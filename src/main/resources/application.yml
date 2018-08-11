@@ -1,0 +1,46 @@
+spring:
+  cloud.config.discovery.enabled: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+server:
+  port: 8090
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
+management:
+  endpoints.web.exposure.include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+zuul:
+  ignoredServices: '*'
+  routes:
+    backend:
+      path: /backend/**
+      serviceId: backend
+    apicube:
+      path: /apicube/**
+      serviceId: apicube
+
+---
+
+spring:
+  profiles: prod
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+eureka:
+  instance:
+    hostname: gateway
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+  client:
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
