@@ -4,11 +4,11 @@ buildscript {
         springFoxVersion = '2.9.2'
     }
     repositories {
-        maven { setUrl('http://maven.aliyun.com/nexus/content/groups/public/') }
-        maven { setUrl('http://maven.aliyun.com/nexus/content/repositories/central') }
-        maven { setUrl('http://repo.spring.io/plugins-release') }
-        maven { setUrl("https://plugins.gradle.org/m2/") }
+        mavenCentral()
+        maven { url('http://repo.spring.io/plugins-release') }
+        maven { url("https://plugins.gradle.org/m2/") }
     }
+    ext['lombok.version'] = '1.18.2'
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
@@ -25,6 +25,7 @@ sourceCompatibility = 1.8
 apply from: './gradle/docker.gradle'
 
 repositories {
+    maven { url 'https://repo.spring.io/libs-release' }
     mavenCentral()
 }
 ext {

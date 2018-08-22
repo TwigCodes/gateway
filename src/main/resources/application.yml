@@ -25,6 +25,10 @@ zuul:
     apicube:
       path: /apicube/**
       serviceId: apicube
+    uaa:
+      path: /uaa/**
+      serviceId: uaa
+      stripPrefix: true
 
 ---
 
