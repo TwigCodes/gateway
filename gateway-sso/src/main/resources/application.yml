@@ -1,0 +1,96 @@
+spring:
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://${DISCOVERY_HOST:localhost}:${DISCOVERY_PORT:8761}/config
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+  security.oauth2.client:
+    registration:
+      keycloak:
+        authorization-grant-type: authorization_code
+        client-name: Keycloak
+        client-id: ${OAUTH2_CLIENT_ID:login-app}
+        client-secret: ${OAUTH2_CLIENT_SECRET:855ee82d-38d0-4d6a-b7e0-22726097cc96}
+        redirect-uri-template: '{baseUrl}/login/oauth2/code/{registrationId}'
+        scope:
+          - openid
+          - profile
+          - email
+    provider:
+      keycloak:
+        authorization-uri: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:9999}/auth/realms/${KEYCLOAK_REALM:master}/protocol/openid-connect/auth
+        token-uri: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:9999}/auth/realms/${KEYCLOAK_REALM:master}/protocol/openid-connect/token
+        user-info-uri: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:9999}/auth/realms/${KEYCLOAK_REALM:master}/protocol/openid-connect/userinfo
+        jwk-set-uri: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:9999}/auth/realms/${KEYCLOAK_REALM:master}/protocol/openid-connect/certs
+        user-name-attribute: preferred_username
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${DISCOVERY_HOST:localhost}:${DISCOVERY_PORT:8761}/eureka/
+management:
+  endpoints.web.exposure.include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+zuul:
+  prefix: /api
+  sensitiveHeaders: Cookie,Set-Cookie
+  ignoredServices: '*'
+  routes:
+    demoa:
+      path: /demoa/**
+      serviceId: demoa
+      strip-prefix: true
+    demob:
+      path: /demob/**
+      serviceId: demob
+      strip-prefix: true
+proxy:
+  auth:
+    routes:
+      demoa: oauth2
+      demob: passthru
+gateway.auth:
+  logout-url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:9999}/auth/realms/${KEYCLOAK_REALM:master}/protocol/openid-connect/logout
+  logout-redirect-url: http://${KEYCLOAK_REDIRECT_URL:localhost}:${SERVER_PORT:9000}
+
+---
+spring:
+  profiles: local
+  cloud:
+    config:
+      enabled: false
+eureka:
+  client:
+    enabled: false
+---
+spring:
+  profiles: dev
+zuul:
+  include-debug-header: true
+logging:
+  level:
+    org.apache.http: 'OFF'
+    org.springframework: ERROR
+    org.springframework.security: 'OFF'
+    com.netflix.discovery: 'OFF'
+    com.netflix.eureka: 'OFF'
+    com.netflix.zuul: DEBUG
+    com.twigcodes.gateway: DEBUG
+---
+spring:
+  profiles: prod
+eureka:
+  instance:
+    hostname: gateway
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+  client:
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: http://${DISCOVERY_HOST:discovery}:${DISCOVERY_PORT:8761}/eureka/

@@ -1,0 +1,69 @@
+spring:
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://${DISCOVERY_HOST:localhost}:${DISCOVERY_PORT:8761}/config
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${DISCOVERY_HOST:localhost}:${DISCOVERY_PORT:8761}/eureka/
+management:
+  endpoints.web.exposure.include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+zuul:
+  prefix: /api
+  sensitiveHeaders: Cookie,Set-Cookie
+  ignoredServices: '*'
+  routes:
+    demoa:
+      path: /demoa/**
+      serviceId: demoa
+      strip-prefix: true
+    demob:
+      path: /demob/**
+      serviceId: demob
+      strip-prefix: true
+
+---
+spring:
+  profiles: local
+  cloud:
+    config:
+      enabled: false
+eureka:
+  client:
+    enabled: false
+---
+spring:
+  profiles: dev
+zuul:
+  include-debug-header: true
+logging:
+  level:
+    org.apache.http: 'OFF'
+    org.springframework: ERROR
+    org.springframework.security: 'OFF'
+    com.netflix.discovery: 'OFF'
+    com.netflix.eureka: 'OFF'
+    com.netflix.zuul: DEBUG
+    com.twigcodes.gateway: DEBUG
+---
+spring:
+  profiles: prod
+eureka:
+  instance:
+    hostname: gateway
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+  client:
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: http://${DISCOVERY_HOST:discovery}:${DISCOVERY_PORT:8761}/eureka/

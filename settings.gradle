@@ -11,4 +11,9 @@ buildscript {
 
 apply plugin: 'net.vivin.gradle-semantic-build-versioning'
 
+include 'demoA'
+include 'demoB'
+include 'gateway-server'
+include 'gateway-keycloak'
+include 'gateway-sso'
 rootProject.name = 'twig-gateway'

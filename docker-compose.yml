@@ -1,0 +1,66 @@
+version: '3.3'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - '5672:5672' # JMS 端口
+      - '15672:15672' # 管理端口 default user:pass = guest:guest
+    networks:
+      - docker-app
+  discovery:
+    image: twigcodes/twig-discovery
+    ports:
+      - 8761:8761
+    environment:
+      SERVER_PORT: 8761
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+    depends_on:
+      - rabbitmq
+    networks:
+      - docker-app
+  keycloak:
+    image: twigcodes/keycloak
+    restart: on-failure
+    command:
+      - '-b'
+      - '0.0.0.0'
+      - '-Dkeycloak.migration.action=import'
+      - '-Dkeycloak.migration.provider=dir'
+      - '-Dkeycloak.migration.dir=/config/'
+      - '-Dkeycloak.migration.strategy=IGNORE_EXISTING'
+    volumes:
+      - ./keycloak/config:/config/
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=password
+      - KEYCLOAK_LOGLEVEL=DEBUG
+      - DB_VENDOR=postgres
+      - DB_USER=admin
+      - DB_PASSWORD=password
+      - DB_ADDR=keycloak-db
+      - DB_PORT=5432
+      - DB_DATABASE=keycloakdb
+    ports:
+      - '9999:8080'
+    depends_on:
+      - keycloak-db
+    networks:
+      - docker-app
+  keycloak-db:
+    image: postgres:10
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: keycloakdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - docker-app
+volumes:
+  pgdata: {}
+networks:
+  docker-app:
+    driver: bridge
