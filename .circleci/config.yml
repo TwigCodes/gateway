@@ -39,7 +39,7 @@ jobs:
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
       # run tests!
-      - run: gradle clean :gateway-server:test
+      - run: gradle clean :gateway-sso:test
 
       - run:
           name: Save test results
@@ -59,4 +59,4 @@ jobs:
 
       - run:
           name: Push Docker Image
-          command: gradle :gateway-server:pushDocker
+          command: gradle :gateway-sso:pushDocker

@@ -10,7 +10,7 @@ services:
 
 install: true
 
-script: ./gradlew :gateway-server:bootJar
+script: ./gradlew :gateway-sso:bootJar
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -30,4 +30,4 @@ deploy:
     tags: true
 
 after_deploy:
-  - ./gradlew :gateway-server:pushDocker
+  - ./gradlew :gateway-sso:pushDocker
