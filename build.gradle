@@ -3,6 +3,7 @@ buildscript {
         springBootVersion = '2.0.5.RELEASE'
         springFoxVersion = '2.9.2'
         keycloakVersion = '4.4.0.Final'
+        twigCommonsVersion = '0.2.6-Candidate'
     }
     repositories {
         mavenCentral()
@@ -28,6 +29,7 @@ subprojects {
     version = rootProject.version
     repositories {
         maven { url 'https://repo.spring.io/libs-release' }
+        maven { url  "https://dl.bintray.com/twigcodes/libs" }
         mavenCentral()
     }
     dependencies {

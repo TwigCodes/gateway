@@ -11,22 +11,22 @@ spring:
     password: ${RABBITMQ_PASSWORD:guest}
   security.oauth2.client:
     registration:
-      keycloak:
+      twigcodes:
         authorization-grant-type: authorization_code
-        client-name: Keycloak
+        client-name: TwigCodes
         client-id: ${OAUTH2_CLIENT_ID:login-app}
-        client-secret: ${OAUTH2_CLIENT_SECRET:855ee82d-38d0-4d6a-b7e0-22726097cc96}
+        client-secret: ${OAUTH2_CLIENT_SECRET:b888bb5b-2627-453e-b3a7-2fb79c923032}
         redirect-uri-template: '{baseUrl}/login/oauth2/code/{registrationId}'
         scope:
           - openid
           - profile
           - email
     provider:
-      keycloak:
-        authorization-uri: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:9999}/auth/realms/${KEYCLOAK_REALM:master}/protocol/openid-connect/auth
-        token-uri: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:9999}/auth/realms/${KEYCLOAK_REALM:master}/protocol/openid-connect/token
-        user-info-uri: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:9999}/auth/realms/${KEYCLOAK_REALM:master}/protocol/openid-connect/userinfo
-        jwk-set-uri: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:9999}/auth/realms/${KEYCLOAK_REALM:master}/protocol/openid-connect/certs
+      twigcodes:
+        authorization-uri: https://${KEYCLOAK_HOST:auth.twigcodes.com}/auth/realms/${KEYCLOAK_REALM:twigcodes}/protocol/openid-connect/auth
+        token-uri: https://${KEYCLOAK_HOST:auth.twigcodes.com}/auth/realms/${KEYCLOAK_REALM:twigcodes}/protocol/openid-connect/token
+        user-info-uri: https://${KEYCLOAK_HOST:auth.twigcodes.com}/auth/realms/${KEYCLOAK_REALM:twigcodes}/protocol/openid-connect/userinfo
+        jwk-set-uri: https://${KEYCLOAK_HOST:auth.twigcodes.com}/auth/realms/${KEYCLOAK_REALM:twigcodes}/protocol/openid-connect/certs
         user-name-attribute: preferred_username
 eureka:
   client:
@@ -56,7 +56,7 @@ proxy:
       demoa: oauth2
       demob: passthru
 gateway.auth:
-  logout-url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:9999}/auth/realms/${KEYCLOAK_REALM:master}/protocol/openid-connect/logout
+  logout-url: https://${KEYCLOAK_HOST:auth.twigcodes.com}/auth/realms/${KEYCLOAK_REALM:twigcodes}/protocol/openid-connect/logout
   logout-redirect-url: http://${KEYCLOAK_REDIRECT_URL:localhost}:${SERVER_PORT:9000}
 
 ---
@@ -68,6 +68,7 @@ spring:
 eureka:
   client:
     enabled: false
+
 ---
 spring:
   profiles: dev
@@ -94,3 +95,16 @@ eureka:
     registryFetchIntervalSeconds: 5
     serviceUrl:
       defaultZone: http://${DISCOVERY_HOST:discovery}:${DISCOVERY_PORT:8761}/eureka/
+zuul:
+  prefix: /api
+  sensitiveHeaders: Cookie,Set-Cookie
+  ignoredServices: '*'
+  routes:
+    apicube:
+      path: /apicube/**
+      serviceId: apicube
+      strip-prefix: true
+proxy:
+  auth:
+    routes:
+      apicube: oauth2

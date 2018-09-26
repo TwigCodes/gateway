@@ -17,7 +17,7 @@ management:
     health:
       show-details: ALWAYS
 security.oauth2.resource:
-  jwk.key-set-uri: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:9999}/auth/realms/${KEYCLOAK_REALM:master}/protocol/openid-connect/certs
+  jwk.key-set-uri: https://${KEYCLOAK_HOST:auth.twigcodes.com}/auth/realms/${KEYCLOAK_REALM:twigcodes}/protocol/openid-connect/certs
 ---
 spring:
   profiles: local
