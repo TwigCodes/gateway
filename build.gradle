@@ -18,9 +18,11 @@ buildscript {
 ext {
     springCloudVersion = 'Finchley.SR1'
 }
-subprojects {
+allprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
+}
+subprojects {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
     group = 'com.twigcodes'
