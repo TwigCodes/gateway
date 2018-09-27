@@ -10,17 +10,20 @@ services:
   discovery:
     image: twigcodes/twig-discovery
     ports:
-    - 8761:8761
+      - 8761:8761
     environment:
       SERVER_PORT: 8761
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
+      CONFIG_GIT_REPO_URI: ${CONFIG_GIT_REPO_URI}
+      CONFIG_GIT_USERNAME: ${CONFIG_GIT_USERNAME}
+      CONFIG_GIT_PASSWORD: ${CONFIG_GIT_PASSWORD}
     depends_on:
-    - rabbitmq
+      - rabbitmq
     networks:
-    - docker-app
+      - docker-app
 volumes:
   pgdata: {}
 networks:
