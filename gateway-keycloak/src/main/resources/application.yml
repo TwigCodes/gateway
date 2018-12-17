@@ -32,13 +32,13 @@ zuul:
       serviceId: demob
       strip-prefix: true
 keycloak:
-  auth-server-url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:9999}/auth
-  realm: ${KEYCLOAK_REALM:master}
-  public-client: true
+  realm: ${KEYCLOAK_REALM:twigcodes}
+  auth-server-url: https://${KEYCLOAK_HOST:auth.twigcodes.com}/auth
+  ssl-required: external
   resource: ${OAUTH2_CLIENT_ID:login-app}
   principal-attribute: preferred_username
   credentials:
-    secret: 4ea06071-533c-40b0-89c2-5cc1c858cf42
+    secret: 942bfe03-9851-4db8-b100-8393c9c6c9cd
 ---
 spring:
   profiles: local
@@ -56,13 +56,13 @@ zuul:
 logging:
   level:
     org.apache.http: 'OFF'
-    org.springframework: ERROR
-    org.springframework.security: 'OFF'
+    org.springframework: DEBUG
+    org.springframework.security: TRACE
     com.netflix.discovery: 'OFF'
     com.netflix.eureka: 'OFF'
-    com.netflix.zuul: DEBUG
-    com.twigcodes.gateway: DEBUG
-    org.keycloak: DEBUG
+    com.netflix.zuul: 'OFF'
+    com.twigcodes.gateway: 'OFF'
+    org.keycloak: TRACE
 ---
 spring:
   profiles: prod
