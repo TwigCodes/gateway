@@ -1,7 +1,5 @@
 dependencies {
     implementation('org.keycloak:keycloak-spring-boot-starter')
-    // implementation("org.keycloak:keycloak-spring-security-adapter")
-    // implementation("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.cloud:spring-cloud-starter-security")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-zuul")
