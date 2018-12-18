@@ -2,6 +2,7 @@ package com.twigcodes.demoa;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.actuate.health.HealthEndpoint;
 import org.springframework.boot.actuate.info.InfoEndpoint;
@@ -17,6 +18,7 @@ import org.springframework.web.context.request.RequestContextListener;
 /**
  * ResourceServerConfg
  */
+@Slf4j
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfg extends ResourceServerConfigurerAdapter{
@@ -47,6 +49,7 @@ public class ResourceServerConfg extends ResourceServerConfigurerAdapter{
 
     public boolean matches(HttpServletRequest request) {
       String auth = request.getHeader("Authorization");
+      log.debug("auth decode from request: ", auth);
       boolean haveOauth2Token =
           (auth != null) && auth.startsWith("Bearer");
       boolean haveAccessToken = request.getParameter("access_token") != null;
