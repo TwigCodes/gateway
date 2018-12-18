@@ -20,8 +20,8 @@ public class Application {
     SpringApplication.run(Application.class, args);
   }
 
-  // @Bean
-  // public KeycloakAuthorizationFilter keycloakAuthorizationFilter() {
-  //   return new KeycloakAuthorizationFilter();
-  // }
+   @Bean
+   public KeycloakAuthorizationFilter keycloakAuthorizationFilter() {
+     return new KeycloakAuthorizationFilter();
+   }
 }

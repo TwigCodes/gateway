@@ -38,7 +38,7 @@ logging:
     com.netflix.discovery: 'OFF'
     com.netflix.eureka: 'OFF'
     com.netflix.zuul: DEBUG
-    com.twigcodes.gateway: DEBUG
+    com.twigcodes: DEBUG
     org.keycloak: DEBUG
 ---
 spring:

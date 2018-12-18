@@ -22,9 +22,10 @@ public class Application {
     SpringApplication.run(Application.class, args);
   }
 
+
   @GetMapping("/hello")
   public String Hello() {
-    return "I am demo B";
-  }
 
+    return "I am demo B, access token is ";
+  }
 }

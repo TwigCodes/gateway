@@ -1,11 +1,8 @@
 package com.twigcodes.demoa;
 
 import javax.servlet.http.HttpServletRequest;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
-import org.springframework.boot.actuate.health.HealthEndpoint;
-import org.springframework.boot.actuate.info.InfoEndpoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,7 +18,7 @@ import org.springframework.web.context.request.RequestContextListener;
 @Slf4j
 @Configuration
 @EnableResourceServer
-public class ResourceServerConfg extends ResourceServerConfigurerAdapter{
+public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 
   @Bean
   public RequestContextListener requestContextListener() {
@@ -56,4 +53,5 @@ public class ResourceServerConfg extends ResourceServerConfigurerAdapter{
       return haveOauth2Token || haveAccessToken;
     }
   }
+
 }

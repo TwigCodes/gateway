@@ -1,10 +1,7 @@
 package com.twigcodes.demob;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
-import org.springframework.boot.actuate.health.HealthEndpoint;
-import org.springframework.boot.actuate.info.InfoEndpoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,7 +16,7 @@ import org.springframework.web.context.request.RequestContextListener;
  */
 @Configuration
 @EnableResourceServer
-public class ResourceServerConfg extends ResourceServerConfigurerAdapter{
+public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 
   @Bean
   public RequestContextListener requestContextListener() {

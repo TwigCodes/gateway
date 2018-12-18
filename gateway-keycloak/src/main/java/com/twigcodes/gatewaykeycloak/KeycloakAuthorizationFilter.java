@@ -2,12 +2,12 @@ package com.twigcodes.gatewaykeycloak;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
-
+import java.security.Principal;
+import javax.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class KeycloakAuthorizationFilter extends ZuulFilter {
@@ -25,11 +25,10 @@ public class KeycloakAuthorizationFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        return true;
-        // RequestContext ctx = RequestContext.getCurrentContext();
-        // HttpServletRequest request = ctx.getRequest();
-        // Principal principal = request.getUserPrincipal();
-        // return principal != null && principal instanceof KeycloakPrincipal;
+         RequestContext ctx = RequestContext.getCurrentContext();
+         HttpServletRequest request = ctx.getRequest();
+         Principal principal = request.getUserPrincipal();
+         return principal instanceof KeycloakAuthenticationToken;
     }
 
     @Override
