@@ -5,4 +5,5 @@ export * from './multi-select-chips';
 export * from './autocomplete';
 export * from './big-input';
 export * from './json-diff';
+export * from './bread-crumbs';
 export * from './animations';

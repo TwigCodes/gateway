@@ -80,7 +80,8 @@ import {
   MultiSelectChipsModule,
   AutocompleteModule,
   BigInputModule,
-  JsonDiffModule
+  JsonDiffModule,
+  BreadCrumbsModule
 } from '@app/libs';
 
 import { FilterMenuComponent } from './filter-menu/filter-menu.component';
@@ -117,6 +118,7 @@ import { FilterMenuComponent } from './filter-menu/filter-menu.component';
     AutocompleteModule,
     BigInputModule,
     JsonDiffModule,
+    BreadCrumbsModule,
 
     FontAwesomeModule
   ]
