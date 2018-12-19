@@ -4,7 +4,7 @@
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
 
-  tgapp-examples {
+  tgapp-home-container {
     .nav-responsive {
       border-bottom: 1px solid mat-color($primary);
 
@@ -13,6 +13,11 @@
         margin: 0 20px;
         width: 100%;
       }
+    }
+
+    .mat-button-toggle-checked {
+      background-color: mat-color($accent);
+      color: mat-color($accent, default-contrast);
     }
   }
 
