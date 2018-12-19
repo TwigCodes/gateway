@@ -10,9 +10,9 @@ export function authReducer(
   action: AuthActions
 ): AuthState {
   switch (action.type) {
-    case AuthActionTypes.LOGIN:
+    case AuthActionTypes.LOGIN_SUCCESS:
       return { ...state, isAuthenticated: true };
-
+    case AuthActionTypes.LOGIN_FAIL:
     case AuthActionTypes.LOGOUT:
       return { ...state, isAuthenticated: false };
 

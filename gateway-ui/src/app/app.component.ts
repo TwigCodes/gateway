@@ -9,7 +9,8 @@ import {
   routeAnimations,
   AppState,
   LocalStorageService,
-  selectIsAuthenticated
+  selectIsAuthenticated,
+  ActionAuthCheckLogin
 } from '@app/core';
 import { environment as env } from '@env/environment';
 
@@ -75,7 +76,7 @@ export class AppComponent implements OnInit {
         })
       );
     }
-
+    this.store.dispatch(new ActionAuthCheckLogin());
     this.isAuthenticated$ = this.store.pipe(select(selectIsAuthenticated));
     this.stickyHeader$ = this.store.pipe(select(selectSettingsStickyHeader));
     this.language$ = this.store.pipe(select(selectSettingsLanguage));

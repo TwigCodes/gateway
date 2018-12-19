@@ -13,6 +13,11 @@ import { StaticModule } from './static';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+// Keycloak
+import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
+import { initializer } from './app-initilizer';
+import { EventStackService } from './core/keycloak/event-stack.service';
+
 import * as fundebug from 'fundebug-javascript';
 
 fundebug.apikey = environment.fundbugApiKey;
@@ -38,6 +43,9 @@ export class FundebugErrorHandler implements ErrorHandler {
     CoreModule,
     SharedModule,
 
+    // Keycloak
+    KeycloakAngularModule,
+
     // features
     StaticModule,
     SettingsModule,
@@ -46,7 +54,15 @@ export class FundebugErrorHandler implements ErrorHandler {
     AppRoutingModule
   ],
   declarations: [AppComponent],
-  providers: [{ provide: ErrorHandler, useClass: FundebugErrorHandler }],
+  providers: [
+    { provide: ErrorHandler, useClass: FundebugErrorHandler },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializer,
+      multi: true,
+      deps: [KeycloakService, EventStackService]
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
