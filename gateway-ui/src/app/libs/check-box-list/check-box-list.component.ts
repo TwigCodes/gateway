@@ -15,11 +15,11 @@ import {
   MatFormFieldControl,
   MatCheckboxChange
 } from '@angular/material';
-import { Option } from '../selection.model';
 import { Subject, Subscription } from 'rxjs';
 import { NgControl, ControlValueAccessor } from '@angular/forms';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { Option } from '../utils/selection.model';
 
 @Component({
   selector: 'ngx-check-box-list',

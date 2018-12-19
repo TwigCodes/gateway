@@ -72,15 +72,17 @@ library.add(
   faStream,
   faBook
 );
-import { DynaTableModule, MaterialModule, CdkModule } from '@app/libs';
+import {
+  DynaTableModule,
+  MaterialModule,
+  CdkModule,
+  CheckBoxListModule,
+  MultiSelectChipsModule,
+  AutocompleteModule,
+  BigInputModule
+} from '@app/libs';
 
-import { BigInputComponent } from './big-input/big-input.component';
-import { BigInputActionComponent } from './big-input/big-input-action.component';
-import { AutocompleteComponent } from './autocomplete/autocomplete.component';
-import { DetailRowDirective } from './detail-row.directive';
 import { FilterMenuComponent } from './filter-menu/filter-menu.component';
-import { MultiSelectChipsComponent } from './multi-select-chips/multi-select-chips.component';
-import { CheckBoxListComponent } from './check-box-list/check-box-list.component';
 
 @NgModule({
   imports: [
@@ -97,15 +99,7 @@ import { CheckBoxListComponent } from './check-box-list/check-box-list.component
 
     FontAwesomeModule
   ],
-  declarations: [
-    BigInputComponent,
-    BigInputActionComponent,
-    AutocompleteComponent,
-    DetailRowDirective,
-    FilterMenuComponent,
-    MultiSelectChipsComponent,
-    CheckBoxListComponent
-  ],
+  declarations: [FilterMenuComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -117,15 +111,12 @@ import { CheckBoxListComponent } from './check-box-list/check-box-list.component
     CdkModule,
     FlexLayoutModule,
     DynaTableModule,
+    CheckBoxListModule,
+    MultiSelectChipsModule,
+    AutocompleteModule,
+    BigInputModule,
 
-    FontAwesomeModule,
-
-    BigInputComponent,
-    BigInputActionComponent,
-    AutocompleteComponent,
-    DetailRowDirective,
-    MultiSelectChipsComponent,
-    CheckBoxListComponent
+    FontAwesomeModule
   ]
 })
 export class SharedModule {}

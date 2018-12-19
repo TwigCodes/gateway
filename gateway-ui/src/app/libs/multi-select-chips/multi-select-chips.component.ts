@@ -17,7 +17,7 @@ import { MatFormFieldControl, MatChipList } from '@angular/material';
 import { Subject } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { Option } from '../selection.model';
+import { Option } from '../utils/selection.model';
 
 @Component({
   selector: 'ngx-multi-select-chips',
