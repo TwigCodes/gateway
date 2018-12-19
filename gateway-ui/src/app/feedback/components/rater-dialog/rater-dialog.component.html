@@ -1,0 +1,25 @@
+<form [formGroup]="form">
+  <h2 mat-dialog-title> {{ isAdd ? '' : '' | translate }} </h2>
+  <mat-dialog-content>
+    <mat-form-field class="full-width">
+      <input matInput placeholder="请输入电子邮件" formControlName="email">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <input matInput placeholder="请输入姓名" formControlName="name">
+    </mat-form-field>
+    <span>
+      <mat-icon class="gender-icon" [svgIcon]="'male'" matTooltip="男生" [color]="form.get('gender').value ? null : 'accent'"></mat-icon> &nbsp;
+      <mat-slide-toggle formControlName="gender">
+        &nbsp;<mat-icon class="gender-icon" [svgIcon]="'female'" matTooltip="女生" [color]="form.get('gender').value ? 'accent' : null"></mat-icon>
+      </mat-slide-toggle>
+    </span>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px" class="full-width">
+      <span fxFlex="40%">
+        <button mat-raised-button type="button" color="primary" (click)="submit()" [disabled]="form.invalid">保存</button>
+        <button mat-button mat-dialog-close>关闭</button>
+      </span>
+    </div>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,82 @@
+{
+  "employee": [
+    {
+      "id": "0",
+      "email": "zhangsan@tg.com",
+      "name": "Zhang San",
+      "title": "Project Manager",
+      "gender": true,
+      "avatar": "https://material.angular.io/assets/img/examples/shiba1.jpg",
+      "employeeNo": "A00001",
+      "reportTo": "wangwu@tg.com"
+    },
+    {
+      "id": "1",
+      "email": "lisi@tg.com",
+      "name": "Li Si",
+      "title": "Engineer",
+      "gender": true,
+      "avatar": "https://material.angular.io/assets/img/examples/shiba1.jpg",
+      "employeeNo": "A00002",
+      "reportTo": "zhangsan@tg.com"
+    },
+    {
+      "id": "2",
+      "email": "wangwu@tg.com",
+      "name": "Wang Wu",
+      "title": "Project Director",
+      "gender": false,
+      "avatar": "https://material.angular.io/assets/img/examples/shiba1.jpg",
+      "employeeNo": "A00003"
+    },
+    {
+      "id": "3",
+      "email": "zhaoliu@tg.com",
+      "name": "Zhao Liu",
+      "title": "Project Manager",
+      "gender": true,
+      "avatar": "https://material.angular.io/assets/img/examples/shiba1.jpg",
+      "employeeNo": "A00004"
+    },
+    {
+      "id": "4",
+      "email": "david@tg.com",
+      "name": "David Tian",
+      "title": "Engineer",
+      "gender": true,
+      "avatar": "https://material.angular.io/assets/img/examples/shiba1.jpg",
+      "employeeNo": "A00005",
+      "reportTo": "zhaoliu@tg.com"
+    },
+    {
+      "id": "5",
+      "email": "michael@tg.com",
+      "name": "Michael Sang",
+      "title": "Sales",
+      "gender": true,
+      "avatar": "https://material.angular.io/assets/img/examples/shiba1.jpg",
+      "employeeNo": "A00006",
+      "reportTo": "wangwu@tg.com"
+    },
+    {
+      "id": "6",
+      "email": "liming@tg.com",
+      "name": "Li Ming",
+      "title": "UI Designer",
+      "gender": true,
+      "avatar": "https://material.angular.io/assets/img/examples/shiba1.jpg",
+      "employeeNo": "A00007",
+      "reportTo": "zhangsan@tg.com"
+    },
+    {
+      "id": "7",
+      "email": "wayne@tg.com",
+      "name": "Wayne Kang",
+      "title": "Deigner",
+      "gender": true,
+      "avatar": "https://material.angular.io/assets/img/examples/shiba1.jpg",
+      "employeeNo": "A00001",
+      "reportTo": "zhaoliu@tg.com"
+    }
+  ]
+}

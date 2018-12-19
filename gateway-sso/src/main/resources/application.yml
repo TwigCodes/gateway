@@ -56,8 +56,8 @@ proxy:
       demoa: oauth2
       demob: passthru
 gateway.auth:
-  logout-url: https://${KEYCLOAK_HOST:auth.twigcodes.com}/auth/realms/${KEYCLOAK_REALM:twigcodes}/protocol/openid-connect/logout
-  logout-redirect-url: http://${KEYCLOAK_REDIRECT_URL:localhost}:${SERVER_PORT:9000}
+  logoutUrl: https://${KEYCLOAK_HOST:auth.twigcodes.com}/auth/realms/${KEYCLOAK_REALM:twigcodes}/protocol/openid-connect/logout
+  logoutRedirectUrl: http://${KEYCLOAK_REDIRECT_URL:localhost}:${SERVER_PORT:9000}
 
 ---
 spring:

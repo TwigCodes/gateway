@@ -1,0 +1,53 @@
+<div fxLayout="row" fxLayout.sm="column" fxLayoutAlign="center stretch"  class="full-width review-container">
+
+  <mat-nav-list class="list-container" fxFlex="1 1 35">
+    <h3 mat-subheader>{{ 'tgkpi.feedback.review.todo' | translate }}
+      <button mat-icon-button [matMenuTriggerFor]="filterMenu">
+        <mat-icon>filter_list</mat-icon>
+      </button>
+      <mat-menu #filterMenu="matMenu">
+        <button mat-menu-item (click)="changeFilter('all')"> {{ 'tgkpi.feedback.review.filter.all' | translate }} </button>
+        <button mat-menu-item (click)="changeFilter('supervisor')"> {{ 'tgkpi.feedback.review.filter.supervisor' | translate }} </button>
+        <button mat-menu-item (click)="changeFilter('subordinates')"> {{ 'tgkpi.feedback.review.filter.subordinates' | translate }} </button>
+        <button mat-menu-item (click)="changeFilter('colleagues')"> {{ 'tgkpi.feedback.review.filter.colleagues' | translate }} </button>
+      </mat-menu>
+    </h3>
+    <tgkpi-review-item
+      class="item-container"
+      *ngFor="let feedback of filterTodo"
+      [matTooltip]="feedback.targetUser.email"
+      [item]="feedback.targetUser"
+      (accept)="showReviewDialog(feedback)"
+      (decline)="declineFeedback(feedback)"
+      relation="{{relationToUser(feedback.targetUser) | translate}}">
+    </tgkpi-review-item>
+  </mat-nav-list>
+
+  <mat-list class="list-container" fxFlex="1 1 25">
+    <h3 mat-subheader> {{ 'tgkpi.feedback.review.completed' | translate }}</h3>
+    <mat-list-item
+      *ngFor="let feedback of completedFeedbacks"
+      class="disabled-item">
+      <img [src]="feedback.targetUser.avatar" matListIcon />
+      <h4 mat-line class="disabled-item-font">{{feedback.targetUser.name}}</h4>
+      <p mat-line class="disabled-item-font">{{feedback.targetUser.title}}</p>
+      <mat-icon [svgIcon]="'review'" style="color: #a3a3a3"></mat-icon>
+    </mat-list-item>
+  </mat-list>
+
+  <mat-list class="list-container" fxFlex="1 1 25">
+    <h3 mat-subheader> {{ 'tgkpi.feedback.review.declined' | translate }}</h3>
+    <mat-list-item *ngFor="let feedback of declinedFeedbacks" class="disabled-item">
+      <img [src]="feedback.targetUser.avatar" matListIcon />
+      <h4 mat-line class="disabled-item-font">{{feedback.targetUser.name}}</h4>
+      <p mat-line class="disabled-item-font">{{feedback.targetUser.title}}</p>
+      <mat-icon style="color: #a3a3a3">not_interested</mat-icon>
+      <button
+        (click)="undoDecline(feedback)"
+        mat-icon-button
+        matTooltip="{{ 'tgkpi.feedback.review.undo' | translate }}">
+        <mat-icon>replay</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+</div>

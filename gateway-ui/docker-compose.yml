@@ -1,0 +1,21 @@
+version: '3'
+services:
+  nginx:
+    container_name: tg-kpi
+    image: registry.cn-beijing.aliyuncs.com/twigcodes/tgkpi-frontend-nginx
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      # args:
+      #   - env=production
+    volumes:
+      - ./dist/browser:/usr/share/nginx/html
+    #   - certs-data:/data/letsencrypt
+    ports:
+      - 80:80
+      # - 443:443
+# volumes:
+#   certs:
+#   certs-data:
+
+# other compose services

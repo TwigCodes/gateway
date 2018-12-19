@@ -1,4 +1,4 @@
-package com.twigcodes.gatewaysso.config;
+package com.twigcodes.gatewaykeycloak.config;
 
 import java.util.ArrayList;
 import java.util.List;

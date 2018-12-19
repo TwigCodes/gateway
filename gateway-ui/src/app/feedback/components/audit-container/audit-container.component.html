@@ -1,0 +1,13 @@
+<div class="table-container mat-elevation-z8">
+  <ngx-dyna-table
+    [data$]="data$"
+    [columns]="columns"
+    [pageIndex]="page$ | async"
+    [pageSize]="size$ | async"
+    [total]="total$ | async"
+    [sortable]="false"
+    [showFilters]="false"
+    (pageChange)="pageChange($event)"
+    (itemClicked)="handleItem($event)">
+  </ngx-dyna-table>
+</div>

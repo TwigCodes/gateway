@@ -17,5 +17,6 @@ public class GatewayProperties {
   @Data
   public static class Auth {
     private String logoutUrl;
+    private String logoutRedirectUrl;
   }
 }

@@ -1,0 +1,43 @@
+.review-container {
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.list-container {
+  min-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 8px;
+}
+
+.disabled-item {
+  background: #d4d4d4;
+}
+
+.disabled-item-font {
+  color: #a3a3a3;
+}
+
+.item-container {
+  margin: 1px;
+  border-radius: 3px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.todo-viewport {
+  height: 500px;
+  width: 500px;
+  border: 1px solid black;
+
+  .cdk-virtual-scroll-content-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.item {
+  -ms-writing-mode: tb-lr;
+  -webkit-writing-mode: vertical-lr;
+  /* stylelint-disable-next-line material/no-prefixes */
+  writing-mode: vertical-lr;
+}

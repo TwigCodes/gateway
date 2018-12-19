@@ -1,4 +1,4 @@
-package com.twigcodes.gatewaykeycloak;
+package com.twigcodes.gatewaykeycloak.config;
 
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
@@ -42,8 +42,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     super.configure(http);
     http
       .authorizeRequests()
-        .antMatchers("/api/**").hasRole("user")
-        .anyRequest().permitAll();
+        .anyRequest().hasRole("user");
   }
 
   @Bean

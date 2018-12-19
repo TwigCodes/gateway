@@ -1,0 +1,7 @@
+<div [formGroup]="form">
+  <mat-chip-list multiple="true" selectable="true" formControlName="tagList" #chipList>
+    <mat-chip *ngFor="let option of options" [value]="option.value" (click)="toggleSelection(option)" [selected]="isSelected(option)">
+      {{ option.label }}
+    </mat-chip>
+  </mat-chip-list>
+</div>

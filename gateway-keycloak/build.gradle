@@ -3,4 +3,16 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.cloud:spring-cloud-starter-security")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-zuul")
+    implementation("io.springfox:springfox-swagger2:${springFoxVersion}")
+    implementation("io.springfox:springfox-bean-validators:${springFoxVersion}")
+    implementation("io.springfox:springfox-swagger-ui:${springFoxVersion}")
+}
+task copyStatic(type: Copy) {
+    dependsOn ':gateway-ui:npm_run_build'
+    from "${project(':gateway-ui').projectDir}/dist/browser"
+    into "${project.projectDir}/src/main/resources/static"
+}
+processResources.dependsOn("copyStatic")
+clean {
+    delete fileTree("${project.projectDir}/src/main/resources/static")
 }
