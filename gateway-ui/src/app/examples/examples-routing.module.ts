@@ -25,17 +25,17 @@ const routes: Routes = [
       {
         path: 'todos',
         component: TodosContainerComponent,
-        data: { title: 'tgkpi.examples.menu.todos' }
+        data: { title: 'tgapp.examples.menu.todos' }
       },
       {
         path: 'stock-market',
         component: StockMarketContainerComponent,
-        data: { title: 'tgkpi.examples.menu.stocks' }
+        data: { title: 'tgapp.examples.menu.stocks' }
       },
       {
         path: 'theming',
         component: ParentComponent,
-        data: { title: 'tgkpi.examples.menu.theming' }
+        data: { title: 'tgapp.examples.menu.theming' }
       },
       {
         path: 'crud',
@@ -45,23 +45,23 @@ const routes: Routes = [
       {
         path: 'crud/:id',
         component: CrudComponent,
-        data: { title: 'tgkpi.examples.menu.crud' }
+        data: { title: 'tgapp.examples.menu.crud' }
       },
       {
         path: 'form',
         component: FormComponent,
-        data: { title: 'tgkpi.examples.menu.form' }
+        data: { title: 'tgapp.examples.menu.form' }
       },
       {
         path: 'notifications',
         component: NotificationsComponent,
-        data: { title: 'tgkpi.examples.menu.notifications' }
+        data: { title: 'tgapp.examples.menu.notifications' }
       },
       {
         path: 'authenticated',
         component: AuthenticatedComponent,
         canActivate: [AuthGuardService],
-        data: { title: 'tgkpi.examples.menu.auth' }
+        data: { title: 'tgapp.examples.menu.auth' }
       }
     ]
   }

@@ -9,7 +9,7 @@ import {
 } from '@angular/material';
 
 @Component({
-  selector: 'tgkpi-review-dialog',
+  selector: 'tgapp-review-dialog',
   templateUrl: './review-dialog.component.html',
   styleUrls: ['./review-dialog.component.scss']
 })

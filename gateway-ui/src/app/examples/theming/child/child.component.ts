@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'tgkpi-child',
+  selector: 'tgapp-child',
   templateUrl: './child.component.html',
   styleUrls: ['./child.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -1,14 +1,14 @@
 <div class="container">
-  <h1>{{ 'tgkpi.examples.crud.title' | translate }}</h1>
+  <h1>{{ 'tgapp.examples.crud.title' | translate }}</h1>
   <div class="row">
     <div class="col-md-6">
-      <h2>{{ 'tgkpi.examples.crud.subtitle1' | translate }}</h2>
+      <h2>{{ 'tgapp.examples.crud.subtitle1' | translate }}</h2>
       <mat-card *ngFor="let book of books$ | async" [ngClass]="routeAnimationsElements"
         (click)=select(book) data-testid="crud-item">
         <h3 data-testid="item-title">{{book.title}}</h3>
         <small>{{book.author}}</small>
       </mat-card>
-      <p *ngIf="(books$ | async)?.length === 0">{{'tgkpi.examples.crud.empty' | translate}}</p>
+      <p *ngIf="(books$ | async)?.length === 0">{{'tgapp.examples.crud.empty' | translate}}</p>
       <button type="button" mat-fab color="primary" class="add" [ngClass]="routeAnimationsElements"
         *ngIf="!isEditing" (click)="addNew(bookForm)" data-testid="add-crud">
         <fa-icon icon="plus"></fa-icon>
@@ -16,21 +16,21 @@
     </div>
     <div class="col-md-6">
       <span class="d-flex justify-content-between">
-        <h2>{{ 'tgkpi.examples.crud.subtitle2' | translate }}</h2>
+        <h2>{{ 'tgapp.examples.crud.subtitle2' | translate }}</h2>
         <span class="d-flex justify-content-end">
           <span *ngIf="selectedBook$ | async as selectedBook">
             <button mat-icon-button color="accent" *ngIf="!isEditing" data-testid="edit-crud">
-              <fa-icon icon="edit" (click)="edit(selectedBook)" [matTooltip]="'tgkpi.examples.crud.tooltip.edit' | translate"
+              <fa-icon icon="edit" (click)="edit(selectedBook)" [matTooltip]="'tgapp.examples.crud.tooltip.edit' | translate"
                 matTooltipPosition="above">
               </fa-icon>
             </button>
             <button mat-icon-button color="warn" (click)="delete(selectedBook)" data-testid="delete-crud">
-              <fa-icon icon="trash" [matTooltip]="'tgkpi.examples.crud.tooltip.delete' | translate"
+              <fa-icon icon="trash" [matTooltip]="'tgapp.examples.crud.tooltip.delete' | translate"
                 matTooltipPosition="above">
               </fa-icon>
             </button>
             <button mat-icon-button (click)="deselect()">
-              <fa-icon icon="times" [matTooltip]="'tgkpi.examples.crud.tooltip.deselect' | translate"
+              <fa-icon icon="times" [matTooltip]="'tgapp.examples.crud.tooltip.deselect' | translate"
                 matTooltipPosition="above">
               </fa-icon>
             </button>
@@ -42,41 +42,41 @@
         [ngClass]="routeAnimationsElements">
         <div class="row">
           <mat-form-field class="col">
-            <input matInput placeholder="{{ 'tgkpi.examples.crud.placeholder1' | translate }}"
+            <input matInput placeholder="{{ 'tgapp.examples.crud.placeholder1' | translate }}"
               formControlName="title" required autofocus>
             <mat-error *ngIf="bookFormGroup.get('title').invalid" data-testid="error-title-crud">
-              {{ 'tgkpi.examples.crud.placeholder1' | translate }}
-              {{ 'tgkpi.examples.crud.error' | translate }}
+              {{ 'tgapp.examples.crud.placeholder1' | translate }}
+              {{ 'tgapp.examples.crud.error' | translate }}
             </mat-error>
           </mat-form-field>
         </div>
         <div class="row">
           <mat-form-field class="col">
-            <input matInput placeholder="{{ 'tgkpi.examples.crud.placeholder2' | translate }}"
+            <input matInput placeholder="{{ 'tgapp.examples.crud.placeholder2' | translate }}"
               formControlName="author" required>
             <mat-error *ngIf="bookFormGroup.get('author').hasError('required')" data-testid="error-author-crud">
-              {{ 'tgkpi.examples.crud.placeholder2' | translate }}
-              {{ 'tgkpi.examples.crud.error' | translate }}
+              {{ 'tgapp.examples.crud.placeholder2' | translate }}
+              {{ 'tgapp.examples.crud.error' | translate }}
             </mat-error>
           </mat-form-field>
         </div>
         <div class="row">
           <mat-form-field class="col">
-            <textarea matInput placeholder="{{ 'tgkpi.examples.crud.placeholder3' | translate }}"
+            <textarea matInput placeholder="{{ 'tgapp.examples.crud.placeholder3' | translate }}"
               formControlName="description" rows="5"></textarea>
             <mat-error *ngIf="bookFormGroup.get('description').invalid">
-              {{ 'tgkpi.examples.crud.placeholder1' | translate }}
-              {{ 'tgkpi.examples.crud.error' | translate }}
+              {{ 'tgapp.examples.crud.placeholder1' | translate }}
+              {{ 'tgapp.examples.crud.error' | translate }}
             </mat-error>
           </mat-form-field>
         </div>
         <div class="row">
           <div class="col-12 d-flex justify-content-between">
             <button (click)="save()" mat-raised-button color="primary">
-              {{'tgkpi.examples.crud.save' | translate }}
+              {{'tgapp.examples.crud.save' | translate }}
             </button>
             <button (click)="cancelEditing()" mat-raised-button>
-              {{'tgkpi.examples.crud.cancel' | translate }}
+              {{'tgapp.examples.crud.cancel' | translate }}
             </button>
           </div>
         </div>
@@ -92,7 +92,7 @@
 
         <ng-template #noSelectedBookTmpl>
           <p [ngClass]="routeAnimationsElements">
-            {{'tgkpi.examples.crud.text' | translate }} <code>@ngrx/entity</code>.
+            {{'tgapp.examples.crud.text' | translate }} <code>@ngrx/entity</code>.
           </p>
         </ng-template>
       </ng-container>

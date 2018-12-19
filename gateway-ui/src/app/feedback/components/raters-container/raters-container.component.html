@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h1 class="main-heading">{{ 'tgkpi.feedback.rater.title' | translate }}</h1>
+      <h1 class="main-heading">{{ 'tgapp.feedback.rater.title' | translate }}</h1>
     </div>
   </div>
   <div class="row">
@@ -9,11 +9,11 @@
       <ngx-mat-autocomplete
         [source]="items"
         [clearAfterSearch]="true"
-        [placeholder]="'tgkpi.feedback.search.placeholder' | translate"
+        [placeholder]="'tgapp.feedback.search.placeholder' | translate"
         [displayTemplate]="itemTemplate"
-        [noRecordText]="'tgkpi.feedback.search.norecord' | translate"
+        [noRecordText]="'tgapp.feedback.search.norecord' | translate"
         [showNoRecordButton]="true"
-        [noRecordButtonText]="'tgkpi.feedback.search.addnew' | translate"
+        [noRecordButtonText]="'tgapp.feedback.search.addnew' | translate"
         (noRecord)="addExternalRater($event)"
         (optionSelected)="selectRater($event)">
       </ngx-mat-autocomplete>
@@ -39,7 +39,7 @@
           <mat-icon [svgIcon]="rater.avatar" mat-card-avatar></mat-icon>
         </ng-template>
         <mat-card-title>{{ rater.name }}</mat-card-title>
-        <mat-card-subtitle>{{ rater.title ? rater.title : ('tgkpi.feedback.rater.notitle' | translate) }}</mat-card-subtitle>
+        <mat-card-subtitle>{{ rater.title ? rater.title : ('tgapp.feedback.rater.notitle' | translate) }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <p class="d-flex mx-auto align-items-center justify-content-start">
@@ -48,13 +48,13 @@
         </p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button [disabled]="isSupervisorOrSubordinates(rater)"> {{ 'tgkpi.feedback.raters.remove' | translate }}</button>
+        <button mat-button [disabled]="isSupervisorOrSubordinates(rater)"> {{ 'tgapp.feedback.raters.remove' | translate }}</button>
       </mat-card-actions>
     </mat-card>
   </div>
   <div class="row">
     <div class="d-flex justify-content-end col-md-12">
-      <button mat-raised-button color="primary" (click)="completeRaterSelection()">{{ 'tgkpi.feedback.rater.submit' | translate }}</button>
+      <button mat-raised-button color="primary" (click)="completeRaterSelection()">{{ 'tgapp.feedback.rater.submit' | translate }}</button>
     </div>
   </div>
 </div>

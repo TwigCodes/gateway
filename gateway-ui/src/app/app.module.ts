@@ -36,7 +36,7 @@ export class FundebugErrorHandler implements ErrorHandler {
     // BrowserModule,
 
     // universal
-    BrowserModule.withServerTransition({ appId: 'tgkpi' }),
+    BrowserModule.withServerTransition({ appId: 'tgapp' }),
     TransferHttpCacheModule,
 
     // core & shared

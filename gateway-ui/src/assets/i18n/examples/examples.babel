@@ -6,7 +6,7 @@
         <name></name>
         <children>
             <folder_node>
-                <name>tgkpi</name>
+                <name>tgapp</name>
                 <children>
                     <folder_node>
                         <name>examples</name>

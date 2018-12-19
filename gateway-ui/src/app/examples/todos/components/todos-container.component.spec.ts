@@ -25,7 +25,7 @@ describe('TodosComponent', () => {
   let dispatchSpy: jasmine.Spy;
 
   beforeEach(async () => {
-    component = await createComponent('<tgkpi-todos></tgkpi-todos>', {
+    component = await createComponent('<tgapp-todos></tgapp-todos>', {
       imports: [TestingModule],
       declarations: [TodosContainerComponent],
       providers: [NotificationService],
@@ -82,7 +82,7 @@ describe('TodosComponent', () => {
     dispatchSpy.calls.reset();
 
     component.keyUp(
-      component.getByPlaceholderText('tgkpi.examples.todos.input'),
+      component.getByPlaceholderText('tgapp.examples.todos.input'),
       {
         target: {
           value: 'poke Tomas'
@@ -94,7 +94,7 @@ describe('TodosComponent', () => {
 
     expect(
       (component.getByPlaceholderText(
-        'tgkpi.examples.todos.input'
+        'tgapp.examples.todos.input'
       ) as HTMLInputElement).value
     ).toBe('');
     expect(dispatchSpy).toHaveBeenCalledTimes(1);
@@ -159,7 +159,7 @@ describe('TodosComponent', () => {
     component.fixture.detectChanges();
 
     component.keyUp(
-      component.getByPlaceholderText('tgkpi.examples.todos.input'),
+      component.getByPlaceholderText('tgapp.examples.todos.input'),
       {
         target: {
           value: 'add'
@@ -177,7 +177,7 @@ describe('TodosComponent', () => {
     component.fixture.detectChanges();
 
     component.keyUp(
-      component.getByPlaceholderText('tgkpi.examples.todos.input'),
+      component.getByPlaceholderText('tgapp.examples.todos.input'),
       {
         target: {
           value: 'hellooooo'
@@ -187,12 +187,12 @@ describe('TodosComponent', () => {
 
     expect(
       (component.getByPlaceholderText(
-        'tgkpi.examples.todos.input'
+        'tgapp.examples.todos.input'
       ) as HTMLInputElement).value
     ).toBeTruthy();
 
     component.keyUp(
-      component.getByPlaceholderText('tgkpi.examples.todos.input'),
+      component.getByPlaceholderText('tgapp.examples.todos.input'),
       {
         key: 'Esc'
       }
@@ -200,7 +200,7 @@ describe('TodosComponent', () => {
 
     expect(
       (component.getByPlaceholderText(
-        'tgkpi.examples.todos.input'
+        'tgapp.examples.todos.input'
       ) as HTMLInputElement).value
     ).toBeFalsy();
   });

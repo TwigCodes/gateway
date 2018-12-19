@@ -21,7 +21,7 @@ import { SettingsState, State } from '../settings.model';
 import { selectSettings } from '../settings.selectors';
 
 @Component({
-  selector: 'tgkpi-settings',
+  selector: 'tgapp-settings',
   templateUrl: './settings-container.component.html',
   styleUrls: ['./settings-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

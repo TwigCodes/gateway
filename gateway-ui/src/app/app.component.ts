@@ -23,7 +23,7 @@ import {
 } from './settings';
 
 @Component({
-  selector: 'tgkpi-root',
+  selector: 'tgapp-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   animations: [routeAnimations]
@@ -39,18 +39,18 @@ export class AppComponent implements OnInit {
     { label: 'English', value: 'en' }
   ];
   navigation = [
-    { link: 'about', label: 'tgkpi.menu.about' },
-    { link: 'feedback/raters', label: 'tgkpi.menu.feedback.raters' },
-    { link: 'feedback/audit', label: 'tgkpi.menu.feedback.audit' },
+    { link: 'about', label: 'tgapp.menu.about' },
+    { link: 'feedback/raters', label: 'tgapp.menu.feedback.raters' },
+    { link: 'feedback/audit', label: 'tgapp.menu.feedback.audit' },
     {
       link: 'feedback/review',
-      label: 'tgkpi.menu.feedback.review'
+      label: 'tgapp.menu.feedback.review'
     },
-    { link: 'admin', label: 'tgkpi.menu.admin' }
+    { link: 'admin', label: 'tgapp.menu.admin' }
   ];
   navigationSideMenu = [
     ...this.navigation,
-    { link: 'settings', label: 'tgkpi.menu.settings' }
+    { link: 'settings', label: 'tgapp.menu.settings' }
   ];
 
   isAuthenticated$: Observable<boolean>;

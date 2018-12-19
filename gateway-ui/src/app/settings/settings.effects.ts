@@ -33,7 +33,7 @@ import { State } from './settings.model';
 
 export const SETTINGS_KEY = 'SETTINGS';
 
-const INIT = of('tgkpi-init-effect-trigger');
+const INIT = of('tgapp-init-effect-trigger');
 
 @Injectable()
 export class SettingsEffects {

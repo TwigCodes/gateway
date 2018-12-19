@@ -5,7 +5,7 @@ import { PageEvent } from '@angular/material';
 import { ColumnConfig } from '@app/libs';
 
 @Component({
-  selector: 'tgkpi-audit-container',
+  selector: 'tgapp-audit-container',
   templateUrl: './audit-container.component.html',
   styleUrls: ['./audit-container.component.scss']
 })

@@ -5,7 +5,7 @@
   <p mat-line>{{item.title}}</p>
   <span class="badge badge-secondary"> {{ relation }} </span>
   <span [@buttonBar]="buttonBarState" class="d-flex m-1">
-    <button mat-button color="accent" (click)="toAccept(item)"> {{ 'tgkpi.feedback.review.accept' | translate }} </button>
-    <button mat-button color="warn" (click)="toDecline(item)"> {{ 'tgkpi.feedback.review.decline' | translate }} </button>
+    <button mat-button color="accent" (click)="toAccept(item)"> {{ 'tgapp.feedback.review.accept' | translate }} </button>
+    <button mat-button color="warn" (click)="toDecline(item)"> {{ 'tgapp.feedback.review.decline' | translate }} </button>
   </span>
 </mat-list-item>

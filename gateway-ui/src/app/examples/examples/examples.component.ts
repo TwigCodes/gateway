@@ -11,7 +11,7 @@ import { State as BaseExamplesState } from '../examples.state';
 interface State extends BaseSettingsState, BaseExamplesState {}
 
 @Component({
-  selector: 'tgkpi-examples',
+  selector: 'tgapp-examples',
   templateUrl: './examples.component.html',
   styleUrls: ['./examples.component.scss'],
   animations: [routeAnimations],
@@ -21,13 +21,13 @@ export class ExamplesComponent implements OnInit {
   isAuthenticated$: Observable<boolean>;
 
   examples = [
-    { link: 'todos', label: 'tgkpi.examples.menu.todos' },
-    { link: 'stock-market', label: 'tgkpi.examples.menu.stocks' },
-    { link: 'theming', label: 'tgkpi.examples.menu.theming' },
-    { link: 'crud', label: 'tgkpi.examples.menu.crud' },
-    { link: 'form', label: 'tgkpi.examples.menu.form' },
-    { link: 'notifications', label: 'tgkpi.examples.menu.notifications' },
-    { link: 'authenticated', label: 'tgkpi.examples.menu.auth', auth: true }
+    { link: 'todos', label: 'tgapp.examples.menu.todos' },
+    { link: 'stock-market', label: 'tgapp.examples.menu.stocks' },
+    { link: 'theming', label: 'tgapp.examples.menu.theming' },
+    { link: 'crud', label: 'tgapp.examples.menu.crud' },
+    { link: 'form', label: 'tgapp.examples.menu.form' },
+    { link: 'notifications', label: 'tgapp.examples.menu.notifications' },
+    { link: 'authenticated', label: 'tgapp.examples.menu.auth', auth: true }
   ];
 
   constructor(private store: Store<State>) {}

@@ -14,7 +14,7 @@ const routes: Routes = [
     path: 'settings',
     component: SettingsContainerComponent,
     canActivate: [AuthGuardService],
-    data: { title: 'tgkpi.menu.settings' }
+    data: { title: 'tgapp.menu.settings' }
   },
   {
     path: 'feedback',

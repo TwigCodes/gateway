@@ -24,11 +24,11 @@ npm start
 ## Run Inside Docker Container
 
 ```bash
-# builds docker image with name `tgkpi`
-docker build -t tgkpi .
+# builds docker image with name `tgapp`
+docker build -t tgapp .
 ```
 
-The following command starts `tgkpi` container (you can access running application browsing <http://localhost:4200>)
+The following command starts `tgapp` container (you can access running application browsing <http://localhost:4200>)
 
 ```bash
 docker run -it \
@@ -36,7 +36,7 @@ docker run -it \
    -v /usr/src/app/node_modules \
    -p 4200:4200 \
    --rm \
-   tgkpi
+   tgapp
 ```
 
 ### Serving a Docker image

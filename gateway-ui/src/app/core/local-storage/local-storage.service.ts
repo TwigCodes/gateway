@@ -1,7 +1,7 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
-const APP_PREFIX = 'tgKPI-';
+const APP_PREFIX = 'tgapp-';
 
 @Injectable()
 export class LocalStorageService {

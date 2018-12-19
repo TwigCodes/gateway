@@ -8,7 +8,7 @@ import { ReviewDialogComponent } from '../review-dialog/review-dialog.component'
 import { filter, take } from 'rxjs/operators';
 
 @Component({
-  selector: 'tgkpi-review-container',
+  selector: 'tgapp-review-container',
   templateUrl: './review-container.component.html',
   styleUrls: ['./review-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -203,10 +203,10 @@ export class ReviewContainerComponent implements OnInit {
   public relationToUser(rater: Partial<Employee>): string {
     const relation =
       rater.email === this.items[this.currentEmployeeIndex].reportTo
-        ? 'tgkpi.feedback.raters.supervisor'
+        ? 'tgapp.feedback.raters.supervisor'
         : rater.reportTo === this.items[this.currentEmployeeIndex].email
-        ? 'tgkpi.feedback.raters.subordinate'
-        : 'tgkpi.feedback.raters.colleague';
+        ? 'tgapp.feedback.raters.subordinate'
+        : 'tgapp.feedback.raters.colleague';
     return relation;
   }
 

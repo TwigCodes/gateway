@@ -15,8 +15,10 @@
 
 @import 'styles-reset.scss-theme';
 @import 'app/app.component.scss-theme';
-@import 'app/libs/bread-crumbs/breadcrumbs.component-theme.scss';
+@import 'app/libs/bread-crumbs/bread-crumbs.component-theme.scss';
 @import 'app/libs/big-input/big-input.component.scss-theme';
+
+@import 'app/admin/components/home-container/home-container.component-theme.scss';
 @import 'app/static/about/about.component.scss-theme';
 @import 'app/examples/notifications/components/notifications.component.scss-theme';
 @import 'app/examples/todos/components/todos-container.component.scss-theme';
@@ -26,16 +28,19 @@
 @import 'app/examples/examples/examples.component.scss-theme';
 
 @mixin custom-components-theme($theme) {
-  @include tgkpi-styles-reset-theme($theme);
-  @include tgkpi-app-component-theme($theme);
-  @include tgkpi-about-component-theme($theme);
+  @include tgapp-styles-reset-theme($theme);
+  @include tgapp-app-component-theme($theme);
+  @include tgapp-about-component-theme($theme);
+  @include tgapp-notifications-component-theme($theme);
+  @include tgapp-todos-container-component-theme($theme);
+  @include tgapp-stock-market-container-component-theme($theme);
+  @include tgapp-parent-component-theme($theme);
+  @include tgapp-child-component-theme($theme);
+  @include tgapp-examples-component-theme($theme);
+  @include tgapp-home-container-theme($theme);
+
   @include ngx-big-input-component-theme($theme);
-  @include tgkpi-notifications-component-theme($theme);
-  @include tgkpi-todos-container-component-theme($theme);
-  @include tgkpi-stock-market-container-component-theme($theme);
-  @include tgkpi-parent-component-theme($theme);
-  @include tgkpi-child-component-theme($theme);
-  @include tgkpi-examples-component-theme($theme);
+  @include ngx-breadcrumbs-component-theme($theme);
 }
 
 .default-theme {

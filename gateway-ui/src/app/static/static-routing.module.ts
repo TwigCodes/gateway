@@ -8,12 +8,12 @@ const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent,
-    data: { title: 'tgkpi.menu.about' }
+    data: { title: 'tgapp.menu.about' }
   },
   {
     path: 'features',
     component: FeaturesComponent,
-    data: { title: 'tgkpi.menu.feedback' }
+    data: { title: 'tgapp.menu.feedback' }
   }
 ];
 

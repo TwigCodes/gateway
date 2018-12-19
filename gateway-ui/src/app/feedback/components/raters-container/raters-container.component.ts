@@ -9,7 +9,7 @@ import { RaterDialogComponent } from '../rater-dialog/rater-dialog.component';
 import { getRelation } from '@app/feedback/feedback.util';
 
 @Component({
-  selector: 'tgkpi-raters-container',
+  selector: 'tgapp-raters-container',
   templateUrl: './raters-container.component.html',
   styleUrls: ['./raters-container.component.scss']
 })
@@ -123,7 +123,7 @@ export class RatersContainerComponent implements OnInit {
       this.selectedRaters.findIndex(item => item.email === rater.email) > -1
     ) {
       this.translateService
-        .get('tgkpi.feedback.raters.notification.existed')
+        .get('tgapp.feedback.raters.notification.existed')
         .pipe(take(1))
         .subscribe(title => {
           this.notificationService.error(title);
@@ -148,10 +148,10 @@ export class RatersContainerComponent implements OnInit {
   public relationToUser(rater: Partial<Employee>): string {
     const relation =
       rater.email === this.items[this.currentEmployeeIndex].reportTo
-        ? 'tgkpi.feedback.raters.supervisor'
+        ? 'tgapp.feedback.raters.supervisor'
         : rater.reportTo === this.items[this.currentEmployeeIndex].email
-        ? 'tgkpi.feedback.raters.subordinate'
-        : 'tgkpi.feedback.raters.colleague';
+        ? 'tgapp.feedback.raters.subordinate'
+        : 'tgapp.feedback.raters.colleague';
     return relation;
   }
 

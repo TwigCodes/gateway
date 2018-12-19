@@ -2,7 +2,7 @@ version: '3'
 services:
   nginx:
     container_name: tg-kpi
-    image: registry.cn-beijing.aliyuncs.com/twigcodes/tgkpi-frontend-nginx
+    image: registry.cn-beijing.aliyuncs.com/twigcodes/tgapp-frontend-nginx
     build:
       context: .
       dockerfile: ./Dockerfile

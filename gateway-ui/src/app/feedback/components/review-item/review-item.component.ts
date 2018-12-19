@@ -29,7 +29,7 @@ export const buttonBarAnim = trigger('buttonBar', [
 ]);
 
 @Component({
-  selector: 'tgkpi-review-item',
+  selector: 'tgapp-review-item',
   templateUrl: './review-item.component.html',
   styleUrls: ['./review-item.component.scss'],
   animations: [buttonBarAnim],

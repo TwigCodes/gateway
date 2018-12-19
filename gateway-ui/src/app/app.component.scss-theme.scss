@@ -1,6 +1,6 @@
 @import '~@angular/material/theming';
 
-@mixin tgkpi-app-component-theme($theme) {
+@mixin tgapp-app-component-theme($theme) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
   $warn: map-get($theme, warn);

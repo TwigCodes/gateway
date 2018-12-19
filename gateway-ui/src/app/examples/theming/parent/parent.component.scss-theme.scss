@@ -1,9 +1,9 @@
 @import '~@angular/material/theming';
 
-@mixin tgkpi-parent-component-theme($theme) {
+@mixin tgapp-parent-component-theme($theme) {
   $accent: map-get($theme, accent);
 
-  tgkpi-parent {
+  tgapp-parent {
     > .container {
       > .row {
         > .col-md-6 {

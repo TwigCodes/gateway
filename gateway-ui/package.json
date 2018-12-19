@@ -1,5 +1,5 @@
 {
-  "name": "tgkpi",
+  "name": "tgapp",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
@@ -19,7 +19,7 @@
     "release": "standard-version && git push --follow-tags origin master",
     "build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server",
     "serve:ssr": "node dist/server.js",
-    "build:client-and-server-bundles": "ng build --prod --vendor-chunk && ng run tgkpi:server",
+    "build:client-and-server-bundles": "ng build --prod --vendor-chunk && ng run tgapp:server",
     "webpack:server": "webpack --config webpack.server.config.js --progress --colors",
     "format:write": "prettier {src,e2e}/**/*.{ts,json,md,scss} --write",
     "format:test": "prettier {src,e2e}/**/*.{ts,json,md,scss} --list-different",
