@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
       link: 'feedback/review',
       label: 'tgkpi.menu.feedback.review'
     },
-    { link: 'examples', label: 'tgkpi.menu.admin' }
+    { link: 'admin', label: 'tgkpi.menu.admin' }
   ];
   navigationSideMenu = [
     ...this.navigation,

@@ -22,6 +22,11 @@ const routes: Routes = [
     pathMatch: 'prefix'
   },
   {
+    path: 'admin',
+    loadChildren: 'app/admin#AdminModule',
+    pathMatch: 'prefix'
+  },
+  {
     path: 'examples',
     loadChildren: 'app/examples/examples.module#ExamplesModule'
   },
