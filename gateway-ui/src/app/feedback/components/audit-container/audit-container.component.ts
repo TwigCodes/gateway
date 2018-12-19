@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { AuditVM } from '@app/feedback';
 import { PageEvent } from '@angular/material';
-import { ColumnConfig } from '@app/dyna-table';
+import { ColumnConfig } from '@app/libs';
 
 @Component({
   selector: 'tgkpi-audit-container',
