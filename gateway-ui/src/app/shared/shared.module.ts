@@ -79,7 +79,8 @@ import {
   CheckBoxListModule,
   MultiSelectChipsModule,
   AutocompleteModule,
-  BigInputModule
+  BigInputModule,
+  JsonDiffModule
 } from '@app/libs';
 
 import { FilterMenuComponent } from './filter-menu/filter-menu.component';
@@ -115,6 +116,7 @@ import { FilterMenuComponent } from './filter-menu/filter-menu.component';
     MultiSelectChipsModule,
     AutocompleteModule,
     BigInputModule,
+    JsonDiffModule,
 
     FontAwesomeModule
   ]
