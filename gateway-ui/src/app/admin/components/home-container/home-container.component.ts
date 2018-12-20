@@ -29,6 +29,7 @@ export class HomeContainerComponent implements OnInit {
         '系统管理员可以查看、新建、修改、删除系统的用户，但默认情况下系统的内建超级用户是无法删除的'
     }
   ];
+  filteredMenus = [...this.menus];
   selection = new SelectionModel<Partial<Menu>>(false, []);
   @ViewChild('gridView')
   public gridView: MatButtonToggleGroup;
@@ -38,5 +39,12 @@ export class HomeContainerComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     console.log('filter value is ', filterValue);
+    if (!filterValue) {
+      this.filteredMenus = [...this.menus];
+    }
+    this.filteredMenus = this.menus.filter(
+      menu =>
+        menu.title.includes(filterValue) || menu.subtitle.includes(filterValue)
+    );
   }
 }
