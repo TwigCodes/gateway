@@ -1,50 +1,36 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
-import { SelectionModel } from '@angular/cdk/collections';
-import { MatButtonToggleGroup } from '@angular/material';
-
-export interface Menu {
-  title: string;
-  subtitle: string;
-  desc: string;
-}
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Item } from '../list-or-grid-with-filter/list-or-grid-with-filter.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'tgapp-home-container',
   templateUrl: './home-container.component.html',
-  styleUrls: ['./home-container.component.scss']
+  styleUrls: ['./home-container.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeContainerComponent implements OnInit {
-  menus: Menu[] = [
+  menus: Item[] = [
     {
+      id: '1',
       title: '角色管理',
       subtitle: '管理用户角色',
       desc:
         '系统管理员可以查看、新建、修改、删除系统的角色，但默认情况下系统的内建角色 User 和 Admin 是无法删除的'
     },
     {
+      id: '2',
       title: '用户管理',
       subtitle: '管理系统用户',
       desc:
         '系统管理员可以查看、新建、修改、删除系统的用户，但默认情况下系统的内建超级用户是无法删除的'
     }
   ];
-  filteredMenus = [...this.menus];
-  selection = new SelectionModel<Partial<Menu>>(false, []);
-  @ViewChild('gridView')
-  public gridView: MatButtonToggleGroup;
-  constructor() {}
+
+  constructor(private router: Router) {}
 
   ngOnInit() {}
 
-  applyFilter(filterValue: string) {
-    console.log('filter value is ', filterValue);
-    if (!filterValue) {
-      this.filteredMenus = [...this.menus];
-    }
-    this.filteredMenus = this.menus.filter(
-      menu =>
-        menu.title.includes(filterValue) || menu.subtitle.includes(filterValue)
-    );
+  handleSelect(item: Item) {
+    this.router.navigate(['admin/roles']);
   }
 }

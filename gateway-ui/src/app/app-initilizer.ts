@@ -14,7 +14,8 @@ export function initializer(
           eventStackService.triggerEvent(event);
         });
         await keycloak.init({
-          config: environment.keycloak
+          config: environment.keycloak,
+          enableBearerInterceptor: true
         });
         resolve();
       } catch (error) {

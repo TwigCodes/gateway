@@ -1,10 +1,10 @@
 @import '~@angular/material/theming';
 
-@mixin tgapp-home-container-theme($theme) {
+@mixin ngx-list-or-grid-theme($theme) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
 
-  tgapp-home-container {
+  ngx-list-or-grid-with-filter {
     .nav-responsive {
       border-bottom: 1px solid mat-color($primary);
 

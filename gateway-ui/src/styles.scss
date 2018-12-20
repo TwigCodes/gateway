@@ -18,7 +18,7 @@
 @import 'app/libs/bread-crumbs/bread-crumbs.component-theme.scss';
 @import 'app/libs/big-input/big-input.component.scss-theme';
 
-@import 'app/admin/components/home-container/home-container.component-theme.scss';
+@import 'app/admin/components/list-or-grid-with-filter/list-or-grid-with-filter.component-theme.scss';
 @import 'app/static/about/about.component.scss-theme';
 @import 'app/examples/notifications/components/notifications.component.scss-theme';
 @import 'app/examples/todos/components/todos-container.component.scss-theme';
@@ -37,8 +37,8 @@
   @include tgapp-parent-component-theme($theme);
   @include tgapp-child-component-theme($theme);
   @include tgapp-examples-component-theme($theme);
-  @include tgapp-home-container-theme($theme);
 
+  @include ngx-list-or-grid-theme($theme);
   @include ngx-big-input-component-theme($theme);
   @include ngx-breadcrumbs-component-theme($theme);
 }
