@@ -25,6 +25,7 @@ export interface Item {
 })
 export class ListOrGridWithFilterComponent {
   @Input() items: Item[] = [];
+  @Input() filterPlaceholder = '';
   @Output() select = new EventEmitter();
   filterValue = null;
   selection = new SelectionModel<Partial<Item>>(false, []);
