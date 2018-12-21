@@ -5,7 +5,8 @@ import {
   MatIconModule,
   MatProgressBarModule,
   MatOptionModule,
-  MatFormFieldModule
+  MatFormFieldModule,
+  MatInputModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutocompleteComponent } from './autocomplete.component';
@@ -19,6 +20,7 @@ import { AutocompleteComponent } from './autocomplete.component';
     MatIconModule,
     MatProgressBarModule,
     MatOptionModule,
+    MatInputModule,
     FormsModule,
     ReactiveFormsModule
   ],
