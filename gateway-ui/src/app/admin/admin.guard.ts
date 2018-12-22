@@ -5,12 +5,17 @@ import {
   Router
 } from '@angular/router';
 import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
+import { NotificationService } from '@app/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminGuard extends KeycloakAuthGuard {
-  constructor(protected router: Router, protected keycloak: KeycloakService) {
+  constructor(
+    protected router: Router,
+    protected keycloak: KeycloakService,
+    private notification: NotificationService
+  ) {
     super(router, keycloak);
   }
 
@@ -20,7 +25,8 @@ export class AdminGuard extends KeycloakAuthGuard {
   ): Promise<boolean> {
     return new Promise((resolve, _) => {
       if (!this.authenticated) {
-        this.keycloak.login();
+        resolve(false);
+        this.notification.warn('您没有访问权限！');
         return;
       }
 
