@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { AuthAdminService } from '@app/admin/services/auth-admin.service';
+import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
 
 @Component({
   selector: 'tgapp-roles-container',
@@ -10,6 +11,16 @@ import { AuthAdminService } from '@app/admin/services/auth-admin.service';
 })
 export class RolesContainerComponent implements OnInit {
   constructor(private service: AuthAdminService) {}
+  crumbs: Crumb[] = [
+    {
+      name: 'admin',
+      link: '/admin'
+    },
+    {
+      name: 'roles',
+      link: '/admin/roles'
+    }
+  ];
   roles$ = this.service.getRoles().pipe(
     map(roles =>
       roles.map(role => ({

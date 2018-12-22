@@ -19,6 +19,10 @@
       background-color: mat-color($accent);
       color: mat-color($accent, default-contrast);
     }
+
+    .mat-button-toggle-checked .mat-button-toggle-button {
+      color: $light-primary-text;
+    }
   }
 
   .nav-responsive-overlay {

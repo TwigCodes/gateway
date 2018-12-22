@@ -40,7 +40,7 @@
 
   @include ngx-list-or-grid-theme($theme);
   @include ngx-big-input-component-theme($theme);
-  @include ngx-breadcrumbs-component-theme($theme);
+  @include ngx-bread-crumbs-component-theme($theme);
 }
 
 .default-theme {
