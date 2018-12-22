@@ -27,7 +27,6 @@ import { FormsModule } from '@angular/forms';
     MatToolbarModule,
     FormsModule
   ],
-  exports: [],
-  providers: []
+  exports: [ListOrGridWithFilterComponent]
 })
 export class ListOrGridWithFilterModule {}
