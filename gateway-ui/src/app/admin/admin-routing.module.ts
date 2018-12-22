@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeContainerComponent, RolesContainerComponent } from './components';
+import {
+  HomeContainerComponent,
+  RolesContainerComponent,
+  UsersContainerComponent
+} from './components';
 import { AdminGuard } from './admin.guard';
 
 const routes: Routes = [
@@ -15,6 +19,14 @@ const routes: Routes = [
   {
     path: 'roles',
     component: RolesContainerComponent,
+    canActivate: [AdminGuard],
+    data: {
+      roles: ['admin']
+    }
+  },
+  {
+    path: 'users',
+    component: UsersContainerComponent,
     canActivate: [AdminGuard],
     data: {
       roles: ['admin']
