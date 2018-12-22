@@ -81,7 +81,8 @@ import {
   AutocompleteModule,
   BigInputModule,
   JsonDiffModule,
-  BreadCrumbsModule
+  BreadCrumbsModule,
+  ListOrGridWithFilterModule
 } from '@app/libs';
 
 import { FilterMenuComponent } from './filter-menu/filter-menu.component';
@@ -119,6 +120,7 @@ import { FilterMenuComponent } from './filter-menu/filter-menu.component';
     BigInputModule,
     JsonDiffModule,
     BreadCrumbsModule,
+    ListOrGridWithFilterModule,
 
     FontAwesomeModule
   ]

@@ -32,8 +32,8 @@ Authorization: Bearer {{accessToken}}
 
 # @name getUsers
 GET {{baseUrl}}/admin/realms/{{realm}}/users HTTP/1.1
-  ?first=1
-  &max=1
+  ?first=0
+  &max=10
 Authorization: Bearer {{accessToken}}
 
 ###

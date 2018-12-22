@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Item } from '../list-or-grid-with-filter/list-or-grid-with-filter.component';
+import { Item } from '@app/libs/list-or-grid-with-filter/list-or-grid-with-filter.component';
 import { Router } from '@angular/router';
 
 @Component({

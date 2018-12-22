@@ -10,8 +10,7 @@
     </mat-form-field>
     <mat-button-toggle-group
       #gridView="matButtonToggleGroup"
-      style="margin-left: 16px"
-    >
+      style="margin-left: 16px">
       <mat-button-toggle value="list">
         <mat-icon>view_list</mat-icon>
       </mat-button-toggle>
@@ -30,13 +29,11 @@
     cols="3"
     rowHeight="250px"
     gutterSize="10px"
-    class="fix-height"
-  >
+    class="fix-height">
     <mat-grid-tile *ngFor="let item of filteredItems">
       <mat-card
         (click)="handleSelected(item)"
-        [class.active]="selection.isSelected(item)"
-      >
+        [class.active]="selection.isSelected(item)">
         <mat-card-header>
           <mat-card-title>{{ item.title }}</mat-card-title>
           <mat-card-subtitle>{{ item.subtitle }}</mat-card-subtitle>
@@ -52,8 +49,7 @@
     <mat-list-item
       (click)="handleSelected(item)"
       *ngFor="let item of filteredItems; let last = last"
-      [class.active]="selection.isSelected(item)"
-    >
+      [class.active]="selection.isSelected(item)">
       <h3 matLine>{{ item.title }}</h3>
       <p matLine>
         <span> {{ item.subtitle }} </span>
