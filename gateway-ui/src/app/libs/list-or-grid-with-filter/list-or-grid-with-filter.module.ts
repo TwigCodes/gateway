@@ -9,7 +9,8 @@ import {
   MatListModule,
   MatCardModule,
   MatGridListModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatButtonModule
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
@@ -18,6 +19,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     MatFormFieldModule,
+    MatButtonModule,
     MatButtonToggleModule,
     MatIconModule,
     MatInputModule,

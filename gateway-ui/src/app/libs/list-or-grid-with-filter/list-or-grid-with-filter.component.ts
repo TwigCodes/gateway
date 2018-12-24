@@ -27,6 +27,7 @@ export class ListOrGridWithFilterComponent {
   @Input() items: Item[] = [];
   @Input() filterPlaceholder = '';
   @Output() select = new EventEmitter();
+  @Output() add = new EventEmitter();
   filterValue = null;
   selection = new SelectionModel<Partial<Item>>(false, []);
   @ViewChild('gridView')
@@ -35,6 +36,10 @@ export class ListOrGridWithFilterComponent {
 
   handleSelected(item: Item) {
     this.select.emit(item);
+  }
+
+  handleAdd() {
+    this.add.emit();
   }
 
   public get filteredItems(): Item[] {
