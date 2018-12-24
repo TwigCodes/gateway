@@ -10,7 +10,7 @@ import {
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MatIconRegistry } from '@angular/material';
-import { MAT_STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { DomSanitizer } from '@angular/platform-browser';
 import { StoreModule, META_REDUCERS } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -76,7 +76,7 @@ import localeZhHans from '@angular/common/locales/zh-Hans';
       useFactory: getMetaReducers
     },
     {
-      provide: MAT_STEPPER_GLOBAL_OPTIONS,
+      provide: STEPPER_GLOBAL_OPTIONS,
       useValue: { showError: true }
     },
     { provide: LOCALE_ID, useValue: 'zh-Hans' },

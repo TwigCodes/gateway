@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
 import {
-  AuthAdminService,
+  RoleService,
   KeycloakUser
 } from '@app/admin/services/auth-admin.service';
 import { map, switchMap, startWith } from 'rxjs/operators';
 import { PageEvent } from '@angular/material';
 import { Subject, Observable } from 'rxjs';
 import { Item } from '@app/libs/list-or-grid-with-filter/list-or-grid-with-filter.component';
+import { UserService } from '@app/admin/services/user.service';
 
 @Component({
   selector: 'tgapp-users-container',
@@ -28,15 +29,15 @@ export class UsersContainerComponent implements OnInit {
       link: '/admin/users'
     }
   ];
-  total$ = this.service.getUserCount();
+  total$ = this.service.count();
   users$: Observable<Item[]>;
-  constructor(private service: AuthAdminService) {}
+  constructor(private service: UserService) {}
 
   ngOnInit() {
     this.users$ = this.pageEvent$.asObservable().pipe(
       startWith({ pageIndex: this.pageIndex, pageSize: this.pageSize }),
       switchMap(({ pageIndex, pageSize }) =>
-        this.service.getUsers(pageIndex, pageSize).pipe(
+        this.service.paged(pageIndex, pageSize).pipe(
           map(users =>
             users.map(user => ({
               id: user.id,

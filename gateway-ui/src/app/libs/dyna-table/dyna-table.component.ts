@@ -5,7 +5,8 @@ import {
   Input,
   Output,
   EventEmitter,
-  TemplateRef
+  TemplateRef,
+  OnDestroy
 } from '@angular/core';
 import {
   MatSort,
@@ -29,7 +30,7 @@ import { ColumnFilterService } from './table-cell/column-filter.service';
   templateUrl: './dyna-table.component.html',
   styleUrls: ['./dyna-table.component.scss']
 })
-export class DynaTableComponent implements OnInit {
+export class DynaTableComponent implements OnInit, OnDestroy {
   @Input() data$: Observable<Identifiable[]>;
   @Input() columns: ColumnConfig[];
   @Input() total = 0;

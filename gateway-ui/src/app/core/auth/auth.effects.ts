@@ -40,7 +40,7 @@ export class AuthEffects {
   checkLogin = this.actions$.pipe(
     ofType<ActionAuthCheckLogin>(AuthActionTypes.CHECK_LOGIN),
     switchMap(_ =>
-      from(this.keycloakService.isLoggedIn()).pipe(catchError(_ => of(false)))
+      from(this.keycloakService.isLoggedIn()).pipe(catchError(err => of(false)))
     ),
     map(loggedIn => {
       this.localStorageService.setItem(AUTH_KEY, {

@@ -9,7 +9,6 @@ import { environment } from '@env/environment';
 
 import { SettingsModule } from './settings';
 import { StaticModule } from './static';
-import { NgxsStoreModule } from './store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -35,9 +34,6 @@ export class FundebugErrorHandler implements ErrorHandler {
     // angular
     BrowserAnimationsModule,
     // BrowserModule,
-
-    // ngxs
-    NgxsStoreModule,
 
     // universal
     BrowserModule.withServerTransition({ appId: 'tgapp' }),

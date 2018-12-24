@@ -18,9 +18,27 @@ password=X*bcYp4x
 
 @accessToken = {{login.response.body.$.access_token}}
 
+###
 # @name getRoles
 GET {{baseUrl}}/admin/realms/{{realm}}/roles HTTP/1.1
 Authorization: Bearer {{accessToken}}
+
+###
+# @name getRoleByName
+GET {{baseUrl}}/admin/realms/{{realm}}/roles/testrole2 HTTP/1.1
+Authorization: Bearer {{accessToken}}
+
+###
+
+# @name addRole
+POST {{baseUrl}}/admin/realms/{{realm}}/roles HTTP/1.1
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "name": "testrole1",
+  "description": "this is test role 1"
+}
 
 ###
 
@@ -35,6 +53,33 @@ GET {{baseUrl}}/admin/realms/{{realm}}/users HTTP/1.1
   ?first=0
   &max=10
 Authorization: Bearer {{accessToken}}
+
+###
+# @name getUsersByUsername
+GET {{baseUrl}}/admin/realms/{{realm}}/users HTTP/1.1
+  ?username=testuser1
+Authorization: Bearer {{accessToken}}
+
+###
+
+# @name addUser
+POST {{baseUrl}}/admin/realms/{{realm}}/users HTTP/1.1
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "username": "testuser2",
+  "firstName": "Test",
+  "lastName": "User2",
+  "email": "testuser2@local.dev"
+}
+
+###
+
+# @name deleteUser
+DELETE {{baseUrl}}/admin/realms/{{realm}}/users/4b96880c-5db5-4c1f-a70f-01f7ab78e6bf HTTP/1.1
+Authorization: Bearer {{accessToken}}
+
 
 ###
 curl -X POST -k -vu test_client:test_secret http://localhost:8095/oauth/token -H "Accept: application/json" -d "password=password&username=admin&grant_type=password&scope=read&client_secret=test_secret&client_id=test_client"

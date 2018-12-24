@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { KeycloakEvent } from 'keycloak-angular';
 import { Subject, Observable } from 'rxjs';
 
-export type EventItem = {
+export interface EventItem {
   _id: number;
   event: KeycloakEvent;
   timestamp: number;
-};
+}
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class EventStackService {
   }
 
   public purgeEventItem(eventItemId: number): void {
-    let idx = this._eventStack.findIndex(
+    const idx = this._eventStack.findIndex(
       eventItem => eventItem._id === eventItemId
     );
     this._eventStack.splice(idx, 1);

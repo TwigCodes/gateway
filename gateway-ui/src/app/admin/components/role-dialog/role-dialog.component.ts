@@ -1,15 +1,16 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, Validators } from '@angular/forms';
 import { EntityFormComponent } from '@app/libs/entity/entity-form.component';
-import { KeycloakRole } from '@app/admin/services/auth-admin.service';
+import { KeycloakRole } from '@app/admin/admin.model';
 
 @Component({
   selector: 'tgapp-role-dialog',
   templateUrl: './role-dialog.component.html',
   styleUrls: ['./role-dialog.component.scss']
 })
-export class RoleDialogComponent extends EntityFormComponent<KeycloakRole> {
+export class RoleDialogComponent extends EntityFormComponent<KeycloakRole>
+  implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: { title: string; payload: KeycloakRole },

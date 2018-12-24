@@ -37,7 +37,7 @@ export class AdminGuard extends KeycloakAuthGuard {
         if (!this.roles || this.roles.length === 0) {
           resolve(false);
         }
-        let granted: boolean = false;
+        let granted = false;
         for (const requiredRole of requiredRoles) {
           if (this.roles.indexOf(requiredRole) > -1) {
             granted = true;

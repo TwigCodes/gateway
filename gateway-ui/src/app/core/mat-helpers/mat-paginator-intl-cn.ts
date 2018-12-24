@@ -1,11 +1,12 @@
 import { MatPaginatorIntl } from '@angular/material';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Injectable()
-export class CustomMatPaginatorIntl extends MatPaginatorIntl {
+export class CustomMatPaginatorIntl extends MatPaginatorIntl
+  implements OnDestroy {
   ofLabel: string;
   unsubscribe: Subject<void> = new Subject<void>();
   constructor(private translate: TranslateService) {

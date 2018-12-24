@@ -76,12 +76,20 @@ export class AutocompleteComponent
     }
   }
 
+  constructor() {}
+
+  get doSearchViaService() {
+    // check if search result returns from service or from local data
+    // if prefetch is active only one request will be made on init
+    return this.service && !this.doPrefetch;
+  }
+
   @Input() name = '';
   @Input() placeholder = '';
   @Input() floatLabel: FloatLabelType = 'auto';
   @Input() formControl?: FormControl;
   @Input() doPrefetch = false;
-  @Input() displayItem? = 'item.name';
+  @Input() displayItem ? = 'item.name';
   @Input() hasSearchButton = false;
   @Input() hasProgressBar = false;
   @Input() minChars = 2;
@@ -93,7 +101,6 @@ export class AutocompleteComponent
   @Input() serviceParams?: HttpParams;
   @Input() displayItemFn?: (item: any) => string;
   @Input() displayTemplate?: TemplateRef<any>;
-  @Input() transformResult: any = (x: any[]) => x;
   @Input() noRecordText = 'Sorry, no suggestions were found';
   @Input() showNoRecordButton = false;
   @Input() noRecordButtonText = 'Do something';
@@ -116,8 +123,7 @@ export class AutocompleteComponent
   private storedItems?: any[];
   private service?: AutocompleteService;
   private returnType: string;
-
-  constructor() {}
+  @Input() transformResult: any = (x: any[]) => x;
 
   ngOnInit() {
     if (this.doPrefetch) {
@@ -135,7 +141,7 @@ export class AutocompleteComponent
 
   public prefetch() {
     if (!this.service) {
-      throw new Error("Service for prefetch is not defined in 'Source'");
+      throw new Error('Service for prefetch is not defined in \'Source\'');
     }
 
     this.storedItems = [];
@@ -163,7 +169,7 @@ export class AutocompleteComponent
 
   public fetch(force?: boolean) {
     if (!this.service) {
-      throw new Error("Service for fetch is not defined in 'Source'");
+      throw new Error('Service for fetch is not defined in \'Source\'');
     }
 
     this.query = this.autocompleteInput.nativeElement.value;
@@ -315,12 +321,6 @@ export class AutocompleteComponent
     this.autocompleteInput.nativeElement.value = '';
     this.query = '';
     this.onChange(this.selectedOption);
-  }
-
-  get doSearchViaService() {
-    // check if search result returns from service or from local data
-    // if prefetch is active only one request will be made on init
-    return this.service && !this.doPrefetch;
   }
 
   public onCreateNew() {

@@ -5,7 +5,9 @@ import {
   Optional,
   Self,
   ElementRef,
-  ViewChild
+  ViewChild,
+  OnDestroy,
+  OnInit
 } from '@angular/core';
 import {
   FormGroup,
@@ -28,21 +30,11 @@ import { Option } from '../utils/selection.model';
   ]
 })
 export class MultiSelectChipsComponent
-  implements MatFormFieldControl<Option[]>, ControlValueAccessor {
-  @Input() options: Option[] = [];
-  selectedOptions: Option[] = [];
-  form: FormGroup;
-  @ViewChild('chipList') chipList: MatChipList;
-  // required properties from ControlValueAccessor
-  private propagateChange = (_: any) => {};
-  writeValue(obj: any): void {
-    this.value = obj;
-  }
-  registerOnChange(fn: any): void {
-    this.propagateChange = fn;
-  }
-  registerOnTouched(fn: any): void {}
-  setDisabledState?(isDisabled: boolean): void {}
+  implements
+    MatFormFieldControl<Option[]>,
+    ControlValueAccessor,
+    OnDestroy,
+    OnInit {
   // required properties from MatFormFieldControl
   @Input()
   get value(): Option[] {
@@ -53,10 +45,6 @@ export class MultiSelectChipsComponent
     this.selectedOptions = options || [];
     this.stateChanges.next();
   }
-  stateChanges = new Subject<void>();
-  static nextId = 0;
-  @HostBinding()
-  id = `ngx-multi-select-chips-${MultiSelectChipsComponent.nextId++}`;
   @Input()
   get placeholder() {
     return this._placeholder;
@@ -65,8 +53,6 @@ export class MultiSelectChipsComponent
     this._placeholder = plh;
     this.stateChanges.next();
   }
-  private _placeholder: string;
-  focused = false;
   get empty() {
     return this.selectedOptions.length === 0;
   }
@@ -90,21 +76,6 @@ export class MultiSelectChipsComponent
     this._disabled = coerceBooleanProperty(dis);
     this.stateChanges.next();
   }
-  private _disabled = false;
-  private _required = false;
-  errorState = false;
-  controlType = 'ngx-multi-select-chips';
-  @HostBinding('attr.aria-describedby') describedBy = '';
-
-  setDescribedByIds(ids: string[]) {
-    this.describedBy = ids.join(' ');
-  }
-
-  onContainerClick(event: MouseEvent) {
-    if ((event.target as Element).tagName.toLowerCase() !== 'mat-chip') {
-      this.chipList.focus();
-    }
-  }
   constructor(
     private fb: FormBuilder,
     @Optional() @Self() public ngControl: NgControl,
@@ -120,6 +91,41 @@ export class MultiSelectChipsComponent
         this.focused = !!origin;
         this.stateChanges.next();
       });
+    }
+  }
+  static nextId = 0;
+  @Input() options: Option[] = [];
+  selectedOptions: Option[] = [];
+  form: FormGroup;
+  @ViewChild('chipList') chipList: MatChipList;
+  stateChanges = new Subject<void>();
+  @HostBinding()
+  id = `ngx-multi-select-chips-${MultiSelectChipsComponent.nextId++}`;
+  private _placeholder: string;
+  focused = false;
+  private _disabled = false;
+  private _required = false;
+  errorState = false;
+  controlType = 'ngx-multi-select-chips';
+  @HostBinding('attr.aria-describedby') describedBy = '';
+  // required properties from ControlValueAccessor
+  private propagateChange = (_: any) => {};
+  writeValue(obj: any): void {
+    this.value = obj;
+  }
+  registerOnChange(fn: any): void {
+    this.propagateChange = fn;
+  }
+  registerOnTouched(fn: any): void {}
+  setDisabledState?(isDisabled: boolean): void {}
+
+  setDescribedByIds(ids: string[]) {
+    this.describedBy = ids.join(' ');
+  }
+
+  onContainerClick(event: MouseEvent) {
+    if ((event.target as Element).tagName.toLowerCase() !== 'mat-chip') {
+      this.chipList.focus();
     }
   }
 

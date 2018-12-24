@@ -1,26 +1,85 @@
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import {
   HttpClient,
   HttpErrorResponse,
   HttpParams
 } from '@angular/common/http';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, retry, finalize } from 'rxjs/operators';
+import { format } from 'date-fns';
+import { Entity } from '@app/libs/entity/entity.model';
 import { environment } from '@env/environment';
-import { Entity } from './entity.model';
-import { catchError, finalize, retry } from 'rxjs/operators';
-import { format } from 'date-fns/esm';
+import { Filter } from '@app/libs/entity/filter.service';
 
-export interface Filter {
-  [name: string]: string | string[];
-}
-
-export abstract class EntityService<T extends Entity> {
-  protected readonly baseUrl = environment.apiBaseUrl;
+@Injectable()
+export abstract class BaseService<T extends Entity> {
+  protected readonly baseUrl = `${environment.keycloak.url}/admin/realms/${
+    environment.keycloak.realm
+  }`;
   protected loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
 
   protected abstract entityPath: string;
 
   constructor(protected httpClient: HttpClient) {}
+
+  search(search: string, pageIndex: number, pageSize: number): Observable<T[]> {
+    this.loadingSubject.next(true);
+    const params = new HttpParams()
+      .set('search', search)
+      .set('first', String(pageIndex))
+      .set('max', String(pageSize));
+
+    const url = `${this.baseUrl}/${this.entityPath}`;
+    return this.httpClient.get<T[]>(url, { params }).pipe(
+      catchError(this.handleError),
+      finalize(() => this.loadingSubject.next(false))
+    );
+  }
+
+  filter(filter: Filter, pageIndex: number, pageSize: number): Observable<T[]> {
+    this.loadingSubject.next(true);
+    const params = new HttpParams()
+      .set('first', String(pageIndex))
+      .set('max', String(pageSize));
+    if (!filter) {
+      return this.paged(pageIndex, pageSize);
+    }
+    for (const key of Object.keys(filter)) {
+      const value = filter[key];
+      if (value instanceof String) {
+        params.set(key, value as string);
+      } else {
+        params.set(key, (value as string[]).join(','));
+      }
+    }
+    const url = `${this.baseUrl}/${this.entityPath}`;
+    return this.httpClient
+      .get<T[]>(url, {
+        params
+      })
+      .pipe(
+        catchError(this.handleError),
+        finalize(() => this.loadingSubject.next(false))
+      );
+  }
+
+  paged(pageIndex: number, pageSize: number): Observable<T[]> {
+    this.loadingSubject.next(true);
+    const url = `${this.baseUrl}/${this.entityPath}`;
+    const params = new HttpParams()
+      .set('first', String(pageIndex))
+      .set('max', String(pageSize));
+    return this.httpClient.get<T[]>(url, { params: params }).pipe(
+      catchError(this.handleError),
+      finalize(() => this.loadingSubject.next(false))
+    );
+  }
+
+  count(): Observable<Number> {
+    const url = `${this.baseUrl}/${this.entityPath}/count`;
+    return this.httpClient.get<Number>(url).pipe(catchError(this.handleError));
+  }
 
   getById(id: number | string) {
     // this.loadingSubject.next(true);
@@ -29,28 +88,6 @@ export abstract class EntityService<T extends Entity> {
       .pipe(
         catchError(this.handleError)
         // finalize(() => this.loadingSubject.next(false))
-      );
-  }
-
-  findAll(
-    filter: Filter,
-    sortOrder = 'asc',
-    pageNumber = 0,
-    pageSize = 100
-  ): Observable<T[]> {
-    this.loadingSubject.next(true);
-    return this.httpClient
-      .get<T[]>(`${this.baseUrl}/${this.entityPath}`, {
-        params: new HttpParams()
-          .set('filter', 'filter TODO')
-          .set('sortOrder', sortOrder)
-          .set('pageNumber', pageNumber.toString())
-          .set('pageSize', pageSize.toString())
-      })
-      .pipe(
-        retry(3), // retry a failed request up to 3 times
-        catchError(this.handleError),
-        finalize(() => this.loadingSubject.next(false))
       );
   }
 
@@ -73,7 +110,7 @@ export abstract class EntityService<T extends Entity> {
       );
   }
 
-  post(entity: T) {
+  add(entity: T) {
     this.loadingSubject.next(true);
     return this.httpClient
       .post(`${this.baseUrl}/${this.entityPath}`, entity)
@@ -83,7 +120,7 @@ export abstract class EntityService<T extends Entity> {
       );
   }
 
-  put(id: number | string, entity: T) {
+  update(id: number | string, entity: T) {
     console.log(entity);
     this.loadingSubject.next(true);
     return this.httpClient

@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { map, filter, take, switchMap } from 'rxjs/operators';
-import { AuthAdminService } from '@app/admin/services/auth-admin.service';
+import { RoleService } from '@app/admin/services/role.service';
 import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
 import { MatDialog } from '@angular/material';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
@@ -22,7 +22,7 @@ export class RolesContainerComponent implements OnInit {
       link: '/admin/roles'
     }
   ];
-  roles$ = this.service.getRoles().pipe(
+  roles$ = this.service.getAll().pipe(
     map(roles =>
       roles.map(role => ({
         id: role.id,
@@ -32,7 +32,7 @@ export class RolesContainerComponent implements OnInit {
       }))
     )
   );
-  constructor(private service: AuthAdminService, private dialog: MatDialog) {}
+  constructor(private service: RoleService, private dialog: MatDialog) {}
   ngOnInit() {}
 
   handleAdd() {
@@ -48,7 +48,7 @@ export class RolesContainerComponent implements OnInit {
           return val !== null;
         }),
         take(1),
-        switchMap(val => this.service.addRole(val))
+        switchMap(val => this.service.add(val))
       )
       .subscribe();
   }

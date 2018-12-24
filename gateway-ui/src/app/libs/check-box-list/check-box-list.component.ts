@@ -35,22 +35,6 @@ export class CheckBoxListComponent
     OnDestroy,
     MatFormFieldControl<Option[]>,
     ControlValueAccessor {
-  @ContentChildren(MatCheckbox) checkboxes: QueryList<MatCheckbox>;
-  @Input() options: Option[] = [];
-  selectedOptions: Option[] = [];
-  subscriptions: Subscription[] = [];
-  // from ControlValueAccessor
-  private propagateChange = (_: any) => {};
-  writeValue(obj: any): void {
-    this.value = obj;
-  }
-  registerOnChange(fn: any): void {
-    this.propagateChange = fn;
-  }
-  registerOnTouched(fn: any): void {}
-  setDisabledState?(isDisabled: boolean): void {
-    this.checkboxes.forEach(checkbox => checkbox.setDisabledState(isDisabled));
-  }
   // from MatFormFieldControll
   @Input()
   get value(): Option[] {
@@ -60,10 +44,6 @@ export class CheckBoxListComponent
     this.selectedOptions = this.selectedOptions || [];
     this.stateChanges.next();
   }
-  stateChanges = new Subject<void>();
-  static nextId = 0;
-
-  @HostBinding() id = `ngx-check-box-list-${CheckBoxListComponent.nextId++}`;
   @Input()
   get placeholder() {
     return this._placeholder;
@@ -72,8 +52,6 @@ export class CheckBoxListComponent
     this._placeholder = plh;
     this.stateChanges.next();
   }
-  private _placeholder: string;
-  focused = false;
   get empty() {
     return this.selectedOptions.length === 0;
   }
@@ -89,7 +67,6 @@ export class CheckBoxListComponent
     this._required = coerceBooleanProperty(req);
     this.stateChanges.next();
   }
-  private _required = false;
   @Input()
   get disabled() {
     return this._disabled;
@@ -97,17 +74,6 @@ export class CheckBoxListComponent
   set disabled(dis) {
     this._disabled = coerceBooleanProperty(dis);
     this.stateChanges.next();
-  }
-  private _disabled = false;
-  errorState = false;
-  controlType = 'ngx-check-box-list';
-  @HostBinding('attr.aria-describedby') describedBy = '';
-
-  setDescribedByIds(ids: string[]) {
-    this.describedBy = ids.join(' ');
-  }
-  onContainerClick(event: MouseEvent) {
-    // TODO: add some logic to handle container clicking event
   }
   constructor(
     @Optional() @Self() public ngControl: NgControl,
@@ -124,6 +90,40 @@ export class CheckBoxListComponent
         this.stateChanges.next();
       });
     }
+  }
+  static nextId = 0;
+  @ContentChildren(MatCheckbox) checkboxes: QueryList<MatCheckbox>;
+  @Input() options: Option[] = [];
+  selectedOptions: Option[] = [];
+  subscriptions: Subscription[] = [];
+  stateChanges = new Subject<void>();
+
+  @HostBinding() id = `ngx-check-box-list-${CheckBoxListComponent.nextId++}`;
+  private _placeholder: string;
+  focused = false;
+  private _required = false;
+  private _disabled = false;
+  errorState = false;
+  controlType = 'ngx-check-box-list';
+  @HostBinding('attr.aria-describedby') describedBy = '';
+  // from ControlValueAccessor
+  private propagateChange = (_: any) => {};
+  writeValue(obj: any): void {
+    this.value = obj;
+  }
+  registerOnChange(fn: any): void {
+    this.propagateChange = fn;
+  }
+  registerOnTouched(fn: any): void {}
+  setDisabledState?(isDisabled: boolean): void {
+    this.checkboxes.forEach(checkbox => checkbox.setDisabledState(isDisabled));
+  }
+
+  setDescribedByIds(ids: string[]) {
+    this.describedBy = ids.join(' ');
+  }
+  onContainerClick(event: MouseEvent) {
+    // TODO: add some logic to handle container clicking event
   }
 
   ngAfterContentInit() {

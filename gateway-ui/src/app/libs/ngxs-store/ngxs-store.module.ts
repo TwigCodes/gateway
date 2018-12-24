@@ -3,6 +3,7 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsEmitPluginModule } from '@ngxs-labs/emitter';
 import { environment } from '@env/environment';
 
 @NgModule({
@@ -15,7 +16,8 @@ import { environment } from '@env/environment';
       disabled: environment.production
     }),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
-    NgxsModule.forRoot([], { developmentMode: !environment.production })
+    NgxsModule.forRoot([], { developmentMode: !environment.production }),
+    NgxsEmitPluginModule.forRoot()
   ],
   exports: [
     NgxsFormPluginModule,

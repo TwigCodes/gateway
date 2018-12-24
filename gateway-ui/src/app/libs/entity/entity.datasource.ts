@@ -1,13 +1,11 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { of, Observable, BehaviorSubject } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Entity } from './entity.model';
-import { EntityService } from './entity.service';
-import { Filter } from './entity.service';
+import { FilterService, Filter } from './filter.service';
 
 export abstract class EntityDataSource<
   TEntity extends Entity,
-  TService extends EntityService<TEntity>
+  TService extends FilterService<TEntity>
 > implements DataSource<TEntity> {
   private entitiesSubject: BehaviorSubject<
     Array<TEntity>
