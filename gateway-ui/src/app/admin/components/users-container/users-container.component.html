@@ -1,3 +1,14 @@
-<p>
-  users-container works!
-</p>
+<ngx-bread-crumbs [crumbs]="crumbs"></ngx-bread-crumbs>
+<ngx-list-or-grid-with-filter
+  filterPlaceholder="请输入用户的姓名进行筛选"
+  [items]="users$ | async"
+  (add)="handleAdd()">
+
+</ngx-list-or-grid-with-filter>
+<mat-paginator
+  [length]="total$ | async"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+  (page)="handlePage($event)">
+
+</mat-paginator>

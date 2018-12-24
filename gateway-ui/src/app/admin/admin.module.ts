@@ -5,15 +5,20 @@ import { AdminRoutingModule } from './admin-routing.module';
 import {
   HomeContainerComponent,
   RolesContainerComponent,
-  UsersContainerComponent
+  UsersContainerComponent,
+  UserDialogComponent,
+  RoleDialogComponent
 } from './components';
 
 @NgModule({
   declarations: [
     HomeContainerComponent,
     RolesContainerComponent,
-    UsersContainerComponent
+    UsersContainerComponent,
+    UserDialogComponent,
+    RoleDialogComponent
   ],
-  imports: [SharedModule, AdminRoutingModule]
+  imports: [SharedModule, AdminRoutingModule],
+  entryComponents: [UserDialogComponent, RoleDialogComponent]
 })
 export class AdminModule {}
