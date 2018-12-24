@@ -21,8 +21,11 @@ import {
   ColumnFilterService
 } from './table-cell';
 
-import { TextCellComponent } from './table-cell/cell-types/text-cell.component';
-import { DateCellComponent } from './table-cell/cell-types/date-cell.component';
+import {
+  TextCellComponent,
+  DateCellComponent,
+  EditCellComponent
+} from './table-cell/cell-types';
 
 @NgModule({
   imports: [
@@ -41,15 +44,17 @@ import { DateCellComponent } from './table-cell/cell-types/date-cell.component';
     DynaTableComponent,
     TableCellComponent,
     TextCellComponent,
-    DateCellComponent
+    DateCellComponent,
+    EditCellComponent
   ],
   exports: [DynaTableComponent, DetailRowDirective],
-  entryComponents: [TextCellComponent, DateCellComponent],
+  entryComponents: [TextCellComponent, DateCellComponent, EditCellComponent],
   providers: [CellService, ColumnFilterService]
 })
 export class DynaTableModule {
   constructor(readonly cellService: CellService) {
     cellService.registerCell('string', TextCellComponent);
     cellService.registerCell('date', DateCellComponent);
+    cellService.registerCell('edit', EditCellComponent);
   }
 }
