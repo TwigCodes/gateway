@@ -74,6 +74,8 @@
     "@nguniversal/common": "^7.0.2",
     "@nguniversal/express-engine": "^7.0.2",
     "@nguniversal/module-map-ngfactory-loader": "^7.0.2",
+    "@ngx-formly/core": "^4.8.2",
+    "@ngx-formly/material": "^4.8.2",
     "@ngx-translate/core": "^11.0.0",
     "@ngx-translate/http-loader": "^4.0.0",
     "@ngxs-labs/dispatch-decorator": "^1.1.0",
