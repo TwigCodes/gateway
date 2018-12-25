@@ -35,7 +35,6 @@ import { CustomSerializer } from './router/custom-serializer';
 import { NotificationService } from './notifications/notification.service';
 import { loadIconResources } from './util/icon.util';
 import localeZhHans from '@angular/common/locales/zh-Hans';
-
 @NgModule({
   imports: [
     // angular
