@@ -1,9 +1,13 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { map, filter, take, switchMap } from 'rxjs/operators';
-import { RoleService } from '@app/admin/services/role.service';
-import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
 import { MatDialog } from '@angular/material';
+import { map, filter, take } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
+import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
+import { selectAll } from '@app/admin/reducers/role.selectors';
+import { AddAction, GetAllAction } from '@app/admin/actions/role.actions';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
+
+import * as fromAdmin from '../../reducers';
 
 @Component({
   selector: 'tgapp-roles-container',
@@ -22,7 +26,8 @@ export class RolesContainerComponent implements OnInit {
       link: '/admin/roles'
     }
   ];
-  roles$ = this.service.getAll().pipe(
+  roles$ = this.store.pipe(
+    select(selectAll),
     map(roles =>
       roles.map(role => ({
         id: role.id,
@@ -32,8 +37,13 @@ export class RolesContainerComponent implements OnInit {
       }))
     )
   );
-  constructor(private service: RoleService, private dialog: MatDialog) {}
-  ngOnInit() {}
+  constructor(
+    private store: Store<fromAdmin.State>,
+    private dialog: MatDialog
+  ) {}
+  ngOnInit() {
+    this.store.dispatch(new GetAllAction());
+  }
 
   handleAdd() {
     const dialogRef = this.dialog.open(RoleDialogComponent, {
@@ -42,14 +52,9 @@ export class RolesContainerComponent implements OnInit {
     dialogRef
       .afterClosed()
       .pipe(
-        filter(val => {
-          console.log(val);
-
-          return val !== null;
-        }),
-        take(1),
-        switchMap(val => this.service.add(val))
+        filter(val => val),
+        take(1)
       )
-      .subscribe();
+      .subscribe(val => this.store.dispatch(new AddAction(val)));
   }
 }

@@ -53,4 +53,15 @@ export class UserEffects {
         )
     )
   );
+
+  @Effect()
+  count = this.actions$.pipe(
+    ofType<fromUser.CountAction>(fromUser.ActionTypes.Count),
+    switchMap(action =>
+      this.service.count().pipe(
+        map(result => new fromUser.CountSuccessAction(result)),
+        catchError(err => of(new fromUser.CountFailAction(err)))
+      )
+    )
+  );
 }

@@ -76,9 +76,9 @@ export abstract class BaseService<T extends Entity> {
     );
   }
 
-  count(): Observable<Number> {
+  count(): Observable<number> {
     const url = `${this.baseUrl}/${this.entityPath}/count`;
-    return this.httpClient.get<Number>(url).pipe(catchError(this.handleError));
+    return this.httpClient.get<number>(url).pipe(catchError(this.handleError));
   }
 
   getById(id: number | string) {

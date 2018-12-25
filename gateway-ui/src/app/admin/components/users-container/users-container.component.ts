@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
-import {
-  RoleService,
-  KeycloakUser
-} from '@app/admin/services/auth-admin.service';
-import { map, switchMap, startWith } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 import { PageEvent } from '@angular/material';
 import { Subject, Observable } from 'rxjs';
+import { LoadPageAction, CountAction } from '@app/admin/actions/user.actions';
+import { selectAll, selectCount } from '@app/admin/reducers/user.selectors';
+import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
 import { Item } from '@app/libs/list-or-grid-with-filter/list-or-grid-with-filter.component';
-import { UserService } from '@app/admin/services/user.service';
+
+import * as fromAdmin from '../../reducers';
 
 @Component({
   selector: 'tgapp-users-container',
@@ -29,32 +29,32 @@ export class UsersContainerComponent implements OnInit {
       link: '/admin/users'
     }
   ];
-  total$ = this.service.count();
+  total$ = this.store.pipe(select(selectCount));
   users$: Observable<Item[]>;
-  constructor(private service: UserService) {}
+  constructor(private store: Store<fromAdmin.State>) {}
 
   ngOnInit() {
-    this.users$ = this.pageEvent$.asObservable().pipe(
-      startWith({ pageIndex: this.pageIndex, pageSize: this.pageSize }),
-      switchMap(({ pageIndex, pageSize }) =>
-        this.service.paged(pageIndex, pageSize).pipe(
-          map(users =>
-            users.map(user => ({
-              id: user.id,
-              title: user.username,
-              subtitle: `${user.firstName} ${user.lastName}`,
-              desc: user.email
-            }))
-          )
-        )
+    this.store.dispatch(
+      new LoadPageAction({ pageIndex: this.pageIndex, pageSize: this.pageSize })
+    );
+    this.store.dispatch(new CountAction());
+    this.users$ = this.store.pipe(
+      select(selectAll),
+      map(users =>
+        users.map(user => ({
+          id: user.id,
+          title: user.username,
+          subtitle: `${user.firstName} ${user.lastName}`,
+          desc: user.email
+        }))
       )
     );
   }
 
-  handlePage(ev: PageEvent) {
-    this.pageEvent$.next(ev);
-    this.pageIndex = ev.pageIndex;
-    this.pageSize = ev.pageSize;
+  handlePage({ pageIndex, pageSize }: PageEvent) {
+    this.store.dispatch(
+      new LoadPageAction({ pageIndex: pageIndex, pageSize: pageSize })
+    );
   }
 
   handleAdd() {}
