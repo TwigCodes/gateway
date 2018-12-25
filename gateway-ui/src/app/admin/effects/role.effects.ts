@@ -45,7 +45,7 @@ export class RoleEffects {
   @Effect()
   getAll = this.actions$.pipe(
     ofType<fromRole.GetAllAction>(fromRole.ActionTypes.GetAll),
-    switchMap(action =>
+    switchMap(_ =>
       this.service.getAll().pipe(
         map(result => new fromRole.GetAllSuccessAction(result)),
         catchError(err => of(new fromRole.GetAllFailAction(err)))

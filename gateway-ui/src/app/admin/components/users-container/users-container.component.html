@@ -2,6 +2,7 @@
 <ngx-list-or-grid-with-filter
   filterPlaceholder="请输入用户的姓名进行筛选"
   [items]="users$ | async"
+  [showAdd]="true"
   (add)="handleAdd()">
 
 </ngx-list-or-grid-with-filter>

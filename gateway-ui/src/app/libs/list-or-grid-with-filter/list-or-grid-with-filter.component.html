@@ -1,7 +1,7 @@
 <mat-card class="mat-elevation-z8">
   <mat-toolbar>
     <mat-form-field>
-      <input matInput [(ngModel)]="filterValue" />
+      <input matInput [(ngModel)]="filterValue" (keyup)="handleFilter()"/>
       <mat-label>
         <mat-icon>search</mat-icon>
         {{ filterPlaceholder }}
@@ -20,6 +20,7 @@
     <button
       mat-mini-fab
       style="margin: 5px"
+      *ngIf="showAdd"
       (click)="handleAdd()">
       <mat-icon>add</mat-icon>
     </button>

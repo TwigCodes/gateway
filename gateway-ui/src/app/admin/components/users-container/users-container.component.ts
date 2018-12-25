@@ -1,12 +1,17 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { map } from 'rxjs/operators';
-import { PageEvent } from '@angular/material';
+import { map, filter, take } from 'rxjs/operators';
+import { PageEvent, MatDialog } from '@angular/material';
 import { Subject, Observable } from 'rxjs';
-import { LoadPageAction, CountAction } from '@app/admin/actions/user.actions';
+import {
+  LoadPageAction,
+  CountAction,
+  AddAction
+} from '@app/admin/actions/user.actions';
 import { selectAll, selectCount } from '@app/admin/reducers/user.selectors';
 import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
 import { Item } from '@app/libs/list-or-grid-with-filter/list-or-grid-with-filter.component';
+import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 
 import * as fromAdmin from '../../reducers';
 
@@ -32,7 +37,10 @@ export class UsersContainerComponent implements OnInit {
   ];
   total$ = this.store.pipe(select(selectCount));
   users$: Observable<Item[]>;
-  constructor(private store: Store<fromAdmin.State>) {}
+  constructor(
+    private store: Store<fromAdmin.State>,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.store.dispatch(
@@ -58,5 +66,16 @@ export class UsersContainerComponent implements OnInit {
     );
   }
 
-  handleAdd() {}
+  handleAdd() {
+    const dialogRef = this.dialog.open(UserDialogComponent, {
+      data: { title: '添加角色', payload: null }
+    });
+    dialogRef
+      .afterClosed()
+      .pipe(
+        filter(val => val),
+        take(1)
+      )
+      .subscribe(val => this.store.dispatch(new AddAction(val)));
+  }
 }

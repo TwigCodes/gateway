@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { environment } from '@env/environment';
 import { Entity } from './entity.model';
 import { catchError, finalize, retry } from 'rxjs/operators';
-import { format } from 'date-fns/esm';
+import { format } from 'date-fns';
 
 export abstract class CrudService<T extends Entity> {
   protected readonly baseUrl = environment.apiBaseUrl;
@@ -43,7 +43,7 @@ export abstract class CrudService<T extends Entity> {
       );
   }
 
-  post(entity: T) {
+  add(entity: T) {
     this.loadingSubject.next(true);
     return this.httpClient
       .post(`${this.baseUrl}/${this.entityPath}`, entity)
@@ -53,7 +53,7 @@ export abstract class CrudService<T extends Entity> {
       );
   }
 
-  put(id: number | string, entity: T) {
+  update(id: number | string, entity: T) {
     console.log(entity);
     this.loadingSubject.next(true);
     return this.httpClient

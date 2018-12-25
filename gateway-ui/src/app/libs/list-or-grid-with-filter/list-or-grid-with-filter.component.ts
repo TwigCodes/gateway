@@ -4,8 +4,7 @@ import {
   Input,
   ChangeDetectionStrategy,
   Output,
-  EventEmitter,
-  SimpleChanges
+  EventEmitter
 } from '@angular/core';
 import { MatButtonToggleGroup } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -26,8 +25,11 @@ export interface Item {
 export class ListOrGridWithFilterComponent {
   @Input() items: Item[] = [];
   @Input() filterPlaceholder = '';
+  @Input() showAdd = false;
+  @Input() userServerFilter = false;
   @Output() select = new EventEmitter();
   @Output() add = new EventEmitter();
+  @Output() filter = new EventEmitter();
   filterValue = null;
   selection = new SelectionModel<Partial<Item>>(false, []);
   @ViewChild('gridView')
@@ -42,8 +44,14 @@ export class ListOrGridWithFilterComponent {
     this.add.emit();
   }
 
+  handleFilter() {
+    this.filter.emit(this.filterValue);
+  }
+
   public get filteredItems(): Item[] {
-    return this.filterValue
+    return this.userServerFilter
+      ? this.items
+      : this.filterValue
       ? this.items.filter(
           item =>
             item.title.includes(this.filterValue) ||
