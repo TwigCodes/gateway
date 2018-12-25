@@ -1,4 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnInit,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, Validators } from '@angular/forms';
 import { EntityFormComponent } from '@app/libs/entity/entity-form.component';
@@ -7,7 +12,8 @@ import { KeycloakRole } from '@app/admin/admin.model';
 @Component({
   selector: 'tgapp-role-dialog',
   templateUrl: './role-dialog.component.html',
-  styleUrls: ['./role-dialog.component.scss']
+  styleUrls: ['./role-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RoleDialogComponent extends EntityFormComponent<KeycloakRole>
   implements OnInit {

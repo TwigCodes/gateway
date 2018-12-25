@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { PageEvent } from '@angular/material';
@@ -13,7 +13,8 @@ import * as fromAdmin from '../../reducers';
 @Component({
   selector: 'tgapp-users-container',
   templateUrl: './users-container.component.html',
-  styleUrls: ['./users-container.component.scss']
+  styleUrls: ['./users-container.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersContainerComponent implements OnInit {
   pageIndex = 0;
