@@ -62,7 +62,7 @@ export class RoleDialogComponent extends EntityFormComponent<KeycloakRole>
     private translate: TranslateService
   ) {
     super(data, dialogRef);
-    this.model = data.payload;
+    this.model = { ...data.payload };
   }
 
   ngOnInit() {

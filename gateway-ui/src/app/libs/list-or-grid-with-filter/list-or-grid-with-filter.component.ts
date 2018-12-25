@@ -14,6 +14,7 @@ export interface Item {
   title: string;
   subtitle: string;
   desc: string;
+  value: any;
 }
 
 @Component({
@@ -37,7 +38,7 @@ export class ListOrGridWithFilterComponent {
   constructor() {}
 
   handleSelected(item: Item) {
-    this.select.emit(item);
+    this.select.emit(item.value);
   }
 
   handleAdd() {

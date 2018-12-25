@@ -88,7 +88,7 @@ export class UserDialogComponent extends EntityFormComponent<KeycloakUser>
     private translate: TranslateService
   ) {
     super(data, dialogRef);
-    this.model = data.payload;
+    this.model = { ...data.payload };
   }
 
   ngOnInit() {

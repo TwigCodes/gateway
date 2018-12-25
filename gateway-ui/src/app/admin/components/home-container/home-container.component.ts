@@ -27,7 +27,11 @@ export class HomeContainerComponent implements OnInit {
       link: 'admin/users'
     }
   ];
-  items: Item[] = this.menus.map(menu => ({ ...menu, link: undefined }));
+  items: Item[] = this.menus.map(menu => ({
+    ...menu,
+    link: undefined,
+    value: menu
+  }));
 
   constructor(private router: Router) {}
 

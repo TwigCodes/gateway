@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { map, filter, take } from 'rxjs/operators';
 import { PageEvent, MatDialog } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import {
   LoadPageAction,
   CountAction,
@@ -12,7 +12,7 @@ import {
 } from '@app/admin/actions/user.actions';
 import { selectAll, selectCount } from '@app/admin/reducers/user.selectors';
 import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
-import { Item } from '@app/libs/list-or-grid-with-filter/list-or-grid-with-filter.component';
+import { KeycloakUser } from '@app/admin/admin.model';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 
 import * as fromAdmin from '../../reducers';
@@ -38,7 +38,18 @@ export class UsersContainerComponent implements OnInit {
     }
   ];
   total$ = this.store.pipe(select(selectCount));
-  users$: Observable<Item[]>;
+  users$ = this.store.pipe(
+    select(selectAll),
+    map(users =>
+      users.map(user => ({
+        id: user.id,
+        title: user.username,
+        subtitle: `${user.firstName} ${user.lastName}`,
+        desc: user.email,
+        value: user
+      }))
+    )
+  );
   constructor(
     private store: Store<fromAdmin.State>,
     private dialog: MatDialog,
@@ -50,17 +61,6 @@ export class UsersContainerComponent implements OnInit {
       new LoadPageAction({ pageIndex: this.pageIndex, pageSize: this.pageSize })
     );
     this.store.dispatch(new CountAction());
-    this.users$ = this.store.pipe(
-      select(selectAll),
-      map(users =>
-        users.map(user => ({
-          id: user.id,
-          title: user.username,
-          subtitle: `${user.firstName} ${user.lastName}`,
-          desc: user.email
-        }))
-      )
-    );
   }
 
   handlePage({ pageIndex, pageSize }: PageEvent) {
@@ -85,8 +85,7 @@ export class UsersContainerComponent implements OnInit {
       .subscribe(val => this.store.dispatch(new AddAction(val)));
   }
 
-  handleUpdate(item: Item) {
-    const user = { id: item.id, username: item.title, email: item.desc };
+  handleUpdate(user: KeycloakUser) {
     const dialogRef = this.dialog.open(UserDialogComponent, {
       data: {
         title: this.translate.instant('tgapp.admin.user-dialog.edit.title'),
@@ -100,7 +99,9 @@ export class UsersContainerComponent implements OnInit {
         take(1)
       )
       .subscribe(val =>
-        this.store.dispatch(new UpdateAction({ ...user, ...val }))
+        this.store.dispatch(
+          new UpdateAction({ id: user.id, update: { ...user, ...val } })
+        )
       );
   }
 }

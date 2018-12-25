@@ -10,10 +10,10 @@ import {
   GetAllAction,
   UpdateAction
 } from '@app/admin/actions/role.actions';
+import { KeycloakRole } from '@app/admin/admin.model';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
 
 import * as fromAdmin from '../../reducers';
-import { Item } from '@app/libs/list-or-grid-with-filter/list-or-grid-with-filter.component';
 
 @Component({
   selector: 'tgapp-roles-container',
@@ -39,7 +39,8 @@ export class RolesContainerComponent implements OnInit {
         id: role.id,
         title: role.name,
         subtitle: role.containerId,
-        desc: role.description
+        desc: role.description,
+        value: role
       }))
     )
   );
@@ -68,8 +69,7 @@ export class RolesContainerComponent implements OnInit {
       .subscribe(val => this.store.dispatch(new AddAction(val)));
   }
 
-  handleUpdate(item: Item) {
-    const role = { id: item.id, name: item.title, description: item.desc };
+  handleUpdate(role: KeycloakRole) {
     const dialogRef = this.dialog.open(RoleDialogComponent, {
       data: {
         title: this.translate.instant('tgapp.admin.role-dialog.edit.title'),
@@ -83,7 +83,9 @@ export class RolesContainerComponent implements OnInit {
         take(1)
       )
       .subscribe(val =>
-        this.store.dispatch(new UpdateAction({ ...role, ...val }))
+        this.store.dispatch(
+          new UpdateAction({ id: role.id, update: { ...role, ...val } })
+        )
       );
   }
 }
