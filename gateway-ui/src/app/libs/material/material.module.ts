@@ -34,8 +34,10 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatStepperModule
+  MatStepperModule,
+  MatPaginatorIntl
 } from '@angular/material';
+import { CustomMatPaginatorIntl } from './mat-paginator-intl-cn';
 
 const MATERIAL_MODULES = [
   MatAutocompleteModule,
@@ -75,6 +77,7 @@ const MATERIAL_MODULES = [
 ];
 
 @NgModule({
-  exports: MATERIAL_MODULES
+  exports: MATERIAL_MODULES,
+  providers: [{ provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }]
 })
 export class MaterialModule {}

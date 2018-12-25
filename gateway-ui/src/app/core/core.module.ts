@@ -61,7 +61,6 @@ import localeZhHans from '@angular/common/locales/zh-Hans';
       }
     })
   ],
-  declarations: [],
   providers: [
     NotificationService,
     {
