@@ -2,12 +2,18 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { map, filter, take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
 import { selectAll } from '@app/admin/reducers/role.selectors';
-import { AddAction, GetAllAction } from '@app/admin/actions/role.actions';
+import {
+  AddAction,
+  GetAllAction,
+  UpdateAction
+} from '@app/admin/actions/role.actions';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
 
 import * as fromAdmin from '../../reducers';
+import { Item } from '@app/libs/list-or-grid-with-filter/list-or-grid-with-filter.component';
 
 @Component({
   selector: 'tgapp-roles-container',
@@ -39,7 +45,8 @@ export class RolesContainerComponent implements OnInit {
   );
   constructor(
     private store: Store<fromAdmin.State>,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private translate: TranslateService
   ) {}
   ngOnInit() {
     this.store.dispatch(new GetAllAction());
@@ -47,7 +54,10 @@ export class RolesContainerComponent implements OnInit {
 
   handleAdd() {
     const dialogRef = this.dialog.open(RoleDialogComponent, {
-      data: { title: '添加角色', payload: null }
+      data: {
+        title: this.translate.instant('tgapp.admin.role-dialog.add.title'),
+        payload: null
+      }
     });
     dialogRef
       .afterClosed()
@@ -56,5 +66,24 @@ export class RolesContainerComponent implements OnInit {
         take(1)
       )
       .subscribe(val => this.store.dispatch(new AddAction(val)));
+  }
+
+  handleUpdate(item: Item) {
+    const role = { id: item.id, name: item.title, description: item.desc };
+    const dialogRef = this.dialog.open(RoleDialogComponent, {
+      data: {
+        title: this.translate.instant('tgapp.admin.role-dialog.edit.title'),
+        payload: role
+      }
+    });
+    dialogRef
+      .afterClosed()
+      .pipe(
+        filter(val => val),
+        take(1)
+      )
+      .subscribe(val =>
+        this.store.dispatch(new UpdateAction({ ...role, ...val }))
+      );
   }
 }

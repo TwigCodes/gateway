@@ -3,6 +3,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { SharedModule } from '@app/shared';
+
 import { AdminRoutingModule } from './admin-routing.module';
 import {
   HomeContainerComponent,
@@ -11,8 +12,9 @@ import {
   UserDialogComponent,
   RoleDialogComponent
 } from './components';
-import * as fromAdmin from './reducers';
+
 import { UserEffects, RoleEffects } from './effects';
+import * as fromAdmin from './reducers';
 
 @NgModule({
   declarations: [

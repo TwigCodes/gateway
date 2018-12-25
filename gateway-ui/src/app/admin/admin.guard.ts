@@ -27,6 +27,7 @@ export class AdminGuard extends KeycloakAuthGuard {
       if (!this.authenticated) {
         resolve(false);
         this.notification.warn('您没有访问权限！');
+        this.router.navigate(['/about']);
         return;
       }
 

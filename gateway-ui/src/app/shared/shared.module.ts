@@ -72,6 +72,7 @@ library.add(
   faStream,
   faBook
 );
+import { FormlyMaterialModule } from '@ngx-formly/material';
 import {
   DynaTableModule,
   MaterialModule,
@@ -86,6 +87,7 @@ import {
 } from '@app/libs';
 
 import { FilterMenuComponent } from './filter-menu/filter-menu.component';
+import { FormlyModule } from '@ngx-formly/core';
 
 @NgModule({
   imports: [
@@ -100,13 +102,18 @@ import { FilterMenuComponent } from './filter-menu/filter-menu.component';
     MaterialModule,
     FlexLayoutModule,
 
-    FontAwesomeModule
+    FontAwesomeModule,
+
+    FormlyModule.forRoot()
   ],
   declarations: [FilterMenuComponent],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+
+    FormlyModule,
+    FormlyMaterialModule,
 
     TranslateModule,
 

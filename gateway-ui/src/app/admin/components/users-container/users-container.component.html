@@ -3,6 +3,7 @@
   filterPlaceholder="请输入用户的姓名进行筛选"
   [items]="users$ | async"
   [showAdd]="true"
+  (select)="handleUpdate($event)"
   (add)="handleAdd()">
 
 </ngx-list-or-grid-with-filter>

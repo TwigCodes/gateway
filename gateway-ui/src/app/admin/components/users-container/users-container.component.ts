@@ -2,11 +2,13 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { map, filter, take } from 'rxjs/operators';
 import { PageEvent, MatDialog } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
 import { Subject, Observable } from 'rxjs';
 import {
   LoadPageAction,
   CountAction,
-  AddAction
+  AddAction,
+  UpdateAction
 } from '@app/admin/actions/user.actions';
 import { selectAll, selectCount } from '@app/admin/reducers/user.selectors';
 import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
@@ -39,7 +41,8 @@ export class UsersContainerComponent implements OnInit {
   users$: Observable<Item[]>;
   constructor(
     private store: Store<fromAdmin.State>,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -68,7 +71,10 @@ export class UsersContainerComponent implements OnInit {
 
   handleAdd() {
     const dialogRef = this.dialog.open(UserDialogComponent, {
-      data: { title: '添加角色', payload: null }
+      data: {
+        title: this.translate.instant('tgapp.admin.user-dialog.add.title'),
+        payload: null
+      }
     });
     dialogRef
       .afterClosed()
@@ -77,5 +83,24 @@ export class UsersContainerComponent implements OnInit {
         take(1)
       )
       .subscribe(val => this.store.dispatch(new AddAction(val)));
+  }
+
+  handleUpdate(item: Item) {
+    const user = { id: item.id, username: item.title, email: item.desc };
+    const dialogRef = this.dialog.open(UserDialogComponent, {
+      data: {
+        title: this.translate.instant('tgapp.admin.user-dialog.edit.title'),
+        payload: user
+      }
+    });
+    dialogRef
+      .afterClosed()
+      .pipe(
+        filter(val => val),
+        take(1)
+      )
+      .subscribe(val =>
+        this.store.dispatch(new UpdateAction({ ...user, ...val }))
+      );
   }
 }

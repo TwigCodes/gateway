@@ -1,18 +1,21 @@
-<h1 mat-dialog-title cdkDrag cdkDragHandle cdkDragRootElement=".cdk-overlay-pane" style="cursor: move">{{ title }}</h1>
+<h1
+  mat-dialog-title
+  cdkDrag
+  cdkDragHandle
+  cdkDragRootElement=".cdk-overlay-pane"
+  style="cursor: move">
+  {{ title }}
+</h1>
 
 <form [formGroup]="entityForm" (ngSubmit)="submit()">
-  <mat-dialog-content>
-    <mat-form-field>
-      <input matInput name="name" formControlName="name" placeholder="Name" />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput name="description" formControlName="description" placeholder="Description" />
-    </mat-form-field>
-
-
-  </mat-dialog-content>
-  <mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
-    <button mat-button color="warn" type="button" [mat-dialog-close]="false">Cancel</button>
-    <button mat-raised-button color="primary" [disabled]="entityForm.invalid">Save</button>
-  </mat-dialog-actions>
+  <formly-form [model]="model" [fields]="fields" [form]="entityForm">
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+      <button mat-button color="warn" type="button" [mat-dialog-close]="false">
+        {{ 'tgapp.dialog.cancel.button' | translate }}
+      </button>
+      <button mat-raised-button color="primary" [disabled]="entityForm.invalid">
+        {{ 'tgapp.dialog.save.button' | translate }}
+      </button>
+    </mat-dialog-actions>
+  </formly-form>
 </form>

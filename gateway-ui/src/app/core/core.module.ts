@@ -21,7 +21,6 @@ import {
   StoreRouterConnectingModule,
   RouterStateSerializer
 } from '@ngrx/router-store';
-
 import { environment } from '@env/environment';
 
 import { httpInterceptorProviders } from './http-interceptors';

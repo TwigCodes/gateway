@@ -27,10 +27,6 @@ const routes: Routes = [
     pathMatch: 'prefix'
   },
   {
-    path: 'examples',
-    loadChildren: 'app/examples/examples.module#ExamplesModule'
-  },
-  {
     path: '**',
     redirectTo: 'about'
   }

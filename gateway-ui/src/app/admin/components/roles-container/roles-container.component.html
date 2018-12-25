@@ -3,6 +3,7 @@
   filterPlaceholder="请输入角色的名称进行筛选"
   [items]="roles$ | async"
   [showAdd]="true"
+  (select)="handleUpdate($event)"
   (add)="handleAdd()">
 </ngx-list-or-grid-with-filter>
 
