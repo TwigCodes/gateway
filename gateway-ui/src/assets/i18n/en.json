@@ -98,5 +98,15 @@
   "material.paginator.prev": "Previous",
   "material.paginator.first": "First",
   "material.paginator.last": "Last",
-  "material.paginator.of": "of"
+  "material.paginator.of": "of",
+  "material.datepicker.calendar": "Calendar",
+  "material.datepicker.nextmonth": "Next",
+  "material.datepicker.nextmultiyear": "Next",
+  "material.datepicker.nextyear": "Next",
+  "material.datepicker.opencalendar": "Open",
+  "material.datepicker.prevmonth": "Prev",
+  "material.datepicker.prevmultiyear": "Prev",
+  "material.datepicker.prevyear": "Prev",
+  "material.datepicker.switchtomonthview": "Month View",
+  "material.datepicker.switchtomultiyearview": "Year View"
 }

@@ -37,7 +37,7 @@ import {
   MatStepperModule,
   MatPaginatorIntl
 } from '@angular/material';
-import { CustomMatPaginatorIntl } from './mat-paginator-intl-cn';
+import { CustomMatPaginatorIntl } from './custom-mat-paginator-intl';
 
 const MATERIAL_MODULES = [
   MatAutocompleteModule,
