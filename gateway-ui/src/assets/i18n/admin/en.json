@@ -1,4 +1,7 @@
 {
+  "tgapp.admin.filter.placeholder": "Please type the name of settings to filter",
+  "tgapp.admin.role.filter.placeholder": "Please type the name of role to filter",
+  "tgapp.admin.user.filter.placeholder": "Please type the name of user to filter",
   "tgapp.admin.menu.role.title": "Roles Management",
   "tgapp.admin.menu.role.subtitle": "Manage the roles of the system",
   "tgapp.admin.menu.role.desc": "Admin User can add and update the existing roles, except for the built-in ones",

@@ -1,4 +1,7 @@
 {
+  "tgapp.admin.filter.placeholder": "请输入设置的名称进行筛选",
+  "tgapp.admin.role.filter.placeholder": "请输入角色的名称进行筛选",
+  "tgapp.admin.user.filter.placeholder": "请输入用户的姓名进行筛选",
   "tgapp.admin.menu.role.title": "角色管理",
   "tgapp.admin.menu.role.subtitle": "管理用户角色",
   "tgapp.admin.menu.role.desc": "系统管理员可以查看、新建、修改、删除系统的角色，但默认情况下系统的内建角色 User 和 Admin 是无法删除的",

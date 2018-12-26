@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 })
 export class HomeContainerComponent implements OnInit {
   menus$ = this.translate
-    .get([
+    .stream([
       'tgapp.admin.menu.role.title',
       'tgapp.admin.menu.role.subtitle',
       'tgapp.admin.menu.role.desc',

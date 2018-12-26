@@ -1,5 +1,5 @@
 <ngx-list-or-grid-with-filter
-  filterPlaceholder="请输入设置的名称进行筛选"
+  filterPlaceholder="{{ 'tgapp.admin.filter.placeholder' | translate }}"
   [items]="items$ | async"
   (select)="handleSelect($event)">
 </ngx-list-or-grid-with-filter>

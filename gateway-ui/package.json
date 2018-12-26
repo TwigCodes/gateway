@@ -76,7 +76,7 @@
     "@nguniversal/module-map-ngfactory-loader": "^7.0.2",
     "@ngx-formly/core": "^4.8.2",
     "@ngx-formly/material": "^4.8.2",
-    "@ngx-translate/core": "^11.0.0",
+    "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
     "@ngxs-labs/dispatch-decorator": "^1.1.0",
     "@ngxs-labs/emitter": "^1.6.4",
