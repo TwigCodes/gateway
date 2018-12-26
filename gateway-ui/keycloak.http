@@ -2,6 +2,7 @@
 @realm = twigcodes
 @client_id = login-app
 @client_secret = 942bfe03-9851-4db8-b100-8393c9c6c9cd
+@adminBaseUrl = {{baseUrl}}/admin/realms/{{realm}}
 
 # @name login
 POST {{baseUrl}}/realms/{{realm}}/protocol/openid-connect/token HTTP/1.1
@@ -20,18 +21,18 @@ password=X*bcYp4x
 
 ###
 # @name getRoles
-GET {{baseUrl}}/admin/realms/{{realm}}/roles HTTP/1.1
+GET {{adminBaseUrl}}/roles HTTP/1.1
 Authorization: Bearer {{accessToken}}
 
 ###
 # @name getRoleByName
-GET {{baseUrl}}/admin/realms/{{realm}}/roles/testrole2 HTTP/1.1
+GET {{adminBaseUrl}}/roles/testrole2 HTTP/1.1
 Authorization: Bearer {{accessToken}}
 
 ###
 
 # @name addRole
-POST {{baseUrl}}/admin/realms/{{realm}}/roles HTTP/1.1
+POST {{adminBaseUrl}}/roles HTTP/1.1
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
@@ -43,21 +44,29 @@ Content-Type: application/json
 ###
 
 # @name getClients
-GET {{baseUrl}}/admin/realms/{{realm}}/clients HTTP/1.1
+GET {{adminBaseUrl}}/clients HTTP/1.1
 Authorization: Bearer {{accessToken}}
 
 ###
 
 # @name getUsers
-GET {{baseUrl}}/admin/realms/{{realm}}/users HTTP/1.1
+GET {{adminBaseUrl}}/users HTTP/1.1
   ?first=0
   &max=10
 Authorization: Bearer {{accessToken}}
 
 ###
 # @name getUsersByUsername
-GET {{baseUrl}}/admin/realms/{{realm}}/users HTTP/1.1
+GET {{adminBaseUrl}}/users HTTP/1.1
   ?username=testuser1
+Authorization: Bearer {{accessToken}}
+
+###
+@userId = {{getUsersByUsername.response.body.$[0].id}}
+
+###
+# @name getUserRoleMappings
+GET {{adminBaseUrl}}/users/{{userId}}/role-mappings
 Authorization: Bearer {{accessToken}}
 
 ###

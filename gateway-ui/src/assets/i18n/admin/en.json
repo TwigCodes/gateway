@@ -1,4 +1,5 @@
 {
+  "tgapp.admin.guard.notification": "You do not have access rights!",
   "tgapp.admin.filter.placeholder": "Please type the name of settings to filter",
   "tgapp.admin.role.filter.placeholder": "Please type the name of role to filter",
   "tgapp.admin.user.filter.placeholder": "Please type the name of user to filter",

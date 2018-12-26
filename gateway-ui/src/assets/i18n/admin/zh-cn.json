@@ -1,4 +1,5 @@
 {
+  "tgapp.admin.guard.notification": "您没有访问权限！",
   "tgapp.admin.filter.placeholder": "请输入设置的名称进行筛选",
   "tgapp.admin.role.filter.placeholder": "请输入角色的名称进行筛选",
   "tgapp.admin.user.filter.placeholder": "请输入用户的姓名进行筛选",

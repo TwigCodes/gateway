@@ -6,6 +6,7 @@ import {
 } from '@angular/router';
 import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
 import { NotificationService } from '@app/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class AdminGuard extends KeycloakAuthGuard {
   constructor(
     protected router: Router,
     protected keycloak: KeycloakService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private translate: TranslateService
   ) {
     super(router, keycloak);
   }
@@ -26,7 +28,9 @@ export class AdminGuard extends KeycloakAuthGuard {
     return new Promise((resolve, _) => {
       if (!this.authenticated) {
         resolve(false);
-        this.notification.warn('您没有访问权限！');
+        this.notification.warn(
+          this.translate.instant('tgapp.admin.guard.notification')
+        );
         this.router.navigate(['/about']);
         return;
       }
