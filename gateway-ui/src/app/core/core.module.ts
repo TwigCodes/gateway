@@ -35,6 +35,7 @@ import { CustomSerializer } from './router/custom-serializer';
 import { NotificationService } from './notifications/notification.service';
 import { loadIconResources } from './util/icon.util';
 import localeZhHans from '@angular/common/locales/zh-Hans';
+import { NgrxNotificationService } from './notifications/ngrx-notification.service';
 @NgModule({
   imports: [
     // angular
@@ -82,7 +83,8 @@ import localeZhHans from '@angular/common/locales/zh-Hans';
     httpInterceptorProviders,
     TitleService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
-    { provide: RouterStateSerializer, useClass: CustomSerializer }
+    { provide: RouterStateSerializer, useClass: CustomSerializer },
+    NgrxNotificationService
   ],
   exports: [TranslateModule]
 })
@@ -92,7 +94,8 @@ export class CoreModule {
     @SkipSelf()
     parentModule: CoreModule,
     ir: MatIconRegistry,
-    ds: DomSanitizer
+    ds: DomSanitizer,
+    notification: NgrxNotificationService
   ) {
     if (parentModule) {
       throw new Error('CoreModule is already loaded. Import only in AppModule');
