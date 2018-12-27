@@ -4,18 +4,13 @@ import { map, filter, take } from 'rxjs/operators';
 import { PageEvent, MatDialog } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-import {
-  LoadPageAction,
-  CountAction,
-  AddAction,
-  UpdateAction
-} from '@app/admin/actions/user.actions';
 import { selectAll, selectCount } from '@app/admin/reducers/user.selectors';
 import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
 import { KeycloakUser } from '@app/admin/admin.model';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 
 import * as fromAdmin from '../../reducers';
+import * as fromUser from '@app/admin/actions/user.actions';
 
 @Component({
   selector: 'tgapp-users-container',
@@ -58,14 +53,20 @@ export class UsersContainerComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(
-      new LoadPageAction({ pageIndex: this.pageIndex, pageSize: this.pageSize })
+      new fromUser.LoadPageAction({
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize
+      })
     );
-    this.store.dispatch(new CountAction());
+    this.store.dispatch(new fromUser.CountAction());
   }
 
   handlePage({ pageIndex, pageSize }: PageEvent) {
     this.store.dispatch(
-      new LoadPageAction({ pageIndex: pageIndex, pageSize: pageSize })
+      new fromUser.LoadPageAction({
+        pageIndex: pageIndex,
+        pageSize: pageSize
+      })
     );
   }
 
@@ -82,7 +83,7 @@ export class UsersContainerComponent implements OnInit {
         filter(val => val),
         take(1)
       )
-      .subscribe(val => this.store.dispatch(new AddAction(val)));
+      .subscribe(val => this.store.dispatch(new fromUser.AddAction(val)));
   }
 
   handleUpdate(user: KeycloakUser) {
@@ -100,7 +101,10 @@ export class UsersContainerComponent implements OnInit {
       )
       .subscribe(val =>
         this.store.dispatch(
-          new UpdateAction({ id: user.id, update: { ...user, ...val } })
+          new fromUser.UpdateAction({
+            id: user.id,
+            update: { ...user, ...val }
+          })
         )
       );
   }

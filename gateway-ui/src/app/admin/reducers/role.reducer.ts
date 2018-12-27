@@ -7,7 +7,7 @@ export interface State extends EntityState<KeycloakRole> {}
 export const adapter: EntityAdapter<KeycloakRole> = createEntityAdapter<
   KeycloakRole
 >({
-  selectId: (role: KeycloakRole) => role.id,
+  selectId: (role: KeycloakRole) => role.name,
   sortComparer: false
 });
 
@@ -24,7 +24,7 @@ export function reducer(state = initialState, action: RoleActions): State {
     case ActionTypes.UpdateSuccess: {
       return {
         ...adapter.updateOne(
-          { id: action.payload.id, changes: action.payload },
+          { id: action.payload.name, changes: action.payload },
           state
         )
       };

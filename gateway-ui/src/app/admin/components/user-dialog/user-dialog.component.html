@@ -11,10 +11,10 @@
   <formly-form [model]="model" [fields]="fields" [form]="entityForm">
     <mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
       <button mat-button color="warn" type="button" [mat-dialog-close]="false">
-        {{ 'tgapp.dialog.cancel.button' | translate }}
+        {{ 'tgapp.form.cancel.button' | translate }}
       </button>
       <button mat-raised-button color="primary" [disabled]="entityForm.invalid">
-        {{ 'tgapp.dialog.save.button' | translate }}
+        {{ 'tgapp.form.save.button' | translate }}
       </button>
     </mat-dialog-actions>
   </formly-form>

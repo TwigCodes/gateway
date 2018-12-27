@@ -25,8 +25,18 @@ GET {{adminBaseUrl}}/roles HTTP/1.1
 Authorization: Bearer {{accessToken}}
 
 ###
+@role_name = {{getRoles.response.body.$[0].name}}
+@role_id = {{getRoles.response.body.$[0].id}}
+@role = {{getRoles.response.body.$[0]}}
+
+###
 # @name getRoleByName
-GET {{adminBaseUrl}}/roles/testrole2 HTTP/1.1
+GET {{adminBaseUrl}}/roles/{{role_name}} HTTP/1.1
+Authorization: Bearer {{accessToken}}
+
+###
+# @name getUsersByRoleName
+GET {{adminBaseUrl}}/roles/{{role_name}}/users
 Authorization: Bearer {{accessToken}}
 
 ###
@@ -66,8 +76,16 @@ Authorization: Bearer {{accessToken}}
 
 ###
 # @name getUserRoleMappings
-GET {{adminBaseUrl}}/users/{{userId}}/role-mappings
+GET {{adminBaseUrl}}/users/{{userId}}/role-mappings/realm
 Authorization: Bearer {{accessToken}}
+
+###
+# @name addUserRoleMappings
+POST  {{adminBaseUrl}}/users/{{userId}}/role-mappings/realm
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+[{{role}}]
 
 ###
 

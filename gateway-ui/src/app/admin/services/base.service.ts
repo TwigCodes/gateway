@@ -12,8 +12,6 @@ export abstract class BaseService<T extends Entity> extends CrudService<T> {
   protected readonly baseUrl = `${environment.keycloak.url}/admin/realms/${
     environment.keycloak.realm
   }`;
-  protected loadingSubject = new BehaviorSubject<boolean>(false);
-  public loading$ = this.loadingSubject.asObservable();
 
   constructor(protected httpClient: HttpClient) {
     super(httpClient);

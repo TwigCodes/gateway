@@ -9,3 +9,4 @@ export * from './bread-crumbs';
 export * from './animations';
 export * from './big-input';
 export * from './list-or-grid-with-filter';
+export * from './confirm-dialog';

@@ -3,7 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import {
   HomeContainerComponent,
   RolesContainerComponent,
-  UsersContainerComponent
+  UsersContainerComponent,
+  RoleDetailContainerComponent,
+  UserDetailContainerComponent
 } from './components';
 import { AdminGuard } from './admin.guard';
 
@@ -22,7 +24,13 @@ const routes: Routes = [
     canActivate: [AdminGuard],
     data: {
       roles: ['admin']
-    }
+    },
+    children: [
+      {
+        path: ':roleId',
+        component: RoleDetailContainerComponent
+      }
+    ]
   },
   {
     path: 'users',
@@ -30,7 +38,13 @@ const routes: Routes = [
     canActivate: [AdminGuard],
     data: {
       roles: ['admin']
-    }
+    },
+    children: [
+      {
+        path: ':userId',
+        component: UserDetailContainerComponent
+      }
+    ]
   }
 ];
 

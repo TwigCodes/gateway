@@ -83,11 +83,13 @@ import {
   BigInputModule,
   JsonDiffModule,
   BreadCrumbsModule,
-  ListOrGridWithFilterModule
+  ListOrGridWithFilterModule,
+  ConfirmDialogModule
 } from '@app/libs';
 
 import { FilterMenuComponent } from './filter-menu/filter-menu.component';
 import { FormlyModule } from '@ngx-formly/core';
+import { ConfirmService } from './confirm/confirm.service';
 
 @NgModule({
   imports: [
@@ -106,6 +108,7 @@ import { FormlyModule } from '@ngx-formly/core';
 
     FormlyModule.forRoot()
   ],
+  providers: [ConfirmService],
   declarations: [FilterMenuComponent],
   exports: [
     CommonModule,
@@ -128,6 +131,7 @@ import { FormlyModule } from '@ngx-formly/core';
     JsonDiffModule,
     BreadCrumbsModule,
     ListOrGridWithFilterModule,
+    ConfirmDialogModule,
 
     FontAwesomeModule
   ]

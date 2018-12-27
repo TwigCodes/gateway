@@ -1,4 +1,4 @@
-<mat-card class="mat-elevation-z8">
+<mat-card>
   <mat-toolbar>
     <mat-form-field>
       <input matInput [(ngModel)]="filterValue" (keyup)="handleFilter()"/>
@@ -33,7 +33,7 @@
 <ng-template #grid>
   <mat-grid-list
     cols="3"
-    rowHeight="250px"
+    rowHeight="200px"
     gutterSize="10px"
     class="fix-height">
     <mat-grid-tile *ngFor="let item of filteredItems">

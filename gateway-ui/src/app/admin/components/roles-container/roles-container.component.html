@@ -1,9 +1,13 @@
-<ngx-bread-crumbs [crumbs]="crumbs"></ngx-bread-crumbs>
-<ngx-list-or-grid-with-filter
-  filterPlaceholder="{{ 'tgapp.admin.role.filter.placeholder' | translate }}"
-  [items]="roles$ | async"
-  [showAdd]="true"
-  (select)="handleUpdate($event)"
-  (add)="handleAdd()">
-</ngx-list-or-grid-with-filter>
-
+<mat-card class="mat-elevation-z8">
+  <ngx-bread-crumbs [crumbs]="crumbs"></ngx-bread-crumbs>
+  <div fxLayout="row nowrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+    <div fxFlex="1 1 auto" fxFlexFill>
+      <ngx-list-or-grid-with-filter filterPlaceholder="{{ 'tgapp.admin.role.filter.placeholder' | translate }}" [items]="roles$ | async"
+        [showAdd]="true" (select)="handleUpdate($event)" (add)="handleAdd()">
+      </ngx-list-or-grid-with-filter>
+    </div>
+    <div fxFlex="1 1 auto">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</mat-card>

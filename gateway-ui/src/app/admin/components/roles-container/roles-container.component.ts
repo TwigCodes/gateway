@@ -2,18 +2,15 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { map, filter, take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
 import { selectAll } from '@app/admin/reducers/role.selectors';
-import {
-  AddAction,
-  GetAllAction,
-  UpdateAction
-} from '@app/admin/actions/role.actions';
 import { KeycloakRole } from '@app/admin/admin.model';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
 
 import * as fromAdmin from '../../reducers';
+import * as fromRole from '@app/admin/actions/role.actions';
 
 @Component({
   selector: 'tgapp-roles-container',
@@ -47,10 +44,11 @@ export class RolesContainerComponent implements OnInit {
   constructor(
     private store: Store<fromAdmin.State>,
     private dialog: MatDialog,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private router: Router
   ) {}
   ngOnInit() {
-    this.store.dispatch(new GetAllAction());
+    this.store.dispatch(new fromRole.GetAllAction());
   }
 
   handleAdd() {
@@ -66,26 +64,10 @@ export class RolesContainerComponent implements OnInit {
         filter(val => val),
         take(1)
       )
-      .subscribe(val => this.store.dispatch(new AddAction(val)));
+      .subscribe(val => this.store.dispatch(new fromRole.AddAction(val)));
   }
 
   handleUpdate(role: KeycloakRole) {
-    const dialogRef = this.dialog.open(RoleDialogComponent, {
-      data: {
-        title: this.translate.instant('tgapp.admin.role-dialog.edit.title'),
-        payload: role
-      }
-    });
-    dialogRef
-      .afterClosed()
-      .pipe(
-        filter(val => val),
-        take(1)
-      )
-      .subscribe(val =>
-        this.store.dispatch(
-          new UpdateAction({ id: role.id, update: { ...role, ...val } })
-        )
-      );
+    this.router.navigate([`/admin/roles/${role.name}`]);
   }
 }

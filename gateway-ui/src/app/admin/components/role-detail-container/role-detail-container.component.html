@@ -1,0 +1,39 @@
+<mat-tab-group>
+  <mat-tab label="{{ 'tgapp.admin.roledetail.info' | translate }}">
+    <ng-template matTabContent>
+      <form [formGroup]="entityForm" (ngSubmit)="submit()">
+        <formly-form [model]="model" [fields]="fields" [form]="entityForm">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <span>
+              <button mat-flat-button type="button" [routerLink]="['/admin/roles']">
+                {{ 'tgapp.form.cancel.button' | translate }}
+              </button>
+              <button mat-button color="warn" type="button" (click)="handleDelete()">
+                {{ 'tgapp.form.delete.button' | translate }}
+              </button>
+            </span>
+            <button mat-raised-button color="primary" [disabled]="entityForm.invalid">
+              {{ 'tgapp.form.save.button' | translate }}
+            </button>
+          </div>
+        </formly-form>
+      </form>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="{{ 'tgapp.admin.roledetail.users' | translate }}">
+    <ng-template matTabContent>
+      <mat-list>
+        <mat-list-item>
+          <button mat-button>添加用户</button>
+        </mat-list-item>
+        <mat-list-item *ngFor="let user of users$ | async">
+          <p matLine>{{ user.username }}</p>
+          <p matLine>{{ user.email }}</p>
+          <button mat-icon-button color="warn" (click)="handleRemoveUser(user.id)">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

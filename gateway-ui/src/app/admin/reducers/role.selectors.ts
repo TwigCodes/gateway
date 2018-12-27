@@ -12,3 +12,9 @@ export const {
   selectEntities: selectEntities,
   selectAll: selectAll
 } = fromRole.adapter.getSelectors(selectRoleState);
+
+export const selectRoleById = (id: string) =>
+  createSelector(
+    selectRoleState,
+    state => (state.entities[id] ? state.entities[id] : null)
+  );

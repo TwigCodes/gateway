@@ -18,6 +18,8 @@ import {
 
 import { UserEffects, RoleEffects, AdminEffects } from './effects';
 import * as fromAdmin from './reducers';
+import { RoleDetailContainerComponent } from './components/role-detail-container/role-detail-container.component';
+import { UserDetailContainerComponent } from './components/user-detail-container/user-detail-container.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import * as fromAdmin from './reducers';
     RolesContainerComponent,
     UsersContainerComponent,
     UserDialogComponent,
-    RoleDialogComponent
+    RoleDialogComponent,
+    RoleDetailContainerComponent,
+    UserDetailContainerComponent
   ],
   imports: [
     SharedModule,

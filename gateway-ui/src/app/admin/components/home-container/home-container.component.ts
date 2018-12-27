@@ -19,7 +19,7 @@ export class HomeContainerComponent implements OnInit {
       'tgapp.admin.menu.role.desc',
       'tgapp.admin.menu.user.title',
       'tgapp.admin.menu.user.subtitle',
-      'tgapp.admin.menu.role.desc'
+      'tgapp.admin.menu.user.desc'
     ])
     .pipe(
       map(t => {
@@ -35,7 +35,7 @@ export class HomeContainerComponent implements OnInit {
             id: '2',
             title: t['tgapp.admin.menu.user.title'],
             subtitle: t['tgapp.admin.menu.user.subtitle'],
-            desc: t['tgapp.admin.menu.role.desc'],
+            desc: t['tgapp.admin.menu.user.desc'],
             link: 'admin/users'
           }
         ];
