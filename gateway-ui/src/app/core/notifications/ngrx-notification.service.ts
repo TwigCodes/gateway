@@ -3,6 +3,7 @@ import { Actions } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { filter } from 'rxjs/operators';
 import { NotificationService } from './notification.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 /** Report ngrx-data success/error actions as toast messages **/
 @Injectable()
@@ -23,7 +24,8 @@ export class NgrxNotificationService {
           notification.success('操作成功！');
         }
         if (action.type.endsWith('Fail')) {
-          notification.error('操作失败，尴尬了');
+          const err = (action as any).payload;
+          notification.error(`操作失败，错误原因 - ${err}`);
         }
       });
   }

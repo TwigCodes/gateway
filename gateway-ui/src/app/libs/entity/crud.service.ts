@@ -65,18 +65,24 @@ export abstract class CrudService<T extends Entity> {
   }
 
   protected handleError(error: HttpErrorResponse) {
+    let errMsg;
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
+      errMsg = error.error.message;
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
       console.error(
-        `Backend returned code ${error.status}, ` + `body was: ${error.error}`
+        `Backend returned code ${error.status}, ` +
+          `body was: ${JSON.stringify(error.error)}`
       );
+      errMsg = error.error.errorMessage;
     }
     // return an ErrorObservable with a user-facing error message
-    return throwError('Something bad happened; please try again later.');
+    return throwError(
+      errMsg || 'Something bad happened; please try again later.'
+    );
   }
 
   protected convertToJson(body: any) {
