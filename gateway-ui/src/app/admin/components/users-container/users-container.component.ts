@@ -90,25 +90,5 @@ export class UsersContainerComponent implements OnInit {
 
   handleUpdate(user: KeycloakUser) {
     this.router.navigate([`/admin/users/${user.id}`]);
-    // const dialogRef = this.dialog.open(UserDialogComponent, {
-    //   data: {
-    //     title: this.translate.instant('tgapp.admin.user-dialog.edit.title'),
-    //     payload: user
-    //   }
-    // });
-    // dialogRef
-    //   .afterClosed()
-    //   .pipe(
-    //     filter(val => val),
-    //     take(1)
-    //   )
-    //   .subscribe(val =>
-    //     this.store.dispatch(
-    //       new fromUser.UpdateAction({
-    //         id: user.id,
-    //         update: { ...user, ...val }
-    //       })
-    //     )
-    //   );
   }
 }
