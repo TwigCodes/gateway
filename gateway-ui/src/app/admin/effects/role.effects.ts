@@ -1,32 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { ROUTER_NAVIGATION, RouterNavigationAction } from '@ngrx/router-store';
+import { ROUTER_NAVIGATION } from '@ngrx/router-store';
 import {
   switchMap,
   map,
   catchError,
   filter,
-  distinctUntilChanged,
   withLatestFrom,
-  first
+  first,
+  tap
 } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
 import { RoleService } from '../services';
 import { selectRoleById } from '../reducers/role.selectors';
 
-import * as selRoleDetail from '../reducers/role-detail.selectors';
+import * as fromRoleDetailSelector from '../reducers/role-detail.selectors';
 import * as fromRole from '../actions/role.actions';
 import * as fromRoleDetail from '../actions/role-detail.actions';
-import * as stateAdmin from '../reducers';
-import { tag } from 'rxjs-spy/operators';
+import * as fromAdminReducer from '../reducers';
 
 @Injectable()
 export class RoleEffects {
   constructor(
     private actions$: Actions,
     private service: RoleService,
-    private store: Store<stateAdmin.State>
+    private store: Store<fromAdminReducer.State>,
+    private router: Router
   ) {}
 
   @Effect()
@@ -73,6 +74,15 @@ export class RoleEffects {
     )
   );
 
+  @Effect({ dispatch: false })
+  successAndNavigate = this.actions$.pipe(
+    ofType<fromRole.UpdateSuccessAction | fromRole.DeleteSuccessAction>(
+      fromRole.ActionTypes.UpdateSuccess,
+      fromRole.ActionTypes.DeleteSuccess
+    ),
+    tap(_ => this.router.navigate(['/admin/roles']))
+  );
+
   @Effect()
   getById = this.actions$.pipe(
     ofType(ROUTER_NAVIGATION),
@@ -82,13 +92,12 @@ export class RoleEffects {
         action.payload.routerState.params['roleId']
     ),
     map(action => action.payload.routerState.params['roleId']),
-    tag('hello'),
     switchMap(roleId =>
       this.store.pipe(
         select(selectRoleById(roleId)),
         filter(val => val !== null && val !== undefined),
         first(),
-        map(role => new fromRoleDetail.GetById(role))
+        map(role => new fromRoleDetail.GetByIdAction(role))
       )
     )
   );
@@ -105,14 +114,14 @@ export class RoleEffects {
     switchMap(roleId =>
       this.store.pipe(
         select(selectRoleById(roleId)),
-        filter(val => val !== null && val !== undefined),
+        filter(val => val != null),
         first(),
         map(role => role.name)
       )
     ),
     withLatestFrom(
-      this.store.pipe(select(selRoleDetail.selectPageIndex)),
-      this.store.pipe(select(selRoleDetail.selectPageSize))
+      this.store.pipe(select(fromRoleDetailSelector.selectPageIndex)),
+      this.store.pipe(select(fromRoleDetailSelector.selectPageSize))
     ),
     switchMap(([name, pageIndex, pageSize]) =>
       this.service.getUsersByRoleName(name, pageIndex, pageSize).pipe(

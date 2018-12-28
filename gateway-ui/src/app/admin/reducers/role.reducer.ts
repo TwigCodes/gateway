@@ -2,6 +2,8 @@ import { RoleActions, ActionTypes } from '../actions/role.actions';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { KeycloakRole } from '../admin.model';
 
+import * as _ from 'lodash';
+
 export interface State extends EntityState<KeycloakRole> {}
 
 export const adapter: EntityAdapter<KeycloakRole> = createEntityAdapter<
@@ -36,7 +38,11 @@ export function reducer(state = initialState, action: RoleActions): State {
       };
     }
     case ActionTypes.GetAllSuccess: {
-      return { ...adapter.addAll(action.payload, state) };
+      const invisibleRoleIds = ['uma_authorization', 'offline_access'];
+      const newRoles = action.payload.filter(
+        role => !_.includes(invisibleRoleIds, role.name)
+      );
+      return { ...adapter.addAll(newRoles, state) };
     }
     default: {
       return state;

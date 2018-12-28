@@ -9,7 +9,7 @@ import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
 import { KeycloakUser } from '@app/admin/admin.model';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 
-import * as fromAdmin from '../../reducers';
+import * as fromAdminReducer from '../../reducers';
 import * as fromUser from '@app/admin/actions/user.actions';
 
 @Component({
@@ -46,7 +46,7 @@ export class UsersContainerComponent implements OnInit {
     )
   );
   constructor(
-    private store: Store<fromAdmin.State>,
+    private store: Store<fromAdminReducer.State>,
     private dialog: MatDialog,
     private translate: TranslateService
   ) {}

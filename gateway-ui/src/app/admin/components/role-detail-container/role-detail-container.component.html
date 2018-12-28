@@ -8,11 +8,11 @@
               <button mat-flat-button type="button" [routerLink]="['/admin/roles']">
                 {{ 'tgapp.form.cancel.button' | translate }}
               </button>
-              <button mat-button color="warn" type="button" (click)="handleDelete()">
+              <button mat-button color="warn" type="button" (click)="handleDelete()" [disabled]="isBuiltIn(model.name)">
                 {{ 'tgapp.form.delete.button' | translate }}
               </button>
             </span>
-            <button mat-raised-button color="primary" [disabled]="entityForm.invalid">
+            <button mat-raised-button color="primary" [disabled]="entityForm.invalid || isBuiltIn(model.name)">
               {{ 'tgapp.form.save.button' | translate }}
             </button>
           </div>
@@ -24,12 +24,27 @@
     <ng-template matTabContent>
       <mat-list>
         <mat-list-item>
-          <button mat-button>添加用户</button>
+          <ngx-mat-autocomplete
+            class="full-width"
+            [placeholder]="'tgapp.admin.roledetail.users.addrolemapping' | translate"
+            [minChars]="2"
+            [source]="service"
+            [serviceParams]="params"
+            [hasProgressBar]="true"
+            [clearAfterSearch]="true"
+            [displayTemplate]="itemTemplate"
+            [noRecordText]="'tgapp.user.search.norecord' | translate"
+            (optionSelected)="selectUser($event)">
+          </ngx-mat-autocomplete>
+          <ng-template #itemTemplate let-item>
+            <span> {{ item.firstName }}&nbsp;{{ item.lastName }}</span>
+            <span> {{item.email}} </span>
+          </ng-template>
         </mat-list-item>
         <mat-list-item *ngFor="let user of users$ | async">
           <p matLine>{{ user.username }}</p>
           <p matLine>{{ user.email }}</p>
-          <button mat-icon-button color="warn" (click)="handleRemoveUser(user.id)">
+          <button mat-icon-button color="warn" (click)="handleRemoveUser(user)">
             <mat-icon>delete_forever</mat-icon>
           </button>
         </mat-list-item>

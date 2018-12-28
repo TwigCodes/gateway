@@ -43,6 +43,12 @@ export function reducer(
     case ActionTypes.GetById: {
       return { ...state, role: action.payload };
     }
+    case ActionTypes.AddUserToRoleSuccess: {
+      return { ...state, ...adapter.addOne(action.payload, state) };
+    }
+    case ActionTypes.DeleteUserFromRoleSuccess: {
+      return { ...state, ...adapter.removeOne(action.payload, state) };
+    }
     default: {
       return state;
     }

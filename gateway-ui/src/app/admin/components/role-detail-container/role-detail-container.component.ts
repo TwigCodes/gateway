@@ -5,17 +5,21 @@ import {
   OnDestroy
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { take, switchMap, filter, first } from 'rxjs/operators';
+import { take, switchMap, filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { ConfirmService } from '@app/shared/confirm/confirm.service';
+import { UserSearchService } from '@app/admin/services/user-search.service';
+import { KeycloakUser, KeycloakRole } from '@app/admin/admin.model';
 
 import * as fromAdminReducer from '../../reducers';
 import * as fromRole from '../../actions/role.actions';
+import * as fromRoleDetail from '../../actions/role-detail.actions';
 import * as fromRoleDetailSelectors from '../../reducers/role-detail.selectors';
-import { ConfirmService } from '@app/shared/confirm/confirm.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'tgapp-role-detail-container',
@@ -26,6 +30,7 @@ import { ConfirmService } from '@app/shared/confirm/confirm.service';
 export class RoleDetailContainerComponent implements OnInit, OnDestroy {
   entityForm = new FormGroup({});
   model;
+  params = new HttpParams().set('pageIndex', '0').set('pageSize', '25');
   model$ = this.store.pipe(select(fromRoleDetailSelectors.selectRole));
   users$ = this.store.pipe(select(fromRoleDetailSelectors.selectUsers));
   sub: Subscription;
@@ -66,8 +71,8 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<fromAdminReducer.State>,
     private translate: TranslateService,
-    private router: Router,
-    private confirm: ConfirmService
+    private confirm: ConfirmService,
+    public service: UserSearchService
   ) {}
   ngOnInit(): void {
     this.sub = this.model$.subscribe(val => {
@@ -90,22 +95,48 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
           update: { ...role, ...this.entityForm.value }
         })
       );
-      this.router.navigate(['/admin/roles']);
     });
   }
-  handleRemoveUser(userId: string) {}
+
+  handleAddRoleMapping() {}
+
+  handleRemoveUser(user: KeycloakUser) {
+    this.model$.pipe(take(1)).subscribe(role => {
+      this.store.dispatch(
+        new fromRoleDetail.DeleteUserFromRoleAction({
+          user: user,
+          role: role
+        })
+      );
+    });
+  }
 
   handleDelete() {
     this.confirm
       .delete()
       .pipe(
-        first(),
+        take(1),
         filter(ok => ok),
         switchMap(_ => this.model$.pipe(take(1)))
       )
       .subscribe(role => {
         this.store.dispatch(new fromRole.DeleteAction(role.name));
-        this.router.navigate(['/admin/roles']);
       });
+  }
+
+  selectUser(user: KeycloakUser) {
+    this.model$.pipe(take(1)).subscribe(role => {
+      this.store.dispatch(
+        new fromRoleDetail.AddUserToRoleAction({
+          user: user,
+          role: role
+        })
+      );
+    });
+  }
+
+  public isBuiltIn(roleId: string): boolean {
+    const builtInRoles = ['admin', 'user'];
+    return _.includes(builtInRoles, roleId);
   }
 }

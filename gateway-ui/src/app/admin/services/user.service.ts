@@ -58,7 +58,7 @@ export class UserService extends BaseService<KeycloakUser> {
    * @param id the id of the user
    * @param roles an array of roles to be assigned to the user
    */
-  public assignRolesToUser(
+  public addRolesToUser(
     id: string,
     roles: KeycloakRole[]
   ): Observable<string[]> {
@@ -74,7 +74,7 @@ export class UserService extends BaseService<KeycloakUser> {
   /**
    * removeRolesFromUser
    */
-  public removeRolesFromUser(
+  public deleteRolesFromUser(
     id: string,
     roles: KeycloakRole[]
   ): Observable<string[]> {
