@@ -28,7 +28,7 @@ export class UserService extends BaseService<KeycloakUser> {
   public add(user: Partial<KeycloakUser>): Observable<KeycloakUser> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}`;
-    return this.http.post(url, JSON.stringify(user)).pipe(
+    return this.http.post(url, user).pipe(
       switchMap(_ => {
         const params = new HttpParams().set('username', user.username);
         return this.http.get<KeycloakUser[]>(url, { params: params }).pipe(
