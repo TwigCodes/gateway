@@ -30,11 +30,17 @@ export function reducer(
   action: RoleDetailActions | fromRoleMapping.RoleMappingActions
 ): State {
   switch (action.type) {
+    case ActionTypes.NextPageSuccess: {
+      return { ...state, ...adapter.addMany(action.payload, state) };
+    }
     case ActionTypes.GetUsersByRoleSuccess: {
       return { ...adapter.addAll(action.payload, state) };
     }
     case ActionTypes.PageChange: {
       return { ...state, ...action.payload };
+    }
+    case ActionTypes.NextPage: {
+      return { ...state, pageIndex: (state.pageIndex + 1) * state.pageSize };
     }
     case ActionTypes.LoadStart: {
       return { ...state, loading: true };

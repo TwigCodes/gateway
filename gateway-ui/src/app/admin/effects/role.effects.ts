@@ -13,7 +13,7 @@ import {
 } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
-import { RoleService } from '../services';
+import { RoleService, UserService } from '../services';
 import { selectRoleById } from '../reducers/role.selectors';
 
 import * as fromRoleDetailSelector from '../reducers/role-detail.selectors';
@@ -26,6 +26,7 @@ export class RoleEffects {
   constructor(
     private actions$: Actions,
     private service: RoleService,
+    private userService: UserService,
     private store: Store<fromAdminReducer.State>,
     private router: Router
   ) {}
@@ -127,6 +128,21 @@ export class RoleEffects {
       this.service.getUsersByRoleName(name, pageIndex, pageSize).pipe(
         map(result => new fromRoleDetail.GetUsersByRoleSuccessAction(result)),
         catchError(err => of(new fromRoleDetail.GetUsersByRoleFailAction(err)))
+      )
+    )
+  );
+
+  @Effect()
+  getNextPageUsers = this.actions$.pipe(
+    ofType<fromRoleDetail.NextPageAction>(fromRoleDetail.ActionTypes.NextPage),
+    withLatestFrom(
+      this.store.pipe(select(fromRoleDetailSelector.selectPageIndex)),
+      this.store.pipe(select(fromRoleDetailSelector.selectPageSize))
+    ),
+    switchMap(([_, pageIndex, pageSize]) =>
+      this.userService.paged(pageIndex, pageSize).pipe(
+        map(result => new fromRoleDetail.NextPageSuccessAction(result)),
+        catchError(err => of(new fromRoleDetail.NextPageFailAction(err)))
       )
     )
   );

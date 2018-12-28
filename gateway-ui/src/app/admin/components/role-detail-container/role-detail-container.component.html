@@ -41,13 +41,23 @@
             <span> {{item.email}} </span>
           </ng-template>
         </mat-list-item>
-        <mat-list-item *ngFor="let user of users$ | async">
-          <p matLine>{{ user.username }}</p>
-          <p matLine>{{ user.email }}</p>
-          <button mat-icon-button color="warn" (click)="handleRemoveUser(user)">
-            <mat-icon>delete_forever</mat-icon>
-          </button>
-        </mat-list-item>
+        <ng-container *ngIf="users$ | async as users">
+          <cdk-virtual-scroll-viewport
+            itemSize="10"
+            class="virtual-viewport"
+            *ngIf="users.length > 0"
+            (scrolledIndexChange)="pageChange()">
+            <mat-list-item
+              *cdkVirtualFor="let user of users; let i = index; trackBy: trackByIdx"
+              class="list-item">
+              <p matLine>{{ user.username }}</p>
+              <p matLine>{{ user.email }}</p>
+              <button mat-icon-button color="warn" (click)="handleRemoveUser(user)">
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+            </mat-list-item>
+          </cdk-virtual-scroll-viewport>
+        </ng-container>
       </mat-list>
     </ng-template>
   </mat-tab>

@@ -4,7 +4,15 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ROUTER_NAVIGATION } from '@ngrx/router-store';
 import { select, Store } from '@ngrx/store';
 import { selectUserById } from '../reducers/user.selectors';
-import { switchMap, map, catchError, tap, filter, first } from 'rxjs/operators';
+import {
+  switchMap,
+  map,
+  catchError,
+  tap,
+  filter,
+  first,
+  withLatestFrom
+} from 'rxjs/operators';
 import { of } from 'rxjs';
 import { UserService } from '../services';
 

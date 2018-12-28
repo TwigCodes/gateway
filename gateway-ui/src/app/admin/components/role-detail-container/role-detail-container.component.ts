@@ -1,17 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { HttpParams } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { take, switchMap, filter } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { Subscription, BehaviorSubject, Observable } from 'rxjs';
 import { ConfirmService } from '@app/shared/confirm/confirm.service';
 import { UserSearchService } from '@app/admin/services/user-search.service';
 import { KeycloakUser } from '@app/admin/admin.model';
 
 import * as fromAdminReducer from '../../reducers';
 import * as fromRole from '../../actions/role.actions';
+import * as fromRoleDetail from '../../actions/role-detail.actions';
 import * as fromRoleDetailSelectors from '../../reducers/role-detail.selectors';
 import * as fromRoleMapping from '../../actions/role-mapping.actions';
 import * as _ from 'lodash';
@@ -22,6 +24,8 @@ import * as _ from 'lodash';
   styleUrls: ['./role-detail-container.component.scss']
 })
 export class RoleDetailContainerComponent implements OnInit, OnDestroy {
+  @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
+  readonly pageSize = 25;
   entityForm = new FormGroup({});
   model;
   params = new HttpParams().set('pageIndex', '0').set('pageSize', '25');
@@ -132,5 +136,18 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
   public isBuiltIn(roleId: string): boolean {
     const builtInRoles = ['admin', 'user'];
     return _.includes(builtInRoles, roleId);
+  }
+
+  trackByIdx(i) {
+    return i;
+  }
+
+  pageChange() {
+    const end = this.viewport.getRenderedRange().end;
+    const total = this.viewport.getDataLength();
+    console.log(`${end}, '>=', ${total}`);
+    if (end === total) {
+      this.store.dispatch(new fromRoleDetail.NextPageAction());
+    }
   }
 }
