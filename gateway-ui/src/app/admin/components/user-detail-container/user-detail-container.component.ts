@@ -139,7 +139,7 @@ export class UserDetailContainerComponent implements OnInit, OnDestroy {
       .pipe(
         take(1),
         filter(ok => ok),
-        switchMap(_ => this.model$.pipe(take(1)))
+        switchMap(__ => this.model$.pipe(take(1)))
       )
       .subscribe(user => {
         this.store.dispatch(new fromUser.DeleteAction(user.id));

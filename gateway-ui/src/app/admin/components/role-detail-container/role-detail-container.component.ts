@@ -111,7 +111,7 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
       .pipe(
         take(1),
         filter(ok => ok),
-        switchMap(_ => this.model$.pipe(take(1)))
+        switchMap(__ => this.model$.pipe(take(1)))
       )
       .subscribe(role => {
         this.store.dispatch(new fromRole.DeleteAction(role.name));

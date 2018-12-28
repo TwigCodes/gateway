@@ -210,13 +210,13 @@ export class ReviewContainerComponent implements OnInit {
     return relation;
   }
 
-  changeFilter(filter: string) {
+  changeFilter(filterStr: string) {
     this.currentFilter =
-      filter === 'supervisor'
+      filterStr === 'supervisor'
         ? 'supervisor'
-        : filter === 'subordinates'
+        : filterStr === 'subordinates'
         ? 'subordinates'
-        : filter === 'colleagues'
+        : filterStr === 'colleagues'
         ? 'colleagues'
         : 'all';
   }
