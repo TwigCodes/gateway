@@ -21,7 +21,7 @@ export abstract class BaseService<T extends Entity> extends CrudService<T> {
     this.loadingSubject.next(true);
     const params = new HttpParams()
       .set('search', search)
-      .set('first', String(pageIndex))
+      .set('first', String(pageIndex * pageSize))
       .set('max', String(pageSize));
 
     const url = `${this.baseUrl}/${this.entityPath}`;
@@ -34,7 +34,7 @@ export abstract class BaseService<T extends Entity> extends CrudService<T> {
   filter(filter: Filter, pageIndex: number, pageSize: number): Observable<T[]> {
     this.loadingSubject.next(true);
     const params = new HttpParams()
-      .set('first', String(pageIndex))
+      .set('first', String(pageIndex * pageSize))
       .set('max', String(pageSize));
     if (!filter) {
       return this.paged(pageIndex, pageSize);
@@ -62,7 +62,7 @@ export abstract class BaseService<T extends Entity> extends CrudService<T> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}`;
     const params = new HttpParams()
-      .set('first', String(pageIndex))
+      .set('first', String(pageIndex * pageSize))
       .set('max', String(pageSize));
     return this.httpClient.get<T[]>(url, { params: params }).pipe(
       catchError(this.handleError),
