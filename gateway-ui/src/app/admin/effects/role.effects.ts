@@ -95,7 +95,7 @@ export class RoleEffects {
     switchMap(roleId =>
       this.store.pipe(
         select(selectRoleById(roleId)),
-        filter(val => val !== null && val !== undefined),
+        filter(val => val != null),
         first(),
         map(role => new fromRoleDetail.GetByIdAction(role))
       )

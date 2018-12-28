@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { map, filter, take } from 'rxjs/operators';
 import { PageEvent, MatDialog } from '@angular/material';
@@ -48,7 +49,8 @@ export class UsersContainerComponent implements OnInit {
   constructor(
     private store: Store<fromAdminReducer.State>,
     private dialog: MatDialog,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -87,25 +89,26 @@ export class UsersContainerComponent implements OnInit {
   }
 
   handleUpdate(user: KeycloakUser) {
-    const dialogRef = this.dialog.open(UserDialogComponent, {
-      data: {
-        title: this.translate.instant('tgapp.admin.user-dialog.edit.title'),
-        payload: user
-      }
-    });
-    dialogRef
-      .afterClosed()
-      .pipe(
-        filter(val => val),
-        take(1)
-      )
-      .subscribe(val =>
-        this.store.dispatch(
-          new fromUser.UpdateAction({
-            id: user.id,
-            update: { ...user, ...val }
-          })
-        )
-      );
+    this.router.navigate([`/admin/users/${user.id}`]);
+    // const dialogRef = this.dialog.open(UserDialogComponent, {
+    //   data: {
+    //     title: this.translate.instant('tgapp.admin.user-dialog.edit.title'),
+    //     payload: user
+    //   }
+    // });
+    // dialogRef
+    //   .afterClosed()
+    //   .pipe(
+    //     filter(val => val),
+    //     take(1)
+    //   )
+    //   .subscribe(val =>
+    //     this.store.dispatch(
+    //       new fromUser.UpdateAction({
+    //         id: user.id,
+    //         update: { ...user, ...val }
+    //       })
+    //     )
+    //   );
   }
 }

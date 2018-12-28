@@ -1,5 +1,6 @@
 {
   "tgapp.user.search.norecord": "没找到包含该关键字的用户",
+  "tgapp.role.search.norecord": "没找到包含该关键字的角色",
   "tgapp.confirm.delete.title": "删除数据",
   "tgapp.confirm.delete.message": "确认删除后将无法再恢复，是否要删除？",
   "tgapp.confirm.delete.ok": "确认",
@@ -7,6 +8,9 @@
   "tgapp.admin.roledetail.info": "角色信息",
   "tgapp.admin.roledetail.users": "拥有该角色的用户",
   "tgapp.admin.roledetail.users.addrolemapping": "添加角色到用户，输入关键字搜索",
+  "tgapp.admin.userdetail.info": "用户信息",
+  "tgapp.admin.userdetail.roles": "角色",
+  "tgapp.admin.userdetail.roles.addrolemapping": "添加用户角色，输入关键字搜索",
   "tgapp.admin.guard.notification": "您没有访问权限！",
   "tgapp.admin.filter.placeholder": "请输入设置的名称进行筛选",
   "tgapp.admin.role.filter.placeholder": "请输入角色的名称进行筛选",

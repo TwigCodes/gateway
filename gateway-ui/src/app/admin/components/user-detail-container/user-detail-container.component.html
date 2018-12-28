@@ -1,3 +1,50 @@
-<p>
-  user-detail-container works!
-</p>
+<mat-tab-group>
+  <mat-tab label="{{ 'tgapp.admin.userdetail.info' | translate }}">
+    <ng-template matTabContent>
+      <form [formGroup]="entityForm" (ngSubmit)="submit()">
+        <formly-form [model]="model" [fields]="fields" [form]="entityForm">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <span>
+              <button mat-flat-button type="button" [routerLink]="['/admin/users']">
+                {{ 'tgapp.form.cancel.button' | translate }}
+              </button>
+              <button mat-button color="warn" type="button" (click)="handleDelete()" [disabled]="isBuiltIn(model.username)">
+                {{ 'tgapp.form.delete.button' | translate }}
+              </button>
+            </span>
+            <button mat-raised-button color="primary" [disabled]="entityForm.invalid || isBuiltIn(model.username)">
+              {{ 'tgapp.form.save.button' | translate }}
+            </button>
+          </div>
+        </formly-form>
+      </form>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="{{ 'tgapp.admin.userdetail.roles' | translate }}">
+    <ng-template matTabContent>
+      <mat-list>
+        <mat-list-item>
+          <ngx-mat-autocomplete
+            class="full-width"
+            [placeholder]="'tgapp.admin.userdetail.roles.addrolemapping' | translate"
+            [source]="source$ | async"
+            [hasProgressBar]="true"
+            [clearAfterSearch]="true"
+            [displayTemplate]="itemTemplate"
+            [noRecordText]="'tgapp.role.search.norecord' | translate"
+            (optionSelected)="selectRole($event)">
+          </ngx-mat-autocomplete>
+          <ng-template #itemTemplate let-item>
+            <span> {{ item.name }}</span>
+          </ng-template>
+        </mat-list-item>
+        <mat-list-item *ngFor="let role of roles$ | async">
+          <p matLine>{{ role.name }}</p>
+          <button mat-icon-button color="warn" (click)="handleRemoveRole(role)">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

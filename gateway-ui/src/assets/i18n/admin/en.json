@@ -1,5 +1,6 @@
 {
-  "tgapp.user.search.norecord": "found no record matched",
+  "tgapp.user.search.norecord": "no matched records found",
+  "tgapp.role.search.norecord": "no matched records found",
   "tgapp.confirm.delete.title": "To Delete The Item",
   "tgapp.confirm.delete.message": "It is not possible to recover the deleted one, please confirm if you are sure about that",
   "tgapp.confirm.delete.ok": "Confirm",
@@ -7,6 +8,9 @@
   "tgapp.admin.roledetail.info": "Role Info",
   "tgapp.admin.roledetail.users": "Users who have the role",
   "tgapp.admin.roledetail.users.addrolemapping": "Type keywords in user's email or name",
+  "tgapp.admin.userdetail.info": "User Info",
+  "tgapp.admin.userdetail.roles": "Roles",
+  "tgapp.admin.userdetail.roles.addrolemapping": "Type keywords in role's email or name",
   "tgapp.admin.guard.notification": "You do not have access rights!",
   "tgapp.admin.filter.placeholder": "Please type the name of settings to filter",
   "tgapp.admin.role.filter.placeholder": "Please type the name of role to filter",

@@ -1,40 +1,33 @@
-import { RoleDetailActions, ActionTypes } from '../actions/role-detail.actions';
+import { UserDetailActions, ActionTypes } from '../actions/user-detail.actions';
 import { KeycloakUser, KeycloakRole } from '../admin.model';
 import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 
 import * as fromRoleMapping from '../actions/role-mapping.actions';
 
-export interface State extends EntityState<KeycloakUser> {
-  pageIndex: number;
-  pageSize: number;
+export interface State extends EntityState<KeycloakRole> {
   loading: boolean;
-  role: KeycloakRole | null;
+  user: KeycloakUser | null;
 }
 
-export const adapter: EntityAdapter<KeycloakUser> = createEntityAdapter<
-  KeycloakUser
+export const adapter: EntityAdapter<KeycloakRole> = createEntityAdapter<
+  KeycloakRole
 >({
-  selectId: (user: KeycloakUser) => user.id,
+  selectId: (role: KeycloakRole) => role.name,
   sortComparer: false
 });
 
 const initialState: State = adapter.getInitialState({
-  pageIndex: 0,
-  pageSize: 25,
   loading: false,
-  role: null
+  user: null
 });
 
 export function reducer(
   state = initialState,
-  action: RoleDetailActions | fromRoleMapping.RoleMappingActions
+  action: UserDetailActions | fromRoleMapping.RoleMappingActions
 ): State {
   switch (action.type) {
-    case ActionTypes.GetUsersByRoleSuccess: {
+    case ActionTypes.GetRolesByUserSuccess: {
       return { ...adapter.addAll(action.payload, state) };
-    }
-    case ActionTypes.PageChange: {
-      return { ...state, ...action.payload };
     }
     case ActionTypes.LoadStart: {
       return { ...state, loading: true };
@@ -43,12 +36,12 @@ export function reducer(
       return { ...state, loading: false };
     }
     case ActionTypes.GetById: {
-      return { ...state, role: action.payload };
+      return { ...state, user: action.payload };
     }
-    case fromRoleMapping.ActionTypes.AddUserToRoleSuccess: {
+    case fromRoleMapping.ActionTypes.AddRoleToUserSuccess: {
       return { ...state, ...adapter.addOne(action.payload, state) };
     }
-    case fromRoleMapping.ActionTypes.DeleteUserFromRoleSuccess: {
+    case fromRoleMapping.ActionTypes.DeleteRoleFromUserSuccess: {
       return { ...state, ...adapter.removeOne(action.payload, state) };
     }
     default: {

@@ -38,3 +38,9 @@ export const selectSearch = createSelector(
   selectUserState,
   state => state.search
 );
+
+export const selectUserById = (id: string) =>
+  createSelector(
+    selectUserState,
+    state => (state.entities[id] ? state.entities[id] : null)
+  );

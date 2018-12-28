@@ -1,16 +1,20 @@
-<ngx-bread-crumbs [crumbs]="crumbs"></ngx-bread-crumbs>
-<ngx-list-or-grid-with-filter
-  filterPlaceholder="{{ 'tgapp.admin.user.filter.placeholder' | translate }}"
-  [items]="users$ | async"
-  [showAdd]="true"
-  (select)="handleUpdate($event)"
-  (add)="handleAdd()">
+<mat-card class="mat-elevation-z8">
+  <ngx-bread-crumbs [crumbs]="crumbs"></ngx-bread-crumbs>
+  <div fxLayout="row nowrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+    <div fxFlex="1 1 auto" fxFlexFill>
+      <ngx-list-or-grid-with-filter
+        filterPlaceholder="{{ 'tgapp.admin.user.filter.placeholder' | translate }}"
+        [items]="users$ | async"
+        [showAdd]="true"
+        (select)="handleUpdate($event)"
+        (add)="handleAdd()">
+      </ngx-list-or-grid-with-filter>
+      <mat-paginator [length]="total$ | async" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]" (page)="handlePage($event)">
+      </mat-paginator>
+    </div>
+    <div fxFlex="1 1 auto">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</mat-card>
 
-</ngx-list-or-grid-with-filter>
-<mat-paginator
-  [length]="total$ | async"
-  [pageSize]="pageSize"
-  [pageSizeOptions]="[5, 10, 25, 100]"
-  (page)="handlePage($event)">
-
-</mat-paginator>

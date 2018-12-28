@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  OnDestroy
-} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
@@ -13,19 +8,18 @@ import { take, switchMap, filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from '@app/shared/confirm/confirm.service';
 import { UserSearchService } from '@app/admin/services/user-search.service';
-import { KeycloakUser, KeycloakRole } from '@app/admin/admin.model';
+import { KeycloakUser } from '@app/admin/admin.model';
 
 import * as fromAdminReducer from '../../reducers';
 import * as fromRole from '../../actions/role.actions';
-import * as fromRoleDetail from '../../actions/role-detail.actions';
 import * as fromRoleDetailSelectors from '../../reducers/role-detail.selectors';
+import * as fromRoleMapping from '../../actions/role-mapping.actions';
 import * as _ from 'lodash';
 
 @Component({
   selector: 'tgapp-role-detail-container',
   templateUrl: './role-detail-container.component.html',
-  styleUrls: ['./role-detail-container.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default
+  styleUrls: ['./role-detail-container.component.scss']
 })
 export class RoleDetailContainerComponent implements OnInit, OnDestroy {
   entityForm = new FormGroup({});
@@ -103,7 +97,7 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
   handleRemoveUser(user: KeycloakUser) {
     this.model$.pipe(take(1)).subscribe(role => {
       this.store.dispatch(
-        new fromRoleDetail.DeleteUserFromRoleAction({
+        new fromRoleMapping.DeleteUserFromRoleAction({
           user: user,
           role: role
         })
@@ -127,7 +121,7 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
   selectUser(user: KeycloakUser) {
     this.model$.pipe(take(1)).subscribe(role => {
       this.store.dispatch(
-        new fromRoleDetail.AddUserToRoleAction({
+        new fromRoleMapping.AddUserToRoleAction({
           user: user,
           role: role
         })

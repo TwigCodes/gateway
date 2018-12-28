@@ -1,13 +1,25 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { ROUTER_NAVIGATION } from '@ngrx/router-store';
+import { select, Store } from '@ngrx/store';
+import { selectUserById } from '../reducers/user.selectors';
+import { switchMap, map, catchError, tap, filter, first } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { UserService } from '../services';
+
 import * as fromUser from '../actions/user.actions';
+import * as fromUserDetail from '../actions/user-detail.actions';
+import * as fromAdminReducer from '../reducers';
 
 @Injectable()
 export class UserEffects {
-  constructor(private actions$: Actions, private service: UserService) {}
+  constructor(
+    private actions$: Actions,
+    private service: UserService,
+    private router: Router,
+    private store: Store<fromAdminReducer.State>
+  ) {}
   @Effect()
   add = this.actions$.pipe(
     ofType<fromUser.AddAction>(fromUser.ActionTypes.Add),
@@ -61,6 +73,59 @@ export class UserEffects {
       this.service.count().pipe(
         map(result => new fromUser.CountSuccessAction(result)),
         catchError(err => of(new fromUser.CountFailAction(err)))
+      )
+    )
+  );
+
+  @Effect({ dispatch: false })
+  successAndNavigate = this.actions$.pipe(
+    ofType<fromUser.UpdateSuccessAction | fromUser.DeleteSuccessAction>(
+      fromUser.ActionTypes.UpdateSuccess,
+      fromUser.ActionTypes.DeleteSuccess
+    ),
+    tap(_ => this.router.navigate(['/admin/users']))
+  );
+
+  @Effect()
+  getById = this.actions$.pipe(
+    ofType(ROUTER_NAVIGATION),
+    filter(
+      (action: any) =>
+        action.payload.event.url.indexOf('/admin/users') > -1 &&
+        action.payload.routerState.params['userId']
+    ),
+    map(action => action.payload.routerState.params['userId']),
+    switchMap(userId =>
+      this.store.pipe(
+        select(selectUserById(userId)),
+        filter(val => val != null),
+        first(),
+        map(user => new fromUserDetail.GetByIdAction(user))
+      )
+    )
+  );
+
+  @Effect()
+  getRolesByUser = this.actions$.pipe(
+    ofType(ROUTER_NAVIGATION),
+    filter(
+      (action: any) =>
+        action.payload.event.url.indexOf('/admin/users') > -1 &&
+        action.payload.routerState.params['userId']
+    ),
+    map(action => action.payload.routerState.params['userId']),
+    switchMap(roleId =>
+      this.store.pipe(
+        select(selectUserById(roleId)),
+        filter(val => val != null),
+        first(),
+        map(user => user.id)
+      )
+    ),
+    switchMap(userId =>
+      this.service.getRolesByUserId(userId).pipe(
+        map(result => new fromUserDetail.GetRolesByUserSuccessAction(result)),
+        catchError(err => of(new fromUserDetail.GetRolesByUserFailAction(err)))
       )
     )
   );
