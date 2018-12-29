@@ -146,7 +146,7 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
     const end = this.viewport.getRenderedRange().end;
     const total = this.viewport.getDataLength();
     console.log(`${end}, '>=', ${total}`);
-    if (end === total) {
+    if (end === total && total >= this.pageSize) {
       this.store.dispatch(new fromRoleDetail.NextPageAction());
     }
   }
