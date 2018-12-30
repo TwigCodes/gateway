@@ -73,23 +73,11 @@ library.add(
   faBook
 );
 import { FormlyMaterialModule } from '@ngx-formly/material';
-import {
-  DynaTableModule,
-  MaterialModule,
-  CdkModule,
-  CheckBoxListModule,
-  MultiSelectChipsModule,
-  AutocompleteModule,
-  BigInputModule,
-  JsonDiffModule,
-  BreadCrumbsModule,
-  ListOrGridWithFilterModule,
-  ConfirmDialogModule
-} from '@app/libs';
 
 import { FilterMenuComponent } from './filter-menu/filter-menu.component';
 import { FormlyModule } from '@ngx-formly/core';
 import { ConfirmService } from './confirm/confirm.service';
+import { TwigLibsModule } from '@app/libs/twig-ng-lib.module';
 
 @NgModule({
   imports: [
@@ -101,7 +89,7 @@ import { ConfirmService } from './confirm/confirm.service';
 
     TranslateModule,
 
-    MaterialModule,
+    TwigLibsModule,
     FlexLayoutModule,
 
     FontAwesomeModule,
@@ -120,18 +108,7 @@ import { ConfirmService } from './confirm/confirm.service';
 
     TranslateModule,
 
-    MaterialModule,
-    CdkModule,
-    FlexLayoutModule,
-    DynaTableModule,
-    CheckBoxListModule,
-    MultiSelectChipsModule,
-    AutocompleteModule,
-    BigInputModule,
-    JsonDiffModule,
-    BreadCrumbsModule,
-    ListOrGridWithFilterModule,
-    ConfirmDialogModule,
+    TwigLibsModule,
 
     FontAwesomeModule
   ]

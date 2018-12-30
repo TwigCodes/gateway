@@ -6,7 +6,7 @@ import { Store, select } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { take, switchMap, filter } from 'rxjs/operators';
-import { Subscription, BehaviorSubject, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ConfirmService } from '@app/shared/confirm/confirm.service';
 import { UserSearchService } from '@app/admin/services/user-search.service';
 import { KeycloakUser } from '@app/admin/admin.model';

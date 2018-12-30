@@ -107,6 +107,43 @@ Content-Type: application/json
 DELETE {{baseUrl}}/admin/realms/{{realm}}/users/4b96880c-5db5-4c1f-a70f-01f7ab78e6bf HTTP/1.1
 Authorization: Bearer {{accessToken}}
 
+###
+# @name getGroups
+GET {{adminBaseUrl}}/groups HTTP/1.1
+Authorization: Bearer {{accessToken}}
+
+###
+@groupId = {{getGroups.response.body.$[0].id}}
+
+###
+# @name getGroupById
+GET {{adminBaseUrl}}/groups/{{groupId}} HTTP/1.1
+Authorization: Bearer {{accessToken}}
+
+
+###
+# @name addGroup
+POST {{adminBaseUrl}}/groups HTTP/1.1
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "name": "testgroup1",
+  "path": "/testgroup1",
+  "subGroups": []
+}
+
+###
+# @name setOrCreateChild
+POST {{adminBaseUrl}}/groups/{{groupId}}/children HTTP/1.1
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "name": "subgroup1",
+  "path": "/testgroup1/subgroup1",
+  "subGroups": []
+}
 
 ###
 curl -X POST -k -vu test_client:test_secret http://localhost:8095/oauth/token -H "Accept: application/json" -d "password=password&username=admin&grant_type=password&scope=read&client_secret=test_secret&client_id=test_client"

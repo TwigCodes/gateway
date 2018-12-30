@@ -15,14 +15,17 @@ import {
   UserDialogComponent,
   RoleDialogComponent,
   RoleDetailContainerComponent,
-  UserDetailContainerComponent
+  UserDetailContainerComponent,
+  GroupsContainerComponent,
+  GroupDetailContainerComponent
 } from './components';
 
 import {
   UserEffects,
   RoleEffects,
   RoleMappingEffects,
-  AdminEffects
+  AdminEffects,
+  GroupEffects
 } from './effects';
 import * as fromAdmin from './reducers';
 
@@ -34,7 +37,9 @@ import * as fromAdmin from './reducers';
     UserDialogComponent,
     RoleDialogComponent,
     RoleDetailContainerComponent,
-    UserDetailContainerComponent
+    UserDetailContainerComponent,
+    GroupsContainerComponent,
+    GroupDetailContainerComponent
   ],
   imports: [
     SharedModule,
@@ -51,6 +56,7 @@ import * as fromAdmin from './reducers';
     EffectsModule.forFeature([
       UserEffects,
       RoleEffects,
+      GroupEffects,
       RoleMappingEffects,
       AdminEffects
     ])

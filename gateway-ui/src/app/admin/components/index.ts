@@ -5,3 +5,5 @@ export * from './user-dialog/user-dialog.component';
 export * from './role-dialog/role-dialog.component';
 export * from './user-detail-container/user-detail-container.component';
 export * from './role-detail-container/role-detail-container.component';
+export * from './groups-container/groups-container.component';
+export * from './group-detail-container/group-detail-container.component';

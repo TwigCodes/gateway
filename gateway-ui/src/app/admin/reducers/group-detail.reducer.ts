@@ -1,14 +1,15 @@
 import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import { RoleDetailActions, ActionTypes } from '../actions/role-detail.actions';
-import { KeycloakUser, KeycloakRole } from '../admin.model';
-
-import * as fromRoleMapping from '../actions/role-mapping.actions';
+import {
+  GroupDetailActions,
+  ActionTypes
+} from '../actions/group-detail.actions';
+import { KeycloakUser, KeycloakGroup } from '../admin.model';
 
 export interface State extends EntityState<KeycloakUser> {
   pageIndex: number;
   pageSize: number;
   loading: boolean;
-  role: KeycloakRole | null;
+  group: KeycloakGroup | null;
 }
 
 export const adapter: EntityAdapter<KeycloakUser> = createEntityAdapter<
@@ -22,18 +23,18 @@ const initialState: State = adapter.getInitialState({
   pageIndex: 0,
   pageSize: 25,
   loading: false,
-  role: null
+  group: null
 });
 
 export function reducer(
   state = initialState,
-  action: RoleDetailActions | fromRoleMapping.RoleMappingActions
+  action: GroupDetailActions
 ): State {
   switch (action.type) {
     case ActionTypes.NextPageSuccess: {
       return { ...state, ...adapter.addMany(action.payload, state) };
     }
-    case ActionTypes.GetUsersByRoleSuccess: {
+    case ActionTypes.GetUsersByGroupSuccess: {
       return { ...adapter.addAll(action.payload, state) };
     }
     case ActionTypes.PageChange: {
@@ -49,13 +50,7 @@ export function reducer(
       return { ...state, loading: false };
     }
     case ActionTypes.GetById: {
-      return { ...state, role: action.payload };
-    }
-    case fromRoleMapping.ActionTypes.AddUserToRoleSuccess: {
-      return { ...state, ...adapter.addOne(action.payload, state) };
-    }
-    case fromRoleMapping.ActionTypes.DeleteUserFromRoleSuccess: {
-      return { ...state, ...adapter.removeOne(action.payload, state) };
+      return { ...state, group: action.payload };
     }
     default: {
       return state;

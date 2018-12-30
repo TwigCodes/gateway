@@ -1,0 +1,12 @@
+<mat-card class="mat-elevation-z8">
+  <ngx-bread-crumbs [crumbs]="crumbs"></ngx-bread-crumbs>
+  <div fxLayout="row nowrap" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+    <div fxFlex="1 1 auto">
+      <ngx-simple-tree [dataSource]="data$" (nodeSelected)="handleSelected($event)">
+      </ngx-simple-tree>
+    </div>
+    <div fxFlex="1 1 auto" fxFlexFill>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</mat-card>

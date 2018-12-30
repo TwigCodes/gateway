@@ -34,6 +34,7 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
+  MatTreeModule,
   MatStepperModule,
   MatPaginatorIntl
 } from '@angular/material';
@@ -73,6 +74,7 @@ const MATERIAL_MODULES = [
   MatTooltipModule,
   MatSortModule,
   MatTableModule,
+  MatTreeModule,
   MatStepperModule
 ];
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
-import { KeycloakUser, KeycloakRole } from '../admin.model';
+import { KeycloakUser, KeycloakRole, KeycloakGroup } from '../admin.model';
 import { Observable } from 'rxjs';
 import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 import {
@@ -87,5 +87,17 @@ export class UserService extends BaseService<KeycloakUser> {
         catchError(this.handleError),
         finalize(() => this.loadingSubject.next(false))
       );
+  }
+
+  /**
+   * getUserGroups
+   */
+  public getUserGroups(id: string) {
+    this.loadingSubject.next(true);
+    const url = `${this.baseUrl}/${this.entityPath}/${id}/groups`;
+    return this.http.get<KeycloakGroup[]>(url).pipe(
+      catchError(this.handleError),
+      finalize(() => this.loadingSubject.next(false))
+    );
   }
 }

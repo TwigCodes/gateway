@@ -5,7 +5,9 @@ import {
   RolesContainerComponent,
   UsersContainerComponent,
   RoleDetailContainerComponent,
-  UserDetailContainerComponent
+  UserDetailContainerComponent,
+  GroupsContainerComponent,
+  GroupDetailContainerComponent
 } from './components';
 import { AdminGuard } from './admin.guard';
 
@@ -43,6 +45,20 @@ const routes: Routes = [
       {
         path: ':userId',
         component: UserDetailContainerComponent
+      }
+    ]
+  },
+  {
+    path: 'groups',
+    component: GroupsContainerComponent,
+    canActivate: [AdminGuard],
+    data: {
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: ':groupId',
+        component: GroupDetailContainerComponent
       }
     ]
   }
