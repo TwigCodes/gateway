@@ -146,6 +146,9 @@ export class GroupsContainerComponent implements OnInit, OnDestroy {
         );
       });
   }
+  handleLoadMore() {
+    console.log('hello');
+  }
   isTopNode(group: KeycloakGroup): boolean {
     return group.path.split('/').filter(val => val).length === 1;
   }

@@ -19,6 +19,8 @@ import { SimpleTreeNode } from './simple-tree-node';
 export class SimpleTreeComponent implements OnInit {
   @Input() dataSource: Observable<SimpleTreeNode[]>;
   @Input() menuTemplate: TemplateRef<any>;
+  @Input() loadMoreTemplate: TemplateRef<any>;
+  @Input() showLoadMore = false;
   @Output() nodeSelected = new EventEmitter();
   menuToggle: { [id: string]: boolean };
   _selectedNodeId: string;
@@ -35,6 +37,8 @@ export class SimpleTreeComponent implements OnInit {
   }
   hasNestedChild = (_: number, nodeData: SimpleTreeNode) =>
     nodeData.children.length > 0;
+  loadMore = (index: number, _: SimpleTreeNode) =>
+    this.showLoadMore && index === this.nestedDataSource.data.length - 1;
 
   private _getChildren = (node: SimpleTreeNode) => node.children;
 
