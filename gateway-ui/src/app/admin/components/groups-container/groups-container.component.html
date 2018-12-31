@@ -4,11 +4,11 @@
     <div fxFlex="1 1 auto" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
       <mat-form-field>
         <input matInput placeholder="搜索群组名称" (keyup)="handleSearch($event.target.value)" #search>
-        <button mat-icon-button matSuffix *ngIf="search.value" (click)="search.value = '';handleSearch('')">
+        <button mat-icon-button matSuffix *ngIf="search.value" (click)="search.value = '';clearSearch()">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
-      <ngx-simple-tree fxFlex="1 1 420px" class="tree-sidebar" [dataSource]="data$" [menuTemplate]="menu" [showLoadMore]="true" [loadMoreTemplate]="loadMore" (nodeSelected)="handleSelected($event)">
+      <ngx-simple-tree fxFlex="1 1 420px" class="tree-sidebar" [dataSource]="data$" [menuTemplate]="menu" [showLoadMore]="showLoadMore$ | async" [loadMoreTemplate]="loadMore" (nodeSelected)="handleSelected($event)">
       </ngx-simple-tree>
     </div>
     <div fxFlex="1 1 auto" fxFlexFill>

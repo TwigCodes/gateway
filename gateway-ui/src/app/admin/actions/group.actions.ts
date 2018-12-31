@@ -17,15 +17,17 @@ export enum ActionTypes {
   Update = '[GroupPage] Update',
   UpdateSuccess = '[GroupApi] Update Success',
   UpdateFail = '[GroupApi] Update Fail',
-  LoadPage = '[GroupPage] LoadPage',
-  LoadPageSuccess = '[GroupApi] LoadPage Success',
-  LoadPageFail = '[GroupApi] LoadPage Fail',
+  NextPage = '[GroupPage] Next Page',
+  LoadPage = '[GroupPage] Load Page',
+  LoadPageSuccess = '[GroupApi] Load Page Success',
+  LoadPageFail = '[GroupApi] Load Page Fail',
   Count = '[GroupPage] Count',
   CountSuccess = '[GroupApi] Count Success',
   CountFail = '[GroupApi] Count Fail',
   Search = '[GroupPage] Search',
   SearchSuccess = '[GroupApi] Search Success',
-  SearchFail = '[GroupApi] Search Fail'
+  SearchFail = '[GroupApi] Search Fail',
+  ClearSearch = '[GroupPage] Clear Search'
 }
 
 export class AddTopAction implements Action {
@@ -90,6 +92,11 @@ export class UpdateFailAction implements Action {
   constructor(public payload: string) {}
 }
 
+export class NextPageAction implements Action {
+  readonly type = ActionTypes.NextPage;
+  constructor() {}
+}
+
 export class LoadPageAction implements Action {
   readonly type = ActionTypes.LoadPage;
   constructor(public payload: { pageIndex: number; pageSize: number }) {}
@@ -135,6 +142,11 @@ export class SearchFailAction implements Action {
   constructor(public payload: string) {}
 }
 
+export class ClearSearchAction implements Action {
+  readonly type = ActionTypes.ClearSearch;
+  constructor() {}
+}
+
 export type GroupActions =
   | AddTopAction
   | AddTopSuccessAction
@@ -148,6 +160,7 @@ export type GroupActions =
   | DeleteAction
   | DeleteSuccessAction
   | DeleteFailAction
+  | NextPageAction
   | LoadPageAction
   | LoadPageSuccessAction
   | LoadPageFailAction
@@ -156,4 +169,5 @@ export type GroupActions =
   | CountFailAction
   | SearchAction
   | SearchSuccessAction
-  | SearchFailAction;
+  | SearchFailAction
+  | ClearSearchAction;

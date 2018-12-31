@@ -14,13 +14,12 @@ import {
 } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { GroupService } from '../services';
-import { KeycloakGroup } from '../admin.model';
 
 import * as fromGroup from '../actions/group.actions';
 import * as fromGroupDetail from '../actions/group-detail.actions';
 import * as fromAdminReducer from '../reducers';
-import * as fromGroupDetailSelectors from '../reducers/group-detail.selectors';
-import * as fromGroupSelectors from '../reducers/group.selectors';
+import * as fromGroupDetailSelectors from '../reducers/groups/group-detail.selectors';
+import * as fromGroupSelectors from '../reducers/groups/group.selectors';
 
 @Injectable()
 export class GroupEffects {
@@ -93,6 +92,19 @@ export class GroupEffects {
   );
 
   @Effect()
+  nextPage = this.actions$.pipe(
+    ofType<fromGroup.NextPageAction>(fromGroup.ActionTypes.NextPage),
+    withLatestFrom(
+      this.store.pipe(select(fromGroupSelectors.selectPageIndex)),
+      this.store.pipe(select(fromGroupSelectors.selectPageSize))
+    ),
+    map(
+      ([_, pageIndex, pageSize]) =>
+        new fromGroup.LoadPageAction({ pageIndex, pageSize })
+    )
+  );
+
+  @Effect()
   count = this.actions$.pipe(
     ofType<fromGroup.CountAction>(fromGroup.ActionTypes.Count),
     switchMap(_ =>
@@ -108,14 +120,27 @@ export class GroupEffects {
     ofType<fromGroup.SearchAction>(fromGroup.ActionTypes.Search),
     map(action => action.payload),
     withLatestFrom(
-      this.store.pipe(select(fromGroupDetailSelectors.selectPageIndex)),
-      this.store.pipe(select(fromGroupDetailSelectors.selectPageSize))
+      this.store.pipe(select(fromGroupSelectors.selectPageIndex)),
+      this.store.pipe(select(fromGroupSelectors.selectPageSize))
     ),
     switchMap(([search, pageIndex, pageSize]) =>
       this.service.search(search, pageIndex, pageSize).pipe(
         map(result => new fromGroup.SearchSuccessAction(result)),
         catchError(err => of(new fromGroup.SearchFailAction(err)))
       )
+    )
+  );
+
+  @Effect()
+  clearSearch = this.actions$.pipe(
+    ofType<fromGroup.ClearSearchAction>(fromGroup.ActionTypes.ClearSearch),
+    withLatestFrom(
+      this.store.pipe(select(fromGroupSelectors.selectPageIndex)),
+      this.store.pipe(select(fromGroupSelectors.selectPageSize))
+    ),
+    map(
+      ([_, pageIndex, pageSize]) =>
+        new fromGroup.LoadPageAction({ pageIndex, pageSize })
     )
   );
 

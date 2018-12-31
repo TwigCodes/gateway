@@ -9,12 +9,16 @@ export interface KeycloakRole {
 
 export interface KeycloakUser {
   id: string;
+  totp: boolean;
   username: string;
   email: string;
   enabled: boolean;
+  emailVerified: boolean;
   firstName: string;
   lastName: string;
   createdTimestamp: number;
+  attributes?: { [key: string]: string | string[] };
+  access?: { [key: string]: boolean };
 }
 
 export interface KeycloakGroup {

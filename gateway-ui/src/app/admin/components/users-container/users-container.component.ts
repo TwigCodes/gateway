@@ -5,7 +5,10 @@ import { map, filter, take } from 'rxjs/operators';
 import { PageEvent, MatDialog } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-import { selectAll, selectCount } from '@app/admin/reducers/user.selectors';
+import {
+  selectAll,
+  selectCount
+} from '@app/admin/reducers/users/user.selectors';
 import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
 import { KeycloakUser } from '@app/admin/admin.model';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';

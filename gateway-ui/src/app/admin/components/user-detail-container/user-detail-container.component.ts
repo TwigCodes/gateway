@@ -11,9 +11,9 @@ import { KeycloakRole } from '@app/admin/admin.model';
 import * as fromAdminReducer from '../../reducers';
 import * as fromUser from '../../actions/user.actions';
 import * as fromRoleMapping from '../../actions/role-mapping.actions';
-import * as fromUserDetailSelectors from '../../reducers/user-detail.selectors';
+import * as fromUserDetailSelectors from '../../reducers/users/user-detail.selectors';
 import * as fromRole from '../../actions/role.actions';
-import * as fromRoleSelectors from '../../reducers/role.selectors';
+import * as fromRoleSelectors from '../../reducers/roles/role.selectors';
 import * as _ from 'lodash';
 
 @Component({

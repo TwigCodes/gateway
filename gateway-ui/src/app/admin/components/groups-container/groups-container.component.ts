@@ -24,7 +24,7 @@ import { GroupDialogComponent } from '../group-dialog/group-dialog.component';
 
 import * as fromAdmin from '../../reducers';
 import * as fromGroup from '../../actions/group.actions';
-import * as fromGroupSelectors from '../../reducers/group.selectors';
+import * as fromGroupSelectors from '../../reducers/groups/group.selectors';
 
 @Component({
   selector: 'tgapp-groups-container',
@@ -51,7 +51,9 @@ export class GroupsContainerComponent implements OnInit, OnDestroy {
     select(fromGroupSelectors.selectAllInTree),
     map(groups => this.convertData(groups))
   );
-
+  showLoadMore$ = this.store.pipe(
+    select(fromGroupSelectors.selectShowLoadMore)
+  );
   constructor(
     private store: Store<fromAdmin.State>,
     private translate: TranslateService,
@@ -72,9 +74,9 @@ export class GroupsContainerComponent implements OnInit, OnDestroy {
           debounceTime(300),
           distinctUntilChanged()
         )
-        .subscribe(search =>
-          this.store.dispatch(new fromGroup.SearchAction(search))
-        )
+        .subscribe(search => {
+          this.store.dispatch(new fromGroup.SearchAction(search));
+        })
     );
   }
   ngOnDestroy(): void {
@@ -96,6 +98,9 @@ export class GroupsContainerComponent implements OnInit, OnDestroy {
   }
   handleSearch(search: string) {
     this.searchChange.next(search);
+  }
+  clearSearch() {
+    this.store.dispatch(new fromGroup.ClearSearchAction());
   }
   handleAddSibling(group: KeycloakGroup) {
     const dialogRef = this.dialog.open(GroupDialogComponent, {
@@ -147,15 +152,13 @@ export class GroupsContainerComponent implements OnInit, OnDestroy {
       });
   }
   handleLoadMore() {
-    console.log('hello');
+    this.store.dispatch(new fromGroup.NextPageAction());
   }
   isTopNode(group: KeycloakGroup): boolean {
     return group.path.split('/').filter(val => val).length === 1;
   }
   getParentId(id: string, all: KeycloakGroupDTO[]): string | null {
     const subs = all.filter(sub => sub.subGroups.includes(id));
-    console.log('subs', subs[0].id);
-
     return subs.length > 0 ? subs[0].id : null;
   }
 }

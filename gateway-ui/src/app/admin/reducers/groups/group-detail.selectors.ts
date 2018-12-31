@@ -1,10 +1,10 @@
 import { createSelector } from '@ngrx/store';
-import { selectAdminState } from './admin.state';
+import { selectAdminState } from '../admin.state';
 import * as fromGroupDetail from './group-detail.reducer';
 
 export const selectGroupDetailState = createSelector(
   selectAdminState,
-  state => state.groupdetail
+  state => state.group_detail
 );
 
 export const {

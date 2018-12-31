@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { KeycloakGroup, KeycloakUser } from '../admin.model';
+import { KeycloakGroup, KeycloakUser, KeycloakRole } from '../admin.model';
 import { BaseService } from './base.service';
-import { map, catchError, finalize, switchMap } from 'rxjs/operators';
+import { map, catchError, finalize, switchMap, mapTo } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -58,10 +58,43 @@ export class GroupService extends BaseService<KeycloakGroup> {
   /**
    * getGroupRealmRoles
    */
-  public getGroupRealmRoles(id: string) {
+  public getGroupRealmRoles(id: string): Observable<KeycloakRole[]> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}/${id}/role-mappings/realm`;
-    return this.httpClient.get<KeycloakUser>(url).pipe(
+    return this.httpClient.get<KeycloakRole[]>(url).pipe(
+      catchError(this.handleError),
+      finalize(() => this.loadingSubject.next(false))
+    );
+  }
+
+  public getGroupAvailableRoles(id: string): Observable<KeycloakRole[]> {
+    this.loadingSubject.next(true);
+    const url = `${this.baseUrl}/${
+      this.entityPath
+    }/${id}/role-mappings/realm/available`;
+    return this.httpClient.get<KeycloakRole[]>(url).pipe(
+      catchError(this.handleError),
+      finalize(() => this.loadingSubject.next(false))
+    );
+  }
+
+  public addRoleToGroup(id: string, roles: KeycloakRole[]) {
+    this.loadingSubject.next(true);
+    const url = `${this.baseUrl}/${this.entityPath}/${id}/role-mappings/realm`;
+    return this.httpClient.post<KeycloakRole>(url, roles).pipe(
+      catchError(this.handleError),
+      finalize(() => this.loadingSubject.next(false))
+    );
+  }
+
+  public deleteRolesFromGroup(
+    id: string,
+    roles: KeycloakRole[]
+  ): Observable<string[]> {
+    this.loadingSubject.next(true);
+    const url = `${this.baseUrl}/${this.entityPath}/${id}/role-mappings/realm`;
+    return this.httpClient.request('delete', url, { body: roles }).pipe(
+      mapTo(roles.map(role => role.id)),
       catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false))
     );

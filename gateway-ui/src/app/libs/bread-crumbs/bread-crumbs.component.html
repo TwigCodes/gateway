@@ -5,8 +5,7 @@
     *ngFor="let crumb of crumbs; let last = last"
     [ngSwitch]="!!crumb.link"
     fxLayout="row"
-    fxLayoutAlign="start center"
-  >
+    fxLayoutAlign="start center">
     <a *ngSwitchCase="true" class="crumb link" [routerLink]="[crumb.link]">{{
       crumb.name
     }}</a>

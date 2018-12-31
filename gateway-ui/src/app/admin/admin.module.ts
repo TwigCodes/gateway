@@ -26,7 +26,9 @@ import {
   RoleEffects,
   RoleMappingEffects,
   AdminEffects,
-  GroupEffects
+  GroupEffects,
+  GroupMappingEffects,
+  GroupDetailRolesEffects
 } from './effects';
 import * as fromAdmin from './reducers';
 
@@ -60,6 +62,8 @@ import * as fromAdmin from './reducers';
       RoleEffects,
       GroupEffects,
       RoleMappingEffects,
+      GroupMappingEffects,
+      GroupDetailRolesEffects,
       AdminEffects
     ])
   ],

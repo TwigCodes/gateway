@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { schema, denormalize } from 'normalizr';
-import { selectAdminState } from './admin.state';
-import { KeycloakGroupDTO, KeycloakGroup } from '../admin.model';
+import { selectAdminState } from '../admin.state';
+import { KeycloakGroupDTO, KeycloakGroup } from '../../admin.model';
 
 import * as fromUser from './group.reducer';
 
@@ -29,6 +29,16 @@ export const selectPageIndex = createSelector(
 export const selectPageSize = createSelector(
   selectGroupState,
   state => state.pageSize
+);
+
+export const selectSearch = createSelector(
+  selectGroupState,
+  state => state.search
+);
+
+export const selectShowLoadMore = createSelector(
+  selectGroupState,
+  state => state.showLoadMore
 );
 
 export const selectTopLevelNodeIds = createSelector(

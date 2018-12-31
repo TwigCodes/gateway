@@ -1,13 +1,15 @@
-import { GroupActions, ActionTypes } from '../actions/group.actions';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { KeycloakGroupDTO } from '../admin.model';
 import { normalize, schema } from 'normalizr';
+import { GroupActions, ActionTypes } from '../../actions/group.actions';
+import { KeycloakGroupDTO } from '../../admin.model';
 import * as _ from 'lodash';
 
 export interface State extends EntityState<KeycloakGroupDTO> {
   pageIndex: number;
   pageSize: number;
   count: number;
+  search: string | null;
+  showLoadMore: boolean;
   topLevelNodeIds: string[];
 }
 
@@ -23,6 +25,8 @@ const initialState = adapter.getInitialState({
   pageIndex: 0,
   pageSize: 25,
   count: 0,
+  search: null,
+  showLoadMore: true,
   topLevelNodeIds: []
 });
 
@@ -92,8 +96,7 @@ export function reducer(state = initialState, action: GroupActions): State {
         count: state.count - 1 >= 0 ? state.count : 0
       };
     }
-    case ActionTypes.SearchSuccess:
-    case ActionTypes.LoadPageSuccess: {
+    case ActionTypes.SearchSuccess: {
       const apiResult = action.payload;
       const group = new schema.Entity('group');
       group.define({ subGroups: [group] });
@@ -101,14 +104,32 @@ export function reducer(state = initialState, action: GroupActions): State {
       const groupEntities = normalizedData.entities['group'];
       return {
         ...adapter.addAll(_.values(groupEntities), state),
-        topLevelNodeIds: normalizedData.result
+        topLevelNodeIds: [...normalizedData.result]
       };
     }
-    case ActionTypes.CountSuccess: {
+    case ActionTypes.LoadPageSuccess: {
+      const apiResult = action.payload;
+      const group = new schema.Entity('group');
+      group.define({ subGroups: [group] });
+      const normalizedData = normalize(apiResult, [group]);
+      const groupEntities = normalizedData.entities['group'];
       return {
         ...state,
-        count: action.payload
+        ...adapter.addMany(_.values(groupEntities), state),
+        topLevelNodeIds: _.union(state.topLevelNodeIds, normalizedData.result)
       };
+    }
+    case ActionTypes.NextPage: {
+      return { ...state, pageIndex: state.pageIndex * state.pageSize + 1 };
+    }
+    case ActionTypes.Search: {
+      return { ...state, search: action.payload, showLoadMore: false };
+    }
+    case ActionTypes.ClearSearch: {
+      return initialState;
+    }
+    case ActionTypes.CountSuccess: {
+      return { ...state, count: action.payload };
     }
     default: {
       return state;

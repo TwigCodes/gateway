@@ -11,6 +11,7 @@ import {
   finalize,
   mapTo
 } from 'rxjs/operators';
+import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -97,6 +98,41 @@ export class UserService extends BaseService<KeycloakUser> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}/${id}/groups`;
     return this.httpClient.get<KeycloakGroup[]>(url).pipe(
+      catchError(this.handleError),
+      finalize(() => this.loadingSubject.next(false))
+    );
+  }
+
+  /**
+   * addUserToGroup
+   */
+  public addUserToGroup(userId: string, groupId: string) {
+    this.loadingSubject.next(true);
+    const url = `${this.baseUrl}/${
+      this.entityPath
+    }/${userId}/groups/${groupId}`;
+    return this.httpClient
+      .put<KeycloakGroup[]>(url, {
+        groupId: groupId,
+        realm: environment.keycloak.realm,
+        userId: userId
+      })
+      .pipe(
+        catchError(this.handleError),
+        finalize(() => this.loadingSubject.next(false))
+      );
+  }
+
+  public deleteUserFromGroup(userId: string, groupId: string) {
+    this.loadingSubject.next(true);
+    const url = `${this.baseUrl}/${
+      this.entityPath
+    }/${userId}/groups/${groupId}`;
+    return this.httpClient.delete(url).pipe(
+      mapTo({
+        groupId: groupId,
+        userId: userId
+      }),
       catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false))
     );

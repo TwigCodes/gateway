@@ -2,8 +2,10 @@ import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
   GroupDetailActions,
   ActionTypes
-} from '../actions/group-detail.actions';
-import { KeycloakUser, KeycloakGroup } from '../admin.model';
+} from '../../actions/group-detail.actions';
+import { KeycloakUser, KeycloakGroup } from '../../admin.model';
+
+import * as fromGroupMapping from '../../actions/group-mapping.actions';
 
 export interface State extends EntityState<KeycloakUser> {
   pageIndex: number;
@@ -28,7 +30,7 @@ const initialState: State = adapter.getInitialState({
 
 export function reducer(
   state = initialState,
-  action: GroupDetailActions
+  action: GroupDetailActions | fromGroupMapping.GroupMappingActions
 ): State {
   switch (action.type) {
     case ActionTypes.NextPageSuccess: {
@@ -36,6 +38,12 @@ export function reducer(
     }
     case ActionTypes.GetUsersByGroupSuccess: {
       return { ...adapter.addAll(action.payload, state) };
+    }
+    case fromGroupMapping.ActionTypes.AddUserToGroupSuccess: {
+      return { ...state, ...adapter.addOne(action.payload, state) };
+    }
+    case fromGroupMapping.ActionTypes.DeleteUserFromGroupSuccess: {
+      return { ...state, ...adapter.removeOne(action.payload, state) };
     }
     case ActionTypes.PageChange: {
       return { ...state, ...action.payload };

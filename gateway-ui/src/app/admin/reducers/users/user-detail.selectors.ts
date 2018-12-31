@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { selectAdminState } from './admin.state';
+import { selectAdminState } from '../admin.state';
 import * as fromUserDetail from './user-detail.reducer';
 
 export const selectUserDetailState = createSelector(

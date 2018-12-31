@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ROUTER_NAVIGATION } from '@ngrx/router-store';
 import { select, Store } from '@ngrx/store';
-import { selectUserById } from '../reducers/user.selectors';
+import { selectUserById } from '../reducers/users/user.selectors';
 import {
   switchMap,
   map,
