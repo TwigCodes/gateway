@@ -10,8 +10,8 @@ import { Observable } from 'rxjs';
 })
 export class GroupService extends BaseService<KeycloakGroup> {
   entityPath = 'groups';
-  constructor(private http: HttpClient) {
-    super(http);
+  constructor(protected httpClient: HttpClient) {
+    super(httpClient);
   }
 
   /**
@@ -20,9 +20,9 @@ export class GroupService extends BaseService<KeycloakGroup> {
   public add(group: Partial<KeycloakGroup>): Observable<KeycloakGroup> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}`;
-    return this.http.post(url, group, { observe: 'response' }).pipe(
+    return this.httpClient.post(url, group, { observe: 'response' }).pipe(
       map(res => res.headers.get('Location')),
-      switchMap(url => this.getById(url)),
+      switchMap(idUrl => this.httpClient.get<KeycloakGroup>(idUrl)),
       catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false))
     );
@@ -30,11 +30,11 @@ export class GroupService extends BaseService<KeycloakGroup> {
 
   public updateSubGroups(
     id: string,
-    changes: KeycloakGroup
+    changes: Partial<KeycloakGroup>
   ): Observable<KeycloakGroup> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}/${id}/children`;
-    return this.http.post<KeycloakGroup>(url, changes).pipe(
+    return this.httpClient.post<KeycloakGroup>(url, changes).pipe(
       catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false))
     );
@@ -49,7 +49,7 @@ export class GroupService extends BaseService<KeycloakGroup> {
     const params = new HttpParams()
       .set('first', String(pageIndex * pageSize))
       .set('max', String(pageSize));
-    return this.http.get<KeycloakUser[]>(url, { params }).pipe(
+    return this.httpClient.get<KeycloakUser[]>(url, { params }).pipe(
       catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false))
     );
@@ -61,7 +61,7 @@ export class GroupService extends BaseService<KeycloakGroup> {
   public getGroupRealmRoles(id: string) {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}/${id}/role-mappings/realm`;
-    return this.http.get<KeycloakUser>(url).pipe(
+    return this.httpClient.get<KeycloakUser>(url).pipe(
       catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false))
     );

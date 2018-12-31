@@ -2,9 +2,15 @@ import { Action } from '@ngrx/store';
 import { KeycloakGroup } from '../admin.model';
 
 export enum ActionTypes {
-  Add = '[GroupPage] Add',
-  AddSuccess = '[GroupApi] Add Success',
-  AddFail = '[GroupApi] Add Fail',
+  AddTop = '[GroupPage] Add Top',
+  AddTopSuccess = '[GroupApi] Add Top Success',
+  AddTopFail = '[GroupApi] Add Top Fail',
+  AddSibling = '[GroupPage] Add Sibling',
+  AddSiblingSuccess = '[GroupApi] Add Sibling Success',
+  AddSiblingFail = '[GroupApi] Add Sibling Fail',
+  AddChild = '[GroupPage] Add Child',
+  AddChildSuccess = '[GroupApi] Add Child Success',
+  AddChildFail = '[GroupApi] Add Child Fail',
   Delete = '[GroupPage] Delete',
   DeleteSuccess = '[GroupApi] Delete Success',
   DeleteFail = '[GroupApi] Delete Fail',
@@ -16,21 +22,41 @@ export enum ActionTypes {
   LoadPageFail = '[GroupApi] LoadPage Fail',
   Count = '[GroupPage] Count',
   CountSuccess = '[GroupApi] Count Success',
-  CountFail = '[GroupApi] Count Fail'
+  CountFail = '[GroupApi] Count Fail',
+  Search = '[GroupPage] Search',
+  SearchSuccess = '[GroupApi] Search Success',
+  SearchFail = '[GroupApi] Search Fail'
 }
 
-export class AddAction implements Action {
-  readonly type = ActionTypes.Add;
+export class AddTopAction implements Action {
+  readonly type = ActionTypes.AddTop;
   constructor(public payload: Partial<KeycloakGroup>) {}
 }
 
-export class AddSuccessAction implements Action {
-  readonly type = ActionTypes.AddSuccess;
+export class AddTopSuccessAction implements Action {
+  readonly type = ActionTypes.AddTopSuccess;
   constructor(public payload: KeycloakGroup) {}
 }
 
-export class AddFailAction implements Action {
-  readonly type = ActionTypes.AddFail;
+export class AddTopFailAction implements Action {
+  readonly type = ActionTypes.AddTopFail;
+  constructor(public payload: string) {}
+}
+
+export class AddChildAction implements Action {
+  readonly type = ActionTypes.AddChild;
+  constructor(
+    public payload: { id: string; changes: Partial<KeycloakGroup> }
+  ) {}
+}
+
+export class AddChildSuccessAction implements Action {
+  readonly type = ActionTypes.AddChildSuccess;
+  constructor(public payload: { parentId: string; child: KeycloakGroup }) {}
+}
+
+export class AddChildFailAction implements Action {
+  readonly type = ActionTypes.AddChildFail;
   constructor(public payload: string) {}
 }
 
@@ -94,10 +120,28 @@ export class CountFailAction implements Action {
   constructor(public payload: string) {}
 }
 
+export class SearchAction implements Action {
+  readonly type = ActionTypes.Search;
+  constructor(public payload: string) {}
+}
+
+export class SearchSuccessAction implements Action {
+  readonly type = ActionTypes.SearchSuccess;
+  constructor(public payload: KeycloakGroup[]) {}
+}
+
+export class SearchFailAction implements Action {
+  readonly type = ActionTypes.SearchFail;
+  constructor(public payload: string) {}
+}
+
 export type GroupActions =
-  | AddAction
-  | AddSuccessAction
-  | AddFailAction
+  | AddTopAction
+  | AddTopSuccessAction
+  | AddTopFailAction
+  | AddChildAction
+  | AddChildSuccessAction
+  | AddChildFailAction
   | UpdateAction
   | UpdateSuccessAction
   | UpdateFailAction
@@ -109,4 +153,7 @@ export type GroupActions =
   | LoadPageFailAction
   | CountAction
   | CountSuccessAction
-  | CountFailAction;
+  | CountFailAction
+  | SearchAction
+  | SearchSuccessAction
+  | SearchFailAction;

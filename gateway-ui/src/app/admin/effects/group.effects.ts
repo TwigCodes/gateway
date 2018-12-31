@@ -14,6 +14,7 @@ import {
 } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { GroupService } from '../services';
+import { KeycloakGroup } from '../admin.model';
 
 import * as fromGroup from '../actions/group.actions';
 import * as fromGroupDetail from '../actions/group-detail.actions';
@@ -31,11 +32,27 @@ export class GroupEffects {
   ) {}
   @Effect()
   add = this.actions$.pipe(
-    ofType<fromGroup.AddAction>(fromGroup.ActionTypes.Add),
-    switchMap(action =>
-      this.service.add(action.payload).pipe(
-        map(group => new fromGroup.AddSuccessAction(group)),
-        catchError(err => of(new fromGroup.AddFailAction(err)))
+    ofType<fromGroup.AddTopAction>(fromGroup.ActionTypes.AddTop),
+    map(action => action.payload),
+    switchMap(val => {
+      return this.service.add(val).pipe(
+        map(group => new fromGroup.AddTopSuccessAction(group)),
+        catchError(err => of(new fromGroup.AddTopFailAction(err)))
+      );
+    })
+  );
+
+  @Effect()
+  addChild = this.actions$.pipe(
+    ofType<fromGroup.AddChildAction>(fromGroup.ActionTypes.AddChild),
+    map(action => action.payload),
+    switchMap(({ id, changes }) =>
+      this.service.updateSubGroups(id, changes).pipe(
+        map(
+          group =>
+            new fromGroup.AddChildSuccessAction({ parentId: id, child: group })
+        ),
+        catchError(err => of(new fromGroup.AddChildFailAction(err)))
       )
     )
   );
@@ -82,6 +99,22 @@ export class GroupEffects {
       this.service.count().pipe(
         map(result => new fromGroup.CountSuccessAction(result)),
         catchError(err => of(new fromGroup.CountFailAction(err)))
+      )
+    )
+  );
+
+  @Effect()
+  search = this.actions$.pipe(
+    ofType<fromGroup.SearchAction>(fromGroup.ActionTypes.Search),
+    map(action => action.payload),
+    withLatestFrom(
+      this.store.pipe(select(fromGroupDetailSelectors.selectPageIndex)),
+      this.store.pipe(select(fromGroupDetailSelectors.selectPageSize))
+    ),
+    switchMap(([search, pageIndex, pageSize]) =>
+      this.service.search(search, pageIndex, pageSize).pipe(
+        map(result => new fromGroup.SearchSuccessAction(result)),
+        catchError(err => of(new fromGroup.SearchFailAction(err)))
       )
     )
   );

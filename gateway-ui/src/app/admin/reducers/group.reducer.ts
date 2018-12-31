@@ -8,7 +8,6 @@ export interface State extends EntityState<KeycloakGroupDTO> {
   pageIndex: number;
   pageSize: number;
   count: number;
-  search: string | null;
   topLevelNodeIds: string[];
 }
 
@@ -24,13 +23,12 @@ const initialState = adapter.getInitialState({
   pageIndex: 0,
   pageSize: 25,
   count: 0,
-  search: null,
   topLevelNodeIds: []
 });
 
 export function reducer(state = initialState, action: GroupActions): State {
   switch (action.type) {
-    case ActionTypes.AddSuccess: {
+    case ActionTypes.AddTopSuccess: {
       const apiResult = action.payload;
       const group = new schema.Entity('group');
       group.define({ subGroups: [group] });
@@ -38,6 +36,31 @@ export function reducer(state = initialState, action: GroupActions): State {
       return {
         ...state,
         ...adapter.addMany(_.values(normalizedData.entities['group']), state),
+        count: state.count + 1,
+        topLevelNodeIds: [...state.topLevelNodeIds, normalizedData.result]
+      };
+    }
+    case ActionTypes.AddChildSuccess: {
+      const apiResult = action.payload.child;
+      const group = new schema.Entity('group');
+      group.define({ subGroups: [group] });
+      const normalizedData = normalize(apiResult, group);
+      const parentId = action.payload.parentId;
+      const parentEntity = state.entities[parentId];
+      const newParentEntity = {
+        ...parentEntity,
+        subGroups: [...parentEntity.subGroups, apiResult.id]
+      };
+      const newState = {
+        ...state,
+        entities: { ...state.entities, [parentId]: newParentEntity }
+      };
+      return {
+        ...newState,
+        ...adapter.addMany(
+          _.values(normalizedData.entities['group']),
+          newState
+        ),
         count: state.count + 1
       };
     }
@@ -69,6 +92,7 @@ export function reducer(state = initialState, action: GroupActions): State {
         count: state.count - 1 >= 0 ? state.count : 0
       };
     }
+    case ActionTypes.SearchSuccess:
     case ActionTypes.LoadPageSuccess: {
       const apiResult = action.payload;
       const group = new schema.Entity('group');

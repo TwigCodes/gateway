@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { KeycloakUser, KeycloakRole, KeycloakGroup } from '../admin.model';
 import { Observable } from 'rxjs';
-import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpParams, HttpClient } from '@angular/common/http';
 import {
   switchMap,
   filter,
@@ -11,15 +11,14 @@ import {
   finalize,
   mapTo
 } from 'rxjs/operators';
-import { RequestOptions } from '@angular/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService extends BaseService<KeycloakUser> {
   entityPath = 'users';
-  constructor(private http: HttpClient) {
-    super(http);
+  constructor(protected httpClient: HttpClient) {
+    super(httpClient);
   }
 
   /**
@@ -28,15 +27,17 @@ export class UserService extends BaseService<KeycloakUser> {
   public add(user: Partial<KeycloakUser>): Observable<KeycloakUser> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}`;
-    return this.http.post(url, user).pipe(
+    return this.httpClient.post(url, user).pipe(
       switchMap(_ => {
         const params = new HttpParams().set('username', user.username);
-        return this.http.get<KeycloakUser[]>(url, { params: params }).pipe(
-          filter(users => users !== null && users.length > 0),
-          map(users => users[0]),
-          catchError(this.handleError),
-          finalize(() => this.loadingSubject.next(false))
-        );
+        return this.httpClient
+          .get<KeycloakUser[]>(url, { params: params })
+          .pipe(
+            filter(users => users !== null && users.length > 0),
+            map(users => users[0]),
+            catchError(this.handleError),
+            finalize(() => this.loadingSubject.next(false))
+          );
       })
     );
   }
@@ -47,7 +48,7 @@ export class UserService extends BaseService<KeycloakUser> {
   public getRolesByUserId(id: string): Observable<KeycloakRole[]> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}/${id}/role-mappings/realm`;
-    return this.http.get<KeycloakRole[]>(url).pipe(
+    return this.httpClient.get<KeycloakRole[]>(url).pipe(
       catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false))
     );
@@ -64,7 +65,7 @@ export class UserService extends BaseService<KeycloakUser> {
   ): Observable<string[]> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}/${id}/role-mappings/realm`;
-    return this.http.post<KeycloakRole[]>(url, roles).pipe(
+    return this.httpClient.post<KeycloakRole[]>(url, roles).pipe(
       mapTo(roles.map(role => role.id)),
       catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false))
@@ -80,7 +81,7 @@ export class UserService extends BaseService<KeycloakUser> {
   ): Observable<string[]> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}/${id}/role-mappings/realm`;
-    return this.http
+    return this.httpClient
       .request<KeycloakRole[]>('delete', url, { body: roles })
       .pipe(
         mapTo(roles.map(role => role.id)),
@@ -95,7 +96,7 @@ export class UserService extends BaseService<KeycloakUser> {
   public getUserGroups(id: string) {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}/${id}/groups`;
-    return this.http.get<KeycloakGroup[]>(url).pipe(
+    return this.httpClient.get<KeycloakGroup[]>(url).pipe(
       catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false))
     );

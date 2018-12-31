@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  TemplateRef
+} from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { Observable } from 'rxjs';
@@ -11,7 +18,9 @@ import { SimpleTreeNode } from './simple-tree-node';
 })
 export class SimpleTreeComponent implements OnInit {
   @Input() dataSource: Observable<SimpleTreeNode[]>;
+  @Input() menuTemplate: TemplateRef<any>;
   @Output() nodeSelected = new EventEmitter();
+  menuToggle: { [id: string]: boolean };
   _selectedNodeId: string;
   nestedTreeControl: NestedTreeControl<SimpleTreeNode>;
   nestedDataSource: MatTreeNestedDataSource<SimpleTreeNode>;
@@ -32,5 +41,9 @@ export class SimpleTreeComponent implements OnInit {
   handleNodeSelect(node: SimpleTreeNode) {
     this.nodeSelected.emit(node.value);
     this._selectedNodeId = node.id;
+  }
+
+  handleToggleMenu(state: boolean, id: string) {
+    this.menuToggle = { [id]: state };
   }
 }

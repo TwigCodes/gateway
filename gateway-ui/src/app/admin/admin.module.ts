@@ -17,7 +17,8 @@ import {
   RoleDetailContainerComponent,
   UserDetailContainerComponent,
   GroupsContainerComponent,
-  GroupDetailContainerComponent
+  GroupDetailContainerComponent,
+  GroupDialogComponent
 } from './components';
 
 import {
@@ -39,7 +40,8 @@ import * as fromAdmin from './reducers';
     RoleDetailContainerComponent,
     UserDetailContainerComponent,
     GroupsContainerComponent,
-    GroupDetailContainerComponent
+    GroupDetailContainerComponent,
+    GroupDialogComponent
   ],
   imports: [
     SharedModule,
@@ -61,7 +63,11 @@ import * as fromAdmin from './reducers';
       AdminEffects
     ])
   ],
-  entryComponents: [UserDialogComponent, RoleDialogComponent]
+  entryComponents: [
+    UserDialogComponent,
+    RoleDialogComponent,
+    GroupDialogComponent
+  ]
 })
 export class AdminModule {}
 

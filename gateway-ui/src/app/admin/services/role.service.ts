@@ -10,8 +10,8 @@ import { BaseService } from './base.service';
 })
 export class RoleService extends BaseService<KeycloakRole> {
   entityPath = 'roles';
-  constructor(private http: HttpClient) {
-    super(http);
+  constructor(protected httpClient: HttpClient) {
+    super(httpClient);
   }
 
   /**
@@ -20,9 +20,11 @@ export class RoleService extends BaseService<KeycloakRole> {
   public add(role: Partial<KeycloakRole>): Observable<KeycloakRole> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}`;
-    return this.http
+    return this.httpClient
       .post(url, role)
-      .pipe(switchMap(_ => this.http.get<KeycloakRole>(`${url}/${role.name}`)))
+      .pipe(
+        switchMap(_ => this.httpClient.get<KeycloakRole>(`${url}/${role.name}`))
+      )
       .pipe(
         catchError(this.handleError),
         finalize(() => this.loadingSubject.next(false))
@@ -39,7 +41,7 @@ export class RoleService extends BaseService<KeycloakRole> {
     const params = new HttpParams()
       .set('first', String(pageIndex))
       .set('max', String(pageSize));
-    return this.http.get<KeycloakUser[]>(url, { params }).pipe(
+    return this.httpClient.get<KeycloakUser[]>(url, { params }).pipe(
       catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false))
     );

@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import {
   MatTreeModule,
   MatIconModule,
-  MatButtonModule
+  MatButtonModule,
+  MatMenuModule
 } from '@angular/material';
 import { SimpleTreeComponent } from './simple-tree.component';
 
@@ -15,7 +16,8 @@ import { SimpleTreeComponent } from './simple-tree.component';
     HttpClientModule,
     MatTreeModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatMenuModule
   ],
   exports: [SimpleTreeComponent]
 })
