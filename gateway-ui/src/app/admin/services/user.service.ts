@@ -12,6 +12,7 @@ import {
   mapTo
 } from 'rxjs/operators';
 import { environment } from '@env/environment';
+import { filteredRoles } from './config';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +51,7 @@ export class UserService extends BaseService<KeycloakUser> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}/${id}/role-mappings/realm`;
     return this.httpClient.get<KeycloakRole[]>(url).pipe(
+      map(roles => filteredRoles(roles)),
       catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false))
     );

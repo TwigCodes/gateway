@@ -9,8 +9,7 @@ export enum ActionTypes {
   NextPageSuccess = '[GroupApi] Next Page Success',
   NextPageFail = '[GroupDetailPage] Next Page Fail',
   LoadStart = '[GroupDetailPage] Load Start',
-  LoadingComplete = '[GroupDetailPage] Load Complete',
-  GetById = '[GroupDetailPage] Get By Id'
+  LoadingComplete = '[GroupDetailPage] Load Complete'
 }
 
 export class GetUsersByGroupSuccessAction implements Action {
@@ -53,11 +52,6 @@ export class LoadingCompleteAction implements Action {
   constructor() {}
 }
 
-export class GetByIdAction implements Action {
-  readonly type = ActionTypes.GetById;
-  constructor(public payload: KeycloakGroup) {}
-}
-
 export type GroupDetailActions =
   | GetUsersByGroupSuccessAction
   | GetUsersByGroupFailAction
@@ -66,5 +60,4 @@ export type GroupDetailActions =
   | NextPageSuccessAction
   | NextPageFailAction
   | LoadStartAction
-  | LoadingCompleteAction
-  | GetByIdAction;
+  | LoadingCompleteAction;

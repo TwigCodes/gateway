@@ -67,12 +67,6 @@ export const selectAllInTree = createSelector(
   }
 );
 
-export const selectGroupById = (id: string) =>
-  createSelector(
-    selectEntities,
-    entities => getGroup(id, entities)
-  );
-
 export const selectParentId = (selectedId: string) =>
   createSelector(
     selectAll,

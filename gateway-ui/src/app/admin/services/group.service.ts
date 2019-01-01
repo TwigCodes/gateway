@@ -4,6 +4,7 @@ import { KeycloakGroup, KeycloakUser, KeycloakRole } from '../admin.model';
 import { BaseService } from './base.service';
 import { map, catchError, finalize, switchMap, mapTo } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { filteredRoles } from './config';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +63,7 @@ export class GroupService extends BaseService<KeycloakGroup> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}/${id}/role-mappings/realm`;
     return this.httpClient.get<KeycloakRole[]>(url).pipe(
+      map(roles => filteredRoles(roles)),
       catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false))
     );
@@ -73,6 +75,7 @@ export class GroupService extends BaseService<KeycloakGroup> {
       this.entityPath
     }/${id}/role-mappings/realm/available`;
     return this.httpClient.get<KeycloakRole[]>(url).pipe(
+      map(roles => filteredRoles(roles)),
       catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false))
     );

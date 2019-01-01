@@ -42,11 +42,10 @@ export function reducer(state = initialState, action: RoleActions): State {
       };
     }
     case ActionTypes.GetAllSuccess: {
-      const invisibleRoleIds = ['uma_authorization', 'offline_access'];
-      const newRoles = action.payload.filter(
-        role => !_.includes(invisibleRoleIds, role.name)
-      );
-      return { ...adapter.addAll(newRoles, state) };
+      return { ...adapter.addAll(action.payload, state) };
+    }
+    case ActionTypes.Select: {
+      return { ...state, selectedId: action.payload };
     }
     default: {
       return state;

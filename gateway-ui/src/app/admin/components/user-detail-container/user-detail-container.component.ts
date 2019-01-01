@@ -26,7 +26,7 @@ export class UserDetailContainerComponent implements OnInit, OnDestroy {
   model;
   model$ = this.store.pipe(select(fromUsers.getUserSelected));
   roles$ = this.store.pipe(select(fromUsers.getUserRoles));
-  source$ = this.store.pipe(select(fromRoleSelectors.selectAll));
+  availableRoles$ = this.store.pipe(select(fromRoleSelectors.selectAll));
   sub: Subscription;
   fields: FormlyFieldConfig[] = [
     {
@@ -120,8 +120,6 @@ export class UserDetailContainerComponent implements OnInit, OnDestroy {
     });
   }
 
-  handleAddRoleMapping() {}
-
   handleRemoveRole(role: KeycloakRole) {
     this.model$.pipe(take(1)).subscribe(user => {
       this.store.dispatch(
@@ -146,7 +144,7 @@ export class UserDetailContainerComponent implements OnInit, OnDestroy {
       });
   }
 
-  selectRole(role: KeycloakRole) {
+  handleAddRoleToUser(role: KeycloakRole) {
     this.model$.pipe(take(1)).subscribe(user => {
       this.store.dispatch(
         new fromRoleMapping.AddRoleToUserAction({

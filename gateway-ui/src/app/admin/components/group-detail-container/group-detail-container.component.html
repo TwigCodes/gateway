@@ -63,9 +63,6 @@
               <mat-option *ngFor="let item of availableRoles$ | async" [value]="item">{{item.name}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <ng-template #itemTemplate let-item>
-            <span> {{ item.name }}</span>
-          </ng-template>
         </mat-list-item>
         <mat-list-item *ngFor="let role of assignedRoles$ | async">
           <p matLine>{{ role.name }}</p>

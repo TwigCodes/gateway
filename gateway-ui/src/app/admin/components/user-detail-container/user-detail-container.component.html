@@ -27,12 +27,12 @@
           <ngx-mat-autocomplete
             class="full-width"
             [placeholder]="'tgapp.admin.userdetail.roles.addrolemapping' | translate"
-            [source]="source$ | async"
+            [source]="availableRoles$ | async"
             [hasProgressBar]="true"
             [clearAfterSearch]="true"
             [displayTemplate]="itemTemplate"
             [noRecordText]="'tgapp.role.search.norecord' | translate"
-            (optionSelected)="selectRole($event)">
+            (optionSelected)="handleAddRoleToUser($event)">
           </ngx-mat-autocomplete>
           <ng-template #itemTemplate let-item>
             <span> {{ item.name }}</span>
