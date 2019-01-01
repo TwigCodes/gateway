@@ -2,16 +2,15 @@ import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
   GroupDetailActions,
   ActionTypes
-} from '../../actions/group-detail.actions';
-import { KeycloakUser, KeycloakGroup } from '../../admin.model';
+} from '../../actions/groups/group-detail.actions';
+import { KeycloakUser } from '../../admin.model';
 
-import * as fromGroupMapping from '../../actions/group-mapping.actions';
+import * as fromGroupMapping from '../../actions/groups/group-mapping.actions';
 
 export interface State extends EntityState<KeycloakUser> {
   pageIndex: number;
   pageSize: number;
   loading: boolean;
-  group: KeycloakGroup | null;
 }
 
 export const adapter: EntityAdapter<KeycloakUser> = createEntityAdapter<
@@ -24,8 +23,7 @@ export const adapter: EntityAdapter<KeycloakUser> = createEntityAdapter<
 const initialState: State = adapter.getInitialState({
   pageIndex: 0,
   pageSize: 25,
-  loading: false,
-  group: null
+  loading: false
 });
 
 export function reducer(
@@ -56,9 +54,6 @@ export function reducer(
     }
     case ActionTypes.LoadingComplete: {
       return { ...state, loading: false };
-    }
-    case ActionTypes.GetById: {
-      return { ...state, group: action.payload };
     }
     default: {
       return state;

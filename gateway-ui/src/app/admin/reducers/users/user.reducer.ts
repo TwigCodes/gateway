@@ -1,4 +1,4 @@
-import { UserActions, ActionTypes } from '../../actions/user.actions';
+import { UserActions, ActionTypes } from '../../actions/users/user.actions';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { KeycloakUser } from '../../admin.model';
 import { Filter } from '@app/libs/entity/filter.service';

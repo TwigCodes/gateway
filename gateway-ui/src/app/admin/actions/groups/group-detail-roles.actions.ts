@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { KeycloakRole, KeycloakGroup } from '../admin.model';
+import { KeycloakRole, KeycloakGroup } from '../../admin.model';
 
 export enum ActionTypes {
   AddRolesToGroup = '[GroupDetailPage] Add Role To Group',
@@ -52,7 +52,7 @@ export class DeleteRolesFromGroupFailAction implements Action {
 
 export class GetRealmRolesOfGroupAction implements Action {
   readonly type = ActionTypes.GetRealmRolesOfGroup;
-  constructor() {}
+  constructor(public payload: string) {}
 }
 
 export class GetRealmRolesOfGroupSuccessAction implements Action {
@@ -67,7 +67,7 @@ export class GetRealmRolesOfGroupFailAction implements Action {
 
 export class GetAvailableRolesOfGroupAction implements Action {
   readonly type = ActionTypes.GetAvailableRolesOfGroup;
-  constructor() {}
+  constructor(public payload: string) {}
 }
 
 export class GetAvailableRolesOfGroupSuccessAction implements Action {

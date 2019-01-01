@@ -2,10 +2,10 @@ import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
   RoleDetailActions,
   ActionTypes
-} from '../../actions/role-detail.actions';
+} from '../../actions/roles/role-detail.actions';
 import { KeycloakUser, KeycloakRole } from '../../admin.model';
 
-import * as fromRoleMapping from '../../actions/role-mapping.actions';
+import * as fromRoleMapping from '../../actions/roles/role-mapping.actions';
 
 export interface State extends EntityState<KeycloakUser> {
   pageIndex: number;

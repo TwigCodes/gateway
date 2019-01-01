@@ -1,6 +1,6 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { normalize, schema } from 'normalizr';
-import { GroupActions, ActionTypes } from '../../actions/group.actions';
+import { GroupActions, ActionTypes } from '../../actions/groups/group.actions';
 import { KeycloakGroupDTO } from '../../admin.model';
 import * as _ from 'lodash';
 
@@ -11,6 +11,7 @@ export interface State extends EntityState<KeycloakGroupDTO> {
   search: string | null;
   showLoadMore: boolean;
   topLevelNodeIds: string[];
+  selectedId: string | null;
 }
 
 export const adapter: EntityAdapter<KeycloakGroupDTO> = createEntityAdapter<
@@ -27,7 +28,8 @@ const initialState = adapter.getInitialState({
   count: 0,
   search: null,
   showLoadMore: true,
-  topLevelNodeIds: []
+  topLevelNodeIds: [],
+  selectedId: null
 });
 
 export function reducer(state = initialState, action: GroupActions): State {
@@ -130,6 +132,9 @@ export function reducer(state = initialState, action: GroupActions): State {
     }
     case ActionTypes.CountSuccess: {
       return { ...state, count: action.payload };
+    }
+    case ActionTypes.Select: {
+      return { ...state, selectedId: action.payload };
     }
     default: {
       return state;

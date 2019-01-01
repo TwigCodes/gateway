@@ -12,10 +12,10 @@ import { UserSearchService } from '@app/admin/services/user-search.service';
 import { KeycloakUser } from '@app/admin/admin.model';
 
 import * as fromAdminReducer from '../../reducers';
-import * as fromRole from '../../actions/role.actions';
-import * as fromRoleDetail from '../../actions/role-detail.actions';
+import * as fromRole from '../../actions/roles/role.actions';
+import * as fromRoleDetail from '../../actions/roles/role-detail.actions';
 import * as fromRoleDetailSelectors from '../../reducers/roles/role-detail.selectors';
-import * as fromRoleMapping from '../../actions/role-mapping.actions';
+import * as fromRoleMapping from '../../actions/roles/role-mapping.actions';
 import * as _ from 'lodash';
 
 @Component({

@@ -1,4 +1,6 @@
 {
+  "tgapp.admin.group-detail.roles": "角色",
+  "tgapp.admin.group-detail.roles.add-role-mapping": "添加角色到群组",
   "tgapp.admin.group-detail.name.label": "群组名称",
   "tgapp.admin.group-detail.name.placeholder": "请输入群m名称",
   "tgapp.admin.group-detail.info": "群组信息",

@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { KeycloakUser } from '../admin.model';
+import { KeycloakUser } from '../../admin.model';
 
 export enum ActionTypes {
   Add = '[UserPage] Add',

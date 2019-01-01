@@ -14,7 +14,7 @@ import { KeycloakUser } from '@app/admin/admin.model';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 
 import * as fromAdminReducer from '../../reducers';
-import * as fromUser from '@app/admin/actions/user.actions';
+import * as fromUser from '@app/admin/actions/users/user.actions';
 
 @Component({
   selector: 'tgapp-users-container',

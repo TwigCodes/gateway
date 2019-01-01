@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ROUTER_NAVIGATION } from '@ngrx/router-store';
 import { select, Store } from '@ngrx/store';
-import { selectUserById } from '../reducers/users/user.selectors';
+import { selectUserById } from '../../reducers/users/user.selectors';
 import {
   switchMap,
   map,
@@ -14,11 +14,11 @@ import {
   withLatestFrom
 } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { UserService } from '../services';
+import { UserService } from '../../services';
 
-import * as fromUser from '../actions/user.actions';
-import * as fromUserDetail from '../actions/user-detail.actions';
-import * as fromAdminReducer from '../reducers';
+import * as fromUser from '../../actions/users/user.actions';
+import * as fromUserDetail from '../../actions/users/user-detail.actions';
+import * as fromAdminReducer from '../../reducers';
 
 @Injectable()
 export class UserEffects {

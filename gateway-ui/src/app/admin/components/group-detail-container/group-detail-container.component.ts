@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
-import { MatTabChangeEvent } from '@angular/material';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
@@ -12,13 +11,11 @@ import { UserSearchService } from '@app/admin/services';
 import { KeycloakUser, KeycloakRole } from '@app/admin/admin.model';
 import { ConfirmService } from '@app/shared/confirm/confirm.service';
 
-import * as fromAdminReducer from '../../reducers';
-import * as fromGroup from '../../actions/group.actions';
-import * as fromGroupMapping from '../../actions/group-mapping.actions';
-import * as fromGroupDetailRoles from '../../actions/group-detail-roles.actions';
-import * as fromGroupDetailSelectors from '../../reducers/groups/group-detail.selectors';
-import * as fromGroupDetailAvailableRolesSelectors from '../../reducers/groups/group-detail-available-roles.selectors';
-import * as fromGroupDetailRealmRolesSelectors from '../../reducers/groups/group-detail-realm-roles.selectors';
+import * as fromAdmin from '../../reducers';
+import * as fromGroup from '../../actions/groups/group.actions';
+import * as fromGroupRole from '../../actions/groups/group-detail-roles.actions';
+import * as fromGroupMapping from '../../actions/groups/group-mapping.actions';
+
 import * as _ from 'lodash';
 
 @Component({
@@ -32,14 +29,10 @@ export class GroupDetailContainerComponent implements OnInit, OnDestroy {
   entityForm = new FormGroup({});
   model;
   params = new HttpParams().set('pageIndex', '0').set('pageSize', '25');
-  model$ = this.store.pipe(select(fromGroupDetailSelectors.selectGroup));
-  users$ = this.store.pipe(select(fromGroupDetailSelectors.selectUsers));
-  availableRoles$ = this.store.pipe(
-    select(fromGroupDetailAvailableRolesSelectors.selectAll)
-  );
-  assignedRoles$ = this.store.pipe(
-    select(fromGroupDetailRealmRolesSelectors.selectAll)
-  );
+  model$ = this.store.pipe(select(fromAdmin.getSelectedGroup));
+  users$ = this.store.pipe(select(fromAdmin.getMembers));
+  availableRoles$ = this.store.pipe(select(fromAdmin.getAvailableRoles));
+  assignedRoles$ = this.store.pipe(select(fromAdmin.getRealmRoles));
   sub: Subscription;
   fields: FormlyFieldConfig[] = [
     {
@@ -58,7 +51,7 @@ export class GroupDetailContainerComponent implements OnInit, OnDestroy {
     }
   ];
   constructor(
-    private store: Store<fromAdminReducer.State>,
+    private store: Store<fromAdmin.State>,
     private translate: TranslateService,
     private confirm: ConfirmService,
     public service: UserSearchService
@@ -109,9 +102,27 @@ export class GroupDetailContainerComponent implements OnInit, OnDestroy {
     });
   }
 
-  handleRemoveRoleFromGroup(role: KeycloakRole) {}
+  handleRemoveRoleFromGroup(role: KeycloakRole) {
+    this.model$.pipe(take(1)).subscribe(group => {
+      this.store.dispatch(
+        new fromGroupRole.DeleteRolesFromGroupAction({
+          roles: [role],
+          group: group
+        })
+      );
+    });
+  }
 
-  handleAddRoleToGroup(role: KeycloakRole) {}
+  handleAddRoleToGroup(role: KeycloakRole) {
+    this.model$.pipe(take(1)).subscribe(group => {
+      this.store.dispatch(
+        new fromGroupRole.AddRolesToGroupAction({
+          roles: [role],
+          group: group
+        })
+      );
+    });
+  }
   handleDelete() {
     this.confirm
       .delete()
@@ -147,18 +158,5 @@ export class GroupDetailContainerComponent implements OnInit, OnDestroy {
    */
   public paths(path: string) {
     return path.split('/').filter(val => val);
-  }
-
-  handleTabChange(ev: MatTabChangeEvent) {
-    switch (ev.index) {
-      case 2: {
-        this.store.dispatch(
-          new fromGroupDetailRoles.GetAvailableRolesOfGroupAction()
-        );
-        this.store.dispatch(
-          new fromGroupDetailRoles.GetRealmRolesOfGroupAction()
-        );
-      }
-    }
   }
 }

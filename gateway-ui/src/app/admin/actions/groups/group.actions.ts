@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { KeycloakGroup } from '../admin.model';
+import { KeycloakGroup } from '../../admin.model';
 
 export enum ActionTypes {
   AddTop = '[GroupPage] Add Top',
@@ -27,7 +27,8 @@ export enum ActionTypes {
   Search = '[GroupPage] Search',
   SearchSuccess = '[GroupApi] Search Success',
   SearchFail = '[GroupApi] Search Fail',
-  ClearSearch = '[GroupPage] Clear Search'
+  ClearSearch = '[GroupPage] Clear Search',
+  Select = '[GroupPage] Select A Group'
 }
 
 export class AddTopAction implements Action {
@@ -147,6 +148,11 @@ export class ClearSearchAction implements Action {
   constructor() {}
 }
 
+export class SelectAction implements Action {
+  readonly type = ActionTypes.Select;
+  constructor(public payload: string) {}
+}
+
 export type GroupActions =
   | AddTopAction
   | AddTopSuccessAction
@@ -170,4 +176,5 @@ export type GroupActions =
   | SearchAction
   | SearchSuccessAction
   | SearchFailAction
-  | ClearSearchAction;
+  | ClearSearchAction
+  | SelectAction;

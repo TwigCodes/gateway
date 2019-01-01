@@ -13,13 +13,13 @@ import {
 } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
-import { RoleService, UserService } from '../services';
-import { selectRoleById } from '../reducers/roles/role.selectors';
+import { RoleService, UserService } from '../../services';
+import { selectRoleById } from '../../reducers/roles/role.selectors';
 
-import * as fromRoleDetailSelector from '../reducers/roles/role-detail.selectors';
-import * as fromRole from '../actions/role.actions';
-import * as fromRoleDetail from '../actions/role-detail.actions';
-import * as fromAdminReducer from '../reducers';
+import * as fromRoleDetailSelector from '../../reducers/roles/role-detail.selectors';
+import * as fromRole from '../../actions/roles/role.actions';
+import * as fromRoleDetail from '../../actions/roles/role-detail.actions';
+import * as fromAdminReducer from '../../reducers';
 
 @Injectable()
 export class RoleEffects {

@@ -3,9 +3,9 @@ import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { UserService } from '../services';
+import { UserService } from '../../services';
 
-import * as fromRoleMapping from '../actions/role-mapping.actions';
+import * as fromRoleMapping from '../../actions/roles/role-mapping.actions';
 
 @Injectable()
 export class RoleMappingEffects {

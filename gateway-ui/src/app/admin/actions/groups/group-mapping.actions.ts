@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { KeycloakUser, KeycloakGroup } from '../admin.model';
+import { KeycloakUser, KeycloakGroup } from '../../admin.model';
 
 export enum ActionTypes {
   AddUserToGroup = '[GroupDetailPage] Add User To Group',

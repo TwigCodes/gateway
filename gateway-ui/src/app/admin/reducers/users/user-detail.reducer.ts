@@ -1,11 +1,11 @@
 import {
   UserDetailActions,
   ActionTypes
-} from '../../actions/user-detail.actions';
+} from '../../actions/users/user-detail.actions';
 import { KeycloakUser, KeycloakRole } from '../../admin.model';
 import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 
-import * as fromRoleMapping from '../../actions/role-mapping.actions';
+import * as fromRoleMapping from '../../actions/roles/role-mapping.actions';
 
 export interface State extends EntityState<KeycloakRole> {
   loading: boolean;

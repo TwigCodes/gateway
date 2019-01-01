@@ -3,9 +3,9 @@ import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { UserService } from '../services';
+import { UserService } from '../../services';
 
-import * as fromGroupMapping from '../actions/group-mapping.actions';
+import * as fromGroupMapping from '../../actions/groups/group-mapping.actions';
 
 @Injectable()
 export class GroupMappingEffects {

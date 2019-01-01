@@ -9,17 +9,15 @@ import {
   catchError,
   tap,
   filter,
-  first,
   withLatestFrom
 } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { GroupService } from '../services';
+import { GroupService } from '../../services';
 
-import * as fromGroup from '../actions/group.actions';
-import * as fromGroupDetail from '../actions/group-detail.actions';
-import * as fromAdminReducer from '../reducers';
-import * as fromGroupDetailSelectors from '../reducers/groups/group-detail.selectors';
-import * as fromGroupSelectors from '../reducers/groups/group.selectors';
+import * as fromGroup from '../../actions/groups/group.actions';
+import * as fromGroupDetail from '../../actions/groups/group-detail.actions';
+import * as fromGroupSelectors from '../../reducers/groups';
+import * as fromAdmin from '../../reducers';
 
 @Injectable()
 export class GroupEffects {
@@ -27,7 +25,7 @@ export class GroupEffects {
     private actions$: Actions,
     private service: GroupService,
     private router: Router,
-    private store: Store<fromAdminReducer.State>
+    private store: Store<fromAdmin.State>
   ) {}
   @Effect()
   add = this.actions$.pipe(
@@ -95,8 +93,8 @@ export class GroupEffects {
   nextPage = this.actions$.pipe(
     ofType<fromGroup.NextPageAction>(fromGroup.ActionTypes.NextPage),
     withLatestFrom(
-      this.store.pipe(select(fromGroupSelectors.selectPageIndex)),
-      this.store.pipe(select(fromGroupSelectors.selectPageSize))
+      this.store.pipe(select(fromGroupSelectors.getGroupsPageIndex)),
+      this.store.pipe(select(fromGroupSelectors.getGroupsPageSize))
     ),
     map(
       ([_, pageIndex, pageSize]) =>
@@ -120,8 +118,8 @@ export class GroupEffects {
     ofType<fromGroup.SearchAction>(fromGroup.ActionTypes.Search),
     map(action => action.payload),
     withLatestFrom(
-      this.store.pipe(select(fromGroupSelectors.selectPageIndex)),
-      this.store.pipe(select(fromGroupSelectors.selectPageSize))
+      this.store.pipe(select(fromGroupSelectors.getGroupsPageIndex)),
+      this.store.pipe(select(fromGroupSelectors.getGroupsPageSize))
     ),
     switchMap(([search, pageIndex, pageSize]) =>
       this.service.search(search, pageIndex, pageSize).pipe(
@@ -135,8 +133,8 @@ export class GroupEffects {
   clearSearch = this.actions$.pipe(
     ofType<fromGroup.ClearSearchAction>(fromGroup.ActionTypes.ClearSearch),
     withLatestFrom(
-      this.store.pipe(select(fromGroupSelectors.selectPageIndex)),
-      this.store.pipe(select(fromGroupSelectors.selectPageSize))
+      this.store.pipe(select(fromGroupSelectors.getGroupsPageIndex)),
+      this.store.pipe(select(fromGroupSelectors.getGroupsPageSize))
     ),
     map(
       ([_, pageIndex, pageSize]) =>
@@ -154,7 +152,7 @@ export class GroupEffects {
   );
 
   @Effect()
-  getById = this.actions$.pipe(
+  select = this.actions$.pipe(
     ofType(ROUTER_NAVIGATION),
     filter(
       (action: any) =>
@@ -162,36 +160,16 @@ export class GroupEffects {
         action.payload.routerState.params['groupId']
     ),
     map(action => action.payload.routerState.params['groupId']),
-    switchMap(groupId =>
-      this.store.pipe(
-        select(fromGroupSelectors.selectGroupById(groupId)),
-        filter(val => val != null),
-        first(),
-        map(group => new fromGroupDetail.GetByIdAction(group))
-      )
-    )
+    map(groupId => new fromGroup.SelectAction(groupId))
   );
 
   @Effect()
   getUsersByGroup = this.actions$.pipe(
-    ofType(ROUTER_NAVIGATION),
-    filter(
-      (action: any) =>
-        action.payload.event.url.indexOf('/admin/groups') > -1 &&
-        action.payload.routerState.params['groupId']
-    ),
-    map(action => action.payload.routerState.params['groupId']),
-    switchMap(groupId =>
-      this.store.pipe(
-        select(fromGroupSelectors.selectGroupById(groupId)),
-        filter(val => val != null),
-        first(),
-        map(group => group.id)
-      )
-    ),
+    ofType<fromGroup.SelectAction>(fromGroup.ActionTypes.Select),
+    map(action => action.payload),
     withLatestFrom(
-      this.store.pipe(select(fromGroupDetailSelectors.selectPageIndex)),
-      this.store.pipe(select(fromGroupDetailSelectors.selectPageSize))
+      this.store.pipe(select(fromGroupSelectors.getMembersPageIndex)),
+      this.store.pipe(select(fromGroupSelectors.getMembersPageSize))
     ),
     switchMap(([id, pageIndex, pageSize]) =>
       this.service.getGroupMembers(id, pageIndex, pageSize).pipe(

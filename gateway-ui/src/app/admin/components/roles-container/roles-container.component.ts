@@ -10,7 +10,7 @@ import { KeycloakRole } from '@app/admin/admin.model';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
 
 import * as fromAdminReducer from '../../reducers';
-import * as fromRole from '@app/admin/actions/role.actions';
+import * as fromRole from '@app/admin/actions/roles/role.actions';
 @Component({
   selector: 'tgapp-roles-container',
   templateUrl: './roles-container.component.html',

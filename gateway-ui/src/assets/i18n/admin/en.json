@@ -1,4 +1,6 @@
 {
+  "tgapp.admin.group-detail.roles": "Roles",
+  "tgapp.admin.group-detail.roles.add-role-mapping": "Add Role To Group",
   "tgapp.admin.group-detail.name.label": "Group Name",
   "tgapp.admin.group-detail.name.placeholder": "Please type the group name",
   "tgapp.admin.group-detail.info": "Group Info",

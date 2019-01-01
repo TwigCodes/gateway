@@ -1,25 +1,25 @@
 import { Action } from '@ngrx/store';
-import { KeycloakUser, KeycloakRole } from '../admin.model';
+import { KeycloakUser, KeycloakGroup } from '../../admin.model';
 
 export enum ActionTypes {
-  GetUsersByRoleSuccess = '[RoleApi] Get Users By Role Success',
-  GetUsersByRoleFail = '[RoleApi] Get Users By Role Fail',
-  PageChange = '[RoleDetailPage] Page Change',
-  NextPage = '[RoleDetailPage] Next Page',
-  NextPageSuccess = '[RoleDetailPage] Next Page Success',
-  NextPageFail = '[RoleDetailPage] Next Page Fail',
-  LoadStart = '[RoleDetailPage] Load Start',
-  LoadingComplete = '[RoleDetailPage] Load Complete',
-  GetById = '[RoleDetailPage] Get By Id'
+  GetUsersByGroupSuccess = '[GroupApi] Get Users By User Success',
+  GetUsersByGroupFail = '[GroupApi] Get Users By User Fail',
+  PageChange = '[GroupDetailPage] Page Change',
+  NextPage = '[GroupDetailPage] Next Page',
+  NextPageSuccess = '[GroupApi] Next Page Success',
+  NextPageFail = '[GroupDetailPage] Next Page Fail',
+  LoadStart = '[GroupDetailPage] Load Start',
+  LoadingComplete = '[GroupDetailPage] Load Complete',
+  GetById = '[GroupDetailPage] Get By Id'
 }
 
-export class GetUsersByRoleSuccessAction implements Action {
-  readonly type = ActionTypes.GetUsersByRoleSuccess;
+export class GetUsersByGroupSuccessAction implements Action {
+  readonly type = ActionTypes.GetUsersByGroupSuccess;
   constructor(public payload: KeycloakUser[]) {}
 }
 
-export class GetUsersByRoleFailAction implements Action {
-  readonly type = ActionTypes.GetUsersByRoleFail;
+export class GetUsersByGroupFailAction implements Action {
+  readonly type = ActionTypes.GetUsersByGroupFail;
   constructor(public payload: string) {}
 }
 
@@ -55,12 +55,12 @@ export class LoadingCompleteAction implements Action {
 
 export class GetByIdAction implements Action {
   readonly type = ActionTypes.GetById;
-  constructor(public payload: KeycloakRole) {}
+  constructor(public payload: KeycloakGroup) {}
 }
 
-export type RoleDetailActions =
-  | GetUsersByRoleSuccessAction
-  | GetUsersByRoleFailAction
+export type GroupDetailActions =
+  | GetUsersByGroupSuccessAction
+  | GetUsersByGroupFailAction
   | PageChangeAction
   | NextPageAction
   | NextPageSuccessAction

@@ -81,7 +81,8 @@ export class GroupService extends BaseService<KeycloakGroup> {
   public addRoleToGroup(id: string, roles: KeycloakRole[]) {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}/${id}/role-mappings/realm`;
-    return this.httpClient.post<KeycloakRole>(url, roles).pipe(
+    return this.httpClient.post(url, roles).pipe(
+      mapTo(roles),
       catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false))
     );
