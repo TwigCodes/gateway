@@ -6,11 +6,11 @@ import {
 
 import { AppState } from '@app/core';
 
-import * as fromRole from './roles/role.reducer';
-import * as fromUser from './users/user.reducer';
+import * as fromRole from './roles/roles.reducer';
+import * as fromUsers from './users/users.reducer';
 import * as fromGroup from './groups/groups.reducer';
-import * as fromRoleDetail from './roles/role-detail.reducer';
-import * as fromUserDetail from './users/user-detail.reducer';
+import * as fromRoleUsers from './roles/role-users.reducer';
+import * as fromUserRoles from './users/user-roles.reducer';
 import * as fromMembers from './groups/members.reducer';
 import * as fromAvailableRoles from './groups/available-roles.reducer';
 import * as fromRealmRoles from './groups/realm-roles.reducer';
@@ -20,9 +20,9 @@ export interface AdminState {
   available_roles: fromAvailableRoles.State;
   realm_roles: fromRealmRoles.State;
   role: fromRole.State;
-  roledetail: fromRoleDetail.State;
-  user: fromUser.State;
-  userdetail: fromUserDetail.State;
+  role_users: fromRoleUsers.State;
+  users: fromUsers.State;
+  user_roles: fromUserRoles.State;
 }
 
 export interface State extends AppState {
@@ -35,9 +35,9 @@ export const reducers: ActionReducerMap<AdminState> = {
   available_roles: fromAvailableRoles.reducer,
   realm_roles: fromRealmRoles.reducer,
   role: fromRole.reducer,
-  roledetail: fromRoleDetail.reducer,
-  user: fromUser.reducer,
-  userdetail: fromUserDetail.reducer
+  role_users: fromRoleUsers.reducer,
+  users: fromUsers.reducer,
+  user_roles: fromUserRoles.reducer
 };
 
 export const selectAdminState = createFeatureSelector<AdminState>('admin');

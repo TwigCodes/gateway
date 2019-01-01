@@ -14,9 +14,8 @@ import {
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { RoleService, UserService } from '../../services';
-import { selectRoleById } from '../../reducers/roles/role.selectors';
 
-import * as fromRoleDetailSelector from '../../reducers/roles/role-detail.selectors';
+import * as fromRoleDetailSelector from '../../reducers/roles/role-users.selectors';
 import * as fromRole from '../../actions/roles/role.actions';
 import * as fromRoleDetail from '../../actions/roles/role-detail.actions';
 import * as fromAdminReducer from '../../reducers';
@@ -93,33 +92,13 @@ export class RoleEffects {
         action.payload.routerState.params['roleId']
     ),
     map(action => action.payload.routerState.params['roleId']),
-    switchMap(roleId =>
-      this.store.pipe(
-        select(selectRoleById(roleId)),
-        filter(val => val != null),
-        first(),
-        map(role => new fromRoleDetail.GetByIdAction(role))
-      )
-    )
+    map(roleId => new fromRole.SelectAction(roleId))
   );
 
   @Effect()
   getUsersByRole = this.actions$.pipe(
-    ofType(ROUTER_NAVIGATION),
-    filter(
-      (action: any) =>
-        action.payload.event.url.indexOf('/admin/roles') > -1 &&
-        action.payload.routerState.params['roleId']
-    ),
-    map(action => action.payload.routerState.params['roleId']),
-    switchMap(roleId =>
-      this.store.pipe(
-        select(selectRoleById(roleId)),
-        filter(val => val != null),
-        first(),
-        map(role => role.name)
-      )
-    ),
+    ofType<fromRole.SelectAction>(fromRole.ActionTypes.Select),
+    map(action => action.payload),
     withLatestFrom(
       this.store.pipe(select(fromRoleDetailSelector.selectPageIndex)),
       this.store.pipe(select(fromRoleDetailSelector.selectPageSize))

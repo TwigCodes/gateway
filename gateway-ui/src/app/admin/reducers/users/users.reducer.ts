@@ -9,6 +9,7 @@ export interface State extends EntityState<KeycloakUser> {
   count: number;
   filter: Filter | null;
   search: string | null;
+  selectedId: string | null;
 }
 
 export const adapter: EntityAdapter<KeycloakUser> = createEntityAdapter<
@@ -23,7 +24,8 @@ const initialState = adapter.getInitialState({
   pageSize: 25,
   count: 0,
   filter: null,
-  search: null
+  search: null,
+  selectedId: null
 });
 
 export function reducer(state = initialState, action: UserActions): State {
@@ -60,6 +62,9 @@ export function reducer(state = initialState, action: UserActions): State {
         ...state,
         count: action.payload
       };
+    }
+    case ActionTypes.Select: {
+      return { ...state, selectedId: action.payload };
     }
     default: {
       return state;

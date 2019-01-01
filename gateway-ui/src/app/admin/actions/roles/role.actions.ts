@@ -13,7 +13,8 @@ export enum ActionTypes {
   UpdateFail = '[RoleApi] Update Fail',
   GetAll = '[RolePage] GetAll',
   GetAllSuccess = '[RoleApi] GetAll Success',
-  GetAllFail = '[RoleApi] GetAll Fail'
+  GetAllFail = '[RoleApi] GetAll Fail',
+  Select = '[RolePage] Select'
 }
 
 export class AddAction implements Action {
@@ -76,6 +77,11 @@ export class GetAllFailAction implements Action {
   constructor(public payload: string) {}
 }
 
+export class SelectAction implements Action {
+  readonly type = ActionTypes.Select;
+  constructor(public payload: string) {}
+}
+
 export type RoleActions =
   | AddAction
   | AddSuccessAction
@@ -88,4 +94,5 @@ export type RoleActions =
   | DeleteFailAction
   | GetAllAction
   | GetAllSuccessAction
-  | GetAllFailAction;
+  | GetAllFailAction
+  | SelectAction;

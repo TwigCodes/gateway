@@ -9,7 +9,6 @@ import * as fromRoleMapping from '../../actions/roles/role-mapping.actions';
 
 export interface State extends EntityState<KeycloakRole> {
   loading: boolean;
-  user: KeycloakUser | null;
 }
 
 export const adapter: EntityAdapter<KeycloakRole> = createEntityAdapter<
@@ -20,8 +19,7 @@ export const adapter: EntityAdapter<KeycloakRole> = createEntityAdapter<
 });
 
 const initialState: State = adapter.getInitialState({
-  loading: false,
-  user: null
+  loading: false
 });
 
 export function reducer(
@@ -37,9 +35,6 @@ export function reducer(
     }
     case ActionTypes.LoadingComplete: {
       return { ...state, loading: false };
-    }
-    case ActionTypes.GetById: {
-      return { ...state, user: action.payload };
     }
     case fromRoleMapping.ActionTypes.AddRoleToUserSuccess: {
       return { ...state, ...adapter.addOne(action.payload, state) };

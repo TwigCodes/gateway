@@ -16,7 +16,8 @@ export enum ActionTypes {
   LoadPageFail = '[UserApi] LoadPage Fail',
   Count = '[UserPage] Count',
   CountSuccess = '[UserApi] Count Success',
-  CountFail = '[UserApi] Count Fail'
+  CountFail = '[UserApi] Count Fail',
+  Select = '[UserPage] Select'
 }
 
 export class AddAction implements Action {
@@ -94,6 +95,11 @@ export class CountFailAction implements Action {
   constructor(public payload: string) {}
 }
 
+export class SelectAction implements Action {
+  readonly type = ActionTypes.Select;
+  constructor(public payload: string) {}
+}
+
 export type UserActions =
   | AddAction
   | AddSuccessAction
@@ -109,4 +115,5 @@ export type UserActions =
   | LoadPageFailAction
   | CountAction
   | CountSuccessAction
-  | CountFailAction;
+  | CountFailAction
+  | SelectAction;

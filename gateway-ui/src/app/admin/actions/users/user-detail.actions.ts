@@ -5,8 +5,7 @@ export enum ActionTypes {
   GetRolesByUserSuccess = '[RoleApi] Get Roles By User Success',
   GetRolesByUserFail = '[RoleApi] Get Roles By User Fail',
   LoadStart = '[UserDetailPage] Load Start',
-  LoadingComplete = '[UserDetailPage] Load Complete',
-  GetById = '[UserDetailPage] Get By Id'
+  LoadingComplete = '[UserDetailPage] Load Complete'
 }
 
 export class GetRolesByUserSuccessAction implements Action {
@@ -17,11 +16,6 @@ export class GetRolesByUserSuccessAction implements Action {
 export class GetRolesByUserFailAction implements Action {
   readonly type = ActionTypes.GetRolesByUserFail;
   constructor(public payload: string) {}
-}
-
-export class GetByIdAction implements Action {
-  readonly type = ActionTypes.GetById;
-  constructor(public payload: KeycloakUser) {}
 }
 
 export class LoadStartAction implements Action {
@@ -37,6 +31,5 @@ export class LoadingCompleteAction implements Action {
 export type UserDetailActions =
   | GetRolesByUserSuccessAction
   | GetRolesByUserFailAction
-  | GetByIdAction
   | LoadStartAction
   | LoadingCompleteAction;

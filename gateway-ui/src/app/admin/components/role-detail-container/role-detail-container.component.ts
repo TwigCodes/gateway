@@ -14,7 +14,7 @@ import { KeycloakUser } from '@app/admin/admin.model';
 import * as fromAdminReducer from '../../reducers';
 import * as fromRole from '../../actions/roles/role.actions';
 import * as fromRoleDetail from '../../actions/roles/role-detail.actions';
-import * as fromRoleDetailSelectors from '../../reducers/roles/role-detail.selectors';
+import * as fromRoleSelectors from '../../reducers/roles';
 import * as fromRoleMapping from '../../actions/roles/role-mapping.actions';
 import * as _ from 'lodash';
 
@@ -29,8 +29,8 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
   entityForm = new FormGroup({});
   model;
   params = new HttpParams().set('pageIndex', '0').set('pageSize', '25');
-  model$ = this.store.pipe(select(fromRoleDetailSelectors.selectRole));
-  users$ = this.store.pipe(select(fromRoleDetailSelectors.selectUsers));
+  model$ = this.store.pipe(select(fromRoleSelectors.getRoleSelected));
+  users$ = this.store.pipe(select(fromRoleSelectors.getRoleUsers));
   sub: Subscription;
   fields: FormlyFieldConfig[] = [
     {

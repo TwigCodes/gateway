@@ -1,18 +1,18 @@
 import { createSelector } from '@ngrx/store';
 import { selectAdminState } from '../admin.state';
 
-import * as fromUser from './user.reducer';
+import * as fromUsers from './users.reducer';
 
 export const selectUserState = createSelector(
   selectAdminState,
-  state => state.user
+  state => state.users
 );
 
 export const {
   selectIds: selectIds,
   selectEntities: selectEntities,
   selectAll: selectAll
-} = fromUser.adapter.getSelectors(selectUserState);
+} = fromUsers.adapter.getSelectors(selectUserState);
 
 export const selectCount = createSelector(
   selectUserState,
@@ -39,8 +39,7 @@ export const selectSearch = createSelector(
   state => state.search
 );
 
-export const selectUserById = (id: string) =>
-  createSelector(
-    selectUserState,
-    state => (state.entities[id] ? state.entities[id] : null)
-  );
+export const selectUserSelected = createSelector(
+  selectUserState,
+  state => state.entities[state.selectedId]
+);

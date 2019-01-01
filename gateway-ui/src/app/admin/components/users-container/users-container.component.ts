@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 import {
   selectAll,
   selectCount
-} from '@app/admin/reducers/users/user.selectors';
+} from '@app/admin/reducers/users/users.selectors';
 import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
 import { KeycloakUser } from '@app/admin/admin.model';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';

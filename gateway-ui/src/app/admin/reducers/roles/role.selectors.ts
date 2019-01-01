@@ -1,20 +1,10 @@
-import { createSelector } from '@ngrx/store';
-import { selectAdminState } from '../admin.state';
-import * as fromRole from './role.reducer';
+import * as fromRoles from './roles.selectors';
+import * as fromRoleUsers from './role-users.selectors';
 
-export const selectRoleState = createSelector(
-  selectAdminState,
-  state => state.role
-);
+export const getRoles = fromRoles.selectAll;
+export const getRoleSelected = fromRoles.selectRoleSelected;
 
-export const {
-  selectIds: selectIds,
-  selectEntities: selectEntities,
-  selectAll: selectAll
-} = fromRole.adapter.getSelectors(selectRoleState);
-
-export const selectRoleById = (id: string) =>
-  createSelector(
-    selectRoleState,
-    state => (state.entities[id] ? state.entities[id] : null)
-  );
+export const getRoleUsers = fromRoleUsers.selectAll;
+export const getRoleUsersLoading = fromRoleUsers.selectLoading;
+export const getRoleUsersPageIndex = fromRoleUsers.selectPageIndex;
+export const getRoleUsersPageSize = fromRoleUsers.selectPageSize;

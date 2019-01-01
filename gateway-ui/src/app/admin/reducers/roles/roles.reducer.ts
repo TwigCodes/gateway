@@ -4,7 +4,9 @@ import { KeycloakRole } from '../../admin.model';
 
 import * as _ from 'lodash';
 
-export interface State extends EntityState<KeycloakRole> {}
+export interface State extends EntityState<KeycloakRole> {
+  selectedId: string | null;
+}
 
 export const adapter: EntityAdapter<KeycloakRole> = createEntityAdapter<
   KeycloakRole
@@ -13,7 +15,9 @@ export const adapter: EntityAdapter<KeycloakRole> = createEntityAdapter<
   sortComparer: false
 });
 
-const initialState = adapter.getInitialState();
+const initialState = adapter.getInitialState({
+  selectedId: null
+});
 
 export function reducer(state = initialState, action: RoleActions): State {
   switch (action.type) {

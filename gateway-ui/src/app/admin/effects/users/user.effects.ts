@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ROUTER_NAVIGATION } from '@ngrx/router-store';
 import { select, Store } from '@ngrx/store';
-import { selectUserById } from '../../reducers/users/user.selectors';
 import {
   switchMap,
   map,
@@ -95,7 +94,7 @@ export class UserEffects {
   );
 
   @Effect()
-  getById = this.actions$.pipe(
+  select = this.actions$.pipe(
     ofType(ROUTER_NAVIGATION),
     filter(
       (action: any) =>
@@ -103,33 +102,13 @@ export class UserEffects {
         action.payload.routerState.params['userId']
     ),
     map(action => action.payload.routerState.params['userId']),
-    switchMap(userId =>
-      this.store.pipe(
-        select(selectUserById(userId)),
-        filter(val => val != null),
-        first(),
-        map(user => new fromUserDetail.GetByIdAction(user))
-      )
-    )
+    map(userId => new fromUser.SelectAction(userId))
   );
 
   @Effect()
   getRolesByUser = this.actions$.pipe(
-    ofType(ROUTER_NAVIGATION),
-    filter(
-      (action: any) =>
-        action.payload.event.url.indexOf('/admin/users') > -1 &&
-        action.payload.routerState.params['userId']
-    ),
-    map(action => action.payload.routerState.params['userId']),
-    switchMap(roleId =>
-      this.store.pipe(
-        select(selectUserById(roleId)),
-        filter(val => val != null),
-        first(),
-        map(user => user.id)
-      )
-    ),
+    ofType<fromUser.SelectAction>(fromUser.ActionTypes.Select),
+    map(action => action.payload),
     switchMap(userId =>
       this.service.getRolesByUserId(userId).pipe(
         map(result => new fromUserDetail.GetRolesByUserSuccessAction(result)),
