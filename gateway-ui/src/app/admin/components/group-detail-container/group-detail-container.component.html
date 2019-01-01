@@ -58,10 +58,11 @@
     <ng-template matTabContent>
       <mat-list>
         <mat-list-item>
-          <ngx-mat-autocomplete class="full-width" [placeholder]="'tgapp.admin.group-detail.roles.add-role-mapping' | translate"
-            [source]="availableRoles$ | async" [hasProgressBar]="true" [clearAfterSearch]="true" [displayTemplate]="itemTemplate"
-            [noRecordText]="'tgapp.role.search.norecord' | translate" (optionSelected)="handleAddRoleToGroup($event)">
-          </ngx-mat-autocomplete>
+          <mat-form-field>
+            <mat-select [placeholder]="'tgapp.admin.group-detail.roles.add-role-mapping' | translate" (selectionChange)="handleAddRoleToGroup($event)">
+              <mat-option *ngFor="let item of availableRoles$ | async" [value]="item">{{item.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
           <ng-template #itemTemplate let-item>
             <span> {{ item.name }}</span>
           </ng-template>

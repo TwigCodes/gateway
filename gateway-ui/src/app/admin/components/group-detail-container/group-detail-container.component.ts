@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
+import { MatSelectChange } from '@angular/material';
 import { HttpParams } from '@angular/common/http';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -27,13 +28,14 @@ export class GroupDetailContainerComponent implements OnInit, OnDestroy {
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
   readonly pageSize = 25;
   entityForm = new FormGroup({});
+  role = null;
   model;
   params = new HttpParams().set('pageIndex', '0').set('pageSize', '25');
   model$ = this.store.pipe(select(fromAdmin.getSelectedGroup));
   users$ = this.store.pipe(select(fromAdmin.getMembers));
   availableRoles$ = this.store.pipe(select(fromAdmin.getAvailableRoles));
   assignedRoles$ = this.store.pipe(select(fromAdmin.getRealmRoles));
-  sub: Subscription;
+  sub = new Subscription();
   fields: FormlyFieldConfig[] = [
     {
       key: 'name',
@@ -57,9 +59,11 @@ export class GroupDetailContainerComponent implements OnInit, OnDestroy {
     public service: UserSearchService
   ) {}
   ngOnInit(): void {
-    this.sub = this.model$.subscribe(val => {
-      this.model = { ...val };
-    });
+    this.sub.add(
+      this.model$.subscribe(val => {
+        this.model = { ...val };
+      })
+    );
   }
   ngOnDestroy() {
     if (this.sub && !this.sub.closed) {
@@ -113,11 +117,11 @@ export class GroupDetailContainerComponent implements OnInit, OnDestroy {
     });
   }
 
-  handleAddRoleToGroup(role: KeycloakRole) {
+  handleAddRoleToGroup(ev: MatSelectChange) {
     this.model$.pipe(take(1)).subscribe(group => {
       this.store.dispatch(
         new fromGroupRole.AddRolesToGroupAction({
-          roles: [role],
+          roles: [ev.value],
           group: group
         })
       );

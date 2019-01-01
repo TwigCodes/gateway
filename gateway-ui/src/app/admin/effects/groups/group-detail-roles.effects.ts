@@ -95,7 +95,7 @@ export class GroupDetailRolesEffects {
     ),
     map(action => action.payload),
     switchMap(({ roles, group }) => {
-      return this.service.addRoleToGroup(group.id, roles).pipe(
+      return this.service.deleteRolesFromGroup(group.id, roles).pipe(
         map(
           roleIds =>
             new fromGroupDetailRoles.DeleteRolesFromGroupSuccessAction(roleIds)

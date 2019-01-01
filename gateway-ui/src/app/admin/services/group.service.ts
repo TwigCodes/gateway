@@ -91,11 +91,11 @@ export class GroupService extends BaseService<KeycloakGroup> {
   public deleteRolesFromGroup(
     id: string,
     roles: KeycloakRole[]
-  ): Observable<string[]> {
+  ): Observable<KeycloakRole[]> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}/${id}/role-mappings/realm`;
     return this.httpClient.request('delete', url, { body: roles }).pipe(
-      mapTo(roles.map(role => role.id)),
+      mapTo(roles),
       catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false))
     );
