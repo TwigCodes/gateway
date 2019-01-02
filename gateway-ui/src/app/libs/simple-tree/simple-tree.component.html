@@ -7,7 +7,7 @@
       <button mat-icon-button disabled></button>
       <button
         mat-button
-        [color]="node.id === _selectedNodeId ? 'warn' : 'primary'"
+        [color]="node.id === _selectedNodeId ? 'warn' : null"
         (click)="handleNodeSelect(node)">
         {{ node.label }}
       </button>
@@ -37,7 +37,7 @@
         </button>
         <button
           mat-button
-          [color]="node.id === _selectedNodeId ? 'warn' : 'primary'"
+          [color]="node.id === _selectedNodeId ? 'warn' : null"
           (click)="handleNodeSelect(node)">
           {{ node.label }}
         </button>

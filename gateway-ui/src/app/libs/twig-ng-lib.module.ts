@@ -16,6 +16,7 @@ import {
   MaterialFileInputModule,
   FormlyControlsModule
 } from '.';
+import { NotFoundModule } from './not-found';
 
 @NgModule({
   exports: [

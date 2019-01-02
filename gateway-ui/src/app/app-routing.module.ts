@@ -25,10 +25,6 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: 'app/admin#AdminModule',
     pathMatch: 'prefix'
-  },
-  {
-    path: '**',
-    redirectTo: 'about'
   }
 ];
 

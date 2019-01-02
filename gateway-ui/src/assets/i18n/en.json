@@ -12,7 +12,7 @@
   "tgapp.about.get-notified.follow": "Follow",
   "tgapp.about.get-notified.title": "Get notified about new releases",
   "tgapp.about.get-started": "Get started",
-
+  "tgapp.admin.guard.notification": "You do not have access rights!",
   "tgapp.feedback.angular": "Modern powerful framework",
   "tgapp.feedback.angular-cli": "A command line interface for Angular",
   "tgapp.feedback.angular-material": "Material design component library",
@@ -85,6 +85,9 @@
   "tgapp.settings.themes.dark": "Dark",
   "tgapp.settings.themes.light": "Light",
   "tgapp.settings.themes.nature": "Nature",
+  "tgapp.settings.themes.indigo-pink": "Modern",
+  "tgapp.settings.themes.deeppurple-amber": "Deep",
+  "tgapp.settings.themes.purple-green": "Purple",
   "tgapp.settings.themes.night-mode": "Auto night mode (from 21:00 to 7:00)",
   "tgapp.settings.themes.placeholder": "Color Theme",
   "tgapp.settings.themes.saneago": "",

@@ -14,3 +14,4 @@ export * from './simple-tree';
 export * from './utils/selection.model';
 export * from './material-file-input';
 export * from './formly-controls';
+export * from './not-found';

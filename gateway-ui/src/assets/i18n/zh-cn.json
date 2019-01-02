@@ -12,7 +12,7 @@
   "tgapp.about.get-notified.follow": "关注",
   "tgapp.about.get-notified.title": "有新版本通知我",
   "tgapp.about.get-started": "快速开始",
-
+  "tgapp.admin.guard.notification": "您没有访问权限！",
   "tgapp.feedback.angular": "现代化的强大框架",
   "tgapp.feedback.angular-cli": "Angular 的命令行工具",
   "tgapp.feedback.angular-material": "Material Design 的组件库",
@@ -84,6 +84,9 @@
   "tgapp.settings.themes.dark": "黑夜模式",
   "tgapp.settings.themes.light": "白天模式",
   "tgapp.settings.themes.nature": "自然",
+  "tgapp.settings.themes.indigo-pink": "现代",
+  "tgapp.settings.themes.deeppurple-amber": "深邃",
+  "tgapp.settings.themes.purple-green": "紫色",
   "tgapp.settings.themes.night-mode": "自动黑夜模式（从 21:00 到 7:00）",
   "tgapp.settings.themes.placeholder": "颜色主题",
   "tgapp.settings.themes.saneago": "",

@@ -19,6 +19,7 @@ import { initializer } from './app-initilizer';
 import { EventStackService } from './core/keycloak/event-stack.service';
 
 import * as fundebug from 'fundebug-javascript';
+import { NotFoundModule } from './libs/not-found/not-found.module';
 
 fundebug.apikey = environment.fundbugApiKey;
 
@@ -51,7 +52,9 @@ export class FundebugErrorHandler implements ErrorHandler {
     SettingsModule,
 
     // app
-    AppRoutingModule
+    AppRoutingModule,
+
+    NotFoundModule
   ],
   declarations: [AppComponent],
   providers: [

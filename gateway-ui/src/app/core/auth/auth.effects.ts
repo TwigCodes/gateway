@@ -4,6 +4,7 @@ import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { tap, map, switchMap, catchError } from 'rxjs/operators';
 import { KeycloakService } from 'keycloak-angular';
+import { of, from } from 'rxjs';
 
 import { LocalStorageService } from '../local-storage/local-storage.service';
 
@@ -15,7 +16,6 @@ import {
   ActionAuthLoginSuccess,
   ActionAuthLoginFail
 } from './auth.actions';
-import { of, from } from 'rxjs';
 
 export const AUTH_KEY = 'AUTH';
 

@@ -1,0 +1,9 @@
+$ngx-indigo-pink-primary: mat-palette($mat-indigo);
+$ngx-indigo-pink-accent: mat-palette($mat-pink, 200, 100, 400);
+$ngx-indigo-pink-warn: mat-palette($mat-red, 600);
+
+$ngx-indigo-pink-theme: mat-light-theme(
+  $ngx-indigo-pink-primary,
+  $ngx-indigo-pink-accent,
+  $ngx-indigo-pink-warn
+);

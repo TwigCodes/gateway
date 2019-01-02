@@ -34,6 +34,9 @@ export class SettingsContainerComponent implements OnInit {
     { value: 'DEFAULT-THEME', label: 'blue' },
     { value: 'LIGHT-THEME', label: 'light' },
     { value: 'NATURE-THEME', label: 'nature' },
+    { value: 'INDIGO-PINK-THEME', label: 'indigo-pink' },
+    { value: 'PURPLE-GREEN-THEME', label: 'purple-green' },
+    { value: 'DEEPPURPLE-AMBER-THEME', label: 'deeppurple-amber' },
     { value: 'BLACK-THEME', label: 'dark' }
   ];
 

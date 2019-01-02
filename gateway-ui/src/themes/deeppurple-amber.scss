@@ -1,0 +1,9 @@
+$ngx-deeppurple-amber-primary: mat-palette($mat-deep-purple);
+$ngx-deeppurple-amber-accent: mat-palette($mat-amber, 200, 100, 400);
+$ngx-deeppurple-amber-warn: mat-palette($mat-red, 600);
+
+$ngx-deeppurple-amber-theme: mat-light-theme(
+  $ngx-deeppurple-amber-primary,
+  $ngx-deeppurple-amber-accent,
+  $ngx-deeppurple-amber-warn
+);
