@@ -7,7 +7,7 @@
     fxLayout="row"
     fxLayoutAlign="start center">
     <a *ngSwitchCase="true" class="crumb link" [routerLink]="[crumb.link]">{{
-      crumb.name
+      crumb.name | translate
     }}</a>
     <div *ngSwitchDefault class="link">{{ crumb.name }}</div>
     <mat-icon *ngIf="!last" class="chevron">chevron_right</mat-icon>

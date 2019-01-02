@@ -27,10 +27,7 @@ export class UsersContainerComponent implements OnInit {
   pageIndex = 0;
   pageSize = 25;
   pageEvent$ = new Subject<PageEvent>();
-  crumbs: Crumb[] = BREADCRUMBS_USERS.map(crumb => ({
-    ...crumb,
-    name: this.translate.instant(crumb.name)
-  }));
+  crumbs: Crumb[] = BREADCRUMBS_USERS;
   total$ = this.store.pipe(select(selectCount));
   users$ = this.store.pipe(
     select(selectAll),

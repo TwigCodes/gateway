@@ -19,10 +19,7 @@ import * as fromRole from '@app/admin/actions/roles/role.actions';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RolesContainerComponent implements OnInit {
-  crumbs: Crumb[] = BREADCRUMBS_ROLES.map(crumb => ({
-    ...crumb,
-    name: this.translate.instant(crumb.name)
-  }));
+  crumbs: Crumb[] = BREADCRUMBS_ROLES;
   roles$ = this.store.pipe(
     select(selectAll),
     map(roles =>

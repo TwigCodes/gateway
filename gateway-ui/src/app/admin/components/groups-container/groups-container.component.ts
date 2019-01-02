@@ -38,10 +38,7 @@ export class GroupsContainerComponent implements OnInit, OnDestroy {
   searchChange = new Subject<string>();
   pageIndex = 0;
   pageSize = 25;
-  crumbs: Crumb[] = BREADCRUMBS_GROUPS.map(crumb => ({
-    ...crumb,
-    name: this.translate.instant(crumb.name)
-  }));
+  crumbs: Crumb[] = BREADCRUMBS_GROUPS;
   data$ = this.store.pipe(
     select(fromGroupSelectors.getGroupsTree),
     map(groups => this.convertData(groups))
