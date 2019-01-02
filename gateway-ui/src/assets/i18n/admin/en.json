@@ -14,6 +14,7 @@
   "tgapp.admin.group-detail.users": "Group Members",
   "tgapp.admin.group-detail.users.add-group-mapping": "Add User to Group",
   "tgapp.user.search.norecord": "no matched records found",
+  "tgapp.group.search.norecord": "no matched records found",
   "tgapp.role.search.norecord": "no matched records found",
   "tgapp.confirm.delete.title": "To Delete The Item",
   "tgapp.confirm.delete.message": "It is not possible to recover the deleted one, please confirm if you are sure about that",

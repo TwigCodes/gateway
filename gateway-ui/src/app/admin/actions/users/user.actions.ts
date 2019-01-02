@@ -17,7 +17,10 @@ export enum ActionTypes {
   Count = '[UserPage] Count',
   CountSuccess = '[UserApi] Count Success',
   CountFail = '[UserApi] Count Fail',
-  Select = '[UserPage] Select'
+  Select = '[UserPage] Select',
+  Search = '[UserPage] Search',
+  SearchSuccess = '[UserApi] Search Success',
+  SearchFail = '[UserApi] Search Fail'
 }
 
 export class AddAction implements Action {
@@ -100,6 +103,21 @@ export class SelectAction implements Action {
   constructor(public payload: string) {}
 }
 
+export class SearchAction implements Action {
+  readonly type = ActionTypes.Search;
+  constructor(public payload: string) {}
+}
+
+export class SearchSuccessAction implements Action {
+  readonly type = ActionTypes.SearchSuccess;
+  constructor(public payload: KeycloakUser[]) {}
+}
+
+export class SearchFailAction implements Action {
+  readonly type = ActionTypes.AddFail;
+  constructor(public payload: string) {}
+}
+
 export type UserActions =
   | AddAction
   | AddSuccessAction
@@ -116,4 +134,7 @@ export type UserActions =
   | CountAction
   | CountSuccessAction
   | CountFailAction
-  | SelectAction;
+  | SelectAction
+  | SearchAction
+  | SearchSuccessAction
+  | SearchFailAction;

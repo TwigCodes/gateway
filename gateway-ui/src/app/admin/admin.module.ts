@@ -21,16 +21,7 @@ import {
   GroupDialogComponent
 } from './components';
 
-import {
-  UserEffects,
-  RoleEffects,
-  RoleMappingEffects,
-  AdminEffects,
-  GroupEffects,
-  GroupUsersEffects,
-  GroupDetailRolesEffects,
-  UserGroupsEffects
-} from './effects';
+import { ADMIN_EFFECTS } from './effects';
 import * as fromAdmin from './reducers';
 
 @NgModule({
@@ -58,16 +49,7 @@ import * as fromAdmin from './reducers';
       isolate: true
     }),
     StoreModule.forFeature('admin', fromAdmin.reducers),
-    EffectsModule.forFeature([
-      UserEffects,
-      UserGroupsEffects,
-      RoleEffects,
-      GroupEffects,
-      RoleMappingEffects,
-      GroupUsersEffects,
-      GroupDetailRolesEffects,
-      AdminEffects
-    ])
+    EffectsModule.forFeature(ADMIN_EFFECTS)
   ],
   entryComponents: [
     UserDialogComponent,

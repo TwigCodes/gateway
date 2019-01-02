@@ -15,7 +15,7 @@ import * as fromAdminReducer from '../../reducers';
 import * as fromRole from '../../actions/roles/role.actions';
 import * as fromRoleDetail from '../../actions/roles/role-users.actions';
 import * as fromRoleSelectors from '../../reducers/roles';
-import * as fromRoleMapping from '../../actions/roles/role-mapping.actions';
+import * as fromRoleUsers from '../../actions/roles/role-users.actions';
 import * as _ from 'lodash';
 
 @Component({
@@ -101,7 +101,7 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
   handleRemoveUser(user: KeycloakUser) {
     this.model$.pipe(take(1)).subscribe(role => {
       this.store.dispatch(
-        new fromRoleMapping.DeleteUserFromRoleAction({
+        new fromRoleUsers.DeleteUserFromRoleAction({
           user: user,
           role: role
         })
@@ -125,7 +125,7 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
   selectUser(user: KeycloakUser) {
     this.model$.pipe(take(1)).subscribe(role => {
       this.store.dispatch(
-        new fromRoleMapping.AddUserToRoleAction({
+        new fromRoleUsers.AddUserToRoleAction({
           user: user,
           role: role
         })

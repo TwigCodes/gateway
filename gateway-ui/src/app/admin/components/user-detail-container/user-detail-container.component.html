@@ -53,7 +53,7 @@
         <mat-list-item>
           <ngx-mat-autocomplete class="full-width" [placeholder]="'tgapp.admin.user-detail.groups.add-group-mapping' | translate"
             [minChars]="2" [source]="groupService" [serviceParams]="params" [hasProgressBar]="true" [clearAfterSearch]="true"
-            [displayTemplate]="itemTemplate" [noRecordText]="'tgapp.user.search.norecord' | translate" (optionSelected)="handleAddUserToGroup($event)">
+            [displayTemplate]="itemTemplate" [noRecordText]="'tgapp.group.search.norecord' | translate" (optionSelected)="handleAddUserToGroup($event)">
           </ngx-mat-autocomplete>
           <ng-template #itemTemplate let-item>
             <span> {{ item.name }}</span>

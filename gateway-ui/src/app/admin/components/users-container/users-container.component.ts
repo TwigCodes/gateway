@@ -67,6 +67,10 @@ export class UsersContainerComponent implements OnInit {
     );
   }
 
+  handleFilter(filterStr: string) {
+    this.store.dispatch(new fromUser.SearchAction(filterStr));
+  }
+
   handleAdd() {
     const dialogRef = this.dialog.open(UserDialogComponent, {
       data: {

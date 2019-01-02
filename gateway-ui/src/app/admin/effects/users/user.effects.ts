@@ -1,23 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store, select } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ROUTER_NAVIGATION } from '@ngrx/router-store';
-import { select, Store } from '@ngrx/store';
 import {
   switchMap,
   map,
   catchError,
   tap,
   filter,
-  first,
   withLatestFrom
 } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { UserService } from '../../services';
 
 import * as fromUser from '../../actions/users/user.actions';
-import * as fromUserDetail from '../../actions/users/user-roles.actions';
-import * as fromAdminReducer from '../../reducers';
+import * as fromAdmin from '../../reducers/admin.state';
+import * as fromUserSelectors from '../../reducers/users/users.selectors';
 
 @Injectable()
 export class UserEffects {
@@ -25,7 +24,7 @@ export class UserEffects {
     private actions$: Actions,
     private service: UserService,
     private router: Router,
-    private store: Store<fromAdminReducer.State>
+    private store: Store<fromAdmin.State>
   ) {}
   @Effect()
   add = this.actions$.pipe(
@@ -106,13 +105,17 @@ export class UserEffects {
   );
 
   @Effect()
-  getRolesByUser = this.actions$.pipe(
-    ofType<fromUser.SelectAction>(fromUser.ActionTypes.Select),
+  search = this.actions$.pipe(
+    ofType<fromUser.SearchAction>(fromUser.ActionTypes.Search),
     map(action => action.payload),
-    switchMap(userId =>
-      this.service.getRolesByUserId(userId).pipe(
-        map(result => new fromUserDetail.GetRolesByUserSuccessAction(result)),
-        catchError(err => of(new fromUserDetail.GetRolesByUserFailAction(err)))
+    withLatestFrom(
+      this.store.pipe(select(fromUserSelectors.selectPageIndex)),
+      this.store.pipe(select(fromUserSelectors.selectPageSize))
+    ),
+    switchMap(([filterStr, pageIndex, pageSize]) =>
+      this.service.search(filterStr, pageIndex, pageSize).pipe(
+        map(result => new fromUser.SearchSuccessAction(result)),
+        catchError(err => of(new fromUser.SearchFailAction(err)))
       )
     )
   );

@@ -14,6 +14,7 @@
   "tgapp.admin.group-detail.users": "群组成员",
   "tgapp.admin.group-detail.users.add-group-mapping": "将用户添加到群组",
   "tgapp.user.search.norecord": "没找到包含该关键字的用户",
+  "tgapp.group.search.norecord": "没找到包含该关键字的群组",
   "tgapp.role.search.norecord": "没找到包含该关键字的角色",
   "tgapp.confirm.delete.title": "删除数据",
   "tgapp.confirm.delete.message": "确认删除后将无法再恢复，是否要删除？",

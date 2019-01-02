@@ -52,6 +52,7 @@ export function reducer(state = initialState, action: UserActions): State {
         count: state.count - 1 >= 0 ? state.count : 0
       };
     }
+    case ActionTypes.SearchSuccess:
     case ActionTypes.LoadPageSuccess: {
       return {
         ...adapter.addAll(action.payload, state)

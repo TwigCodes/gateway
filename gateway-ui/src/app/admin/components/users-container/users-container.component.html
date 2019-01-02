@@ -6,6 +6,8 @@
         filterPlaceholder="{{ 'tgapp.admin.user.filter.placeholder' | translate }}"
         [items]="users$ | async"
         [showAdd]="true"
+        [userServerFilter]="true"
+        (filter)="handleFilter($event)"
         (select)="handleUpdate($event)"
         (add)="handleAdd()">
       </ngx-list-or-grid-with-filter>

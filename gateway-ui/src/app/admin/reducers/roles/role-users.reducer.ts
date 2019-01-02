@@ -1,11 +1,9 @@
 import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
-  RoleDetailActions,
+  RoleUsersActions,
   ActionTypes
 } from '../../actions/roles/role-users.actions';
 import { KeycloakUser, KeycloakRole } from '../../admin.model';
-
-import * as fromRoleMapping from '../../actions/roles/role-mapping.actions';
 
 export interface State extends EntityState<KeycloakUser> {
   pageIndex: number;
@@ -26,10 +24,7 @@ const initialState: State = adapter.getInitialState({
   loading: false
 });
 
-export function reducer(
-  state = initialState,
-  action: RoleDetailActions | fromRoleMapping.RoleMappingActions
-): State {
+export function reducer(state = initialState, action: RoleUsersActions): State {
   switch (action.type) {
     case ActionTypes.NextPageSuccess: {
       return { ...state, ...adapter.addMany(action.payload, state) };
@@ -49,10 +44,10 @@ export function reducer(
     case ActionTypes.LoadingComplete: {
       return { ...state, loading: false };
     }
-    case fromRoleMapping.ActionTypes.AddUserToRoleSuccess: {
+    case ActionTypes.AddUserToRoleSuccess: {
       return { ...state, ...adapter.addOne(action.payload, state) };
     }
-    case fromRoleMapping.ActionTypes.DeleteUserFromRoleSuccess: {
+    case ActionTypes.DeleteUserFromRoleSuccess: {
       return { ...state, ...adapter.removeOne(action.payload, state) };
     }
     default: {

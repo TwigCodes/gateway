@@ -1,11 +1,9 @@
+import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
-  UserDetailActions,
+  UserRolesActions,
   ActionTypes
 } from '../../actions/users/user-roles.actions';
-import { KeycloakUser, KeycloakRole } from '../../admin.model';
-import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-
-import * as fromRoleMapping from '../../actions/roles/role-mapping.actions';
+import { KeycloakRole } from '../../admin.model';
 
 export interface State extends EntityState<KeycloakRole> {
   loading: boolean;
@@ -22,10 +20,7 @@ const initialState: State = adapter.getInitialState({
   loading: false
 });
 
-export function reducer(
-  state = initialState,
-  action: UserDetailActions | fromRoleMapping.RoleMappingActions
-): State {
+export function reducer(state = initialState, action: UserRolesActions): State {
   switch (action.type) {
     case ActionTypes.GetRolesByUserSuccess: {
       return { ...adapter.addAll(action.payload, state) };
@@ -36,10 +31,10 @@ export function reducer(
     case ActionTypes.LoadingComplete: {
       return { ...state, loading: false };
     }
-    case fromRoleMapping.ActionTypes.AddRoleToUserSuccess: {
+    case ActionTypes.AddRoleToUserSuccess: {
       return { ...state, ...adapter.addOne(action.payload, state) };
     }
-    case fromRoleMapping.ActionTypes.DeleteRoleFromUserSuccess: {
+    case ActionTypes.DeleteRoleFromUserSuccess: {
       return { ...state, ...adapter.removeOne(action.payload, state) };
     }
     default: {

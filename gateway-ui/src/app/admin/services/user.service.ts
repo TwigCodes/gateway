@@ -65,11 +65,11 @@ export class UserService extends BaseService<KeycloakUser> {
   public addRolesToUser(
     id: string,
     roles: KeycloakRole[]
-  ): Observable<string[]> {
+  ): Observable<KeycloakRole[]> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}/${id}/role-mappings/realm`;
     return this.httpClient.post<KeycloakRole[]>(url, roles).pipe(
-      mapTo(roles.map(role => role.id)),
+      mapTo(roles),
       catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false))
     );

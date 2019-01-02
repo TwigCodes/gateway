@@ -13,7 +13,7 @@ import { KeycloakRole, KeycloakGroup } from '@app/admin/admin.model';
 
 import * as fromAdminReducer from '../../reducers';
 import * as fromUser from '../../actions/users/user.actions';
-import * as fromRoleMapping from '../../actions/roles/role-mapping.actions';
+import * as fromUserRoles from '../../actions/users/user-roles.actions';
 import * as fromUsers from '../../reducers/users';
 import * as fromRole from '../../actions/roles/role.actions';
 import * as fromRoleSelectors from '../../reducers/roles/roles.selectors';
@@ -134,7 +134,7 @@ export class UserDetailContainerComponent implements OnInit, OnDestroy {
   handleRemoveRole(role: KeycloakRole) {
     this.model$.pipe(take(1)).subscribe(user => {
       this.store.dispatch(
-        new fromRoleMapping.DeleteRoleFromUserAction({
+        new fromUserRoles.DeleteRoleFromUserAction({
           user: user,
           role: role
         })
@@ -158,7 +158,7 @@ export class UserDetailContainerComponent implements OnInit, OnDestroy {
   handleAddRoleToUser(role: KeycloakRole) {
     this.model$.pipe(take(1)).subscribe(user => {
       this.store.dispatch(
-        new fromRoleMapping.AddRoleToUserAction({
+        new fromUserRoles.AddRoleToUserAction({
           user: user,
           role: role
         })

@@ -1,32 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Store, select } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ROUTER_NAVIGATION } from '@ngrx/router-store';
-import {
-  switchMap,
-  map,
-  catchError,
-  filter,
-  withLatestFrom,
-  first,
-  tap
-} from 'rxjs/operators';
+import { switchMap, map, catchError, filter, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { RoleService, UserService } from '../../services';
 
-import * as fromRoleDetailSelector from '../../reducers/roles/role-users.selectors';
 import * as fromRole from '../../actions/roles/role.actions';
-import * as fromRoleDetail from '../../actions/roles/role-users.actions';
-import * as fromAdminReducer from '../../reducers';
 
 @Injectable()
 export class RoleEffects {
   constructor(
     private actions$: Actions,
     private service: RoleService,
-    private userService: UserService,
-    private store: Store<fromAdminReducer.State>,
     private router: Router
   ) {}
 
@@ -84,7 +70,7 @@ export class RoleEffects {
   );
 
   @Effect()
-  getById = this.actions$.pipe(
+  select = this.actions$.pipe(
     ofType(ROUTER_NAVIGATION),
     filter(
       (action: any) =>
@@ -93,36 +79,5 @@ export class RoleEffects {
     ),
     map(action => action.payload.routerState.params['roleId']),
     map(roleId => new fromRole.SelectAction(roleId))
-  );
-
-  @Effect()
-  getUsersByRole = this.actions$.pipe(
-    ofType<fromRole.SelectAction>(fromRole.ActionTypes.Select),
-    map(action => action.payload),
-    withLatestFrom(
-      this.store.pipe(select(fromRoleDetailSelector.selectPageIndex)),
-      this.store.pipe(select(fromRoleDetailSelector.selectPageSize))
-    ),
-    switchMap(([name, pageIndex, pageSize]) =>
-      this.service.getUsersByRoleName(name, pageIndex, pageSize).pipe(
-        map(result => new fromRoleDetail.GetUsersByRoleSuccessAction(result)),
-        catchError(err => of(new fromRoleDetail.GetUsersByRoleFailAction(err)))
-      )
-    )
-  );
-
-  @Effect()
-  getNextPageUsers = this.actions$.pipe(
-    ofType<fromRoleDetail.NextPageAction>(fromRoleDetail.ActionTypes.NextPage),
-    withLatestFrom(
-      this.store.pipe(select(fromRoleDetailSelector.selectPageIndex)),
-      this.store.pipe(select(fromRoleDetailSelector.selectPageSize))
-    ),
-    switchMap(([_, pageIndex, pageSize]) =>
-      this.userService.paged(pageIndex, pageSize).pipe(
-        map(result => new fromRoleDetail.NextPageSuccessAction(result)),
-        catchError(err => of(new fromRoleDetail.NextPageFailAction(err)))
-      )
-    )
   );
 }
