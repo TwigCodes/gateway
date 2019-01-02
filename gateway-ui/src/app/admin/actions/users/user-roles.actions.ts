@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { KeycloakUser, KeycloakRole } from '../../admin.model';
+import { KeycloakRole } from '../../admin.model';
 
 export enum ActionTypes {
   GetRolesByUserSuccess = '[RoleApi] Get Roles By User Success',

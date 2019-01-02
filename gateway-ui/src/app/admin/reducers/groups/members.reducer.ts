@@ -4,9 +4,6 @@ import {
   ActionTypes
 } from '../../actions/groups/group-users.actions';
 import { KeycloakUser } from '../../admin.model';
-
-import * as fromGroupMapping from '../../actions/groups/group-mapping.actions';
-
 export interface State extends EntityState<KeycloakUser> {
   pageIndex: number;
   pageSize: number;
@@ -28,7 +25,7 @@ const initialState: State = adapter.getInitialState({
 
 export function reducer(
   state = initialState,
-  action: GroupDetailActions | fromGroupMapping.GroupMappingActions
+  action: GroupDetailActions
 ): State {
   switch (action.type) {
     case ActionTypes.NextPageSuccess: {
@@ -37,10 +34,10 @@ export function reducer(
     case ActionTypes.GetUsersByGroupSuccess: {
       return { ...adapter.addAll(action.payload, state) };
     }
-    case fromGroupMapping.ActionTypes.AddUserToGroupSuccess: {
+    case ActionTypes.AddUserToGroupSuccess: {
       return { ...state, ...adapter.addOne(action.payload, state) };
     }
-    case fromGroupMapping.ActionTypes.DeleteUserFromGroupSuccess: {
+    case ActionTypes.DeleteUserFromGroupSuccess: {
       return { ...state, ...adapter.removeOne(action.payload, state) };
     }
     case ActionTypes.PageChange: {

@@ -1,12 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { take, filter, switchMap } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfirmService } from '@app/shared/confirm/confirm.service';
-import { KeycloakRole } from '@app/admin/admin.model';
+import { GroupSearchService } from '@app/admin/services';
+import { ConfirmService } from '@app/shared';
+import { KeycloakRole, KeycloakGroup } from '@app/admin/admin.model';
 
 import * as fromAdminReducer from '../../reducers';
 import * as fromUser from '../../actions/users/user.actions';
@@ -14,6 +17,7 @@ import * as fromRoleMapping from '../../actions/roles/role-mapping.actions';
 import * as fromUsers from '../../reducers/users';
 import * as fromRole from '../../actions/roles/role.actions';
 import * as fromRoleSelectors from '../../reducers/roles/roles.selectors';
+import * as fromUserGroups from '../../actions/users/user-groups.actions';
 import * as _ from 'lodash';
 
 @Component({
@@ -22,10 +26,16 @@ import * as _ from 'lodash';
   styleUrls: ['./user-detail-container.component.scss']
 })
 export class UserDetailContainerComponent implements OnInit, OnDestroy {
+  @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
+  readonly pageSize = 25;
   entityForm = new FormGroup({});
+  params = new HttpParams()
+    .set('pageIndex', '0')
+    .set('pageSize', String(this.pageSize));
   model;
   model$ = this.store.pipe(select(fromUsers.getUserSelected));
   roles$ = this.store.pipe(select(fromUsers.getUserRoles));
+  groups$ = this.store.pipe(select(fromUsers.getUserGroups));
   availableRoles$ = this.store.pipe(select(fromRoleSelectors.selectAll));
   sub: Subscription;
   fields: FormlyFieldConfig[] = [
@@ -91,7 +101,8 @@ export class UserDetailContainerComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<fromAdminReducer.State>,
     private translate: TranslateService,
-    private confirm: ConfirmService
+    private confirm: ConfirmService,
+    public groupService: GroupSearchService
   ) {}
 
   ngOnInit() {
@@ -158,5 +169,36 @@ export class UserDetailContainerComponent implements OnInit, OnDestroy {
   public isBuiltIn(username: string): boolean {
     const builtInUsers = ['twigadmin'];
     return _.includes(builtInUsers, username);
+  }
+
+  pageChange() {
+    const end = this.viewport.getRenderedRange().end;
+    const total = this.viewport.getDataLength();
+    console.log(`${end}, '>=', ${total}`);
+    if (end === total && total >= this.pageSize) {
+      this.store.dispatch(new fromUserGroups.NextPageAction());
+    }
+  }
+
+  handleAddUserToGroup(group: KeycloakGroup) {
+    this.model$.pipe(take(1)).subscribe(user => {
+      this.store.dispatch(
+        new fromUserGroups.AddAction({
+          user: user,
+          group: group
+        })
+      );
+    });
+  }
+
+  handleRemoveUserFromGroup(group: KeycloakGroup) {
+    this.model$.pipe(take(1)).subscribe(user => {
+      this.store.dispatch(
+        new fromUserGroups.DeleteAction({
+          user: user,
+          group: group
+        })
+      );
+    });
   }
 }

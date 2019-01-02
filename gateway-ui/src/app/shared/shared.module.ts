@@ -72,10 +72,8 @@ library.add(
   faStream,
   faBook
 );
-import { FormlyMaterialModule } from '@ngx-formly/material';
 
 import { FilterMenuComponent } from './filter-menu/filter-menu.component';
-import { FormlyModule } from '@ngx-formly/core';
 import { ConfirmService } from './confirm/confirm.service';
 import { TwigLibsModule } from '@app/libs/twig-ng-lib.module';
 
@@ -92,9 +90,7 @@ import { TwigLibsModule } from '@app/libs/twig-ng-lib.module';
     TwigLibsModule,
     FlexLayoutModule,
 
-    FontAwesomeModule,
-
-    FormlyModule.forRoot()
+    FontAwesomeModule
   ],
   providers: [ConfirmService],
   declarations: [FilterMenuComponent],
@@ -102,9 +98,6 @@ import { TwigLibsModule } from '@app/libs/twig-ng-lib.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
-    FormlyModule,
-    FormlyMaterialModule,
 
     TranslateModule,
 

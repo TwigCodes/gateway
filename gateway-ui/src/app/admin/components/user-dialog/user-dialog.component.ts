@@ -79,6 +79,19 @@ export class UserDialogComponent extends EntityFormComponent<KeycloakUser>
         'templateOptions.placeholder': () =>
           this.translate.instant('tgapp.admin.user-dialog.email.placeholder')
       }
+    },
+    {
+      key: 'enabled',
+      type: 'toggle',
+      templateOptions: {
+        required: true
+      },
+      expressionProperties: {
+        'templateOptions.label': () =>
+          this.translate.instant('tgapp.admin.user-dialog.enabled.label'),
+        'templateOptions.description': () =>
+          this.translate.instant('tgapp.admin.user-dialog.enabled.description')
+      }
     }
   ];
   constructor(

@@ -12,9 +12,10 @@ import {
   BreadCrumbsModule,
   ListOrGridWithFilterModule,
   ConfirmDialogModule,
-  SimpleTreeModule
+  SimpleTreeModule,
+  MaterialFileInputModule,
+  FormlyControlsModule
 } from '.';
-import { MaterialFileInputModule } from './material-file-input';
 
 @NgModule({
   exports: [
@@ -31,7 +32,8 @@ import { MaterialFileInputModule } from './material-file-input';
     ListOrGridWithFilterModule,
     ConfirmDialogModule,
     SimpleTreeModule,
-    MaterialFileInputModule
+    MaterialFileInputModule,
+    FormlyControlsModule
   ]
 })
 export class TwigLibsModule {}

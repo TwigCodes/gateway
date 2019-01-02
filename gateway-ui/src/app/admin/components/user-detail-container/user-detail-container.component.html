@@ -1,5 +1,5 @@
 <mat-tab-group>
-  <mat-tab label="{{ 'tgapp.admin.userdetail.info' | translate }}">
+  <mat-tab label="{{ 'tgapp.admin.user-detail.info' | translate }}">
     <ng-template matTabContent>
       <form [formGroup]="entityForm" (ngSubmit)="submit()">
         <formly-form [model]="model" [fields]="fields" [form]="entityForm">
@@ -20,13 +20,13 @@
       </form>
     </ng-template>
   </mat-tab>
-  <mat-tab label="{{ 'tgapp.admin.userdetail.roles' | translate }}">
+  <mat-tab label="{{ 'tgapp.admin.user-detail.roles' | translate }}">
     <ng-template matTabContent>
       <mat-list>
         <mat-list-item>
           <ngx-mat-autocomplete
             class="full-width"
-            [placeholder]="'tgapp.admin.userdetail.roles.addrolemapping' | translate"
+            [placeholder]="'tgapp.admin.user-detail.roles.addrolemapping' | translate"
             [source]="availableRoles$ | async"
             [hasProgressBar]="true"
             [clearAfterSearch]="true"
@@ -44,6 +44,32 @@
             <mat-icon>delete_forever</mat-icon>
           </button>
         </mat-list-item>
+      </mat-list>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="{{ 'tgapp.admin.user-detail.groups' | translate }}">
+    <ng-template matTabContent>
+      <mat-list>
+        <mat-list-item>
+          <ngx-mat-autocomplete class="full-width" [placeholder]="'tgapp.admin.user-detail.groups.add-group-mapping' | translate"
+            [minChars]="2" [source]="groupService" [serviceParams]="params" [hasProgressBar]="true" [clearAfterSearch]="true"
+            [displayTemplate]="itemTemplate" [noRecordText]="'tgapp.user.search.norecord' | translate" (optionSelected)="handleAddUserToGroup($event)">
+          </ngx-mat-autocomplete>
+          <ng-template #itemTemplate let-item>
+            <span> {{ item.name }}</span>
+          </ng-template>
+        </mat-list-item>
+        <ng-container *ngIf="groups$ | async as groups">
+          <cdk-virtual-scroll-viewport itemSize="10" class="virtual-viewport" *ngIf="groups.length > 0"
+            (scrolledIndexChange)="pageChange()">
+            <mat-list-item *cdkVirtualFor="let group of groups; let i = index;" class="list-item">
+              <p matLine>{{ group.name }}</p>
+              <button mat-icon-button color="warn" (click)="handleRemoveUserFromGroup(group)">
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+            </mat-list-item>
+          </cdk-virtual-scroll-viewport>
+        </ng-container>
       </mat-list>
     </ng-template>
   </mat-tab>

@@ -27,8 +27,9 @@ import {
   RoleMappingEffects,
   AdminEffects,
   GroupEffects,
-  GroupMappingEffects,
-  GroupDetailRolesEffects
+  GroupUsersEffects,
+  GroupDetailRolesEffects,
+  UserGroupsEffects
 } from './effects';
 import * as fromAdmin from './reducers';
 
@@ -59,10 +60,11 @@ import * as fromAdmin from './reducers';
     StoreModule.forFeature('admin', fromAdmin.reducers),
     EffectsModule.forFeature([
       UserEffects,
+      UserGroupsEffects,
       RoleEffects,
       GroupEffects,
       RoleMappingEffects,
-      GroupMappingEffects,
+      GroupUsersEffects,
       GroupDetailRolesEffects,
       AdminEffects
     ])

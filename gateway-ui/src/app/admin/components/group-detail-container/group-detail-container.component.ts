@@ -14,8 +14,8 @@ import { ConfirmService } from '@app/shared/confirm/confirm.service';
 
 import * as fromAdmin from '../../reducers';
 import * as fromGroup from '../../actions/groups/group.actions';
-import * as fromGroupRole from '../../actions/groups/group-roles.actions';
-import * as fromGroupMapping from '../../actions/groups/group-mapping.actions';
+import * as fromGroupRoles from '../../actions/groups/group-roles.actions';
+import * as fromGroupUsers from '../../actions/groups/group-users.actions';
 
 import * as _ from 'lodash';
 
@@ -87,7 +87,7 @@ export class GroupDetailContainerComponent implements OnInit, OnDestroy {
   handleAddUserToGroup(user: KeycloakUser) {
     this.model$.pipe(take(1)).subscribe(group => {
       this.store.dispatch(
-        new fromGroupMapping.AddUserToGroupAction({
+        new fromGroupUsers.AddUserToGroupAction({
           user: user,
           group: group
         })
@@ -98,7 +98,7 @@ export class GroupDetailContainerComponent implements OnInit, OnDestroy {
   handleRemoveUserFromGroup(user: KeycloakUser) {
     this.model$.pipe(take(1)).subscribe(group => {
       this.store.dispatch(
-        new fromGroupMapping.DeleteUserFromGroupAction({
+        new fromGroupUsers.DeleteUserFromGroupAction({
           user: user,
           group: group
         })
@@ -109,7 +109,7 @@ export class GroupDetailContainerComponent implements OnInit, OnDestroy {
   handleRemoveRoleFromGroup(role: KeycloakRole) {
     this.model$.pipe(take(1)).subscribe(group => {
       this.store.dispatch(
-        new fromGroupRole.DeleteRolesFromGroupAction({
+        new fromGroupRoles.DeleteRolesFromGroupAction({
           roles: [role],
           group: group
         })
@@ -120,7 +120,7 @@ export class GroupDetailContainerComponent implements OnInit, OnDestroy {
   handleAddRoleToGroup(ev: MatSelectChange) {
     this.model$.pipe(take(1)).subscribe(group => {
       this.store.dispatch(
-        new fromGroupRole.AddRolesToGroupAction({
+        new fromGroupRoles.AddRolesToGroupAction({
           roles: [ev.value],
           group: group
         })

@@ -9,7 +9,13 @@ export enum ActionTypes {
   NextPageSuccess = '[GroupApi] Next Page Success',
   NextPageFail = '[GroupDetailPage] Next Page Fail',
   LoadStart = '[GroupDetailPage] Load Start',
-  LoadingComplete = '[GroupDetailPage] Load Complete'
+  LoadingComplete = '[GroupDetailPage] Load Complete',
+  AddUserToGroup = '[GroupDetailPage] Add User To Group',
+  AddUserToGroupSuccess = '[UserAPI] Add User To Group Success',
+  AddUserToGroupFail = '[UserAPI] Add User To Group Fail',
+  DeleteUserFromGroup = '[GroupDetailPage] Delete User from Group',
+  DeleteUserFromGroupSuccess = '[UserAPI] Delete User from Group Success',
+  DeleteUserFromGroupFail = '[UserAPI] Delete User from Group Fail'
 }
 
 export class GetUsersByGroupSuccessAction implements Action {
@@ -52,6 +58,36 @@ export class LoadingCompleteAction implements Action {
   constructor() {}
 }
 
+export class AddUserToGroupAction implements Action {
+  readonly type = ActionTypes.AddUserToGroup;
+  constructor(public payload: { user: KeycloakUser; group: KeycloakGroup }) {}
+}
+
+export class AddUserToGroupSuccessAction implements Action {
+  readonly type = ActionTypes.AddUserToGroupSuccess;
+  constructor(public payload: KeycloakUser) {}
+}
+
+export class AddUserToGroupFailAction implements Action {
+  readonly type = ActionTypes.AddUserToGroupFail;
+  constructor(public payload: string) {}
+}
+
+export class DeleteUserFromGroupAction implements Action {
+  readonly type = ActionTypes.DeleteUserFromGroup;
+  constructor(public payload: { user: KeycloakUser; group: KeycloakGroup }) {}
+}
+
+export class DeleteUserFromGroupSuccessAction implements Action {
+  readonly type = ActionTypes.DeleteUserFromGroupSuccess;
+  constructor(public payload: string) {}
+}
+
+export class DeleteUserFromGroupFailAction implements Action {
+  readonly type = ActionTypes.DeleteUserFromGroupFail;
+  constructor(public payload: string) {}
+}
+
 export type GroupDetailActions =
   | GetUsersByGroupSuccessAction
   | GetUsersByGroupFailAction
@@ -60,4 +96,10 @@ export type GroupDetailActions =
   | NextPageSuccessAction
   | NextPageFailAction
   | LoadStartAction
-  | LoadingCompleteAction;
+  | LoadingCompleteAction
+  | AddUserToGroupAction
+  | AddUserToGroupSuccessAction
+  | AddUserToGroupFailAction
+  | DeleteUserFromGroupAction
+  | DeleteUserFromGroupSuccessAction
+  | DeleteUserFromGroupFailAction;

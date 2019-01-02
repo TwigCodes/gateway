@@ -36,6 +36,21 @@ export const selectSearch = createSelector(
   state => state.search
 );
 
+const getGroup = (
+  id: string,
+  entities: { [id: string]: KeycloakGroupDTO }
+): KeycloakGroup => {
+  if (entities[id] == null) {
+    return null;
+  }
+  return {
+    ...entities[id],
+    subGroups: entities[id].subGroups.map(groupId =>
+      getGroup(groupId, entities)
+    )
+  };
+};
+
 export const selectSelected = createSelector(
   selectGroupsState,
   state => getGroup(state.selectedId, state.entities)
@@ -84,18 +99,3 @@ export const selectParentId = (selectedId: string) =>
       return subs.length > 0 ? subs[0].id : null;
     }
   );
-
-const getGroup = (
-  id: string,
-  entities: { [id: string]: KeycloakGroupDTO }
-): KeycloakGroup => {
-  if (entities[id] == null) {
-    return null;
-  }
-  return {
-    ...entities[id],
-    subGroups: entities[id].subGroups.map(groupId =>
-      getGroup(groupId, entities)
-    )
-  };
-};

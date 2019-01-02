@@ -7,8 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { take, switchMap, filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import { ConfirmService } from '@app/shared/confirm/confirm.service';
-import { UserSearchService } from '@app/admin/services/user-search.service';
+import { ConfirmService } from '@app/shared';
+import { UserSearchService } from '@app/admin/services';
 import { KeycloakUser } from '@app/admin/admin.model';
 
 import * as fromAdminReducer from '../../reducers';
