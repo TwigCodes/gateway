@@ -1,4 +1,11 @@
 {
+  "tgapp.groups.tree.menu.add-sibling": "Add Silbing",
+  "tgapp.groups.tree.menu.add-child": "Add Child",
+  "tgapp.groups.tree.load-more": "Load More",
+  "tgapp.breadcrumb.admin.home": "Admin",
+  "tgapp.breadcrumb.admin.users": "Users",
+  "tgapp.breadcrumb.admin.roles": "Roles",
+  "tgapp.breadcrumb.admin.groups": "Groups",
   "tgapp.admin.group-detail.roles": "Roles",
   "tgapp.admin.group-detail.roles.add-role-mapping": "Add Role To Group",
   "tgapp.admin.group-detail.name.label": "Group Name",

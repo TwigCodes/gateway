@@ -1,4 +1,11 @@
 {
+  "tgapp.groups.tree.menu.add-sibling": "添加同级群组",
+  "tgapp.groups.tree.menu.add-child": "添加子群组",
+  "tgapp.groups.tree.load-more": "加载更多",
+  "tgapp.breadcrumb.admin.home": "管理首页",
+  "tgapp.breadcrumb.admin.users": "用户管理",
+  "tgapp.breadcrumb.admin.roles": "角色管理",
+  "tgapp.breadcrumb.admin.groups": "群组管理",
   "tgapp.admin.group-detail.roles": "角色",
   "tgapp.admin.group-detail.roles.add-role-mapping": "添加角色到群组",
   "tgapp.admin.group-detail.name.label": "群组名称",

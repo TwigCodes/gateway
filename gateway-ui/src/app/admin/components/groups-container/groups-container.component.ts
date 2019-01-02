@@ -21,6 +21,7 @@ import { KeycloakGroup, KeycloakGroupDTO } from '@app/admin/admin.model';
 import { SimpleTreeNode } from '@app/libs';
 import { Crumb } from '@app/libs';
 import { GroupDialogComponent } from '../group-dialog/group-dialog.component';
+import { BREADCRUMBS_GROUPS } from '@app/admin/commons/breadcrumbs';
 
 import * as fromAdmin from '../../reducers';
 import * as fromGroup from '../../actions/groups/group.actions';
@@ -37,16 +38,10 @@ export class GroupsContainerComponent implements OnInit, OnDestroy {
   searchChange = new Subject<string>();
   pageIndex = 0;
   pageSize = 25;
-  crumbs: Crumb[] = [
-    {
-      name: 'admin',
-      link: '/admin'
-    },
-    {
-      name: 'groups',
-      link: '/admin/groups'
-    }
-  ];
+  crumbs: Crumb[] = BREADCRUMBS_GROUPS.map(crumb => ({
+    ...crumb,
+    name: this.translate.instant(crumb.name)
+  }));
   data$ = this.store.pipe(
     select(fromGroupSelectors.getGroupsTree),
     map(groups => this.convertData(groups))

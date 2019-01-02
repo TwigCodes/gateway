@@ -8,6 +8,7 @@ import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
 import { selectAll } from '@app/admin/reducers/roles/roles.selectors';
 import { KeycloakRole } from '@app/admin/admin.model';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
+import { BREADCRUMBS_ROLES } from '@app/admin/commons/breadcrumbs';
 
 import * as fromAdminReducer from '../../reducers';
 import * as fromRole from '@app/admin/actions/roles/role.actions';
@@ -18,16 +19,10 @@ import * as fromRole from '@app/admin/actions/roles/role.actions';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RolesContainerComponent implements OnInit {
-  crumbs: Crumb[] = [
-    {
-      name: 'admin',
-      link: '/admin'
-    },
-    {
-      name: 'roles',
-      link: '/admin/roles'
-    }
-  ];
+  crumbs: Crumb[] = BREADCRUMBS_ROLES.map(crumb => ({
+    ...crumb,
+    name: this.translate.instant(crumb.name)
+  }));
   roles$ = this.store.pipe(
     select(selectAll),
     map(roles =>

@@ -12,6 +12,7 @@ import {
 import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
 import { KeycloakUser } from '@app/admin/admin.model';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
+import { BREADCRUMBS_USERS } from '@app/admin/commons/breadcrumbs';
 
 import * as fromAdminReducer from '../../reducers';
 import * as fromUser from '@app/admin/actions/users/user.actions';
@@ -26,16 +27,10 @@ export class UsersContainerComponent implements OnInit {
   pageIndex = 0;
   pageSize = 25;
   pageEvent$ = new Subject<PageEvent>();
-  crumbs: Crumb[] = [
-    {
-      name: 'admin',
-      link: '/admin'
-    },
-    {
-      name: 'users',
-      link: '/admin/users'
-    }
-  ];
+  crumbs: Crumb[] = BREADCRUMBS_USERS.map(crumb => ({
+    ...crumb,
+    name: this.translate.instant(crumb.name)
+  }));
   total$ = this.store.pipe(select(selectCount));
   users$ = this.store.pipe(
     select(selectAll),
