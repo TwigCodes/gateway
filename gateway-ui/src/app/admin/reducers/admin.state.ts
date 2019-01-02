@@ -1,20 +1,17 @@
-import {
-  ActionReducerMap,
-  createFeatureSelector,
-  createSelector
-} from '@ngrx/store';
+import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
 
 import { AppState } from '@app/core';
 
-import * as fromRole from './roles/roles.reducer';
 import * as fromUsers from './users/users.reducer';
-import * as fromGroup from './groups/groups.reducer';
-import * as fromRoleUsers from './roles/role-users.reducer';
 import * as fromUserRoles from './users/user-roles.reducer';
+import * as fromUserGroups from './users/user-groups.reducer';
+import * as fromRole from './roles/roles.reducer';
+import * as fromRoleUsers from './roles/role-users.reducer';
+import * as fromGroup from './groups/groups.reducer';
 import * as fromMembers from './groups/members.reducer';
 import * as fromAvailableRoles from './groups/available-roles.reducer';
 import * as fromRealmRoles from './groups/realm-roles.reducer';
-import * as fromUserGroups from './users/user-groups.reducer';
+
 export interface AdminState {
   groups: fromGroup.State;
   members: fromMembers.State;

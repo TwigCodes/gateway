@@ -11,11 +11,10 @@ import { ConfirmService } from '@app/shared';
 import { UserSearchService } from '@app/admin/services';
 import { KeycloakUser } from '@app/admin/admin.model';
 
-import * as fromAdminReducer from '../../reducers';
-import * as fromRole from '../../actions/roles/role.actions';
-import * as fromRoleDetail from '../../actions/roles/role-users.actions';
-import * as fromRoleSelectors from '../../reducers/roles';
-import * as fromRoleUsers from '../../actions/roles/role-users.actions';
+import * as fromAdmin from '@app/admin/reducers';
+import * as fromRole from '@app/admin/actions/roles/role.actions';
+import * as fromRoleDetail from '@app/admin/actions/roles/role-users.actions';
+import * as fromRoleUsers from '@app/admin/actions/roles/role-users.actions';
 import * as _ from 'lodash';
 
 @Component({
@@ -29,8 +28,8 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
   entityForm = new FormGroup({});
   model;
   params = new HttpParams().set('pageIndex', '0').set('pageSize', '25');
-  model$ = this.store.pipe(select(fromRoleSelectors.getRoleSelected));
-  users$ = this.store.pipe(select(fromRoleSelectors.getRoleUsers));
+  model$ = this.store.pipe(select(fromAdmin.getRoleSelected));
+  users$ = this.store.pipe(select(fromAdmin.getRoleUsers));
   sub: Subscription;
   fields: FormlyFieldConfig[] = [
     {
@@ -67,7 +66,7 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
     }
   ];
   constructor(
-    private store: Store<fromAdminReducer.State>,
+    private store: Store<fromAdmin.State>,
     private translate: TranslateService,
     private confirm: ConfirmService,
     public service: UserSearchService

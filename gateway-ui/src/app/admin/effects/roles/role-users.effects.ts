@@ -3,12 +3,11 @@ import { Observable, of } from 'rxjs';
 import { Action, select, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
-import { UserService, RoleService } from '../../services';
+import { UserService, RoleService } from '@app/admin/services';
 
-import * as fromRole from '../../actions/roles/role.actions';
-import * as fromRoleUsers from '../../actions/roles/role-users.actions';
-import * as fromRoleSelectors from '../../reducers/roles';
-import * as fromAdminReducer from '../../reducers';
+import * as fromRole from '@app/admin/actions/roles/role.actions';
+import * as fromRoleUsers from '@app/admin/actions/roles/role-users.actions';
+import * as fromAdmin from '@app/admin/reducers';
 
 @Injectable()
 export class RoleUsersEffects {
@@ -16,7 +15,7 @@ export class RoleUsersEffects {
     private actions$: Actions,
     private userService: UserService,
     private roleService: RoleService,
-    private store: Store<fromAdminReducer.State>
+    private store: Store<fromAdmin.State>
   ) {}
 
   @Effect() addUserToRole$: Observable<Action> = this.actions$.pipe(
@@ -62,8 +61,8 @@ export class RoleUsersEffects {
     ofType<fromRole.SelectAction>(fromRole.ActionTypes.Select),
     map(action => action.payload),
     withLatestFrom(
-      this.store.pipe(select(fromRoleSelectors.getRoleUsersPageIndex)),
-      this.store.pipe(select(fromRoleSelectors.getRoleUsersPageSize))
+      this.store.pipe(select(fromAdmin.getRoleUsersPageIndex)),
+      this.store.pipe(select(fromAdmin.getRoleUsersPageSize))
     ),
     switchMap(([name, pageIndex, pageSize]) =>
       this.roleService.getUsersByRoleName(name, pageIndex, pageSize).pipe(
@@ -77,9 +76,9 @@ export class RoleUsersEffects {
   getNextPageUsers = this.actions$.pipe(
     ofType<fromRoleUsers.NextPageAction>(fromRoleUsers.ActionTypes.NextPage),
     withLatestFrom(
-      this.store.pipe(select(fromRoleSelectors.getRoleSelected)),
-      this.store.pipe(select(fromRoleSelectors.getRoleUsersPageIndex)),
-      this.store.pipe(select(fromRoleSelectors.getRoleUsersPageSize))
+      this.store.pipe(select(fromAdmin.getRoleSelected)),
+      this.store.pipe(select(fromAdmin.getRoleUsersPageIndex)),
+      this.store.pipe(select(fromAdmin.getRoleUsersPageSize))
     ),
     switchMap(([_, role, pageIndex, pageSize]) =>
       this.roleService.getUsersByRoleName(role.name, pageIndex, pageSize).pipe(

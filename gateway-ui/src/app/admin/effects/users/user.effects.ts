@@ -12,11 +12,10 @@ import {
   withLatestFrom
 } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { UserService } from '../../services';
+import { UserService } from '@app/admin/services';
 
-import * as fromUser from '../../actions/users/user.actions';
-import * as fromAdmin from '../../reducers/admin.state';
-import * as fromUserSelectors from '../../reducers/users/users.selectors';
+import * as fromUser from '@app/admin/actions/users/user.actions';
+import * as fromAdmin from '@app/admin/reducers';
 
 @Injectable()
 export class UserEffects {
@@ -109,8 +108,8 @@ export class UserEffects {
     ofType<fromUser.SearchAction>(fromUser.ActionTypes.Search),
     map(action => action.payload),
     withLatestFrom(
-      this.store.pipe(select(fromUserSelectors.selectPageIndex)),
-      this.store.pipe(select(fromUserSelectors.selectPageSize))
+      this.store.pipe(select(fromAdmin.getUserPageIndex)),
+      this.store.pipe(select(fromAdmin.getUserPageSize))
     ),
     switchMap(([filterStr, pageIndex, pageSize]) =>
       this.service.search(filterStr, pageIndex, pageSize).pipe(

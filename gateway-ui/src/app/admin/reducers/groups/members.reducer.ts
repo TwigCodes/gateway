@@ -2,8 +2,8 @@ import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
   GroupDetailActions,
   ActionTypes
-} from '../../actions/groups/group-users.actions';
-import { KeycloakUser } from '../../admin.model';
+} from '@app/admin/actions/groups/group-users.actions';
+import { KeycloakUser } from '@app/admin/admin.model';
 export interface State extends EntityState<KeycloakUser> {
   pageIndex: number;
   pageSize: number;

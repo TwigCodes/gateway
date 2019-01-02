@@ -2,8 +2,8 @@ import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
   UserRolesActions,
   ActionTypes
-} from '../../actions/users/user-roles.actions';
-import { KeycloakRole } from '../../admin.model';
+} from '@app/admin/actions/users/user-roles.actions';
+import { KeycloakRole } from '@app/admin/admin.model';
 
 export interface State extends EntityState<KeycloakRole> {
   loading: boolean;

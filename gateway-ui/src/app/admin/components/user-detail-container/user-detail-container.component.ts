@@ -11,13 +11,11 @@ import { GroupSearchService } from '@app/admin/services';
 import { ConfirmService } from '@app/shared';
 import { KeycloakRole, KeycloakGroup } from '@app/admin/admin.model';
 
-import * as fromAdminReducer from '../../reducers';
-import * as fromUser from '../../actions/users/user.actions';
-import * as fromUserRoles from '../../actions/users/user-roles.actions';
-import * as fromUsers from '../../reducers/users';
-import * as fromRole from '../../actions/roles/role.actions';
-import * as fromRoleSelectors from '../../reducers/roles/roles.selectors';
-import * as fromUserGroups from '../../actions/users/user-groups.actions';
+import * as fromAdmin from '@app/admin/reducers';
+import * as fromUser from '@app/admin/actions/users/user.actions';
+import * as fromUserRoles from '@app/admin/actions/users/user-roles.actions';
+import * as fromRole from '@app/admin/actions/roles/role.actions';
+import * as fromUserGroups from '@app/admin/actions/users/user-groups.actions';
 import * as _ from 'lodash';
 
 @Component({
@@ -33,10 +31,10 @@ export class UserDetailContainerComponent implements OnInit, OnDestroy {
     .set('pageIndex', '0')
     .set('pageSize', String(this.pageSize));
   model;
-  model$ = this.store.pipe(select(fromUsers.getUserSelected));
-  roles$ = this.store.pipe(select(fromUsers.getUserRoles));
-  groups$ = this.store.pipe(select(fromUsers.getUserGroups));
-  availableRoles$ = this.store.pipe(select(fromRoleSelectors.selectAll));
+  model$ = this.store.pipe(select(fromAdmin.getUserSelected));
+  roles$ = this.store.pipe(select(fromAdmin.getUserRoles));
+  groups$ = this.store.pipe(select(fromAdmin.getUserGroups));
+  availableRoles$ = this.store.pipe(select(fromAdmin.getRoles));
   sub: Subscription;
   fields: FormlyFieldConfig[] = [
     {
@@ -99,7 +97,7 @@ export class UserDetailContainerComponent implements OnInit, OnDestroy {
     }
   ];
   constructor(
-    private store: Store<fromAdminReducer.State>,
+    private store: Store<fromAdmin.State>,
     private translate: TranslateService,
     private confirm: ConfirmService,
     public groupService: GroupSearchService

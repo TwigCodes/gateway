@@ -10,7 +10,7 @@ import { KeycloakRole } from '@app/admin/admin.model';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
 import { BREADCRUMBS_ROLES } from '@app/admin/commons/breadcrumbs';
 
-import * as fromAdminReducer from '../../reducers';
+import * as fromAdmin from '@app/admin/reducers';
 import * as fromRole from '@app/admin/actions/roles/role.actions';
 @Component({
   selector: 'tgapp-roles-container',
@@ -33,7 +33,7 @@ export class RolesContainerComponent implements OnInit {
     )
   );
   constructor(
-    private store: Store<fromAdminReducer.State>,
+    private store: Store<fromAdmin.State>,
     private dialog: MatDialog,
     private translate: TranslateService,
     private router: Router

@@ -12,7 +12,7 @@ import { GroupEffects } from './groups/group.effects';
 
 import { GroupUsersEffects } from './groups/group-users.effects';
 
-import { GroupDetailRolesEffects } from './groups/group-roles.effects';
+import { GroupRolesEffects } from './groups/group-roles.effects';
 
 import { AdminEffects } from './admin.effects';
 
@@ -34,6 +34,6 @@ export const ADMIN_EFFECTS = [
   RoleUsersEffects,
   GroupEffects,
   GroupUsersEffects,
-  GroupDetailRolesEffects,
+  GroupRolesEffects,
   AdminEffects
 ];

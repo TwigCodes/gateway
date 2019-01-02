@@ -12,12 +12,11 @@ import {
   withLatestFrom
 } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { GroupService } from '../../services';
+import { GroupService } from '@app/admin/services';
 
-import * as fromGroup from '../../actions/groups/group.actions';
-import * as fromGroupDetail from '../../actions/groups/group-users.actions';
-import * as fromGroupSelectors from '../../reducers/groups';
-import * as fromAdmin from '../../reducers';
+import * as fromGroup from '@app/admin/actions/groups/group.actions';
+import * as fromGroupDetail from '@app/admin/actions/groups/group-users.actions';
+import * as fromAdmin from '@app/admin/reducers';
 
 @Injectable()
 export class GroupEffects {
@@ -93,8 +92,8 @@ export class GroupEffects {
   nextPage = this.actions$.pipe(
     ofType<fromGroup.NextPageAction>(fromGroup.ActionTypes.NextPage),
     withLatestFrom(
-      this.store.pipe(select(fromGroupSelectors.getGroupsPageIndex)),
-      this.store.pipe(select(fromGroupSelectors.getGroupsPageSize))
+      this.store.pipe(select(fromAdmin.getGroupsPageIndex)),
+      this.store.pipe(select(fromAdmin.getGroupsPageSize))
     ),
     map(
       ([_, pageIndex, pageSize]) =>
@@ -118,8 +117,8 @@ export class GroupEffects {
     ofType<fromGroup.SearchAction>(fromGroup.ActionTypes.Search),
     map(action => action.payload),
     withLatestFrom(
-      this.store.pipe(select(fromGroupSelectors.getGroupsPageIndex)),
-      this.store.pipe(select(fromGroupSelectors.getGroupsPageSize))
+      this.store.pipe(select(fromAdmin.getGroupsPageIndex)),
+      this.store.pipe(select(fromAdmin.getGroupsPageSize))
     ),
     switchMap(([search, pageIndex, pageSize]) =>
       this.service.search(search, pageIndex, pageSize).pipe(
@@ -133,8 +132,8 @@ export class GroupEffects {
   clearSearch = this.actions$.pipe(
     ofType<fromGroup.ClearSearchAction>(fromGroup.ActionTypes.ClearSearch),
     withLatestFrom(
-      this.store.pipe(select(fromGroupSelectors.getGroupsPageIndex)),
-      this.store.pipe(select(fromGroupSelectors.getGroupsPageSize))
+      this.store.pipe(select(fromAdmin.getGroupsPageIndex)),
+      this.store.pipe(select(fromAdmin.getGroupsPageSize))
     ),
     map(
       ([_, pageIndex, pageSize]) =>
@@ -168,8 +167,8 @@ export class GroupEffects {
     ofType<fromGroup.SelectAction>(fromGroup.ActionTypes.Select),
     map(action => action.payload),
     withLatestFrom(
-      this.store.pipe(select(fromGroupSelectors.getMembersPageIndex)),
-      this.store.pipe(select(fromGroupSelectors.getMembersPageSize))
+      this.store.pipe(select(fromAdmin.getMembersPageIndex)),
+      this.store.pipe(select(fromAdmin.getMembersPageSize))
     ),
     switchMap(([id, pageIndex, pageSize]) =>
       this.service.getGroupMembers(id, pageIndex, pageSize).pipe(

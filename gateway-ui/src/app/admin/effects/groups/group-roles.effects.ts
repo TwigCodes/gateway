@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap, map, catchError, filter } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { GroupService } from '../../services';
+import { GroupService } from '@app/admin/services';
 
-import * as fromGroupDetailRoles from '../../actions/groups/group-roles.actions';
-import * as fromGroup from '../../actions/groups/group.actions';
+import * as fromGroupRoles from '@app/admin/actions/groups/group-roles.actions';
+import * as fromGroup from '@app/admin/actions/groups/group.actions';
 
 @Injectable()
-export class GroupDetailRolesEffects {
+export class GroupRolesEffects {
   constructor(private actions$: Actions, private service: GroupService) {}
 
   @Effect()
@@ -16,10 +16,7 @@ export class GroupDetailRolesEffects {
     ofType<fromGroup.SelectAction>(fromGroup.ActionTypes.Select),
     filter(action => action.payload != null),
     map(action => action.payload),
-    map(
-      groupId =>
-        new fromGroupDetailRoles.GetAvailableRolesOfGroupAction(groupId)
-    )
+    map(groupId => new fromGroupRoles.GetAvailableRolesOfGroupAction(groupId))
   );
 
   @Effect()
@@ -27,25 +24,23 @@ export class GroupDetailRolesEffects {
     ofType<fromGroup.SelectAction>(fromGroup.ActionTypes.Select),
     filter(action => action.payload != null),
     map(action => action.payload),
-    map(groupId => new fromGroupDetailRoles.GetRealmRolesOfGroupAction(groupId))
+    map(groupId => new fromGroupRoles.GetRealmRolesOfGroupAction(groupId))
   );
 
   @Effect()
   loadAvailableRoles = this.actions$.pipe(
-    ofType<fromGroupDetailRoles.GetAvailableRolesOfGroupAction>(
-      fromGroupDetailRoles.ActionTypes.GetAvailableRolesOfGroup
+    ofType<fromGroupRoles.GetAvailableRolesOfGroupAction>(
+      fromGroupRoles.ActionTypes.GetAvailableRolesOfGroup
     ),
     map(action => action.payload),
     switchMap(groupId => {
       return this.service.getGroupAvailableRoles(groupId).pipe(
         map(
           roles =>
-            new fromGroupDetailRoles.GetAvailableRolesOfGroupSuccessAction(
-              roles
-            )
+            new fromGroupRoles.GetAvailableRolesOfGroupSuccessAction(roles)
         ),
         catchError(err =>
-          of(new fromGroupDetailRoles.GetAvailableRolesOfGroupFailAction(err))
+          of(new fromGroupRoles.GetAvailableRolesOfGroupFailAction(err))
         )
       );
     })
@@ -53,18 +48,17 @@ export class GroupDetailRolesEffects {
 
   @Effect()
   loadRealmRoles = this.actions$.pipe(
-    ofType<fromGroupDetailRoles.GetRealmRolesOfGroupAction>(
-      fromGroupDetailRoles.ActionTypes.GetRealmRolesOfGroup
+    ofType<fromGroupRoles.GetRealmRolesOfGroupAction>(
+      fromGroupRoles.ActionTypes.GetRealmRolesOfGroup
     ),
     map(action => action.payload),
     switchMap(groupId => {
       return this.service.getGroupRealmRoles(groupId).pipe(
         map(
-          roles =>
-            new fromGroupDetailRoles.GetRealmRolesOfGroupSuccessAction(roles)
+          roles => new fromGroupRoles.GetRealmRolesOfGroupSuccessAction(roles)
         ),
         catchError(err =>
-          of(new fromGroupDetailRoles.GetRealmRolesOfGroupFailAction(err))
+          of(new fromGroupRoles.GetRealmRolesOfGroupFailAction(err))
         )
       );
     })
@@ -72,36 +66,32 @@ export class GroupDetailRolesEffects {
 
   @Effect()
   addRolesToGroup = this.actions$.pipe(
-    ofType<fromGroupDetailRoles.AddRolesToGroupAction>(
-      fromGroupDetailRoles.ActionTypes.AddRolesToGroup
+    ofType<fromGroupRoles.AddRolesToGroupAction>(
+      fromGroupRoles.ActionTypes.AddRolesToGroup
     ),
     map(action => action.payload),
     switchMap(({ roles, group }) => {
       return this.service.addRoleToGroup(group.id, roles).pipe(
-        map(
-          roles => new fromGroupDetailRoles.AddRolesToGroupSuccessAction(roles)
-        ),
-        catchError(err =>
-          of(new fromGroupDetailRoles.AddRolesToGroupFailAction(err))
-        )
+        map(roles => new fromGroupRoles.AddRolesToGroupSuccessAction(roles)),
+        catchError(err => of(new fromGroupRoles.AddRolesToGroupFailAction(err)))
       );
     })
   );
 
   @Effect()
   deleteRolesToGroup = this.actions$.pipe(
-    ofType<fromGroupDetailRoles.DeleteRolesFromGroupAction>(
-      fromGroupDetailRoles.ActionTypes.DeleteRolesFromGroup
+    ofType<fromGroupRoles.DeleteRolesFromGroupAction>(
+      fromGroupRoles.ActionTypes.DeleteRolesFromGroup
     ),
     map(action => action.payload),
     switchMap(({ roles, group }) => {
       return this.service.deleteRolesFromGroup(group.id, roles).pipe(
         map(
           roleIds =>
-            new fromGroupDetailRoles.DeleteRolesFromGroupSuccessAction(roleIds)
+            new fromGroupRoles.DeleteRolesFromGroupSuccessAction(roleIds)
         ),
         catchError(err =>
-          of(new fromGroupDetailRoles.DeleteRolesFromGroupFailAction(err))
+          of(new fromGroupRoles.DeleteRolesFromGroupFailAction(err))
         )
       );
     })

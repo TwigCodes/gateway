@@ -23,9 +23,8 @@ import { Crumb } from '@app/libs';
 import { GroupDialogComponent } from '../group-dialog/group-dialog.component';
 import { BREADCRUMBS_GROUPS } from '@app/admin/commons/breadcrumbs';
 
-import * as fromAdmin from '../../reducers';
-import * as fromGroup from '../../actions/groups/group.actions';
-import * as fromGroupSelectors from '../../reducers/groups';
+import * as fromAdmin from '@app/admin/reducers';
+import * as fromGroup from '@app/admin/actions/groups/group.actions';
 
 @Component({
   selector: 'tgapp-groups-container',
@@ -40,12 +39,10 @@ export class GroupsContainerComponent implements OnInit, OnDestroy {
   pageSize = 25;
   crumbs: Crumb[] = BREADCRUMBS_GROUPS;
   data$ = this.store.pipe(
-    select(fromGroupSelectors.getGroupsTree),
+    select(fromAdmin.getGroupsTree),
     map(groups => this.convertData(groups))
   );
-  showLoadMore$ = this.store.pipe(
-    select(fromGroupSelectors.getGroupsShowLoadMore)
-  );
+  showLoadMore$ = this.store.pipe(select(fromAdmin.getGroupsShowLoadMore));
   constructor(
     private store: Store<fromAdmin.State>,
     private translate: TranslateService,
@@ -106,7 +103,7 @@ export class GroupsContainerComponent implements OnInit, OnDestroy {
       .pipe(
         filter(val => val),
         take(1),
-        withLatestFrom(this.store.pipe(select(fromGroupSelectors.getGroups)))
+        withLatestFrom(this.store.pipe(select(fromAdmin.getGroups)))
       )
       .subscribe(([val, all]) => {
         if (this.isTopNode(group)) {

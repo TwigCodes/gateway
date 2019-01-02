@@ -12,10 +12,10 @@ import { UserSearchService } from '@app/admin/services';
 import { KeycloakUser, KeycloakRole } from '@app/admin/admin.model';
 import { ConfirmService } from '@app/shared/confirm/confirm.service';
 
-import * as fromAdmin from '../../reducers';
-import * as fromGroup from '../../actions/groups/group.actions';
-import * as fromGroupRoles from '../../actions/groups/group-roles.actions';
-import * as fromGroupUsers from '../../actions/groups/group-users.actions';
+import * as fromAdmin from '@app/admin/reducers';
+import * as fromGroup from '@app/admin/actions/groups/group.actions';
+import * as fromGroupRoles from '@app/admin/actions/groups/group-roles.actions';
+import * as fromGroupUsers from '@app/admin/actions/groups/group-users.actions';
 
 import * as _ from 'lodash';
 

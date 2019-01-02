@@ -14,7 +14,7 @@ import { KeycloakUser } from '@app/admin/admin.model';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 import { BREADCRUMBS_USERS } from '@app/admin/commons/breadcrumbs';
 
-import * as fromAdminReducer from '../../reducers';
+import * as fromAdmin from '@app/admin/reducers';
 import * as fromUser from '@app/admin/actions/users/user.actions';
 
 @Component({
@@ -42,7 +42,7 @@ export class UsersContainerComponent implements OnInit {
     )
   );
   constructor(
-    private store: Store<fromAdminReducer.State>,
+    private store: Store<fromAdmin.State>,
     private dialog: MatDialog,
     private translate: TranslateService,
     private router: Router

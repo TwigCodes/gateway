@@ -1,6 +1,9 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { RoleActions, ActionTypes } from '../../actions/roles/role.actions';
-import { KeycloakRole } from '../../admin.model';
+import {
+  RoleActions,
+  ActionTypes
+} from '@app/admin/actions/roles/role.actions';
+import { KeycloakRole } from '@app/admin/admin.model';
 
 import * as _ from 'lodash';
 

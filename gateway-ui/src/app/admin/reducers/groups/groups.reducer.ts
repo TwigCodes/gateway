@@ -1,7 +1,10 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { normalize, schema } from 'normalizr';
-import { GroupActions, ActionTypes } from '../../actions/groups/group.actions';
-import { KeycloakGroupDTO } from '../../admin.model';
+import {
+  GroupActions,
+  ActionTypes
+} from '@app/admin/actions/groups/group.actions';
+import { KeycloakGroupDTO } from '@app/admin/admin.model';
 import * as _ from 'lodash';
 
 export interface State extends EntityState<KeycloakGroupDTO> {

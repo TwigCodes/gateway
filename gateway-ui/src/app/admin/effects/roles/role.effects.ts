@@ -4,9 +4,9 @@ import { ROUTER_NAVIGATION } from '@ngrx/router-store';
 import { switchMap, map, catchError, filter, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
-import { RoleService, UserService } from '../../services';
+import { RoleService } from '@app/admin/services';
 
-import * as fromRole from '../../actions/roles/role.actions';
+import * as fromRole from '@app/admin/actions/roles/role.actions';
 
 @Injectable()
 export class RoleEffects {

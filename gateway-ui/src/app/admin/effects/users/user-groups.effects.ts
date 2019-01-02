@@ -5,8 +5,8 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { UserService } from '@app/admin/services';
 import { switchMap, map, catchError } from 'rxjs/operators';
 
-import * as fromUser from '../../actions/users/user.actions';
-import * as fromUserGroups from '../../actions/users/user-groups.actions';
+import * as fromUser from '@app/admin/actions/users/user.actions';
+import * as fromUserGroups from '@app/admin/actions/users/user-groups.actions';
 
 @Injectable()
 export class UserGroupsEffects {
