@@ -15,7 +15,7 @@ import { of } from 'rxjs';
 import { GroupService } from '../../services';
 
 import * as fromGroup from '../../actions/groups/group.actions';
-import * as fromGroupDetail from '../../actions/groups/group-detail.actions';
+import * as fromGroupDetail from '../../actions/groups/group-users.actions';
 import * as fromGroupSelectors from '../../reducers/groups';
 import * as fromAdmin from '../../reducers';
 

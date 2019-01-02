@@ -2,10 +2,10 @@ import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
   GroupRoleMappingActions,
   ActionTypes
-} from '../../actions/groups/group-detail-roles.actions';
+} from '../../actions/groups/group-roles.actions';
 import { KeycloakRole } from '../../admin.model';
 
-import * as fromGroup from '../../actions/groups/group-detail.actions';
+import * as fromGroup from '../../actions/groups/group-users.actions';
 
 export interface State extends EntityState<KeycloakRole> {
   loading: boolean;

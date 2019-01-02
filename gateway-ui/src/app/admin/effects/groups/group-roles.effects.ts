@@ -4,7 +4,7 @@ import { switchMap, map, catchError, filter } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { GroupService } from '../../services';
 
-import * as fromGroupDetailRoles from '../../actions/groups/group-detail-roles.actions';
+import * as fromGroupDetailRoles from '../../actions/groups/group-roles.actions';
 import * as fromGroup from '../../actions/groups/group.actions';
 
 @Injectable()

@@ -16,7 +16,7 @@ import { of } from 'rxjs';
 import { UserService } from '../../services';
 
 import * as fromUser from '../../actions/users/user.actions';
-import * as fromUserDetail from '../../actions/users/user-detail.actions';
+import * as fromUserDetail from '../../actions/users/user-roles.actions';
 import * as fromAdminReducer from '../../reducers';
 
 @Injectable()

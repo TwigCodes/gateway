@@ -1,10 +1,8 @@
-# tg 360-Degree Feedback System
+# TwigCodes 360-Degree Feedback System
 
 ## Run Locally
 
 ```bash
-git clone https://github.com/tomastrajan/angular-ngrx-material-starter.git new-project
-cd new-project
 npm install
 npm start
 ```

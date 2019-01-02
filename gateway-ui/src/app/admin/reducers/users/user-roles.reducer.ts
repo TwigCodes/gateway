@@ -1,7 +1,7 @@
 import {
   UserDetailActions,
   ActionTypes
-} from '../../actions/users/user-detail.actions';
+} from '../../actions/users/user-roles.actions';
 import { KeycloakUser, KeycloakRole } from '../../admin.model';
 import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 

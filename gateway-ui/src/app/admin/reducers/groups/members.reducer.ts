@@ -2,7 +2,7 @@ import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
   GroupDetailActions,
   ActionTypes
-} from '../../actions/groups/group-detail.actions';
+} from '../../actions/groups/group-users.actions';
 import { KeycloakUser } from '../../admin.model';
 
 import * as fromGroupMapping from '../../actions/groups/group-mapping.actions';

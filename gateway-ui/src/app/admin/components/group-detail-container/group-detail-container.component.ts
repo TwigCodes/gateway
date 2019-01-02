@@ -14,7 +14,7 @@ import { ConfirmService } from '@app/shared/confirm/confirm.service';
 
 import * as fromAdmin from '../../reducers';
 import * as fromGroup from '../../actions/groups/group.actions';
-import * as fromGroupRole from '../../actions/groups/group-detail-roles.actions';
+import * as fromGroupRole from '../../actions/groups/group-roles.actions';
 import * as fromGroupMapping from '../../actions/groups/group-mapping.actions';
 
 import * as _ from 'lodash';

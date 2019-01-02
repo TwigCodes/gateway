@@ -17,7 +17,7 @@ import { RoleService, UserService } from '../../services';
 
 import * as fromRoleDetailSelector from '../../reducers/roles/role-users.selectors';
 import * as fromRole from '../../actions/roles/role.actions';
-import * as fromRoleDetail from '../../actions/roles/role-detail.actions';
+import * as fromRoleDetail from '../../actions/roles/role-users.actions';
 import * as fromAdminReducer from '../../reducers';
 
 @Injectable()

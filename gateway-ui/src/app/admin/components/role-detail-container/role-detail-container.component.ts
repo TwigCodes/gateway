@@ -13,7 +13,7 @@ import { KeycloakUser } from '@app/admin/admin.model';
 
 import * as fromAdminReducer from '../../reducers';
 import * as fromRole from '../../actions/roles/role.actions';
-import * as fromRoleDetail from '../../actions/roles/role-detail.actions';
+import * as fromRoleDetail from '../../actions/roles/role-users.actions';
 import * as fromRoleSelectors from '../../reducers/roles';
 import * as fromRoleMapping from '../../actions/roles/role-mapping.actions';
 import * as _ from 'lodash';

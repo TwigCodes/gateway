@@ -2,7 +2,7 @@ import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import {
   RoleDetailActions,
   ActionTypes
-} from '../../actions/roles/role-detail.actions';
+} from '../../actions/roles/role-users.actions';
 import { KeycloakUser, KeycloakRole } from '../../admin.model';
 
 import * as fromRoleMapping from '../../actions/roles/role-mapping.actions';
