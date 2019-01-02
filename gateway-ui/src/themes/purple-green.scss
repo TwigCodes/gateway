@@ -1,9 +1,0 @@
-$ngx-purple-green-primary: mat-palette($mat-purple);
-$ngx-purple-green-accent: mat-palette($mat-green, 200, 100, 400);
-$ngx-purple-green-warn: mat-palette($mat-red, 600);
-
-$ngx-purple-green-theme: mat-light-theme(
-  $ngx-purple-green-primary,
-  $ngx-purple-green-accent,
-  $ngx-purple-green-warn
-);

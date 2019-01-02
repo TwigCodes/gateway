@@ -18,7 +18,6 @@ import { ClickOutsideDirective } from './click-outside/click-outside.directive';
 import { FullscreenToggleComponent } from './fullscreen-toggle/fullscreen-toggle.component';
 import { QuickpanelToggleComponent } from './quickpanel-toggle/quickpanel-toggle.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +26,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
     ClickOutsideDirective,
     FullscreenToggleComponent,
     QuickpanelToggleComponent,
-    ToolbarComponent,
-    NotificationsComponent
+    ToolbarComponent
   ],
   imports: [
     CommonModule,

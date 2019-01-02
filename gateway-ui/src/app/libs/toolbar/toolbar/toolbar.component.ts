@@ -4,7 +4,6 @@ import {
   OnInit,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { AuthState } from '@ngx-starter-kit/auth';
 import { MatSidenav } from '@angular/material';
@@ -16,7 +15,6 @@ import { MatSidenav } from '@angular/material';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToolbarComponent implements OnInit {
-  @Select(AuthState.profile) profile$: Observable<any>;
   @Input() quickpanel: MatSidenav;
   @Input() sidenav: MatSidenav;
   isFullscreen = false;

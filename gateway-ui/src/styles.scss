@@ -12,9 +12,6 @@
 @import 'themes/light-theme.scss';
 @import 'themes/black-theme.scss';
 @import 'themes/nature-theme.scss';
-@import 'themes/indigo-pink-theme.scss';
-@import 'themes/purple-green.scss';
-@import 'themes/deeppurple-amber.scss';
 
 @import 'styles-reset.scss-theme';
 @import 'app/app.component.scss-theme';
@@ -64,21 +61,6 @@
 .nature-theme {
   @include angular-material-theme($ngx-nature-theme);
   @include custom-components-theme($ngx-nature-theme);
-}
-
-.indigo-pink-theme {
-  @include angular-material-theme($ngx-indigo-pink-theme);
-  @include custom-components-theme($ngx-indigo-pink-theme);
-}
-
-.purple-green-theme {
-  @include angular-material-theme($ngx-purple-green-theme);
-  @include custom-components-theme($ngx-purple-green-theme);
-}
-
-.deeppurple-amber-theme {
-  @include angular-material-theme($ngx-deeppurple-amber-theme);
-  @include custom-components-theme($ngx-deeppurple-amber-theme);
 }
 
 .full-width {
