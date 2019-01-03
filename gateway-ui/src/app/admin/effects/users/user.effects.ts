@@ -88,7 +88,7 @@ export class UserEffects {
       fromUser.ActionTypes.UpdateSuccess,
       fromUser.ActionTypes.DeleteSuccess
     ),
-    tap(_ => this.router.navigate(['/admin/users']))
+    tap(_ => this.router.navigate(['admin/users']))
   );
 
   @Effect()

@@ -83,7 +83,7 @@ export class GroupsContainerComponent implements OnInit, OnDestroy {
         children: this.convertData(item.subGroups)
       }));
   handleSelected(group: KeycloakGroup) {
-    this.router.navigate([`/admin/groups/${group.id}`]);
+    this.router.navigate([`admin/groups/${group.id}`]);
   }
   handleSearch(search: string) {
     this.searchChange.next(search);

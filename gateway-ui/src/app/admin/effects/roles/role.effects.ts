@@ -66,7 +66,7 @@ export class RoleEffects {
       fromRole.ActionTypes.UpdateSuccess,
       fromRole.ActionTypes.DeleteSuccess
     ),
-    tap(_ => this.router.navigate(['/admin/roles']))
+    tap(_ => this.router.navigate(['admin/roles']))
   );
 
   @Effect()

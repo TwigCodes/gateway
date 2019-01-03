@@ -163,7 +163,7 @@ export class RatersContainerComponent implements OnInit {
   }
 
   completeRaterSelection() {
-    this.router.navigate(['/feedback/review']);
+    this.router.navigate(['feedback/review']);
   }
 
   public addExternalRater(email) {

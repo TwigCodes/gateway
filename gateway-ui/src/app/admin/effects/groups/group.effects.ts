@@ -147,7 +147,7 @@ export class GroupEffects {
       fromGroup.ActionTypes.UpdateSuccess,
       fromGroup.ActionTypes.DeleteSuccess
     ),
-    tap(_ => this.router.navigate(['/admin/groups']))
+    tap(_ => this.router.navigate(['admin/groups']))
   );
 
   @Effect()

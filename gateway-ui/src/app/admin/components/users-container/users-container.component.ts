@@ -88,6 +88,6 @@ export class UsersContainerComponent implements OnInit {
   }
 
   handleUpdate(user: KeycloakUser) {
-    this.router.navigate([`/admin/users/${user.id}`]);
+    this.router.navigate([`admin/users/${user.id}`]);
   }
 }

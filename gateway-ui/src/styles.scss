@@ -20,23 +20,11 @@
 @import 'app/libs/list-or-grid-with-filter/list-or-grid-with-filter.component-theme.scss';
 
 @import 'app/static/about/about.component.scss-theme';
-@import 'app/examples/notifications/components/notifications.component.scss-theme';
-@import 'app/examples/todos/components/todos-container.component.scss-theme';
-@import 'app/examples/stock-market/components/stock-market-container.component.scss-theme';
-@import 'app/examples/theming/parent/parent.component.scss-theme';
-@import 'app/examples/theming/child/child.component.scss-theme';
-@import 'app/examples/examples/examples.component.scss-theme';
 
 @mixin custom-components-theme($theme) {
   @include tgapp-styles-reset-theme($theme);
   @include tgapp-app-component-theme($theme);
   @include tgapp-about-component-theme($theme);
-  @include tgapp-notifications-component-theme($theme);
-  @include tgapp-todos-container-component-theme($theme);
-  @include tgapp-stock-market-container-component-theme($theme);
-  @include tgapp-parent-component-theme($theme);
-  @include tgapp-child-component-theme($theme);
-  @include tgapp-examples-component-theme($theme);
 
   @include ngx-list-or-grid-theme($theme);
   @include ngx-big-input-component-theme($theme);

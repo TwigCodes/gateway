@@ -5,7 +5,7 @@
         <formly-form [model]="model" [fields]="fields" [form]="entityForm">
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <span>
-              <button mat-flat-button type="button" [routerLink]="['/admin/users']">
+              <button mat-flat-button type="button" [routerLink]="['admin/users']">
                 {{ 'tgapp.form.cancel.button' | translate }}
               </button>
               <button mat-button color="warn" type="button" (click)="handleDelete()" [disabled]="isBuiltIn(model.username)">

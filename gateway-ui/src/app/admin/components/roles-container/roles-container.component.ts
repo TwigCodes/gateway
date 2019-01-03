@@ -59,6 +59,6 @@ export class RolesContainerComponent implements OnInit {
   }
 
   handleUpdate(role: KeycloakRole) {
-    this.router.navigate([`/admin/roles/${role.name}`]);
+    this.router.navigate([`admin/roles/${role.name}`]);
   }
 }
