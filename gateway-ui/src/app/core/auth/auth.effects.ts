@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { tap, map, switchMap, catchError } from 'rxjs/operators';
+import { tap, map, switchMap, catchError, filter } from 'rxjs/operators';
 import { KeycloakService } from 'keycloak-angular';
 import { of, from } from 'rxjs';
 

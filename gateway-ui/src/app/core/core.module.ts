@@ -17,10 +17,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import {
-  StoreRouterConnectingModule,
-  RouterStateSerializer
-} from '@ngrx/router-store';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { environment } from '@env/environment';
 
 import { httpInterceptorProviders } from './http-interceptors';
@@ -44,7 +41,9 @@ import { NgrxNotificationService } from './notifications/ngrx-notification.servi
 
     // ngrx
     StoreModule.forRoot(reducers),
-    StoreRouterConnectingModule.forRoot(),
+    StoreRouterConnectingModule.forRoot({
+      serializer: CustomSerializer
+    }),
     EffectsModule.forRoot([AuthEffects]),
     environment.production
       ? []
@@ -83,7 +82,6 @@ import { NgrxNotificationService } from './notifications/ngrx-notification.servi
     httpInterceptorProviders,
     TitleService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
-    { provide: RouterStateSerializer, useClass: CustomSerializer },
     NgrxNotificationService
   ],
   exports: [TranslateModule]

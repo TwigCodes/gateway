@@ -60,15 +60,6 @@ export class RoleEffects {
     )
   );
 
-  @Effect({ dispatch: false })
-  successAndNavigate = this.actions$.pipe(
-    ofType<fromRole.UpdateSuccessAction | fromRole.DeleteSuccessAction>(
-      fromRole.ActionTypes.UpdateSuccess,
-      fromRole.ActionTypes.DeleteSuccess
-    ),
-    tap(_ => this.router.navigate(['admin/roles']))
-  );
-
   @Effect()
   select = this.actions$.pipe(
     ofType(ROUTER_NAVIGATION),

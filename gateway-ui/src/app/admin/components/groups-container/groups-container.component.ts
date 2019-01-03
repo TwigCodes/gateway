@@ -4,7 +4,7 @@ import {
   OnDestroy,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import {
   map,
@@ -47,7 +47,8 @@ export class GroupsContainerComponent implements OnInit, OnDestroy {
     private store: Store<fromAdmin.State>,
     private translate: TranslateService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -83,7 +84,7 @@ export class GroupsContainerComponent implements OnInit, OnDestroy {
         children: this.convertData(item.subGroups)
       }));
   handleSelected(group: KeycloakGroup) {
-    this.router.navigate([`admin/groups/${group.id}`]);
+    this.router.navigate([`${group.id}`], { relativeTo: this.route });
   }
   handleSearch(search: string) {
     this.searchChange.next(search);

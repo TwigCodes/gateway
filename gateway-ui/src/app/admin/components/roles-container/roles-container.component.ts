@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { map, filter, take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
 import { selectAll } from '@app/admin/reducers/roles/roles.selectors';
@@ -36,7 +36,8 @@ export class RolesContainerComponent implements OnInit {
     private store: Store<fromAdmin.State>,
     private dialog: MatDialog,
     private translate: TranslateService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
   ngOnInit() {
     this.store.dispatch(new fromRole.GetAllAction());
@@ -59,6 +60,6 @@ export class RolesContainerComponent implements OnInit {
   }
 
   handleUpdate(role: KeycloakRole) {
-    this.router.navigate([`admin/roles/${role.name}`]);
+    this.router.navigate([`${role.name}`], { relativeTo: this.route });
   }
 }

@@ -82,15 +82,6 @@ export class UserEffects {
     )
   );
 
-  @Effect({ dispatch: false })
-  successAndNavigate = this.actions$.pipe(
-    ofType<fromUser.UpdateSuccessAction | fromUser.DeleteSuccessAction>(
-      fromUser.ActionTypes.UpdateSuccess,
-      fromUser.ActionTypes.DeleteSuccess
-    ),
-    tap(_ => this.router.navigate(['admin/users']))
-  );
-
   @Effect()
   select = this.actions$.pipe(
     ofType(ROUTER_NAVIGATION),

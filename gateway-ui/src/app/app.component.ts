@@ -1,7 +1,7 @@
 import browser from 'browser-detect';
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, of, combineLatest } from 'rxjs';
 
 import {
   ActionAuthLogin,
@@ -10,7 +10,8 @@ import {
   AppState,
   LocalStorageService,
   selectIsAuthenticated,
-  ActionAuthCheckLogin
+  ActionAuthCheckLogin,
+  selectRealm
 } from '@app/core';
 import { environment as env } from '@env/environment';
 
@@ -21,6 +22,13 @@ import {
   selectSettingsLanguage,
   selectSettingsStickyHeader
 } from './settings';
+import { map, withLatestFrom, filter } from 'rxjs/operators';
+import { tag } from 'rxjs-spy/operators';
+
+export interface RouteMenu {
+  link: string;
+  label: string;
+}
 
 @Component({
   selector: 'tgapp-root',
@@ -29,6 +37,7 @@ import {
   animations: [routeAnimations]
 })
 export class AppComponent implements OnInit {
+  realm$: Observable<string>;
   isProd = env.production;
   envName = env.envName;
   version = env.versions.app;
@@ -48,11 +57,12 @@ export class AppComponent implements OnInit {
     },
     { link: 'admin', label: 'tgapp.menu.admin' }
   ];
+  navigation$: Observable<RouteMenu[]>;
   navigationSideMenu = [
     ...this.navigation,
     { link: 'settings', label: 'tgapp.menu.settings' }
   ];
-
+  navigationSideMenu$: Observable<RouteMenu[]>;
   isAuthenticated$: Observable<boolean>;
   stickyHeader$: Observable<boolean>;
   language$: Observable<string>;
@@ -68,6 +78,22 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.realm$ = this.store.pipe(
+      select(selectRealm),
+      filter(val => val != null)
+    );
+    this.navigation$ = combineLatest(
+      this.realm$,
+      of(this.navigation),
+      (realm, navs) =>
+        navs.map(nav => ({ ...nav, link: `${realm}/${nav.link}` }))
+    );
+    this.navigationSideMenu$ = combineLatest(
+      this.realm$,
+      of(this.navigationSideMenu),
+      (realm, navs) =>
+        navs.map(nav => ({ ...nav, link: `${realm}/${nav.link}` }))
+    );
     this.storageService.testLocalStorage();
     if (AppComponent.isIEorEdgeOrSafari()) {
       this.store.dispatch(

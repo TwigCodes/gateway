@@ -141,15 +141,6 @@ export class GroupEffects {
     )
   );
 
-  @Effect({ dispatch: false })
-  successAndNavigate = this.actions$.pipe(
-    ofType<fromGroup.UpdateSuccessAction | fromGroup.DeleteSuccessAction>(
-      fromGroup.ActionTypes.UpdateSuccess,
-      fromGroup.ActionTypes.DeleteSuccess
-    ),
-    tap(_ => this.router.navigate(['admin/groups']))
-  );
-
   @Effect()
   select = this.actions$.pipe(
     ofType(ROUTER_NAVIGATION),

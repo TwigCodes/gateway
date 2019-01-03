@@ -2,22 +2,22 @@ import { Crumb } from '@app/libs';
 
 export const ADMIN_HOME: Crumb = {
   name: 'tgapp.breadcrumb.admin.home',
-  link: 'admin'
+  link: '../'
 };
 
 export const ADMIN_USERS: Crumb = {
   name: 'tgapp.breadcrumb.admin.users',
-  link: 'admin/users'
+  link: '../users'
 };
 
 export const ADMIN_ROLES: Crumb = {
   name: 'tgapp.breadcrumb.admin.roles',
-  link: 'admin/roles'
+  link: '../roles'
 };
 
 export const ADMIN_GROUPS: Crumb = {
   name: 'tgapp.breadcrumb.admin.groups',
-  link: 'admin/groups'
+  link: '../groups'
 };
 
 export const BREADCRUMBS_USERS = [ADMIN_HOME, ADMIN_USERS];

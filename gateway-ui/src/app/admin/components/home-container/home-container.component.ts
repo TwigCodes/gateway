@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Item } from '@app/libs/list-or-grid-with-filter/list-or-grid-with-filter.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -32,21 +32,21 @@ export class HomeContainerComponent implements OnInit {
             title: t['tgapp.admin.menu.role.title'],
             subtitle: t['tgapp.admin.menu.role.subtitle'],
             desc: t['tgapp.admin.menu.role.desc'],
-            link: 'admin/roles'
+            link: 'roles'
           },
           {
             id: '2',
             title: t['tgapp.admin.menu.user.title'],
             subtitle: t['tgapp.admin.menu.user.subtitle'],
             desc: t['tgapp.admin.menu.user.desc'],
-            link: 'admin/users'
+            link: 'users'
           },
           {
             id: '2',
             title: t['tgapp.admin.menu.group.title'],
             subtitle: t['tgapp.admin.menu.group.subtitle'],
             desc: t['tgapp.admin.menu.group.desc'],
-            link: 'admin/groups'
+            link: 'groups'
           }
         ];
       })
@@ -61,11 +61,15 @@ export class HomeContainerComponent implements OnInit {
     )
   );
 
-  constructor(private router: Router, private translate: TranslateService) {}
+  constructor(
+    private router: Router,
+    private translate: TranslateService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {}
 
   handleSelect(menu) {
-    this.router.navigate([menu.link]);
+    this.router.navigate([menu.link], { relativeTo: this.route });
   }
 }

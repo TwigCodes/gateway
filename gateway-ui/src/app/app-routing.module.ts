@@ -3,28 +3,39 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { SettingsContainerComponent } from './settings';
 import { AuthGuardService } from './core';
+import { AboutComponent } from './static';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'about',
-    pathMatch: 'full'
-  },
-  {
-    path: 'settings',
-    component: SettingsContainerComponent,
-    canActivate: [AuthGuardService],
-    data: { title: 'tgapp.menu.settings' }
-  },
-  {
-    path: 'feedback',
-    loadChildren: 'app/feedback#FeedbackModule',
-    pathMatch: 'prefix'
-  },
-  {
-    path: 'admin',
-    loadChildren: 'app/admin#AdminModule',
-    pathMatch: 'prefix'
+    path: ':realm',
+    children: [
+      {
+        path: '',
+        redirectTo: 'about',
+        pathMatch: 'full'
+      },
+      {
+        path: 'about',
+        component: AboutComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'settings',
+        component: SettingsContainerComponent,
+        canActivate: [AuthGuardService],
+        data: { title: 'tgapp.menu.settings' }
+      },
+      {
+        path: 'feedback',
+        loadChildren: './feedback#FeedbackModule',
+        pathMatch: 'prefix'
+      },
+      {
+        path: 'admin',
+        loadChildren: './admin#AdminModule',
+        pathMatch: 'prefix'
+      }
+    ]
   }
 ];
 
@@ -33,7 +44,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       useHash: false,
-      scrollPositionRestoration: 'enabled'
+      scrollPositionRestoration: 'enabled',
+      relativeLinkResolution: 'corrected'
     })
   ],
   exports: [RouterModule]

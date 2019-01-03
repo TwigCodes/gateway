@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { map, filter, take } from 'rxjs/operators';
 import { PageEvent, MatDialog } from '@angular/material';
@@ -45,7 +45,8 @@ export class UsersContainerComponent implements OnInit {
     private store: Store<fromAdmin.State>,
     private dialog: MatDialog,
     private translate: TranslateService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -88,6 +89,6 @@ export class UsersContainerComponent implements OnInit {
   }
 
   handleUpdate(user: KeycloakUser) {
-    this.router.navigate([`admin/users/${user.id}`]);
+    this.router.navigate([`${user.id}`], { relativeTo: this.route });
   }
 }

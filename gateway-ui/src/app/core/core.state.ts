@@ -3,9 +3,9 @@ import {
   MetaReducer,
   createFeatureSelector,
   INIT,
-  UPDATE
+  UPDATE,
+  createSelector
 } from '@ngrx/store';
-import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 import { storeFreeze } from 'ngrx-store-freeze';
 
 import { environment } from '@env/environment';
@@ -15,10 +15,11 @@ import { AuthState } from './auth/auth.models';
 import { authReducer } from './auth/auth.reducer';
 import { RouterStateUrl } from './router/router.state';
 import { LocalStorageService } from './local-storage/local-storage.service';
+import * as fromRouter from '@ngrx/router-store';
 
 export const reducers: ActionReducerMap<AppState> = {
   auth: authReducer,
-  router: routerReducer
+  router: fromRouter.routerReducer
 };
 
 export function getMetaReducers(
@@ -51,10 +52,25 @@ export const selectAuthState = createFeatureSelector<AppState, AuthState>(
 
 export const selectRouterState = createFeatureSelector<
   AppState,
-  RouterReducerState<RouterStateUrl>
+  fromRouter.RouterReducerState<RouterStateUrl>
 >('router');
 
 export interface AppState {
   auth: AuthState;
-  router: RouterReducerState<RouterStateUrl>;
+  router: fromRouter.RouterReducerState<RouterStateUrl>;
 }
+
+export const getCurrentUrl = createSelector(
+  selectRouterState,
+  state => state && state.state && state.state.url
+);
+
+export const getRouteParams = createSelector(
+  selectRouterState,
+  state => state && state.state && state.state.params
+);
+
+export const getRouteQueryParams = createSelector(
+  selectRouterState,
+  state => state && state.state && state.state.queryParams
+);
