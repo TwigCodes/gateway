@@ -15,11 +15,12 @@ import { AppComponent } from './app.component';
 
 // Keycloak
 import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
+// import { OAuthModule } from 'angular-oauth2-oidc';
 import { initializer } from './app-initilizer';
 import { EventStackService } from './core/keycloak/event-stack.service';
+import { NotFoundModule } from './libs/not-found/not-found.module';
 
 import * as fundebug from 'fundebug-javascript';
-import { NotFoundModule } from './libs/not-found/not-found.module';
 
 fundebug.apikey = environment.fundbugApiKey;
 
@@ -46,6 +47,12 @@ export class FundebugErrorHandler implements ErrorHandler {
 
     // Keycloak
     KeycloakAngularModule,
+    // OAuthModule.forRoot({
+    //   resourceServer: {
+    //     allowedUrls: ['https://auth.twigcodes.com/auth/admin'],
+    //     sendAccessToken: true
+    //   }
+    // }),
 
     // features
     StaticModule,

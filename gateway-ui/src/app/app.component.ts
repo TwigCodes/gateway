@@ -1,7 +1,7 @@
 import browser from 'browser-detect';
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, of, combineLatest } from 'rxjs';
+import { Observable, of, combineLatest, Subscription } from 'rxjs';
 
 import {
   ActionAuthLogin,
@@ -13,6 +13,9 @@ import {
   ActionAuthCheckLogin,
   selectRealm
 } from '@app/core';
+import { filter } from 'rxjs/operators';
+// import { OAuthService } from 'angular-oauth2-oidc';
+// import { JwksValidationHandler } from 'angular-oauth2-oidc';
 import { environment as env } from '@env/environment';
 
 import {
@@ -22,8 +25,6 @@ import {
   selectSettingsLanguage,
   selectSettingsStickyHeader
 } from './settings';
-import { map, withLatestFrom, filter } from 'rxjs/operators';
-import { tag } from 'rxjs-spy/operators';
 
 export interface RouteMenu {
   link: string;
@@ -67,11 +68,12 @@ export class AppComponent implements OnInit {
   stickyHeader$: Observable<boolean>;
   language$: Observable<string>;
   theme$: Observable<string>;
-
+  sub = new Subscription();
   constructor(
     private store: Store<AppState>,
     private storageService: LocalStorageService
-  ) {}
+  ) // private oauthService: OAuthService
+  {}
 
   private static isIEorEdgeOrSafari() {
     return ['ie', 'edge', 'safari'].includes(browser().name);
@@ -82,6 +84,16 @@ export class AppComponent implements OnInit {
       select(selectRealm),
       filter(val => val != null)
     );
+    // this.sub.add(
+    //   this.realm$.subscribe(realm => {
+    //     this.oauthService.configure({
+    //       ...env.oidcConfig,
+    //       issuer: `${env.oidcConfig.issuer}/${realm}`
+    //     });
+    //     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+    //     this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    //   })
+    // );
     this.navigation$ = combineLatest(
       this.realm$,
       of(this.navigation),
@@ -102,6 +114,7 @@ export class AppComponent implements OnInit {
         })
       );
     }
+
     this.store.dispatch(new ActionAuthCheckLogin());
     this.isAuthenticated$ = this.store.pipe(select(selectIsAuthenticated));
     this.stickyHeader$ = this.store.pipe(select(selectSettingsStickyHeader));

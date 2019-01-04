@@ -48,4 +48,4 @@ Thumbs.db
 
 # debug
 debug.log
-/environments
+/src/environments

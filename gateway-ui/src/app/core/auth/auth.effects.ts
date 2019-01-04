@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { tap, map, switchMap, catchError, filter } from 'rxjs/operators';
+import { tap, map, switchMap, catchError } from 'rxjs/operators';
 import { KeycloakService } from 'keycloak-angular';
 import { of, from } from 'rxjs';
+// import { OAuthService } from 'angular-oauth2-oidc';
 
 import { LocalStorageService } from '../local-storage/local-storage.service';
 
@@ -25,6 +26,7 @@ export class AuthEffects {
     private actions$: Actions<Action>,
     private localStorageService: LocalStorageService,
     private keycloakService: KeycloakService,
+    // private oauthService: OAuthService,
     private router: Router
   ) {}
 
@@ -33,6 +35,7 @@ export class AuthEffects {
     ofType<ActionAuthLogin>(AuthActionTypes.LOGIN),
     tap(() => {
       this.keycloakService.login();
+      // this.oauthService.initImplicitFlow();
     })
   );
 
@@ -43,6 +46,8 @@ export class AuthEffects {
       from(this.keycloakService.isLoggedIn()).pipe(catchError(err => of(false)))
     ),
     map(loggedIn => {
+      // const claims = this.oauthService.getIdentityClaims();
+      // const loggedIn = claims != null;
       this.localStorageService.setItem(AUTH_KEY, {
         isAuthenticated: loggedIn
       });
@@ -57,6 +62,7 @@ export class AuthEffects {
     ofType<ActionAuthLogout>(AuthActionTypes.LOGOUT),
     tap(() => {
       this.keycloakService.logout();
+      // this.oauthService.logOut();
       this.router.navigate(['']);
       this.localStorageService.setItem(AUTH_KEY, { isAuthenticated: false });
     })

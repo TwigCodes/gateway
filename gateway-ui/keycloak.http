@@ -243,3 +243,17 @@ client_id=service-app
 &requested_token_type=urn:ietf:params:oauth:token-type:access_token
 &audience=login-app
 &requested_subject=admin%
+
+###
+POST  https://auth.twigcodes.com/auth/realms/twigcodes/protocol/openid-connect/auth
+Content-Type: application/x-www-form-urlencoded
+
+response_type=id_token%20token
+&client_id=login-app
+&state=4a5SJs3kJXXMthITMBnyzCYiFSoO9V015HNDJrJj
+&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Findex.html
+&scope=openid%20profile%20email
+&nonce=4a5SJs3kJXXMthITMBnyzCYiFSoO9V015HNDJrJj
+
+###
+GET https://auth.twigcodes.com/auth/realms/twigcodes/login-actions/authenticate?session_code=jLRcMD6ScWyozaCx4x5SgqaU8XApShITVQHDPR6cgSc&execution=3bff7dac-8828-417b-b679-d81d713928b4&client_id=login-app&tab_id=Wva1vtTL5-w

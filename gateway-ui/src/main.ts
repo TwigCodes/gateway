@@ -11,10 +11,12 @@ if (environment.production) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  let path = window.location.pathname;
-  const paths = path.split('/');
-  if (paths.length > 1) {
-    localStorage.setItem('REALM', paths[1]);
+  if (environment.auth_method === 'keycloak') {
+    let path = window.location.pathname;
+    const paths = path.split('/');
+    if (paths.length > 1) {
+      localStorage.setItem('REALM', paths[1]);
+    }
   }
   platformBrowserDynamic()
     .bootstrapModule(AppModule)
