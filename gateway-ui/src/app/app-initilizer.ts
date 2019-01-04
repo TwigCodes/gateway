@@ -14,7 +14,10 @@ export function initializer(
           eventStackService.triggerEvent(event);
         });
         await keycloak.init({
-          config: environment.keycloak,
+          config: {
+            ...environment.keycloak,
+            realm: localStorage.getItem('REALM') || environment.keycloak.realm
+          },
           enableBearerInterceptor: true
         });
         resolve();

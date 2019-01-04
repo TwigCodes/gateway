@@ -11,6 +11,11 @@ if (environment.production) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  let path = window.location.pathname;
+  const paths = path.split('/');
+  if (paths.length > 1) {
+    localStorage.setItem('REALM', paths[1]);
+  }
   platformBrowserDynamic()
     .bootstrapModule(AppModule)
     .catch(err => console.log(err));
