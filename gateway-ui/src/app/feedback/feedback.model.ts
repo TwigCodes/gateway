@@ -49,7 +49,7 @@ export interface Questionnaire {
 export interface Question {
   id: number;
   questionnaireId: number;
-  question: string;
+  title: string;
   options?: { label: string; value: string }[];
   type: string;
   displayOrder: number;

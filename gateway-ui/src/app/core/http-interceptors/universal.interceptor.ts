@@ -9,7 +9,6 @@ import {
 import { REQUEST } from '@nguniversal/express-engine/tokens';
 
 // libs
-import { Request } from 'express';
 import { Observable } from 'rxjs';
 
 const getBaseUrl = (req: any) => `${req.protocol}://${req.get('Host')}`;

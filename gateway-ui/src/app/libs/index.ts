@@ -15,3 +15,7 @@ export * from './utils/selection.model';
 export * from './material-file-input';
 export * from './formly-controls';
 export * from './not-found';
+export {
+  QuestionWizardModule,
+  Option as QuestionOption
+} from './question-wizard';

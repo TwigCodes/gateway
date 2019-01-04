@@ -1,72 +1,11 @@
-<form [formGroup]="form">
-  <h2 mat-dialog-title> {{ 'tgapp.feedback.review.dialog.title' | translate }} </h2>
-  <mat-dialog-content>
-    <mat-card class="d-flex m-1">
-      <img [src]="ratee?.avatar" class="card-avatar m-2">
-      <div>
-        <mat-card-title>{{ ratee?.name }}</mat-card-title>
-        <mat-card-subtitle>{{ ratee?.title ? ratee.title : ('tgapp.feedback.rater.notitle' | translate) }}</mat-card-subtitle>
-      </div>
-    </mat-card>
-    <mat-horizontal-stepper formArrayName="items" linear>
-      <mat-step
-        *ngFor="let question of questions; let idx = index;"
-        label="{{idx + 1}}"
-        [formGroupName]="idx"
-        [stepControl]="form.get('items').get([idx])">
-        <div class="col">
-          {{ question.question }}
-        </div>
-        <ng-container [ngSwitch]="question.type">
-          <mat-form-field class="col" *ngSwitchCase="'checkbox'">
-            <ngx-check-box-list [options]="question.options" formControlName="answer">
-              <mat-checkbox *ngFor="let option of question.options" [value]="option.value"> {{ option.label }}
-              </mat-checkbox>
-            </ngx-check-box-list>
-          </mat-form-field>
-          <mat-form-field class="col" *ngSwitchCase="'radio'">
-            <mat-radio-group formControlName="answer">
-              <mat-radio-button
-                *ngFor="let option of question.options"
-                [value]="option.value"> {{ option.label }} </mat-radio-button>
-            </mat-radio-group>
-          </mat-form-field>
-          <mat-form-field class="col" *ngSwitchCase="'tag'">
-            <ngx-multi-select-chips
-              [options]="question.options"
-              formControlName="answer">
-            </ngx-multi-select-chips>
-          </mat-form-field>
-          <mat-form-field class="col" *ngSwitchCase="'text'">
-            <textarea
-              matInput
-              placeholder="{{ 'tgapp.feedback.review.dialog.answer' | translate }}"
-              formControlName="answer"
-              cdkTextareaAutosize
-              cdkAutosizeMinRows="3"
-              cdkAutosizeMaxRows="10"
-              #autosize="cdkTextareaAutosize" >
-            </textarea>
-            <mat-hint [align]="'end'">{{form.get('items').get([idx]).get('answer').value?.length}} /
-              1000</mat-hint>
-            <mat-error *ngIf="form.get('items').get([idx]).get('answer').hasError('required')">
-
-              {{ 'tgapp.feedback.review.dialog.answer.required' | translate }}
-            </mat-error>
-            <mat-error *ngIf="form.get('items').get([idx]).get('answer').hasError('minlength')">
-              {{ 'tgapp.feedback.review.dialog.answer.min' | translate }} 2
-            </mat-error>
-            <mat-error *ngIf="form.get('items').get([idx]).get('answer').hasError('maxlength')">
-              {{ 'tgapp.feedback.review.dialog.answer.max' | translate }} 1000
-            </mat-error>
-          </mat-form-field>
-        </ng-container>
-        <div class="d-flex justify-content-end">
-          <button class="m-2" mat-flat-button color="primary" matStepperPrevious type="button" *ngIf="idx > 0"> {{ 'tgapp.feedback.review.dialog.answer.back' | translate }} </button>
-          <button class="m-2" mat-flat-button color="primary" matStepperNext type="button" *ngIf="idx < questions.length - 1">{{ 'tgapp.feedback.review.dialog.answer.next' | translate }}</button>
-          <button class="m-2" mat-flat-button color="primary" type="button" (click)="submit()" *ngIf="idx === questions.length - 1"> {{ 'tgapp.feedback.review.dialog.answer.complete' | translate }} </button>
-        </div>
-      </mat-step>
-    </mat-horizontal-stepper>
-  </mat-dialog-content>
-</form>
+<h2 mat-dialog-title> {{ 'tgapp.feedback.review.dialog.title' | translate }} </h2>
+<mat-dialog-content>
+  <mat-card class="d-flex m-1">
+    <img [src]="ratee?.avatar" class="card-avatar m-2">
+    <div>
+      <mat-card-title>{{ ratee?.name }}</mat-card-title>
+      <mat-card-subtitle>{{ ratee?.title ? ratee.title : ('tgapp.feedback.rater.notitle' | translate) }}</mat-card-subtitle>
+    </div>
+  </mat-card>
+  <ngx-question-wizard [questions]="questions" (answer)="handleAnswer($event)"></ngx-question-wizard>
+</mat-dialog-content>

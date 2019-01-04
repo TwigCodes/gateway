@@ -14,7 +14,8 @@ import {
   ConfirmDialogModule,
   SimpleTreeModule,
   MaterialFileInputModule,
-  FormlyControlsModule
+  FormlyControlsModule,
+  QuestionWizardModule
 } from '.';
 import { NotFoundModule } from './not-found';
 
@@ -34,7 +35,8 @@ import { NotFoundModule } from './not-found';
     ConfirmDialogModule,
     SimpleTreeModule,
     MaterialFileInputModule,
-    FormlyControlsModule
+    FormlyControlsModule,
+    QuestionWizardModule
   ]
 })
 export class TwigLibsModule {}
