@@ -22,24 +22,27 @@ import {
 } from './components';
 
 import { ADMIN_EFFECTS } from './effects';
+import { DataMgmtModule } from '@app/data-mgmt/data-mgmt.module';
 import * as fromAdmin from './reducers';
 
+export const COMPONENTS = [
+  HomeContainerComponent,
+  RolesContainerComponent,
+  UsersContainerComponent,
+  UserDialogComponent,
+  RoleDialogComponent,
+  RoleDetailContainerComponent,
+  UserDetailContainerComponent,
+  GroupsContainerComponent,
+  GroupDetailContainerComponent,
+  GroupDialogComponent
+];
 @NgModule({
-  declarations: [
-    HomeContainerComponent,
-    RolesContainerComponent,
-    UsersContainerComponent,
-    UserDialogComponent,
-    RoleDialogComponent,
-    RoleDetailContainerComponent,
-    UserDetailContainerComponent,
-    GroupsContainerComponent,
-    GroupDetailContainerComponent,
-    GroupDialogComponent
-  ],
+  declarations: COMPONENTS,
   imports: [
     SharedModule,
     AdminRoutingModule,
+    DataMgmtModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

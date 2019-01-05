@@ -18,7 +18,8 @@ export function initializer(
             ...environment.keycloak,
             realm: localStorage.getItem('REALM') || environment.keycloak.realm
           },
-          enableBearerInterceptor: true
+          enableBearerInterceptor: true,
+          bearerExcludedUrls: [environment.leanCloud.baseUrl]
         });
         resolve();
       } catch (error) {

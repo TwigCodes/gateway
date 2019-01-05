@@ -49,6 +49,8 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   @Output() pageChange = new EventEmitter<PageEvent>();
   @Output() sortChange = new EventEmitter<Sort>();
   @Output() filterChange = new EventEmitter<string>();
+  @Output() actionEdit = new EventEmitter();
+  @Output() actionDelete = new EventEmitter();
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -179,7 +181,8 @@ export class DynaTableComponent implements OnInit, OnDestroy {
     this.selectedIndex = index;
   }
 
-  handleRowClick(row: any) {
+  handleRowClick(row: any, ev: Event) {
+    ev.stopPropagation();
     this.rowClick.emit(row);
   }
 
@@ -193,5 +196,15 @@ export class DynaTableComponent implements OnInit, OnDestroy {
     }
     this.selection.toggle(row);
     this.selectChange.emit(this.selection.selected);
+  }
+
+  handleRowActionEdit(row: any, ev: Event) {
+    ev.stopPropagation();
+    this.actionEdit.emit(row);
+  }
+
+  handleRowActionDelete(row: any, ev: Event) {
+    ev.stopPropagation();
+    this.actionDelete.emit(row);
   }
 }

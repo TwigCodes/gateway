@@ -1,5 +1,19 @@
 <div class="mat-elevation-z8">
-  <ngx-dyna-table [data$]="data$" [columns]="columns" [pageIndex]="page$ | async" [pageSize]="size$ | async" [total]="total$ | async"
-    [sortable]="false" [showFilters]="false" (pageChange)="pageChange($event)" (itemClicked)="handleItem($event)">
+  <ngx-dyna-table
+    [data$]="data$"
+    [columns]="columns"
+    [pageIndex]="pageIndex$ | async"
+    [pageSize]="pageSize$ | async"
+    [total]="total$ | async"
+    [sortable]="false"
+    [showFilters]="false"
+    (pageChange)="pageChange($event)"
+    (rowClick)="handleItem($event)"
+    (actionEdit)="handleEdit($event)"
+    (actionDelete)="handleDelete($event)"
+    >
   </ngx-dyna-table>
+  <ng-template #myTpl>
+    <button mat-button>Hello</button>
+  </ng-template>
 </div>

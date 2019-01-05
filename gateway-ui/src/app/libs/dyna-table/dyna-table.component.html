@@ -45,7 +45,20 @@
       <ng-container [ngTemplateOutlet]="sortHeaderTpl" [ngTemplateOutletContext]="{$implicit: column, idx: i}"></ng-container>
     </th>
     <td mat-cell *matCellDef="let row">
-      <ngx-table-cell [row]="row" [column]="column"></ngx-table-cell>
+      <ngx-table-cell [row]="row" [column]="column" *ngIf="column.type !== 'action' else actionTemplate"></ngx-table-cell>
+      <ng-template #actionTemplate>
+        <ng-container *ngIf="column.templateRef else defaultActionTpl">
+          <ng-container *ngTemplateOutlet="column.templateRef; context: { $implicit: row }"></ng-container>
+        </ng-container>
+        <ng-template #defaultActionTpl>
+          <button type="button" (click)="handleRowActionEdit(row, $event)" color="primary" mat-icon-button>
+            <mat-icon>edit_mode</mat-icon>
+          </button>
+          <button type="button" (click)="handleRowActionDelete(row, $event)" color="warn" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </ng-template>
+      </ng-template>
     </td>
   </ng-container>
 
@@ -55,7 +68,7 @@
     *matRowDef="let row; columns: displayedColumns;"
     [ngxDetailRow]="row"
     [ngxDetailRowTpl]="expandTpl"
-    (click)="handleRowClick(row)">
+    (click)="handleRowClick(row, $event)">
   </tr>
 </table>
 <mat-paginator

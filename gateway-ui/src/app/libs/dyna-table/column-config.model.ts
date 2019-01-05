@@ -1,3 +1,5 @@
+import { TemplateRef } from '@angular/core';
+
 export class ColumnConfig {
   name?: string;
   displayName?: string;
@@ -5,4 +7,5 @@ export class ColumnConfig {
   type: string;
   options?: any;
   sticky?: string;
+  templateRef?: TemplateRef<any>;
 }

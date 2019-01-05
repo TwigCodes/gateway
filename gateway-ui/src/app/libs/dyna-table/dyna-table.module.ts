@@ -8,7 +8,8 @@ import {
   MatIconModule,
   MatDialogModule,
   MatCheckboxModule,
-  MatSelectModule
+  MatSelectModule,
+  MatButtonModule
 } from '@angular/material';
 
 import { DynaTableComponent } from './dyna-table.component';
@@ -21,11 +22,7 @@ import {
   ColumnFilterService
 } from './table-cell';
 
-import {
-  TextCellComponent,
-  DateCellComponent,
-  EditCellComponent
-} from './table-cell/cell-types';
+import { TextCellComponent, DateCellComponent } from './table-cell/cell-types';
 
 @NgModule({
   imports: [
@@ -34,6 +31,7 @@ import {
     MatSortModule,
     MatPaginatorModule,
     MatIconModule,
+    MatButtonModule,
     MatDialogModule,
     MatCheckboxModule,
     MatSelectModule
@@ -44,17 +42,15 @@ import {
     DynaTableComponent,
     TableCellComponent,
     TextCellComponent,
-    DateCellComponent,
-    EditCellComponent
+    DateCellComponent
   ],
   exports: [DynaTableComponent, DetailRowDirective],
-  entryComponents: [TextCellComponent, DateCellComponent, EditCellComponent],
+  entryComponents: [TextCellComponent, DateCellComponent],
   providers: [CellService, ColumnFilterService]
 })
 export class DynaTableModule {
   constructor(readonly cellService: CellService) {
     cellService.registerCell('string', TextCellComponent);
     cellService.registerCell('date', DateCellComponent);
-    cellService.registerCell('edit', EditCellComponent);
   }
 }
