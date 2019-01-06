@@ -1,7 +1,7 @@
 import { TemplateRef } from '@angular/core';
 
 export abstract class Entity {
-  abstract get id(): number | string;
+  abstract get id(): string;
   [key: string]: any;
   constructor(init?: Partial<Entity>) {
     Object.assign(this, init);

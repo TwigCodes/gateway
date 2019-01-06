@@ -9,7 +9,11 @@ import {
   MatDialogModule,
   MatCheckboxModule,
   MatSelectModule,
-  MatButtonModule
+  MatButtonModule,
+  MatTooltipModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatDatepickerModule
 } from '@angular/material';
 
 import { DynaTableComponent } from './dyna-table.component';
@@ -21,12 +25,18 @@ import {
   DetailRowDirective,
   ColumnFilterService
 } from './table-cell';
-
+import { TableTextFilterComponent, TableDateFilterComponent } from './filters';
 import { TextCellComponent, DateCellComponent } from './table-cell/cell-types';
+import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatInputModule,
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
@@ -34,7 +44,9 @@ import { TextCellComponent, DateCellComponent } from './table-cell/cell-types';
     MatButtonModule,
     MatDialogModule,
     MatCheckboxModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTooltipModule,
+    FlexLayoutModule
   ],
   declarations: [
     CellDirective,
@@ -42,15 +54,27 @@ import { TextCellComponent, DateCellComponent } from './table-cell/cell-types';
     DynaTableComponent,
     TableCellComponent,
     TextCellComponent,
-    DateCellComponent
+    DateCellComponent,
+    TableTextFilterComponent,
+    TableDateFilterComponent
   ],
   exports: [DynaTableComponent, DetailRowDirective],
-  entryComponents: [TextCellComponent, DateCellComponent],
+  entryComponents: [
+    TextCellComponent,
+    DateCellComponent,
+    TableTextFilterComponent,
+    TableDateFilterComponent
+  ],
   providers: [CellService, ColumnFilterService]
 })
 export class DynaTableModule {
-  constructor(readonly cellService: CellService) {
+  constructor(
+    readonly cellService: CellService,
+    readonly filterService: ColumnFilterService
+  ) {
     cellService.registerCell('string', TextCellComponent);
     cellService.registerCell('date', DateCellComponent);
+    filterService.registerFilter('string', TableTextFilterComponent);
+    filterService.registerFilter('date', TableDateFilterComponent);
   }
 }

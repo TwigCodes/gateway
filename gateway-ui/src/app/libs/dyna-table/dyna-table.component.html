@@ -1,16 +1,6 @@
-<ng-template #sortHeaderTpl let-column let-idx>
-  <span *ngIf="sortable else nosort" mat-sort-header arrowPosition="after" [disabled]="!column.name">
-    {{ column.displayName || 'col' + idx }}
-  </span>
-  <ng-template #nosort>
-    <span>{{ column.displayName }} </span>
-  </ng-template>
-</ng-template>
 <table
   mat-table
-  matSort
   [dataSource]="dataSource"
-  [matSortDisabled]="!sortable"
   (matSortChange)="handleSortChange($event)">
   <ng-container matColumnDef="select" *ngIf="selectable">
     <th mat-header-cell *matHeaderCellDef>
@@ -35,14 +25,32 @@
     [stickyEnd]="column.sticky === 'end'">
     <th
       *matHeaderCellDef
-      mat-header-cell>
-
-      <button class="mat-sort-header-button"
-        *ngIf="showFilters && canFilter(column)"
-        (click)="filter(column); $event.stopPropagation();">
-        <mat-icon color="{{ isFiltered(column) ? 'primary' : 'default' }}">filter_list</mat-icon>
-      </button>
-      <ng-container [ngTemplateOutlet]="sortHeaderTpl" [ngTemplateOutletContext]="{$implicit: column, idx: i}"></ng-container>
+      mat-header-cell
+      matSort
+      [matSortDisabled]="!column.sortable"
+      (matSortChange)="handleSortChange($event)"
+      >
+      <div fxLayout="row" fxLayoutAlign="start center" *ngIf="column.type !== 'action' && !column.templateRef else actionHeaderTemplate">
+        <span *ngIf="column.sortable else nosort" mat-sort-header arrowPosition="after" [disabled]="!column.name">{{
+          column.displayName || 'col' + i }}
+        </span>
+        <ng-template #nosort>
+          <span>{{ column.displayName }} </span>
+        </ng-template>
+        <button
+          #filterBtn
+          *ngIf="column.filterable && canFilter(column)"
+          mat-icon-button
+          [class.mat-sort-header-button]="column.sortable"
+          (click)="filter(column); $event.stopPropagation();">
+          <mat-icon color="{{ isFiltered(column) ? 'primary' : 'default' }}">filter_list</mat-icon>
+        </button>
+      </div>
+      <ng-template #actionHeaderTemplate>
+        <button type="button" (click)="handleRowActionAdd($event)" color="primary" mat-icon-button>
+          <mat-icon>add_circle</mat-icon>
+        </button>
+      </ng-template>
     </th>
     <td mat-cell *matCellDef="let row">
       <ngx-table-cell [row]="row" [column]="column" *ngIf="column.type !== 'action' else actionTemplate"></ngx-table-cell>

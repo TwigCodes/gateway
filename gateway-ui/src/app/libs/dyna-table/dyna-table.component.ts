@@ -19,6 +19,7 @@ import {
   MatTableDataSource
 } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
+import { take } from 'rxjs/operators';
 import { Subscription, Observable } from 'rxjs';
 import { ColumnConfig } from './column-config.model';
 import { ColumnFilter } from './column-filter.model';
@@ -37,7 +38,6 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   @Input() pageIndex = 0;
   @Input() pageSize = 20;
   @Input() pageSizeOptions = [20, 50, 100];
-  @Input() showFilters = true;
   @Input() showPaginator = true;
   @Input() stickyHeader = false;
   @Input() selectable = false;
@@ -51,6 +51,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   @Output() filterChange = new EventEmitter<string>();
   @Output() actionEdit = new EventEmitter();
   @Output() actionDelete = new EventEmitter();
+  @Output() actionAdd = new EventEmitter();
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -60,7 +61,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   selection = new SelectionModel<Identifiable>(true, []);
   isHighlight = false;
   selectedIndex = -1;
-  subscription: Subscription = Subscription.EMPTY;
+  subscription = new Subscription();
 
   private appliedFilters: { [key: string]: ColumnFilter } = {};
 
@@ -77,8 +78,11 @@ export class DynaTableComponent implements OnInit, OnDestroy {
       throw Error('DynaTable must be provided with column definitions.');
     }
 
-    this.subscription = this.data$.subscribe(
-      data => (this.dataSource.data = data)
+    this.subscription.add(
+      this.data$.subscribe(data => {
+        this.dataSource.data = [];
+        this.dataSource.data = data;
+      })
     );
     this.displayedColumns = this.selectable
       ? [...['select'], ...this.columns.map(c => c.name)]
@@ -141,30 +145,26 @@ export class DynaTableComponent implements OnInit, OnDestroy {
 
       const dialogRef = this.dialog.open(filter, dialogConfig);
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.appliedFilters[column.name] = result;
-        } else if (result === '') {
-          delete this.appliedFilters[column.name];
-        }
+      dialogRef
+        .afterClosed()
+        .pipe(take(1))
+        .subscribe(result => {
+          if (result) {
+            this.appliedFilters[column.name] = result;
+          } else if (result === '') {
+            delete this.appliedFilters[column.name];
+          }
 
-        if (result || result === '') {
-          this.updateDataSource();
-        }
-      });
+          if (result || result === '') {
+            console.log(result);
+          }
+        });
     }
   }
 
   clearFilters() {
     this.appliedFilters = {};
-    this.updateDataSource();
   }
-
-  protected updateDataSource() {
-    const dataSource = this.dataSource as any;
-    dataSource.filters = this.getFilters();
-  }
-
   getFilters() {
     const filters = this.appliedFilters;
     const filterArray = Object.keys(filters).map(key => filters[key]);
@@ -206,5 +206,10 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   handleRowActionDelete(row: any, ev: Event) {
     ev.stopPropagation();
     this.actionDelete.emit(row);
+  }
+
+  handleRowActionAdd(ev: Event) {
+    ev.stopPropagation();
+    this.actionAdd.emit();
   }
 }

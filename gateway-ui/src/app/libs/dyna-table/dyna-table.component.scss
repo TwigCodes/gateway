@@ -13,3 +13,11 @@ th .mat-icon.mat-default:hover {
 .mat-column-select {
   overflow: initial;
 }
+// TODO: this is a workaroud for button focus after dialog closed
+button.mat-icon-button {
+  &.cdk-program-focused {
+    ::ng-deep .mat-button-focus-overlay {
+      opacity: 0; // hide overlay
+    }
+  }
+}

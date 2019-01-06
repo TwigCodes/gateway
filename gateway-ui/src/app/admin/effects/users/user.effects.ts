@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ROUTER_NAVIGATION } from '@ngrx/router-store';
@@ -7,7 +6,6 @@ import {
   switchMap,
   map,
   catchError,
-  tap,
   filter,
   withLatestFrom
 } from 'rxjs/operators';
@@ -22,7 +20,6 @@ export class UserEffects {
   constructor(
     private actions$: Actions,
     private service: UserService,
-    private router: Router,
     private store: Store<fromAdmin.State>
   ) {}
   @Effect()

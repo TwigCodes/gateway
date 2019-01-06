@@ -1,4 +1,5 @@
 import { Entity } from './entity.model';
+import { startOfDay, endOfDay } from 'date-fns';
 
 export enum LeanCloudOp {
   NE,
@@ -17,12 +18,15 @@ export enum LeanCloudOp {
 
 export class LeanCloudSearch {
   fieldName: string;
-  value: string;
+  value: string | Date | number | boolean;
 
   /**
    * constructor
    */
-  public constructor(fieldName: string, value: string) {
+  public constructor(
+    fieldName: string,
+    value: string | Date | number | boolean
+  ) {
     this.fieldName = fieldName;
     this.value = value;
   }
@@ -31,7 +35,28 @@ export class LeanCloudSearch {
    * expression
    */
   public get expression(): string {
-    return JSON.stringify({ [this.fieldName]: { $regex: this.value } });
+    return this.value instanceof Date
+      ? JSON.stringify({
+          $and: [
+            {
+              [this.fieldName]: {
+                $gte: {
+                  __type: 'Date',
+                  iso: startOfDay(this.value).toUTCString
+                }
+              }
+            },
+            {
+              [this.fieldName]: {
+                $lt: {
+                  __type: 'Date',
+                  iso: endOfDay(this.value).toUTCString
+                }
+              }
+            }
+          ]
+        })
+      : JSON.stringify({ [this.fieldName]: { $regex: this.value } });
   }
 }
 

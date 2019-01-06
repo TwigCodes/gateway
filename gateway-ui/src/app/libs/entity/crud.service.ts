@@ -54,7 +54,6 @@ export abstract class CrudService<T extends Entity> {
   }
 
   update(id: number | string, entity: T) {
-    console.log(entity);
     this.loadingSubject.next(true);
     return this.httpClient
       .put(`${this.baseUrl}/${this.entityPath}/${id}`, entity)

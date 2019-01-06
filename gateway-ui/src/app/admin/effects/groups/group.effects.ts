@@ -7,7 +7,6 @@ import {
   switchMap,
   map,
   catchError,
-  tap,
   filter,
   withLatestFrom
 } from 'rxjs/operators';

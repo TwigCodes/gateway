@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import {
   MatAutocompleteModule,
   MatBadgeModule,
+  MatBottomSheetModule,
   MatButtonModule,
   MatButtonToggleModule,
   MatCardModule,
@@ -43,6 +44,7 @@ import { CustomMatPaginatorIntl } from './custom-mat-paginator-intl';
 const MATERIAL_MODULES = [
   MatAutocompleteModule,
   MatBadgeModule,
+  MatBottomSheetModule,
   MatButtonModule,
   MatButtonToggleModule,
   MatCardModule,

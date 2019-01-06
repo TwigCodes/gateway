@@ -9,14 +9,19 @@ import { ColumnConfig } from '../../column-config.model';
 
 @Component({
   selector: 'ngx-date-cell',
-  template: '{{ column.cell(row) | date:dateFormat }}',
+  template: `
+    <span matTooltip="{{ column.cell(row) | date: dateTooltipFormat }}">{{
+      column.cell(row) | date: dateFormat
+    }}</span>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DateCellComponent implements CellComponent, OnInit {
   @Input() column: ColumnConfig;
   @Input() row: object;
 
-  dateFormat = 'short';
+  dateFormat = 'yyyy-MM-dd';
+  dateTooltipFormat = 'short';
 
   ngOnInit() {
     if (this.column.options) {

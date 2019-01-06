@@ -1,44 +1,54 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef
-} from '@angular/core';
-import { PageEvent } from '@angular/material';
-import { ColumnConfig } from '@app/libs';
-import { Question } from '@app/data-mgmt/data-mgmt.model';
-import { QuestionService } from '@app/data-mgmt/services/question.service';
-import { BaseLeanCloudTableComponent } from '@app/libs';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { ColumnConfig, BaseLeanCloudTableComponent } from '@app/libs';
+import { ConfirmService } from '@app/shared';
+import { Question } from '../../data-mgmt.model';
+import { QuestionService } from '../../services';
+import { QuestionDialogComponent } from './question-dialog.component';
 
 @Component({
   selector: 'tgapp-questions-container',
-  templateUrl: './questions-container.component.html',
-  styleUrls: ['./questions-container.component.scss'],
+  templateUrl: '../../../libs/entity/templates/entity-table.html',
+  styles: [
+    `
+      :host {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+    `
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuestionsContainerComponent
   extends BaseLeanCloudTableComponent<Question, QuestionService>
   implements OnInit {
   protected columns: ColumnConfig[];
-  @ViewChild('myTpl') myTpl: TemplateRef<any>;
-  constructor(protected service: QuestionService) {
-    super(service);
+  protected entityForm = QuestionDialogComponent;
+  constructor(
+    protected service: QuestionService,
+    protected dialog: MatDialog,
+    protected confirm: ConfirmService
+  ) {
+    super(service, dialog, confirm);
   }
 
   ngOnInit() {
+    this.sortable = true;
     this.columns = [
       {
-        name: 'id',
+        name: 'objectId',
         displayName: 'ID',
         cell: (e: Question) => `${e.objectId}`,
-        type: 'string'
+        type: 'string',
+        sortable: true
       },
       {
         name: 'title',
         displayName: '问题内容',
         cell: (e: Question) => e.title,
-        type: 'string'
+        type: 'string',
+        filterable: true
       },
       {
         name: 'type',
@@ -50,37 +60,23 @@ export class QuestionsContainerComponent
         name: 'createdAt',
         displayName: '创建时间',
         cell: (e: Question) => e.createdAt,
-        type: 'date'
+        type: 'date',
+        sortable: true,
+        filterable: true
       },
       {
         name: 'updatedAt',
         displayName: '更新时间',
         cell: (e: Question) => e.updatedAt,
-        type: 'date'
+        type: 'date',
+        sortable: true,
+        filterable: true
       },
-      {
-        name: 'edit',
-        displayName: '',
-        cell: null,
-        type: 'action',
-        templateRef: this.myTpl
-      }
+      { name: 'edit', displayName: '', cell: null, type: 'action' }
     ];
   }
 
-  pageChange(ev: PageEvent) {
-    this.pageChange$.next(ev);
-  }
-
   handleItem(row: Question) {
-    console.log(row);
-  }
-
-  handleEdit(row: Question) {
-    console.log(row);
-  }
-
-  handleDelete(row: Question) {
     console.log(row);
   }
 }

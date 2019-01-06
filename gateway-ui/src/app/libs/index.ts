@@ -16,6 +16,7 @@ export * from './material-file-input';
 export * from './formly-controls';
 export * from './not-found';
 export * from './entity';
+export * from './utils';
 export {
   QuestionWizardModule,
   Option as QuestionOption
