@@ -42,6 +42,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   @Input() stickyHeader = false;
   @Input() selectable = false;
   @Input() sortable = true;
+  @Input() showAction = true;
   @Input() expandTpl: TemplateRef<any>;
   @Input() moreMenuTpl: TemplateRef<any>;
 
@@ -73,12 +74,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    if (this.data$ == null) {
-      throw Error('DynaTable must be provided with data stream.');
-    }
-    if (this.columns == null) {
-      throw Error('DynaTable must be provided with column definitions.');
-    }
+    this.validateConfig();
 
     this.subscription.add(
       this.data$.subscribe(data => {
@@ -86,9 +82,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
         this.dataSource.data = data;
       })
     );
-    this.displayedColumns = this.selectable
-      ? [...['select'], ...this.columns.map(c => c.name)]
-      : this.columns.map(c => c.name);
+    this.appendDefaultColumnToConfig();
 
     const dataSource = this.dataSource;
     if (this.sortable) {
@@ -97,6 +91,31 @@ export class DynaTableComponent implements OnInit, OnDestroy {
     if (this.showPaginator) {
       dataSource.paginator = this.paginator;
     }
+  }
+
+  private validateConfig() {
+    if (this.data$ == null) {
+      throw Error('DynaTable must be provided with data stream.');
+    }
+    if (this.columns == null) {
+      throw Error('DynaTable must be provided with column definitions.');
+    }
+    this.columns.forEach(col => {
+      if (col.cell == null && col.header == null && col.cellTpl == null) {
+        throw 'Column Definition Error: cell function and displayName are not defined, provide one unless cellTpl is configured';
+      }
+    });
+  }
+
+  private appendDefaultColumnToConfig() {
+    this.displayedColumns =
+      this.selectable && this.showAction
+        ? ['ngx-select', ...this.columns.map(c => c.name), 'ngx-action']
+        : this.selectable
+        ? ['ngx-select', ...this.columns.map(c => c.name)]
+        : this.showAction
+        ? [...this.columns.map(c => c.name), 'ngx-action']
+        : this.columns.map(c => c.name);
   }
 
   ngOnDestroy(): void {
@@ -166,6 +185,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
 
   clearFilters() {
     this.appliedFilters = {};
+    this.filterChange.emit(this.appliedFilters);
   }
   getFilters() {
     const filters = this.appliedFilters;

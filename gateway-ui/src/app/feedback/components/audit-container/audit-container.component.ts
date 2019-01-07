@@ -37,7 +37,7 @@ export class AuditContainerComponent implements OnInit {
   ]);
   column: ColumnConfig = {
     name: 'id',
-    displayName: 'ID,',
+    header: 'ID,',
     cell: (e: AuditVM) => `${e.id}`,
     type: 'text'
   };
@@ -67,37 +67,37 @@ export class AuditContainerComponent implements OnInit {
   columns: ColumnConfig[] = [
     {
       name: 'id',
-      displayName: 'ID',
+      header: 'ID',
       cell: (e: AuditVM) => `${e.id}`,
       type: 'string'
     },
     {
       name: 'reviewee.name',
-      displayName: '员工姓名',
+      header: '员工姓名',
       cell: (e: AuditVM) => e.reviewInvitation.reviewee.name,
       type: 'string'
     },
     {
       name: 'reviewee.email',
-      displayName: '员工 Email',
+      header: '员工 Email',
       cell: (e: AuditVM) => `${e.reviewInvitation.reviewee.email}`,
       type: 'string'
     },
     {
       name: 'reviewers',
-      displayName: '评价者',
+      header: '评价者',
       cell: (e: AuditVM) => `${e.reviewInvitation.reviewers}`,
       type: 'string'
     },
     {
       name: 'auditBy',
-      displayName: '审核人',
+      header: '审核人',
       cell: (e: AuditVM) => (e.auditedBy ? '已审核' : '未审核'),
       type: 'string'
     },
     {
       name: 'auditAt',
-      displayName: '审核时间',
+      header: '审核时间',
       cell: (e: AuditVM) => e.auditedAt,
       type: 'date'
     }

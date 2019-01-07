@@ -38,27 +38,27 @@ export class QuestionsContainerComponent
     this.columns = [
       {
         name: 'objectId',
-        displayName: 'ID',
+        header: 'ID',
         cell: (e: Question) => `${e.objectId}`,
         type: 'string',
         sortable: true
       },
       {
         name: 'title',
-        displayName: '问题内容',
+        header: '问题内容',
         cell: (e: Question) => e.title,
         type: 'string',
         filterable: true
       },
       {
         name: 'type',
-        displayName: '问题类型',
+        header: '问题类型',
         cell: (e: Question) => `${e.type}`,
         type: 'string'
       },
       {
         name: 'createdAt',
-        displayName: '创建时间',
+        header: '创建时间',
         cell: (e: Question) => e.createdAt,
         type: 'date',
         sortable: true,
@@ -66,13 +66,12 @@ export class QuestionsContainerComponent
       },
       {
         name: 'updatedAt',
-        displayName: '更新时间',
+        header: '更新时间',
         cell: (e: Question) => e.updatedAt,
         type: 'date',
         sortable: true,
         filterable: true
-      },
-      { name: 'edit', displayName: '', cell: null, type: 'action' }
+      }
     ];
   }
 

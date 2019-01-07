@@ -60,7 +60,7 @@ export class TableDateFilterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.displayName = this.filterData.column.displayName;
+    this.displayName = this.filterData.column.header;
     this.model =
       this.filterData.filter || new DateFilter(this.filterData.column.name);
   }

@@ -2,12 +2,13 @@ import { TemplateRef } from '@angular/core';
 
 export class ColumnConfig {
   name: string;
-  displayName?: string;
-  cell: (c: any) => any;
   type: string;
+  header?: string;
+  cell?: (c: any) => any;
   options?: any;
   sticky?: string;
   sortable?: boolean;
   filterable?: boolean;
-  templateRef?: TemplateRef<any>;
+  cellTpl?: TemplateRef<any>;
+  headerTpl?: TemplateRef<any>;
 }
