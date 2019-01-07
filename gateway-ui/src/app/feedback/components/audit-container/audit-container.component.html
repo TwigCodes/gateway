@@ -6,7 +6,6 @@
     [pageSize]="size$ | async"
     [total]="total$ | async"
     [sortable]="false"
-    [showFilters]="false"
     (pageChange)="pageChange($event)"
     (itemClicked)="handleItem($event)">
   </ngx-dyna-table>

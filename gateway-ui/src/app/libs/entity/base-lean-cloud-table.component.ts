@@ -7,7 +7,7 @@ import { Entity } from './entity.model';
 import { BaseLeanCloudService } from './base-lean-cloud.service';
 import { ConfirmService } from '@app/shared';
 import { EntityFormComponent } from './entity-form.component';
-import { ColumnConfig } from '../dyna-table';
+import { ColumnConfig, ColumnFilter } from '../dyna-table';
 import { untilDestroy } from '../utils';
 
 export abstract class BaseLeanCloudTableComponent<
@@ -28,6 +28,7 @@ export abstract class BaseLeanCloudTableComponent<
     active: 'id',
     direction: 'desc'
   });
+  filterChange$ = new BehaviorSubject<string | null>(null);
   delete$ = new Subject<string>();
   update$ = new Subject<T>();
   add$ = new Subject<T>();
@@ -39,19 +40,23 @@ export abstract class BaseLeanCloudTableComponent<
     protected dialog: MatDialog,
     protected confirm: ConfirmService
   ) {
-    const combined$ = combineLatest(
+    combineLatest(
       this.pageChange$,
       this.sortChange$,
-      (page, sort) => {
+      this.filterChange$,
+      (page, sort, filter) => {
         return {
           pageIndex: page.pageIndex,
           pageSize: page.pageSize,
-          sort: sort.direction === 'desc' ? `-${sort.active}` : sort.active
+          sort: sort.direction === 'desc' ? `-${sort.active}` : sort.active,
+          filter: filter
         };
       }
     )
       .pipe(
-        switchMap(ev => this.service.paged(ev.pageIndex, ev.pageSize, ev.sort)),
+        switchMap(ev =>
+          this.service.paged(ev.pageIndex, ev.pageSize, ev.sort, ev.filter)
+        ),
         untilDestroy(this)
       )
       .subscribe(data => {
@@ -125,6 +130,35 @@ export abstract class BaseLeanCloudTableComponent<
       .delete()
       .pipe(filter(val => val))
       .subscribe(__ => this.delete$.next(row.objectId));
+  }
+
+  handleFilter(appliedFilters: { [key: string]: ColumnFilter }) {
+    let filters = [];
+    for (const key in appliedFilters) {
+      if (appliedFilters.hasOwnProperty(key)) {
+        const appliedFilterValue = appliedFilters[key] as any;
+        const filter = appliedFilterValue.getFilter();
+        for (const filterKey in filter) {
+          if (filter.hasOwnProperty(filterKey)) {
+            const filterValue = filter[filterKey];
+            for (const propKey in filterValue) {
+              if (filterValue.hasOwnProperty(propKey)) {
+                const propValue = filterValue[propKey];
+                filters.push({ [filterKey]: { [propKey]: propValue } });
+              }
+            }
+          }
+        }
+      }
+    }
+    if (filters.length === 0) {
+      this.filterChange$.next(null);
+      return;
+    }
+    const filterQuery = JSON.stringify(
+      filters.length === 1 ? filters[0] : { $and: filters }
+    );
+    this.filterChange$.next(filterQuery);
   }
 
   public abstract handleItem(row: T): void;

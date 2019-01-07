@@ -16,10 +16,11 @@ import { StoreModule, META_REDUCERS } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { environment } from '@env/environment';
 
+import { NgrxNotificationService } from './notifications/ngrx-notification.service';
 import { httpInterceptorProviders } from './http-interceptors';
 import { LocalStorageService } from './local-storage/local-storage.service';
 import { AuthEffects } from './auth/auth.effects';
@@ -32,7 +33,6 @@ import { CustomSerializer } from './router/custom-serializer';
 import { NotificationService } from './notifications/notification.service';
 import { loadIconResources } from './util/icon.util';
 import localeZhHans from '@angular/common/locales/zh-Hans';
-import { NgrxNotificationService } from './notifications/ngrx-notification.service';
 @NgModule({
   imports: [
     // angular
@@ -104,9 +104,8 @@ export class CoreModule {
 }
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(
-    http,
-    `${environment.i18nPrefix}/assets/i18n/`,
-    '.json'
-  );
+  return new MultiTranslateHttpLoader(http, [
+    { prefix: './assets/i18n/', suffix: '.json' },
+    { prefix: './assets/i18n/libs/', suffix: '.json' }
+  ]);
 }

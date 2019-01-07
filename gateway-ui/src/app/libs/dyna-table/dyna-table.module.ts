@@ -13,7 +13,8 @@ import {
   MatTooltipModule,
   MatFormFieldModule,
   MatInputModule,
-  MatDatepickerModule
+  MatDatepickerModule,
+  MatMenuModule
 } from '@angular/material';
 
 import { DynaTableComponent } from './dyna-table.component';
@@ -29,6 +30,7 @@ import { TableTextFilterComponent, TableDateFilterComponent } from './filters';
 import { TextCellComponent, DateCellComponent } from './table-cell/cell-types';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -43,10 +45,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
+    MatMenuModule,
     MatCheckboxModule,
     MatSelectModule,
     MatTooltipModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    TranslateModule
   ],
   declarations: [
     CellDirective,

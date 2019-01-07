@@ -63,7 +63,8 @@ export abstract class BaseLeanCloudService<
   paged(
     pageIndex: number,
     pageSize: number,
-    sort: string
+    sort: string,
+    filter: string | null
   ): Observable<LeanCloudResult<T>> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}`;
@@ -71,7 +72,8 @@ export abstract class BaseLeanCloudService<
       .set('skip', String(pageIndex * pageSize))
       .set('limit', String(pageSize))
       .set('order', sort)
-      .set('count', '1');
+      .set('count', '1')
+      .set('where', filter);
     return this.httpClient
       .get<LeanCloudResult<T>>(url, { params: params })
       .pipe(

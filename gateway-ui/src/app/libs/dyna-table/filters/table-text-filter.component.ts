@@ -1,23 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ColumnFilter } from '../column-filter.model';
-import { TableFilter } from '../table-filter';
-
-export class TextFilter implements TableFilter {
-  value: string;
-
-  public constructor(private readonly column: string) {
-    this.value = '';
-  }
-
-  getFilter(): object {
-    const filter = {};
-
-    filter[this.column] = { contains: this.value };
-
-    return filter;
-  }
-}
+import { TextFilter } from '../table-filter';
 
 @Component({
   selector: 'ngx-table-text-filter',

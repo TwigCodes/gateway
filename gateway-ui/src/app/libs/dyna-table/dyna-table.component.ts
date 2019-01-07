@@ -43,12 +43,13 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   @Input() selectable = false;
   @Input() sortable = true;
   @Input() expandTpl: TemplateRef<any>;
+  @Input() moreMenuTpl: TemplateRef<any>;
 
   @Output() selectChange = new EventEmitter<any[]>();
   @Output() rowClick = new EventEmitter();
   @Output() pageChange = new EventEmitter<PageEvent>();
   @Output() sortChange = new EventEmitter<Sort>();
-  @Output() filterChange = new EventEmitter<string>();
+  @Output() filterChange = new EventEmitter();
   @Output() actionEdit = new EventEmitter();
   @Output() actionDelete = new EventEmitter();
   @Output() actionAdd = new EventEmitter();
@@ -64,6 +65,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   subscription = new Subscription();
 
   private appliedFilters: { [key: string]: ColumnFilter } = {};
+  private appliedSorts: { [key: string]: Sort } = {};
 
   constructor(
     private readonly columnFilterService: ColumnFilterService,
@@ -156,7 +158,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
           }
 
           if (result || result === '') {
-            console.log(result);
+            this.filterChange.emit(this.appliedFilters);
           }
         });
     }

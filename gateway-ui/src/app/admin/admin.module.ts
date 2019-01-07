@@ -3,8 +3,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { environment } from '@env/environment';
+import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { SharedModule } from '@app/shared';
 
 import { AdminRoutingModule } from './admin-routing.module';
@@ -63,9 +62,9 @@ export const COMPONENTS = [
 export class AdminModule {}
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(
-    http,
-    `${environment.i18nPrefix}/assets/i18n/admin/`,
-    '.json'
-  );
+  return new MultiTranslateHttpLoader(http, [
+    { prefix: './assets/i18n/', suffix: '.json' },
+    { prefix: './assets/i18n/libs/', suffix: '.json' },
+    { prefix: './assets/i18n/admin/', suffix: '.json' }
+  ]);
 }

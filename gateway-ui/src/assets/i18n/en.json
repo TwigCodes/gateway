@@ -95,21 +95,5 @@
   "tgapp.settings.themes.title": "Themes",
   "tgapp.settings.title": "Settings",
   "tgapp.title.long": "360-Degree Feedback System",
-  "tgapp.title.short": "Angular Starter",
-  "material.paginator.itemsperpage": "Items per page",
-  "material.paginator.next": "Next",
-  "material.paginator.prev": "Previous",
-  "material.paginator.first": "First",
-  "material.paginator.last": "Last",
-  "material.paginator.of": "of",
-  "material.datepicker.calendar": "Calendar",
-  "material.datepicker.nextmonth": "Next",
-  "material.datepicker.nextmultiyear": "Next",
-  "material.datepicker.nextyear": "Next",
-  "material.datepicker.opencalendar": "Open",
-  "material.datepicker.prevmonth": "Prev",
-  "material.datepicker.prevmultiyear": "Prev",
-  "material.datepicker.prevyear": "Prev",
-  "material.datepicker.switchtomonthview": "Month View",
-  "material.datepicker.switchtomultiyearview": "Year View"
+  "tgapp.title.short": "Angular Starter"
 }

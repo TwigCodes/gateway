@@ -1,0 +1,19 @@
+{
+  "material.paginator.itemsperpage": "每页",
+  "material.paginator.next": "下页",
+  "material.paginator.prev": "上页",
+  "material.paginator.first": "首页",
+  "material.paginator.last": "尾页",
+  "material.paginator.of": "条中的",
+  "material.datepicker.calendar": "日历",
+  "material.datepicker.nextmonth": "下月",
+  "material.datepicker.nextmultiyear": "向后",
+  "material.datepicker.nextyear": "下一年",
+  "material.datepicker.opencalendar": "打开",
+  "material.datepicker.prevmonth": "上月",
+  "material.datepicker.prevmultiyear": "向前",
+  "material.datepicker.prevyear": "上一年",
+  "material.datepicker.switchtomonthview": "月视图",
+  "material.datepicker.switchtomultiyearview": "年视图",
+  "ngx-dyna-table.menu.more.clear-filters": "清除所有排序和条件"
+}
