@@ -9,7 +9,6 @@ import { QuestionService } from './services';
 @NgModule({
   declarations: [QuestionsContainerComponent, QuestionDialogComponent],
   imports: [SharedModule, DataMgmtRoutingModule],
-  providers: [QuestionService],
   entryComponents: [QuestionDialogComponent]
 })
 export class DataMgmtModule {}

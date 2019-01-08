@@ -6,7 +6,9 @@ import { KeycloakRole, KeycloakUser } from '../admin.model';
 import { BaseKeycloakService } from './base-keycloak.service';
 import { filteredRoles } from './config';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class RoleService extends BaseKeycloakService<KeycloakRole> {
   entityPath = 'roles';
   constructor(protected httpClient: HttpClient) {

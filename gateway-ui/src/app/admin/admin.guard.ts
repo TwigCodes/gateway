@@ -8,7 +8,9 @@ import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
 import { NotificationService } from '@app/core';
 import { TranslateService } from '@ngx-translate/core';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AdminGuard extends KeycloakAuthGuard {
   constructor(
     protected router: Router,

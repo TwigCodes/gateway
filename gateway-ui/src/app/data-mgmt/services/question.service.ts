@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { BaseLeanCloudService } from '@app/libs';
 import { Question } from '../data-mgmt.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class QuestionService extends BaseLeanCloudService<Question> {
   protected entityPath = 'questions';
   constructor(protected httpClient: HttpClient) {

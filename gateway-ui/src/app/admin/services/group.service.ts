@@ -6,7 +6,9 @@ import { map, catchError, finalize, switchMap, mapTo } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { filteredRoles } from './config';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class GroupService extends BaseKeycloakService<KeycloakGroup> {
   entityPath = 'groups';
   constructor(protected httpClient: HttpClient) {

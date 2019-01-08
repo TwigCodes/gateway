@@ -61,14 +61,6 @@ export const COMPONENTS = [
     StoreModule.forFeature('admin', fromAdmin.reducers),
     EffectsModule.forFeature(ADMIN_EFFECTS)
   ],
-  providers: [
-    GroupService,
-    RoleService,
-    UserService,
-    GroupSearchService,
-    UserSearchService,
-    AdminGuard
-  ],
   entryComponents: [
     UserDialogComponent,
     RoleDialogComponent,

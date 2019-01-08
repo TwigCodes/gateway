@@ -133,7 +133,7 @@ export abstract class BaseLeanCloudTableComponent<
   }
 
   handleFilter(appliedFilters: { [key: string]: ColumnFilter }) {
-    let filters = [];
+    const filters = [];
     for (const key in appliedFilters) {
       if (appliedFilters.hasOwnProperty(key)) {
         const appliedFilterValue = appliedFilters[key] as any;

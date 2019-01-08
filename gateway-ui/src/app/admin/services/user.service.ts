@@ -14,7 +14,9 @@ import {
 import { environment } from '@env/environment';
 import { filteredRoles } from './config';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class UserService extends BaseKeycloakService<KeycloakUser> {
   entityPath = 'users';
   constructor(protected httpClient: HttpClient) {

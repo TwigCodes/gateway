@@ -3,7 +3,9 @@ import { HttpParams } from '@angular/common/http';
 import { AutocompleteService } from '@app/libs';
 import { UserService } from './user.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class UserSearchService implements AutocompleteService {
   constructor(private service: UserService) {}
   fetch(params?: HttpParams): Promise<any> {

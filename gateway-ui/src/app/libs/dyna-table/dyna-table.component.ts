@@ -104,18 +104,18 @@ export class DynaTableComponent implements OnInit, OnDestroy {
     }
     this.columns.forEach(col => {
       if (col.cell == null && col.cellTpl == null) {
-        throw 'Invalid DynaTable Column Definition, cell function and cellTpl are null, at least one shall be configured';
+        throw new Error('Invalid DynaTable Column Definition, cell function and cellTpl are null, at least one shall be configured');
       }
       if (col.header == null && col.headerTpl == null) {
-        throw 'Invalid DynaTable Column Definition, header and headerTpl are null, at least one shall be configured';
+        throw new Error('Invalid DynaTable Column Definition, header and headerTpl are null, at least one shall be configured');
       }
       if (
         col.name === this.DEFAULT_COLUMN_ACTION ||
         col.name === this.DEFAULT_COLUMN_SELECT
       ) {
-        throw `${
+        throw new Error(`${
           col.name
-        } has the same name with the reserved name, please change it`;
+        } has the same name with the reserved name, please change it`);
       }
     });
   }
