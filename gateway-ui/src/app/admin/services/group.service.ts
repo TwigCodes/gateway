@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { KeycloakGroup, KeycloakUser, KeycloakRole } from '../admin.model';
-import { BaseService } from './base.service';
+import { BaseKeycloakService } from './base-keycloak.service';
 import { map, catchError, finalize, switchMap, mapTo } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { filteredRoles } from './config';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class GroupService extends BaseService<KeycloakGroup> {
+@Injectable()
+export class GroupService extends BaseKeycloakService<KeycloakGroup> {
   entityPath = 'groups';
   constructor(protected httpClient: HttpClient) {
     super(httpClient);

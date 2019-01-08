@@ -15,5 +15,16 @@
   "material.datepicker.prevyear": "Prev",
   "material.datepicker.switchtomonthview": "Month View",
   "material.datepicker.switchtomultiyearview": "Year View",
-  "ngx-dyna-table.menu.more.clear-filters": "Reset View"
+  "ngx-dyna-table.menu.more.clear-filters": "Reset View",
+  "validation.regex.email.message": "Email address is not valid",
+  "validation.regex.name.message": "The name is invalid, only alphanumeric/underline/dollar sign are allowed",
+  "validation.regex.mobile.message": "The mobile number is not valid",
+  "validation.regex.human-name.message": "The name should consists of alphanumeric and space, no other charactors allowed",
+  "validation.regex.username.message": "The username should consists of alphanumeric, no other charactors allowed",
+  "validation.regex.url.message": "The url is not valid",
+  "validation.require.message": "The field is required",
+  "validation.min.message": "The min value should be {{value}}",
+  "validation.max.message": "The max value should be {{value}}",
+  "validation.min-length.message": "The min length should be {{value}}",
+  "validation.max-length.message": "The max length should be {{value}}"
 }

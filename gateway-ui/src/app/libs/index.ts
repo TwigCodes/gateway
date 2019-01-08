@@ -17,6 +17,7 @@ export * from './formly-controls';
 export * from './not-found';
 export * from './entity';
 export * from './utils';
+export * from './validators';
 export {
   QuestionWizardModule,
   Option as QuestionOption

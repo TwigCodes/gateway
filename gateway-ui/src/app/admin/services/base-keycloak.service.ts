@@ -8,7 +8,9 @@ import { Filter } from '@app/libs/entity/filter.service';
 import { CrudService } from '@app/libs/entity/crud.service';
 
 @Injectable()
-export abstract class BaseService<T extends Entity> extends CrudService<T> {
+export abstract class BaseKeycloakService<T extends Entity> extends CrudService<
+  T
+> {
   protected readonly baseUrl = `${environment.keycloak.url}/admin/realms/${
     environment.keycloak.realm
   }`;

@@ -3,13 +3,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { switchMap, finalize, catchError, map } from 'rxjs/operators';
 import { KeycloakRole, KeycloakUser } from '../admin.model';
-import { BaseService } from './base.service';
+import { BaseKeycloakService } from './base-keycloak.service';
 import { filteredRoles } from './config';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class RoleService extends BaseService<KeycloakRole> {
+@Injectable()
+export class RoleService extends BaseKeycloakService<KeycloakRole> {
   entityPath = 'roles';
   constructor(protected httpClient: HttpClient) {
     super(httpClient);

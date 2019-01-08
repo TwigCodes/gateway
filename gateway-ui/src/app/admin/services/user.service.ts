@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from './base.service';
+import { BaseKeycloakService } from './base-keycloak.service';
 import { KeycloakUser, KeycloakRole, KeycloakGroup } from '../admin.model';
 import { Observable } from 'rxjs';
 import { HttpParams, HttpClient } from '@angular/common/http';
@@ -14,10 +14,8 @@ import {
 import { environment } from '@env/environment';
 import { filteredRoles } from './config';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class UserService extends BaseService<KeycloakUser> {
+@Injectable()
+export class UserService extends BaseKeycloakService<KeycloakUser> {
   entityPath = 'users';
   constructor(protected httpClient: HttpClient) {
     super(httpClient);

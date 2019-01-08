@@ -14,11 +14,11 @@ export abstract class BaseLeanCloudTableComponent<
   T extends Entity,
   TService extends BaseLeanCloudService<T>
 > implements OnInit, OnDestroy {
-  protected data$ = new BehaviorSubject<T[]>([]);
-  protected abstract columns: ColumnConfig[];
+  public data$ = new BehaviorSubject<T[]>([]);
+  public abstract columns: ColumnConfig[];
   protected abstract entityForm: ComponentType<EntityFormComponent<T>>;
-  protected selectable = false;
-  protected sortable = false;
+  public selectable = false;
+  public sortable = false;
   pageChange$ = new BehaviorSubject<PageEvent>({
     pageIndex: 0,
     pageSize: 20,

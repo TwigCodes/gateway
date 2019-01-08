@@ -3,9 +3,7 @@ import { HttpParams } from '@angular/common/http';
 import { AutocompleteService } from '@app/libs';
 import { GroupService } from './group.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class GroupSearchService implements AutocompleteService {
   constructor(private service: GroupService) {}
   fetch(params?: HttpParams): Promise<any> {

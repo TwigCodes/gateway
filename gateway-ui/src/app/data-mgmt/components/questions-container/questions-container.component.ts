@@ -23,8 +23,8 @@ import { QuestionDialogComponent } from './question-dialog.component';
 export class QuestionsContainerComponent
   extends BaseLeanCloudTableComponent<Question, QuestionService>
   implements OnInit {
-  protected columns: ColumnConfig[];
-  protected entityForm = QuestionDialogComponent;
+  public columns: ColumnConfig[];
+  public entityForm = QuestionDialogComponent;
   constructor(
     protected service: QuestionService,
     protected dialog: MatDialog,

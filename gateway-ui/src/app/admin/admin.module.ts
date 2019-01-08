@@ -20,9 +20,17 @@ import {
   GroupDialogComponent
 } from './components';
 
+import {
+  GroupService,
+  RoleService,
+  UserService,
+  GroupSearchService,
+  UserSearchService
+} from './services';
 import { ADMIN_EFFECTS } from './effects';
 import { DataMgmtModule } from '@app/data-mgmt/data-mgmt.module';
 import * as fromAdmin from './reducers';
+import { AdminGuard } from './admin.guard';
 
 export const COMPONENTS = [
   HomeContainerComponent,
@@ -52,6 +60,14 @@ export const COMPONENTS = [
     }),
     StoreModule.forFeature('admin', fromAdmin.reducers),
     EffectsModule.forFeature(ADMIN_EFFECTS)
+  ],
+  providers: [
+    GroupService,
+    RoleService,
+    UserService,
+    GroupSearchService,
+    UserSearchService,
+    AdminGuard
   ],
   entryComponents: [
     UserDialogComponent,
