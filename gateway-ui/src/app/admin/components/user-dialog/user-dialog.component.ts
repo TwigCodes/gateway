@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { EntityFormComponent } from '@app/libs/entity/entity-form.component';
 import { KeycloakUser } from '@app/admin/admin.model';
+import { usernamePattern, usernameValidationMessage } from '@app/libs';
 
 @Component({
   selector: 'tgapp-user-dialog',
@@ -23,6 +24,13 @@ export class UserDialogComponent extends EntityFormComponent<KeycloakUser> {
         key: 'username',
         type: 'input',
         templateOptions: { type: 'text', required: true },
+        validators: {
+          validation: ['username']
+          // username: {
+          //   expression: c => usernamePattern.test(c.value),
+          //   message: this.translate.instant(usernameValidationMessage)
+          // }
+        },
         expressionProperties: {
           'templateOptions.label': () =>
             this.translate.instant('tgapp.admin.user-dialog.username.label'),
@@ -35,7 +43,7 @@ export class UserDialogComponent extends EntityFormComponent<KeycloakUser> {
       {
         key: 'firstName',
         type: 'input',
-        templateOptions: { type: 'text', required: true },
+        templateOptions: { type: 'text', required: true, maxLength: 30 },
         expressionProperties: {
           'templateOptions.label': () =>
             this.translate.instant('tgapp.admin.user-dialog.firstname.label'),
@@ -48,7 +56,7 @@ export class UserDialogComponent extends EntityFormComponent<KeycloakUser> {
       {
         key: 'lastName',
         type: 'input',
-        templateOptions: { type: 'text', required: true },
+        templateOptions: { type: 'text', required: true, maxLength: 30 },
         expressionProperties: {
           'templateOptions.label': () =>
             this.translate.instant('tgapp.admin.user-dialog.lastname.label'),
@@ -62,6 +70,9 @@ export class UserDialogComponent extends EntityFormComponent<KeycloakUser> {
         key: 'email',
         type: 'input',
         templateOptions: { type: 'email', required: true },
+        validators: {
+          validation: ['email']
+        },
         expressionProperties: {
           'templateOptions.label': () =>
             this.translate.instant('tgapp.admin.user-dialog.email.label'),
@@ -72,7 +83,6 @@ export class UserDialogComponent extends EntityFormComponent<KeycloakUser> {
       {
         key: 'enabled',
         type: 'toggle',
-        templateOptions: { required: true },
         expressionProperties: {
           'templateOptions.label': () =>
             this.translate.instant('tgapp.admin.user-dialog.enabled.label'),

@@ -10,6 +10,7 @@ import {
   GroupDetailContainerComponent
 } from './components';
 import { AdminGuard } from './admin.guard';
+import { MenusContainerComponent } from './components/menus/menus-container.component';
 
 const routes: Routes = [
   {
@@ -61,6 +62,14 @@ const routes: Routes = [
         component: GroupDetailContainerComponent
       }
     ]
+  },
+  {
+    path: 'menus',
+    component: MenusContainerComponent,
+    canActivate: [AdminGuard],
+    data: {
+      roles: ['admin']
+    }
   }
 ];
 

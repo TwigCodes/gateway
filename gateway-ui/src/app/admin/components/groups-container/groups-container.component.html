@@ -3,7 +3,7 @@
   <div fxLayout="row nowrap" fxLayoutAlign="start stretch" fxLayoutGap="10px">
     <div fxFlex="1 1 auto" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
       <mat-form-field>
-        <input matInput placeholder="搜索群组名称" (keyup)="handleSearch($event.target.value)" #search>
+        <input matInput placeholder="{{ 'tgapp.groups.tree.search.placeholder' | translate }}" (keyup)="handleSearch($event.target.value)" #search>
         <button mat-icon-button matSuffix *ngIf="search.value" (click)="search.value = '';clearSearch()">
           <mat-icon>close</mat-icon>
         </button>

@@ -41,10 +41,10 @@
         (click)="handleSelected(item)"
         [class.active]="selection.isSelected(item)">
         <mat-card-header>
-          <mat-card-title>{{ item.title }}</mat-card-title>
-          <mat-card-subtitle>{{ item.subtitle }}</mat-card-subtitle>
+          <mat-card-title>{{ item.title | translate }}</mat-card-title>
+          <mat-card-subtitle>{{ item.subtitle | translate }}</mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content> {{ item.desc }} </mat-card-content>
+        <mat-card-content> {{ item.desc | translate }} </mat-card-content>
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
@@ -56,10 +56,10 @@
       (click)="handleSelected(item)"
       *ngFor="let item of filteredItems; let last = last"
       [class.active]="selection.isSelected(item)">
-      <h3 matLine>{{ item.title }}</h3>
+      <h3 matLine>{{ item.title | translate }}</h3>
       <p matLine>
-        <span> {{ item.subtitle }} </span>
-        <span class="subline">-- {{ item.desc }} </span>
+        <span> {{ item.subtitle | translate }} </span>
+        <span class="subline">-- {{ item.desc | translate }} </span>
       </p>
       <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
     </mat-list-item>

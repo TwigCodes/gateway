@@ -7,7 +7,9 @@ import { ColumnFilter } from '../column-filter.model';
   selector: 'ngx-table-date-filter',
   template: `
     <form (ngSubmit)="apply()">
-      <h2 mat-dialog-title>Filter for {{ displayName }}</h2>
+      <h2 mat-dialog-title>
+        {{ 'ngx-table-date-filter.dialog.title' | translate }} {{ displayName }}
+      </h2>
 
       <mat-dialog-content>
         <mat-form-field>
@@ -15,7 +17,9 @@ import { ColumnFilter } from '../column-filter.model';
             matInput
             [matDatepicker]="fromDate"
             name="fromDate"
-            placeholder="From date"
+            placeholder="{{
+              'ngx-table-date-filter.dialog.from-date' | translate
+            }}"
             [(ngModel)]="model.fromDate"
           />
           <mat-datepicker-toggle
@@ -30,7 +34,9 @@ import { ColumnFilter } from '../column-filter.model';
             matInput
             [matDatepicker]="toDate"
             name="toDate"
-            placeholder="To date"
+            placeholder="{{
+              'ngx-table-date-filter.dialog.to-date' | translate
+            }}"
             [(ngModel)]="model.toDate"
           />
           <mat-datepicker-toggle
@@ -42,8 +48,12 @@ import { ColumnFilter } from '../column-filter.model';
       </mat-dialog-content>
 
       <mat-dialog-actions>
-        <button mat-button mat-dialog-close>Clear</button>
-        <button mat-button type="submit">Apply</button>
+        <button mat-button mat-dialog-close>
+          {{ 'ngx-table-date-filter.dialog.clear' | translate }}
+        </button>
+        <button mat-button type="submit">
+          {{ 'ngx-table-date-filter.dialog.apply' | translate }}
+        </button>
       </mat-dialog-actions>
     </form>
   `,

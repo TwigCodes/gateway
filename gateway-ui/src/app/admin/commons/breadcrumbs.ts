@@ -20,8 +20,15 @@ export const ADMIN_GROUPS: Crumb = {
   link: '../groups'
 };
 
+export const ADMIN_MENUS: Crumb = {
+  name: 'tgapp.breadcrumb.admin.menus',
+  link: '.'
+};
+
 export const BREADCRUMBS_USERS = [ADMIN_HOME, ADMIN_USERS];
 
 export const BREADCRUMBS_ROLES = [ADMIN_HOME, ADMIN_ROLES];
 
 export const BREADCRUMBS_GROUPS = [ADMIN_HOME, ADMIN_GROUPS];
+
+export const BREADCRUMBS_MENUS = [ADMIN_HOME, ADMIN_MENUS];

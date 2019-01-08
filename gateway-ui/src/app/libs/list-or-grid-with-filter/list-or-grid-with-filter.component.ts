@@ -10,7 +10,6 @@ import { MatButtonToggleGroup } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 
 export interface Item {
-  id: string;
   title: string;
   subtitle: string;
   desc: string;

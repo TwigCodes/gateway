@@ -6,6 +6,7 @@ import { CrudService } from '@app/libs/entity/crud.service';
 import { Entity } from '@app/libs/entity/entity.model';
 import { environment as env } from '@env/environment';
 import { LeanCloudSearch, LeanCloudResult } from './lean-cloud.model';
+import { tag } from 'rxjs-spy/operators';
 
 @Injectable()
 export abstract class BaseLeanCloudService<
@@ -84,13 +85,13 @@ export abstract class BaseLeanCloudService<
 
   getAll(): Observable<T[]> {
     this.loadingSubject.next(true);
-    return this.httpClient.get(`${this.baseUrl}/${this.entityPath}`).pipe(
-      map((result: { results: T[] }) =>
-        result.results.map(entity => entity as T)
-      ),
-      retry(3), // retry a failed request up to 3 times
-      catchError(this.handleError),
-      finalize(() => this.loadingSubject.next(false))
-    );
+    return this.httpClient
+      .get<LeanCloudResult<T>>(`${this.baseUrl}/${this.entityPath}`)
+      .pipe(
+        map(result => result.results),
+        retry(3), // retry a failed request up to 3 times
+        catchError(this.handleError),
+        finalize(() => this.loadingSubject.next(false))
+      );
   }
 }

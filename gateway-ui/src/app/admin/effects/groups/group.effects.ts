@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ROUTER_NAVIGATION } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
@@ -22,7 +21,6 @@ export class GroupEffects {
   constructor(
     private actions$: Actions,
     private service: GroupService,
-    private router: Router,
     private store: Store<fromAdmin.State>
   ) {}
   @Effect()

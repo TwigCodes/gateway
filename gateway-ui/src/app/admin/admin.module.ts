@@ -23,6 +23,8 @@ import {
 import { ADMIN_EFFECTS } from './effects';
 import { DataMgmtModule } from '@app/data-mgmt/data-mgmt.module';
 import * as fromAdmin from './reducers';
+import { MenusDialogComponent } from './components/menus/menu-dialog.component';
+import { MenusContainerComponent } from './components/menus/menus-container.component';
 
 export const COMPONENTS = [
   HomeContainerComponent,
@@ -34,7 +36,9 @@ export const COMPONENTS = [
   UserDetailContainerComponent,
   GroupsContainerComponent,
   GroupDetailContainerComponent,
-  GroupDialogComponent
+  GroupDialogComponent,
+  MenusContainerComponent,
+  MenusDialogComponent
 ];
 @NgModule({
   declarations: COMPONENTS,
@@ -56,7 +60,8 @@ export const COMPONENTS = [
   entryComponents: [
     UserDialogComponent,
     RoleDialogComponent,
-    GroupDialogComponent
+    GroupDialogComponent,
+    MenusDialogComponent
   ]
 })
 export class AdminModule {}

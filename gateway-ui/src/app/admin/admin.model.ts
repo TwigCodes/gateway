@@ -1,3 +1,5 @@
+import { Entity } from '@app/libs';
+
 export interface KeycloakRole {
   id: string;
   name: string;
@@ -41,4 +43,15 @@ export interface KeycloakGroupDTO {
   clientRoles?: { [key: string]: string[] };
   attributes?: { [key: string]: string[] };
   access?: { [key: string]: boolean };
+}
+
+export class AdminMenuItem extends Entity {
+  objectId: string;
+  title: string;
+  subtitle: string;
+  desc: string;
+  link: string;
+  get id() {
+    return this.objectId;
+  }
 }

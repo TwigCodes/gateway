@@ -3,11 +3,13 @@ import { CellComponent } from './cell.component';
 import { ColumnConfig } from '../../column-config.model';
 
 @Component({
-  selector: 'ngx-text-cell',
-  template: '{{ displayText }}',
+  selector: 'ngx-translate-cell',
+  template: `
+    <span [matTooltip]="displayText">{{ displayText | translate }}</span>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TextCellComponent implements CellComponent {
+export class TranslateCellComponent implements CellComponent {
   @Input() column: ColumnConfig;
   @Input() row: object;
 

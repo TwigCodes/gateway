@@ -1,4 +1,7 @@
-<mat-tab-group animationDuration="0ms">
+<ng-template #none>
+  Nothing to display
+</ng-template>
+<mat-tab-group animationDuration="0ms" *ngIf="model else none">
   <mat-tab label="{{ 'tgapp.admin.group-detail.info' | translate }}">
     <ng-template matTabContent>
       <form [formGroup]="entityForm" (ngSubmit)="submit()" class="body-content">
@@ -30,6 +33,7 @@
             [displayTemplate]="itemTemplate" [noRecordText]="'tgapp.user.search.norecord' | translate" (optionSelected)="handleAddUserToGroup($event)">
           </ngx-mat-autocomplete>
           <ng-template #itemTemplate let-item>
+            <span> {{item.username}} </span>
             <span> {{ item.firstName }}&nbsp;{{ item.lastName }}</span>
             <span> {{item.email}} </span>
           </ng-template>

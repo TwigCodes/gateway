@@ -1,4 +1,4 @@
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyConfig } from '@ngx-formly/core';
 import { FormControl, ValidationErrors } from '@angular/forms';
 
 // tslint:disable-next-line:max-line-length
@@ -51,3 +51,31 @@ export const usernameValidationMessage = 'validation.regex.username.message';
 export function usernameValidator(control: FormControl): ValidationErrors {
   return usernamePattern.test(control.value) ? null : { username: true };
 }
+
+export const COMMON_VALIDATION_MESSAGES = [
+  requiredValidationMessage,
+  minValidationMessage,
+  maxValidationMessage,
+  minLengthValidationMessage,
+  maxLengthValidationMessage,
+  emailValidationMessage,
+  nameValidationMessage,
+  urlValidationMessage,
+  mobileValidationMessage,
+  humanNameValidationMessage,
+  usernameValidationMessage
+];
+
+export const addValidationMessagesToConfig = (msg, config: FormlyConfig) => {
+  config.addValidatorMessage('required', msg[requiredValidationMessage]);
+  config.addValidatorMessage('min', msg[minValidationMessage]);
+  config.addValidatorMessage('max', msg[maxValidationMessage]);
+  config.addValidatorMessage('minlength', msg[minLengthValidationMessage]);
+  config.addValidatorMessage('maxlength', msg[maxLengthValidationMessage]);
+  config.addValidatorMessage('email', msg[emailValidationMessage]);
+  config.addValidatorMessage('name', msg[nameValidationMessage]);
+  config.addValidatorMessage('username', msg[usernameValidationMessage]);
+  config.addValidatorMessage('human', msg[humanNameValidationMessage]);
+  config.addValidatorMessage('url', msg[urlValidationMessage]);
+  config.addValidatorMessage('mobile', msg[mobileValidationMessage]);
+};

@@ -27,7 +27,11 @@ import {
   ColumnFilterService
 } from './table-cell';
 import { TableTextFilterComponent, TableDateFilterComponent } from './filters';
-import { TextCellComponent, DateCellComponent } from './table-cell/cell-types';
+import {
+  TextCellComponent,
+  DateCellComponent,
+  TranslateCellComponent
+} from './table-cell/cell-types';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
@@ -59,6 +63,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TableCellComponent,
     TextCellComponent,
     DateCellComponent,
+    TranslateCellComponent,
     TableTextFilterComponent,
     TableDateFilterComponent
   ],
@@ -66,6 +71,7 @@ import { TranslateModule } from '@ngx-translate/core';
   entryComponents: [
     TextCellComponent,
     DateCellComponent,
+    TranslateCellComponent,
     TableTextFilterComponent,
     TableDateFilterComponent
   ],
@@ -78,6 +84,7 @@ export class DynaTableModule {
   ) {
     cellService.registerCell('string', TextCellComponent);
     cellService.registerCell('date', DateCellComponent);
+    cellService.registerCell('translate', TranslateCellComponent);
     filterService.registerFilter('string', TableTextFilterComponent);
     filterService.registerFilter('date', TableDateFilterComponent);
   }

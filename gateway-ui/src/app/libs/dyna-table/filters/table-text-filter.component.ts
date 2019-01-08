@@ -7,14 +7,18 @@ import { TextFilter } from '../table-filter';
   selector: 'ngx-table-text-filter',
   template: `
     <form (ngSubmit)="apply()">
-      <h2 mat-dialog-title>Filter for {{ displayName }}</h2>
+      <h2 mat-dialog-title>
+        {{ 'ngx-table-date-filter.dialog.title' | translate }} {{ displayName }}
+      </h2>
 
       <mat-dialog-content>
         <mat-form-field>
           <input
             type="text"
             matInput
-            placeholder="Containing"
+            placeholder="{{
+              'ngx-table-date-filter.text.placeholder' | translate
+            }}"
             name="value"
             [(ngModel)]="model.value"
           />
@@ -22,8 +26,12 @@ import { TextFilter } from '../table-filter';
       </mat-dialog-content>
 
       <mat-dialog-actions>
-        <button mat-button mat-dialog-close>Clear</button>
-        <button mat-button type="submit">Apply</button>
+        <button mat-button mat-dialog-close>
+          {{ 'ngx-table-date-filter.dialog.clear' | translate }}
+        </button>
+        <button mat-button type="submit">
+          {{ 'ngx-table-date-filter.dialog.apply' | translate }}
+        </button>
       </mat-dialog-actions>
     </form>
   `,

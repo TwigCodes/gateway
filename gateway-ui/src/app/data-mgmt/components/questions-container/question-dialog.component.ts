@@ -1,11 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  EntityFormComponent,
-  namePattern,
-  emailValidationMessage
-} from '@app/libs';
+import { EntityFormComponent } from '@app/libs';
 import { Question } from '@app/data-mgmt/data-mgmt.model';
 
 @Component({
@@ -31,10 +27,7 @@ export class QuestionDialogComponent extends EntityFormComponent<Question> {
           rows: 3
         },
         validators: {
-          name: {
-            expression: c => namePattern.test(c.value),
-            message: this.translate.instant(emailValidationMessage)
-          }
+          validation: [name]
         },
         expressionProperties: {
           'templateOptions.label': () =>
