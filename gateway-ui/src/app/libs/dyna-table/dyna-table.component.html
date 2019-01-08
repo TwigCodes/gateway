@@ -60,7 +60,7 @@
     </td>
   </ng-container>
   <!--render default action column-->
-  <ng-container matColumnDef="ngx-action" >
+  <ng-container matColumnDef="ngx-action" *ngIf="showAction">
     <th mat-header-cell *matHeaderCellDef>
       <button type="button" (click)="handleRowActionAdd($event)" color="primary" mat-icon-button>
         <mat-icon>add_circle</mat-icon>

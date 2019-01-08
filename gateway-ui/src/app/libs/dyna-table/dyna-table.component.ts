@@ -58,6 +58,8 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  readonly DEFAULT_COLUMN_SELECT = 'ngx-select';
+  readonly DEFAULT_COLUMN_ACTION = 'ngx-action';
   dataSource: MatTableDataSource<Identifiable> = new MatTableDataSource();
   displayedColumns: string[];
   selection = new SelectionModel<Identifiable>(true, []);
@@ -101,8 +103,19 @@ export class DynaTableComponent implements OnInit, OnDestroy {
       throw Error('DynaTable must be provided with column definitions.');
     }
     this.columns.forEach(col => {
-      if (col.cell == null && col.header == null && col.cellTpl == null) {
-        throw 'Column Definition Error: cell function and displayName are not defined, provide one unless cellTpl is configured';
+      if (col.cell == null && col.cellTpl == null) {
+        throw 'Invalid DynaTable Column Definition, cell function and cellTpl are null, at least one shall be configured';
+      }
+      if (col.header == null && col.headerTpl == null) {
+        throw 'Invalid DynaTable Column Definition, header and headerTpl are null, at least one shall be configured';
+      }
+      if (
+        col.name === this.DEFAULT_COLUMN_ACTION ||
+        col.name === this.DEFAULT_COLUMN_SELECT
+      ) {
+        throw `${
+          col.name
+        } has the same name with the reserved name, please change it`;
       }
     });
   }
@@ -110,11 +123,15 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   private appendDefaultColumnToConfig() {
     this.displayedColumns =
       this.selectable && this.showAction
-        ? ['ngx-select', ...this.columns.map(c => c.name), 'ngx-action']
+        ? [
+            this.DEFAULT_COLUMN_SELECT,
+            ...this.columns.map(c => c.name),
+            this.DEFAULT_COLUMN_ACTION
+          ]
         : this.selectable
-        ? ['ngx-select', ...this.columns.map(c => c.name)]
+        ? [this.DEFAULT_COLUMN_SELECT, ...this.columns.map(c => c.name)]
         : this.showAction
-        ? [...this.columns.map(c => c.name), 'ngx-action']
+        ? [...this.columns.map(c => c.name), this.DEFAULT_COLUMN_ACTION]
         : this.columns.map(c => c.name);
   }
 
