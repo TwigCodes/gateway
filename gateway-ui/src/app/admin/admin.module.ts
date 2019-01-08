@@ -20,17 +20,9 @@ import {
   GroupDialogComponent
 } from './components';
 
-import {
-  GroupService,
-  RoleService,
-  UserService,
-  GroupSearchService,
-  UserSearchService
-} from './services';
 import { ADMIN_EFFECTS } from './effects';
 import { DataMgmtModule } from '@app/data-mgmt/data-mgmt.module';
 import * as fromAdmin from './reducers';
-import { AdminGuard } from './admin.guard';
 
 export const COMPONENTS = [
   HomeContainerComponent,

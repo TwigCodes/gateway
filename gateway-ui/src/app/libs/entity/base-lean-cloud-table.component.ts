@@ -9,6 +9,7 @@ import { ConfirmService } from '@app/shared';
 import { EntityFormComponent } from './entity-form.component';
 import { ColumnConfig, ColumnFilter } from '../dyna-table';
 import { untilDestroy } from '../utils';
+import { Crumb } from '../bread-crumbs';
 
 export abstract class BaseLeanCloudTableComponent<
   T extends Entity,
@@ -16,6 +17,7 @@ export abstract class BaseLeanCloudTableComponent<
 > implements OnInit, OnDestroy {
   public data$ = new BehaviorSubject<T[]>([]);
   public abstract columns: ColumnConfig[];
+  public abstract crumbs: Crumb[];
   protected abstract entityForm: ComponentType<EntityFormComponent<T>>;
   public selectable = false;
   public sortable = false;

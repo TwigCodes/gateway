@@ -1,7 +1,8 @@
-<div class="mat-elevation-z8">
+<mat-card class="mat-elevation-z8">
+  <ngx-bread-crumbs [crumbs]="crumbs"></ngx-bread-crumbs>
   <ngx-dyna-table [data$]="data$" [columns]="columns" [pageIndex]="pageIndex$ | async" [pageSize]="pageSize$ | async"
     [total]="total$ | async" [selectable]="selectable" [sortable]="sortable" (pageChange)="handlePageChange($event)"
     (sortChange)="handleSortChange($event)" (rowClick)="handleItem($event)" (actionEdit)="handleEdit($event)"
     (actionDelete)="handleDelete($event)" (actionAdd)="handleAdd()" (filterChange)="handleFilter($event)">
   </ngx-dyna-table>
-</div>
+</mat-card>

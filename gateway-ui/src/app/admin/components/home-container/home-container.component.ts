@@ -22,7 +22,10 @@ export class HomeContainerComponent implements OnInit {
       'tgapp.admin.menu.user.desc',
       'tgapp.admin.menu.group.title',
       'tgapp.admin.menu.group.subtitle',
-      'tgapp.admin.menu.group.desc'
+      'tgapp.admin.menu.group.desc',
+      'tgapp.admin.menu.questions.title',
+      'tgapp.admin.menu.questions.subtitle',
+      'tgapp.admin.menu.questions.desc'
     ])
     .pipe(
       map(t => {
@@ -42,11 +45,18 @@ export class HomeContainerComponent implements OnInit {
             link: 'users'
           },
           {
-            id: '2',
+            id: '3',
             title: t['tgapp.admin.menu.group.title'],
             subtitle: t['tgapp.admin.menu.group.subtitle'],
             desc: t['tgapp.admin.menu.group.desc'],
             link: 'groups'
+          },
+          {
+            id: '4',
+            title: t['tgapp.admin.menu.questions.title'],
+            subtitle: t['tgapp.admin.menu.questions.subtitle'],
+            desc: t['tgapp.admin.menu.questions.desc'],
+            link: 'data-mgmt/questions'
           }
         ];
       })

@@ -31,7 +31,6 @@ export class AdminGuard extends KeycloakAuthGuard {
         this.notification.warn(
           this.translate.instant('tgapp.admin.guard.notification')
         );
-        this.router.navigate(['../about']);
         return;
       }
 

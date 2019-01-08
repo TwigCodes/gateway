@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ColumnConfig, BaseLeanCloudTableComponent } from '@app/libs';
+import { ColumnConfig, BaseLeanCloudTableComponent, Crumb } from '@app/libs';
 import { ConfirmService } from '@app/shared';
 import { Question } from '../../data-mgmt.model';
 import { QuestionService } from '../../services';
@@ -24,6 +24,7 @@ export class QuestionsContainerComponent
   extends BaseLeanCloudTableComponent<Question, QuestionService>
   implements OnInit {
   public columns: ColumnConfig[];
+  public crumbs: Crumb[];
   public entityForm = QuestionDialogComponent;
   constructor(
     protected service: QuestionService,
@@ -35,6 +36,10 @@ export class QuestionsContainerComponent
 
   ngOnInit() {
     this.sortable = true;
+    this.crumbs = [
+      { name: 'tgapp.breadcrumb.admin.home', link: '../../' },
+      { name: 'tgapp.breadcrumb.admin.data-mgmt.questions', link: '.' }
+    ];
     this.columns = [
       {
         name: 'objectId',
