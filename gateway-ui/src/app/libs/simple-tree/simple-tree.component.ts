@@ -16,11 +16,13 @@ import {
   getFlatNodeStates
 } from './simple-tree-node';
 import { untilDestroy } from '../utils';
+import { rotateEnterAnimation } from '../animations';
 
 @Component({
   selector: 'ngx-simple-tree',
   templateUrl: './simple-tree.component.html',
-  styleUrls: ['./simple-tree.component.scss']
+  styleUrls: ['./simple-tree.component.scss'],
+  animations: [rotateEnterAnimation]
 })
 export class SimpleTreeComponent implements OnInit, OnDestroy {
   @Input() dataSource: Observable<SimpleTreeNode[]>;

@@ -14,7 +14,8 @@
       <button
         mat-icon-button
         [matMenuTriggerFor]="nodeMenu"
-        *ngIf="node.id === _selectedNodeId">
+        *ngIf="node.id === _selectedNodeId"
+        [@rotateEnterAnimation]>
         <mat-icon>more_vert</mat-icon>
       </button>
     </li>
@@ -43,7 +44,11 @@
           {{ node.label }}
         </button>
 
-        <button mat-icon-button [matMenuTriggerFor]="nodeMenu" *ngIf="node.id === _selectedNodeId">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="nodeMenu"
+          [@rotateEnterAnimation]
+          *ngIf="node.id === _selectedNodeId">
           <mat-icon>more_vert</mat-icon>
         </button>
       </div>
