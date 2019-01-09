@@ -18,6 +18,8 @@ export enum ActionTypes {
   UpdateSuccess = '[GroupApi] Update Success',
   UpdateFail = '[GroupApi] Update Fail',
   NextPage = '[GroupPage] Next Page',
+  NextPageSuccess = '[GroupApi] Next Page Success',
+  NextPageFail = '[GroupApi] Next Page Fail',
   LoadPage = '[GroupPage] Load Page',
   LoadPageSuccess = '[GroupApi] Load Page Success',
   LoadPageFail = '[GroupApi] Load Page Fail',
@@ -98,6 +100,16 @@ export class NextPageAction implements Action {
   constructor() {}
 }
 
+export class NextPageSuccessAction implements Action {
+  readonly type = ActionTypes.NextPageSuccess;
+  constructor(public payload: KeycloakGroup[]) {}
+}
+
+export class NextPageFailAction implements Action {
+  readonly type = ActionTypes.NextPageFail;
+  constructor(public payload: string) {}
+}
+
 export class LoadPageAction implements Action {
   readonly type = ActionTypes.LoadPage;
   constructor(public payload: { pageIndex: number; pageSize: number }) {}
@@ -166,10 +178,12 @@ export type GroupActions =
   | DeleteAction
   | DeleteSuccessAction
   | DeleteFailAction
-  | NextPageAction
   | LoadPageAction
   | LoadPageSuccessAction
   | LoadPageFailAction
+  | NextPageAction
+  | NextPageSuccessAction
+  | NextPageFailAction
   | CountAction
   | CountSuccessAction
   | CountFailAction

@@ -52,7 +52,6 @@
       </ul>
     </li>
   </mat-nested-tree-node>
-  <mat-tree-node *matTreeNodeDef="let node; when: loadMore">
-    <ng-container *ngTemplateOutlet="loadMoreTemplate; context: { $implicit: node }"></ng-container>
-  </mat-tree-node>
 </mat-tree>
+
+<ng-container *ngTemplateOutlet="loadMoreTemplate; context: { $implicit: node }" [ngIf]="loadMore"></ng-container>

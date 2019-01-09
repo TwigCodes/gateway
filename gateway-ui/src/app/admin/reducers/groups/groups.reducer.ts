@@ -125,8 +125,18 @@ export function reducer(state = initialState, action: GroupActions): State {
         topLevelNodeIds: _.union(state.topLevelNodeIds, normalizedData.result)
       };
     }
-    case ActionTypes.NextPage: {
-      return { ...state, pageIndex: state.pageIndex * state.pageSize + 1 };
+    case ActionTypes.NextPageSuccess: {
+      const apiResult = action.payload;
+      const group = new schema.Entity('group');
+      group.define({ subGroups: [group] });
+      const normalizedData = normalize(apiResult, [group]);
+      const groupEntities = normalizedData.entities['group'];
+      return {
+        ...state,
+        ...adapter.addMany(_.values(groupEntities), state),
+        topLevelNodeIds: _.union(state.topLevelNodeIds, normalizedData.result),
+        pageIndex: apiResult.length > 0 ? state.pageIndex + 1 : state.pageIndex
+      };
     }
     case ActionTypes.Search: {
       return { ...state, search: action.payload, showLoadMore: false };

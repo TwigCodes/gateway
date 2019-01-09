@@ -92,9 +92,11 @@ export class GroupEffects {
       this.store.pipe(select(fromAdmin.getGroupsPageIndex)),
       this.store.pipe(select(fromAdmin.getGroupsPageSize))
     ),
-    map(
-      ([_, pageIndex, pageSize]) =>
-        new fromGroup.LoadPageAction({ pageIndex, pageSize })
+    switchMap(([_, pageIndex, pageSize]) =>
+      this.service.paged(pageIndex + 1, pageSize).pipe(
+        map(result => new fromGroup.NextPageSuccessAction(result)),
+        catchError(err => of(new fromGroup.NextPageFailAction(err)))
+      )
     )
   );
 
@@ -113,12 +115,9 @@ export class GroupEffects {
   search = this.actions$.pipe(
     ofType<fromGroup.SearchAction>(fromGroup.ActionTypes.Search),
     map(action => action.payload),
-    withLatestFrom(
-      this.store.pipe(select(fromAdmin.getGroupsPageIndex)),
-      this.store.pipe(select(fromAdmin.getGroupsPageSize))
-    ),
-    switchMap(([search, pageIndex, pageSize]) =>
-      this.service.search(search, pageIndex, pageSize).pipe(
+    withLatestFrom(this.store.pipe(select(fromAdmin.getGroupsPageSize))),
+    switchMap(([search, pageSize]) =>
+      this.service.search(search, 0, pageSize).pipe(
         map(result => new fromGroup.SearchSuccessAction(result)),
         catchError(err => of(new fromGroup.SearchFailAction(err)))
       )

@@ -5,16 +5,14 @@ import {
   Output,
   EventEmitter,
   TemplateRef,
-  OnDestroy,
-  ViewChild
+  OnDestroy
 } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { MatTreeNestedDataSource, MatTree } from '@angular/material';
+import { MatTreeNestedDataSource } from '@angular/material';
 import { Observable } from 'rxjs';
 import {
   SimpleTreeNode,
   getFlatNodes,
-  FlatNode,
   getFlatNodeStates
 } from './simple-tree-node';
 import { untilDestroy } from '../utils';
@@ -30,7 +28,6 @@ export class SimpleTreeComponent implements OnInit, OnDestroy {
   @Input() loadMoreTemplate: TemplateRef<any>;
   @Input() showLoadMore = false;
   @Output() nodeSelected = new EventEmitter();
-  @ViewChild('simpleTree') simpleTree: MatTree<SimpleTreeNode>;
   menuToggle: { [id: string]: boolean };
   _selectedNodeId: string;
   _treeNodeStates: { [id: string]: boolean };
@@ -41,13 +38,14 @@ export class SimpleTreeComponent implements OnInit, OnDestroy {
     this.nestedDataSource = new MatTreeNestedDataSource();
 
     this.dataSource.pipe(untilDestroy(this)).subscribe(data => {
-      const flatData = getFlatNodes(data);
       this._treeNodeStates = {
         ...getFlatNodeStates(data),
         ...this._treeNodeStates
       };
       this.nestedDataSource.data = data;
       this.refreshTree();
+      const flatData = getFlatNodes(this.nestedDataSource.data);
+      if (!this.nestedTreeControl) return;
       for (const key in flatData) {
         if (flatData.hasOwnProperty(key)) {
           const expand = this._treeNodeStates[key];
@@ -69,8 +67,11 @@ export class SimpleTreeComponent implements OnInit, OnDestroy {
   }
   hasNestedChild = (_: number, nodeData: SimpleTreeNode) =>
     nodeData.children.length > 0;
-  loadMore = (index: number, _: SimpleTreeNode) =>
-    this.showLoadMore && index === this.nestedDataSource.data.length - 1;
+  loadMore = (index: number, node: SimpleTreeNode) => {
+    this.showLoadMore &&
+      node.id ===
+        this.nestedDataSource.data[this.nestedDataSource.data.length - 1].id;
+  };
 
   private _getChildren = (node: SimpleTreeNode) => node.children;
 

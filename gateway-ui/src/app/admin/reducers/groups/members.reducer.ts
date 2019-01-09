@@ -44,7 +44,7 @@ export function reducer(
       return { ...state, ...action.payload };
     }
     case ActionTypes.NextPage: {
-      return { ...state, pageIndex: (state.pageIndex + 1) * state.pageSize };
+      return { ...state, pageIndex: state.pageIndex + 1 };
     }
     case ActionTypes.LoadStart: {
       return { ...state, loading: true };

@@ -45,7 +45,7 @@ export function reducer(
       return { ...adapter.addAll(action.payload, state) };
     }
     case ActionTypes.NextPage: {
-      return { ...state, pageIndex: state.pageIndex * state.pageSize + 1 };
+      return { ...state, pageIndex: state.pageIndex + 1 };
     }
     default: {
       return state;
