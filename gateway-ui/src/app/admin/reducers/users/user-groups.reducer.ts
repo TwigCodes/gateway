@@ -4,6 +4,7 @@ import {
   ActionTypes
 } from '@app/admin/actions/users/user-groups.actions';
 import { KeycloakGroup } from '@app/admin/admin.model';
+import { DEFAULT_PAGE_SIZE } from '@app/libs';
 
 export interface State extends EntityState<KeycloakGroup> {
   pageIndex: number;
@@ -20,7 +21,7 @@ export const adapter: EntityAdapter<KeycloakGroup> = createEntityAdapter<
 
 const initialState = adapter.getInitialState({
   pageIndex: 0,
-  pageSize: 25,
+  pageSize: DEFAULT_PAGE_SIZE,
   search: null
 });
 

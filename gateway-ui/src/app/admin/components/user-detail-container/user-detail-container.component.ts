@@ -10,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { GroupSearchService } from '@app/admin/services';
 import { ConfirmService } from '@app/shared';
 import { KeycloakRole, KeycloakGroup } from '@app/admin/admin.model';
+import { DEFAULT_PAGE_SIZE } from '@app/libs';
 
 import * as fromAdmin from '@app/admin/reducers';
 import * as fromUser from '@app/admin/actions/users/user.actions';
@@ -25,7 +26,7 @@ import * as _ from 'lodash';
 })
 export class UserDetailContainerComponent implements OnInit, OnDestroy {
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
-  readonly pageSize = 25;
+  readonly pageSize = DEFAULT_PAGE_SIZE;
   entityForm = new FormGroup({});
   params = new HttpParams()
     .set('pageIndex', '0')

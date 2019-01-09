@@ -64,8 +64,8 @@ export class SimpleTreeComponent implements OnInit, OnDestroy {
     );
   }
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
+    // Called once, before the instance is destroyed.
+    // Add 'implements OnDestroy' to the class.
   }
   hasNestedChild = (_: number, nodeData: SimpleTreeNode) =>
     nodeData.children.length > 0;
@@ -87,7 +87,7 @@ export class SimpleTreeComponent implements OnInit, OnDestroy {
   }
 
   refreshTree() {
-    let _data = this.nestedDataSource.data;
+    const _data = this.nestedDataSource.data;
     this.nestedDataSource.data = null;
     this.nestedDataSource.data = _data;
   }

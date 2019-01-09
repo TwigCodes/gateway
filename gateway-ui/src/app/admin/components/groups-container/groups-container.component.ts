@@ -18,7 +18,7 @@ import { Store, select } from '@ngrx/store';
 import { MatDialog } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { KeycloakGroup, KeycloakGroupDTO } from '@app/admin/admin.model';
-import { SimpleTreeNode } from '@app/libs';
+import { SimpleTreeNode, DEFAULT_PAGE_SIZE } from '@app/libs';
 import { Crumb } from '@app/libs';
 import { GroupDialogComponent } from '../group-dialog/group-dialog.component';
 import { BREADCRUMBS_GROUPS } from '@app/admin/commons/breadcrumbs';
@@ -36,7 +36,7 @@ export class GroupsContainerComponent implements OnInit, OnDestroy {
   sub = new Subscription();
   searchChange = new Subject<string>();
   pageIndex = 0;
-  pageSize = 25;
+  pageSize = DEFAULT_PAGE_SIZE;
   crumbs: Crumb[] = BREADCRUMBS_GROUPS;
   data$ = this.store.pipe(
     select(fromAdmin.getGroupsTree),

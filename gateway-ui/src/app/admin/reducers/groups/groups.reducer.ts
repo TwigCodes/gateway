@@ -5,6 +5,7 @@ import {
   ActionTypes
 } from '@app/admin/actions/groups/group.actions';
 import { KeycloakGroupDTO } from '@app/admin/admin.model';
+import { DEFAULT_PAGE_SIZE } from '@app/libs';
 import * as _ from 'lodash';
 
 export interface State extends EntityState<KeycloakGroupDTO> {
@@ -22,12 +23,12 @@ export const adapter: EntityAdapter<KeycloakGroupDTO> = createEntityAdapter<
 >({
   selectId: (group: KeycloakGroupDTO) => group.id,
   sortComparer: (a: KeycloakGroupDTO, b: KeycloakGroupDTO) =>
-    a.id.localeCompare(b.id)
+    a.name.localeCompare(b.name)
 });
 
 const initialState = adapter.getInitialState({
   pageIndex: 0,
-  pageSize: 25,
+  pageSize: DEFAULT_PAGE_SIZE,
   count: 0,
   search: null,
   showLoadMore: true,

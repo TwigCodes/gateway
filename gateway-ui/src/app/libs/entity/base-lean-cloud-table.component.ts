@@ -7,7 +7,7 @@ import { Entity } from './entity.model';
 import { BaseLeanCloudService } from './base-lean-cloud.service';
 import { ConfirmService } from '@app/shared';
 import { EntityFormComponent } from './entity-form.component';
-import { ColumnConfig, ColumnFilter } from '../dyna-table';
+import { ColumnConfig, ColumnFilter, DEFAULT_PAGE_SIZE } from '../dyna-table';
 import { untilDestroy } from '../utils';
 import { Crumb } from '../bread-crumbs';
 
@@ -23,7 +23,7 @@ export abstract class BaseLeanCloudTableComponent<
   public sortable = false;
   pageChange$ = new BehaviorSubject<PageEvent>({
     pageIndex: 0,
-    pageSize: 20,
+    pageSize: DEFAULT_PAGE_SIZE,
     length: 0
   });
   sortChange$ = new BehaviorSubject<Sort>({

@@ -4,7 +4,7 @@ import {
   ActionTypes
 } from '@app/admin/actions/users/user.actions';
 import { KeycloakUser } from '@app/admin/admin.model';
-import { Filter } from '@app/libs/entity/filter.service';
+import { Filter, DEFAULT_PAGE_SIZE } from '@app/libs';
 
 export interface State extends EntityState<KeycloakUser> {
   pageIndex: number;
@@ -24,7 +24,7 @@ export const adapter: EntityAdapter<KeycloakUser> = createEntityAdapter<
 
 const initialState = adapter.getInitialState({
   pageIndex: 0,
-  pageSize: 25,
+  pageSize: DEFAULT_PAGE_SIZE,
   count: 0,
   filter: null,
   search: null,

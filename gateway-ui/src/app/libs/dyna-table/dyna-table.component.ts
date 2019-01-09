@@ -26,6 +26,8 @@ import { ColumnFilter } from './column-filter.model';
 import { Identifiable } from './identifiable.model';
 import { ColumnFilterService } from './table-cell/column-filter.service';
 
+export const DEFAULT_PAGE_SIZE = 20;
+
 @Component({
   selector: 'ngx-dyna-table',
   templateUrl: './dyna-table.component.html',
@@ -36,7 +38,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   @Input() columns: ColumnConfig[];
   @Input() total = 0;
   @Input() pageIndex = 0;
-  @Input() pageSize = 20;
+  @Input() pageSize = DEFAULT_PAGE_SIZE;
   @Input() pageSizeOptions = [20, 50, 100];
   @Input() showPaginator = true;
   @Input() stickyHeader = false;
@@ -104,18 +106,24 @@ export class DynaTableComponent implements OnInit, OnDestroy {
     }
     this.columns.forEach(col => {
       if (col.cell == null && col.cellTpl == null) {
-        throw new Error('Invalid DynaTable Column Definition, cell function and cellTpl are null, at least one shall be configured');
+        throw new Error(
+          'Invalid DynaTable Column Definition, cell function and cellTpl are null, at least one shall be configured'
+        );
       }
       if (col.header == null && col.headerTpl == null) {
-        throw new Error('Invalid DynaTable Column Definition, header and headerTpl are null, at least one shall be configured');
+        throw new Error(
+          'Invalid DynaTable Column Definition, header and headerTpl are null, at least one shall be configured'
+        );
       }
       if (
         col.name === this.DEFAULT_COLUMN_ACTION ||
         col.name === this.DEFAULT_COLUMN_SELECT
       ) {
-        throw new Error(`${
-          col.name
-        } has the same name with the reserved name, please change it`);
+        throw new Error(
+          `${
+            col.name
+          } has the same name with the reserved name, please change it`
+        );
       }
     });
   }

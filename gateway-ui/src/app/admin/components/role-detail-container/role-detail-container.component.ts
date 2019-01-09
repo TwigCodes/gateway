@@ -15,6 +15,7 @@ import * as fromAdmin from '@app/admin/reducers';
 import * as fromRole from '@app/admin/actions/roles/role.actions';
 import * as fromRoleDetail from '@app/admin/actions/roles/role-users.actions';
 import * as fromRoleUsers from '@app/admin/actions/roles/role-users.actions';
+import { DEFAULT_PAGE_SIZE } from '@app/libs';
 import * as _ from 'lodash';
 
 @Component({
@@ -24,10 +25,12 @@ import * as _ from 'lodash';
 })
 export class RoleDetailContainerComponent implements OnInit, OnDestroy {
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
-  readonly pageSize = 25;
+  readonly pageSize = DEFAULT_PAGE_SIZE;
   entityForm = new FormGroup({});
   model;
-  params = new HttpParams().set('pageIndex', '0').set('pageSize', '25');
+  params = new HttpParams()
+    .set('pageIndex', '0')
+    .set('pageSize', String(this.pageSize));
   model$ = this.store.pipe(select(fromAdmin.getRoleSelected));
   users$ = this.store.pipe(select(fromAdmin.getRoleUsers));
   sub: Subscription;

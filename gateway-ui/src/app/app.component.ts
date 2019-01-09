@@ -13,7 +13,7 @@ import {
   ActionAuthCheckLogin,
   selectRealm
 } from '@app/core';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 // import { OAuthService } from 'angular-oauth2-oidc';
 // import { JwksValidationHandler } from 'angular-oauth2-oidc';
 import { environment as env } from '@env/environment';
@@ -71,9 +71,8 @@ export class AppComponent implements OnInit {
   sub = new Subscription();
   constructor(
     private store: Store<AppState>,
-    private storageService: LocalStorageService
-  ) // private oauthService: OAuthService
-  {}
+    private storageService: LocalStorageService // private oauthService: OAuthService
+  ) {}
 
   private static isIEorEdgeOrSafari() {
     return ['ie', 'edge', 'safari'].includes(browser().name);
@@ -94,17 +93,18 @@ export class AppComponent implements OnInit {
     //     this.oauthService.loadDiscoveryDocumentAndTryLogin();
     //   })
     // );
-    this.navigation$ = combineLatest(
-      this.realm$,
-      of(this.navigation),
-      (realm, navs) =>
+    this.navigation$ = combineLatest(this.realm$, of(this.navigation)).pipe(
+      map(([realm, navs]) =>
         navs.map(nav => ({ ...nav, link: `${realm}/${nav.link}` }))
+      )
     );
     this.navigationSideMenu$ = combineLatest(
       this.realm$,
-      of(this.navigationSideMenu),
-      (realm, navs) =>
+      of(this.navigationSideMenu)
+    ).pipe(
+      map(([realm, navs]) =>
         navs.map(nav => ({ ...nav, link: `${realm}/${nav.link}` }))
+      )
     );
     this.storageService.testLocalStorage();
     if (AppComponent.isIEorEdgeOrSafari()) {

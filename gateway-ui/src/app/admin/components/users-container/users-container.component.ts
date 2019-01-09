@@ -13,6 +13,7 @@ import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
 import { KeycloakUser } from '@app/admin/admin.model';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 import { BREADCRUMBS_USERS } from '@app/admin/commons/breadcrumbs';
+import { DEFAULT_PAGE_SIZE } from '@app/libs';
 
 import * as fromAdmin from '@app/admin/reducers';
 import * as fromUser from '@app/admin/actions/users/user.actions';
@@ -25,7 +26,7 @@ import * as fromUser from '@app/admin/actions/users/user.actions';
 })
 export class UsersContainerComponent implements OnInit {
   pageIndex = 0;
-  pageSize = 25;
+  pageSize = DEFAULT_PAGE_SIZE;
   pageEvent$ = new Subject<PageEvent>();
   crumbs: Crumb[] = BREADCRUMBS_USERS;
   total$ = this.store.pipe(select(selectCount));

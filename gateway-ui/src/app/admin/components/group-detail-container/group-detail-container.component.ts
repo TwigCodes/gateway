@@ -12,6 +12,7 @@ import { tag } from 'rxjs-spy/operators';
 import { UserSearchService } from '@app/admin/services';
 import { KeycloakUser, KeycloakRole } from '@app/admin/admin.model';
 import { ConfirmService } from '@app/shared/confirm/confirm.service';
+import { DEFAULT_PAGE_SIZE } from '@app/libs';
 
 import * as fromAdmin from '@app/admin/reducers';
 import * as fromGroup from '@app/admin/actions/groups/group.actions';
@@ -27,11 +28,13 @@ import * as _ from 'lodash';
 })
 export class GroupDetailContainerComponent implements OnInit, OnDestroy {
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
-  readonly pageSize = 25;
+  readonly pageSize = DEFAULT_PAGE_SIZE;
   entityForm = new FormGroup({});
   role = null;
   model;
-  params = new HttpParams().set('pageIndex', '0').set('pageSize', '25');
+  params = new HttpParams()
+    .set('pageIndex', '0')
+    .set('pageSize', String(this.pageSize));
   model$ = this.store.pipe(
     select(fromAdmin.getSelectedGroup),
     tag('selectedGroup')
