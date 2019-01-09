@@ -98,7 +98,8 @@ export function reducer(state = initialState, action: GroupActions): State {
         ...state,
         ...adapter.removeMany(deletedIds, state),
         topLevelNodeIds: newTopLevelNodeIds,
-        count: state.count - 1 >= 0 ? state.count : 0
+        count: state.count - 1 >= 0 ? state.count : 0,
+        selectedId: null
       };
     }
     case ActionTypes.SearchSuccess: {

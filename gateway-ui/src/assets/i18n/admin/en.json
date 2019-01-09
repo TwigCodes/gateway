@@ -16,6 +16,7 @@
   "tgapp.admin.group-detail.info": "Group Info",
   "tgapp.admin.group-detail.users": "Group Members",
   "tgapp.admin.group-detail.users.add-group-mapping": "Add User to Group",
+  "tgapp.admin.group-detail.nothing-to-display": "No group selected, please select one from the tree",
   "tgapp.user.search.norecord": "no matched records found",
   "tgapp.group.search.norecord": "no matched records found",
   "tgapp.role.search.norecord": "no matched records found",

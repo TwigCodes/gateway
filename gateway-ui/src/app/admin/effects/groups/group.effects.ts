@@ -154,11 +154,13 @@ export class GroupEffects {
   getUsersByGroup = this.actions$.pipe(
     ofType<fromGroup.SelectAction>(fromGroup.ActionTypes.Select),
     map(action => action.payload),
+    switchMap(__ => this.store.pipe(select(fromAdmin.getSelectedGroup))),
+    filter(val => val != null),
     withLatestFrom(
       this.store.pipe(select(fromAdmin.getMembersPageIndex)),
       this.store.pipe(select(fromAdmin.getMembersPageSize))
     ),
-    switchMap(([id, pageIndex, pageSize]) =>
+    switchMap(([{ id }, pageIndex, pageSize]) =>
       this.service.getGroupMembers(id, pageIndex, pageSize).pipe(
         map(result => new fromGroupDetail.GetUsersByGroupSuccessAction(result)),
         catchError(err =>

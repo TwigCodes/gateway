@@ -40,7 +40,7 @@ const getGroup = (
   id: string,
   entities: { [id: string]: KeycloakGroupDTO }
 ): KeycloakGroup => {
-  if (entities[id] == null) {
+  if (id == null || entities[id] == null) {
     return null;
   }
   return {
@@ -94,7 +94,6 @@ export const selectParentId = (selectedId: string) =>
         return null;
       }
       const subs = all.filter(sub => sub.subGroups.includes(selectedId));
-      console.log('subs', subs);
 
       return subs.length > 0 ? subs[0].id : null;
     }

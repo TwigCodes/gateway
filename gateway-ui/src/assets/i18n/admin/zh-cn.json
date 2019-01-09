@@ -16,6 +16,7 @@
   "tgapp.admin.group-detail.info": "群组信息",
   "tgapp.admin.group-detail.users": "群组成员",
   "tgapp.admin.group-detail.users.add-group-mapping": "将用户添加到群组",
+  "tgapp.admin.group-detail.nothing-to-display": "当前没有选中任何有效群组，请在左侧选择",
   "tgapp.user.search.norecord": "没找到包含该关键字的用户",
   "tgapp.group.search.norecord": "没找到包含该关键字的群组",
   "tgapp.role.search.norecord": "没找到包含该关键字的角色",

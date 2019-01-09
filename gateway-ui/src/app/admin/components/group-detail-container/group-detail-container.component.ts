@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
 import { take, filter, switchMap } from 'rxjs/operators';
+import { tag } from 'rxjs-spy/operators';
 import { UserSearchService } from '@app/admin/services';
 import { KeycloakUser, KeycloakRole } from '@app/admin/admin.model';
 import { ConfirmService } from '@app/shared/confirm/confirm.service';
@@ -31,10 +32,22 @@ export class GroupDetailContainerComponent implements OnInit, OnDestroy {
   role = null;
   model;
   params = new HttpParams().set('pageIndex', '0').set('pageSize', '25');
-  model$ = this.store.pipe(select(fromAdmin.getSelectedGroup));
-  users$ = this.store.pipe(select(fromAdmin.getMembers));
-  availableRoles$ = this.store.pipe(select(fromAdmin.getAvailableRoles));
-  assignedRoles$ = this.store.pipe(select(fromAdmin.getRealmRoles));
+  model$ = this.store.pipe(
+    select(fromAdmin.getSelectedGroup),
+    tag('selectedGroup')
+  );
+  users$ = this.model$.pipe(
+    filter(val => val != null),
+    switchMap(__ => this.store.pipe(select(fromAdmin.getMembers)))
+  );
+  availableRoles$ = this.model$.pipe(
+    filter(val => val != null),
+    switchMap(__ => this.store.pipe(select(fromAdmin.getAvailableRoles)))
+  );
+  assignedRoles$ = this.model$.pipe(
+    filter(val => val != null),
+    switchMap(__ => this.store.pipe(select(fromAdmin.getRealmRoles)))
+  );
   sub = new Subscription();
   fields: FormlyFieldConfig[] = [
     {

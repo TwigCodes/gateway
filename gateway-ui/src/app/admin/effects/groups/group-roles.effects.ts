@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Store, select } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap, map, catchError, filter } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -6,25 +7,32 @@ import { GroupService } from '@app/admin/services';
 
 import * as fromGroupRoles from '@app/admin/actions/groups/group-roles.actions';
 import * as fromGroup from '@app/admin/actions/groups/group.actions';
+import * as fromAdmin from '@app/admin/reducers';
 
 @Injectable()
 export class GroupRolesEffects {
-  constructor(private actions$: Actions, private service: GroupService) {}
+  constructor(
+    private actions$: Actions,
+    private service: GroupService,
+    private store: Store<fromAdmin.State>
+  ) {}
 
   @Effect()
   prepareAvailable = this.actions$.pipe(
     ofType<fromGroup.SelectAction>(fromGroup.ActionTypes.Select),
-    filter(action => action.payload != null),
     map(action => action.payload),
-    map(groupId => new fromGroupRoles.GetAvailableRolesOfGroupAction(groupId))
+    switchMap(__ => this.store.pipe(select(fromAdmin.getSelectedGroup))),
+    filter(val => val != null),
+    map(({ id }) => new fromGroupRoles.GetAvailableRolesOfGroupAction(id))
   );
 
   @Effect()
   prepareRealm = this.actions$.pipe(
     ofType<fromGroup.SelectAction>(fromGroup.ActionTypes.Select),
-    filter(action => action.payload != null),
     map(action => action.payload),
-    map(groupId => new fromGroupRoles.GetRealmRolesOfGroupAction(groupId))
+    switchMap(__ => this.store.pipe(select(fromAdmin.getSelectedGroup))),
+    filter(val => val != null),
+    map(({ id }) => new fromGroupRoles.GetRealmRolesOfGroupAction(id))
   );
 
   @Effect()

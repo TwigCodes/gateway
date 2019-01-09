@@ -1,7 +1,9 @@
 <ng-template #none>
-  Nothing to display
+  <mat-card>
+    {{ 'tgapp.admin.group-detail.nothing-to-display' | translate }}
+  </mat-card>
 </ng-template>
-<mat-tab-group animationDuration="0ms" *ngIf="model else none">
+<mat-tab-group animationDuration="0ms" *ngIf="(model$ | async) !== null else none">
   <mat-tab label="{{ 'tgapp.admin.group-detail.info' | translate }}">
     <ng-template matTabContent>
       <form [formGroup]="entityForm" (ngSubmit)="submit()" class="body-content">

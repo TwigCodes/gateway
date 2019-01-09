@@ -1,4 +1,4 @@
-<mat-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl" class="tree">
+<mat-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl" class="tree" #simpleTree>
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
     <mat-menu #nodeMenu="matMenu">
       <ng-container *ngTemplateOutlet="menuTemplate; context: { $implicit: node }"></ng-container>
@@ -29,10 +29,11 @@
         <button
           mat-icon-button
           matTreeNodeToggle
+          (click)="toggleTreeNodeState(node)"
           [color]="node.id === _selectedNodeId ? 'warn' : 'primary'"
           [attr.aria-label]="'toggle ' + node.label">
           <mat-icon class="mat-icon-rtl-mirror">
-            {{ nestedTreeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+            {{ _treeNodeStates[node.id].expand ? 'expand_more' : 'chevron_right' }}
           </mat-icon>
         </button>
         <button
