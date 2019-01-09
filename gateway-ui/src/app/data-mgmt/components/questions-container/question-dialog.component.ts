@@ -26,9 +26,6 @@ export class QuestionDialogComponent extends EntityFormComponent<Question> {
           maxLength: 255,
           rows: 3
         },
-        validators: {
-          validation: [name]
-        },
         expressionProperties: {
           'templateOptions.label': () =>
             this.translate.instant(
