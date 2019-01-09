@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Employee } from '@app/feedback/feedback.model';
-import { NotificationService, ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
 import { TranslateService } from '@ngx-translate/core';
 import { take, filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
+import { Employee } from '@app/feedback/feedback.model';
+import { NotificationService, ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
 import { RaterDialogComponent } from '../rater-dialog/rater-dialog.component';
 import { getRelation } from '@app/feedback/feedback.util';
 
