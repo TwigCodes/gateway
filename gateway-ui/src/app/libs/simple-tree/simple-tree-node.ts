@@ -10,6 +10,19 @@ export interface FlatNode {
   expand: boolean;
 }
 
+export const getFlatNodeStates = (
+  nodes: SimpleTreeNode[]
+): { [id: string]: boolean } => {
+  return nodes.reduce((acc, curr) => {
+    const flatNodes = getFlatNodeStates(curr.children);
+    return {
+      ...acc,
+      ...flatNodes,
+      [curr.id]: false
+    };
+  }, {});
+};
+
 export const getFlatNodes = (
   nodes: SimpleTreeNode[]
 ): { [id: string]: FlatNode } => {

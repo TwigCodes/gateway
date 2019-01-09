@@ -33,7 +33,7 @@
           [color]="node.id === _selectedNodeId ? 'warn' : 'primary'"
           [attr.aria-label]="'toggle ' + node.label">
           <mat-icon class="mat-icon-rtl-mirror">
-            {{ _treeNodeStates[node.id].expand ? 'expand_more' : 'chevron_right' }}
+            {{ _treeNodeStates[node.id] ? 'expand_more' : 'chevron_right' }}
           </mat-icon>
         </button>
         <button

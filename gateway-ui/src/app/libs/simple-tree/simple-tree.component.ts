@@ -11,7 +11,12 @@ import {
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource, MatTree } from '@angular/material';
 import { Observable } from 'rxjs';
-import { SimpleTreeNode, getFlatNodes, FlatNode } from './simple-tree-node';
+import {
+  SimpleTreeNode,
+  getFlatNodes,
+  FlatNode,
+  getFlatNodeStates
+} from './simple-tree-node';
 import { untilDestroy } from '../utils';
 
 @Component({
@@ -28,7 +33,7 @@ export class SimpleTreeComponent implements OnInit, OnDestroy {
   @ViewChild('simpleTree') simpleTree: MatTree<SimpleTreeNode>;
   menuToggle: { [id: string]: boolean };
   _selectedNodeId: string;
-  _treeNodeStates: { [id: string]: FlatNode };
+  _treeNodeStates: { [id: string]: boolean };
   nestedTreeControl: NestedTreeControl<SimpleTreeNode>;
   nestedDataSource: MatTreeNestedDataSource<SimpleTreeNode>;
 
@@ -37,19 +42,22 @@ export class SimpleTreeComponent implements OnInit, OnDestroy {
 
     this.dataSource.pipe(untilDestroy(this)).subscribe(data => {
       const flatData = getFlatNodes(data);
-      this._treeNodeStates = { ...flatData, ...this._treeNodeStates };
+      this._treeNodeStates = {
+        ...getFlatNodeStates(data),
+        ...this._treeNodeStates
+      };
       this.nestedDataSource.data = data;
+      this.refreshTree();
       for (const key in flatData) {
         if (flatData.hasOwnProperty(key)) {
-          const flatNode = this._treeNodeStates[key];
-          if (flatNode.expand) {
+          const expand = this._treeNodeStates[key];
+          if (expand) {
             this.nestedTreeControl.expand(flatData[key].node);
           } else {
             this.nestedTreeControl.collapse(flatData[key].node);
           }
         }
       }
-      this.refreshTree();
     });
     this.nestedTreeControl = new NestedTreeControl<SimpleTreeNode>(
       this._getChildren
@@ -84,10 +92,7 @@ export class SimpleTreeComponent implements OnInit, OnDestroy {
   toggleTreeNodeState(node: SimpleTreeNode) {
     this._treeNodeStates = {
       ...this._treeNodeStates,
-      [node.id]: {
-        ...this._treeNodeStates[node.id],
-        expand: this.nestedTreeControl.isExpanded(node)
-      }
+      [node.id]: this.nestedTreeControl.isExpanded(node)
     };
   }
 }
