@@ -1,8 +1,36 @@
 <mat-card class="mat-elevation-z8">
   <ngx-bread-crumbs [crumbs]="crumbs"></ngx-bread-crumbs>
-  <ngx-dyna-table [data$]="data$" [columns]="columns" [pageIndex]="pageIndex$ | async" [pageSize]="pageSize$ | async"
-    [total]="total$ | async" [selectable]="selectable" [sortable]="sortable" (pageChange)="handlePageChange($event)"
-    (sortChange)="handleSortChange($event)" (rowClick)="handleItem($event)" (actionEdit)="handleEdit($event)"
-    (actionDelete)="handleDelete($event)" (actionAdd)="handleAdd()" (filterChange)="handleFilter($event)">
-  </ngx-dyna-table>
+  <mat-progress-bar mode="query" *ngIf="loading$ | async else loaded"></mat-progress-bar>
+  <ng-template #loaded>
+    <ngx-dyna-table
+      #table
+      [data$]="data$"
+      [columns]="columns"
+      [pageIndex]="pageIndex$ | async"
+      [pageSize]="pageSize$ | async"
+      [total]="total$ | async"
+      [selectable]="selectable"
+      [sortable]="sortable"
+      [multiSortable]="multiSortable"
+      [moreMenuTpl]="moreMenu"
+      (pageChange)="handlePageChange($event)"
+      (sortChange)="handleSortChange($event)"
+      (rowClick)="handleItem($event)"
+      (actionEdit)="handleEdit($event)"
+      (actionDelete)="handleDelete($event)"
+      (actionAdd)="handleAdd()"
+      (filterChange)="handleFilter($event)">
+    </ngx-dyna-table>
+  </ng-template>
 </mat-card>
+<ng-template #moreMenu>
+  <button mat-menu-item (click)="resetFiltersAndSorts()">
+    <mat-icon>settings_backup_restore</mat-icon> {{'ngx-dyna-table.menu.more.reset' | translate}}
+  </button>
+  <button mat-menu-item (click)="clearFilters()">
+    <mat-icon>filter_none</mat-icon> {{'ngx-dyna-table.menu.more.clear-filters' | translate}}
+  </button>
+  <button mat-menu-item (click)="clearSorts()">
+    <mat-icon>sort_by_alpha</mat-icon> {{'ngx-dyna-table.menu.more.clear-sorts' | translate}}
+  </button>
+</ng-template>

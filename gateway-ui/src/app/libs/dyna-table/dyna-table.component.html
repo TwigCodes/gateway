@@ -69,7 +69,6 @@
         <mat-icon>more_horiz</mat-icon>
       </button>
       <mat-menu #moreMenu="matMenu">
-        <button mat-menu-item (click)="clearFilters()"> {{'ngx-dyna-table.menu.more.clear-filters' | translate}} </button>
         <ng-container *ngTemplateOutlet="moreMenuTpl"></ng-container>
       </mat-menu>
     </th>

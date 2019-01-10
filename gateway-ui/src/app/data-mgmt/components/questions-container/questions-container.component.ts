@@ -36,6 +36,7 @@ export class QuestionsContainerComponent
 
   ngOnInit() {
     this.sortable = true;
+    this.selectable = true;
     this.crumbs = [
       { name: 'tgapp.breadcrumb.admin.home', link: '../../' },
       { name: 'tgapp.breadcrumb.admin.data-mgmt.questions', link: '.' }

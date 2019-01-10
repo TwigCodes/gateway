@@ -1,13 +1,18 @@
-import { OnInit, OnDestroy } from '@angular/core';
+import { OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { map, switchMap, filter, withLatestFrom } from 'rxjs/operators';
 import { PageEvent, Sort, MatDialog } from '@angular/material';
 import { ComponentType } from '@angular/cdk/portal';
-import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Subject, Observable } from 'rxjs';
 import { Entity } from './entity.model';
 import { BaseLeanCloudService } from './base-lean-cloud.service';
 import { ConfirmService } from '@app/shared';
 import { EntityFormComponent } from './entity-form.component';
-import { ColumnConfig, ColumnFilter, DEFAULT_PAGE_SIZE } from '../dyna-table';
+import {
+  ColumnConfig,
+  ColumnFilter,
+  DEFAULT_PAGE_SIZE,
+  DynaTableComponent
+} from '../dyna-table';
 import { untilDestroy } from '../utils';
 import { Crumb } from '../bread-crumbs';
 
@@ -21,6 +26,7 @@ export abstract class BaseLeanCloudTableComponent<
   protected abstract entityForm: ComponentType<EntityFormComponent<T>>;
   public selectable = false;
   public sortable = false;
+  public multiSortable = false;
   pageChange$ = new BehaviorSubject<PageEvent>({
     pageIndex: 0,
     pageSize: DEFAULT_PAGE_SIZE,
@@ -34,11 +40,14 @@ export abstract class BaseLeanCloudTableComponent<
   pageIndex$ = this.pageChange$.pipe(map(ev => ev.pageIndex));
   pageSize$ = this.pageChange$.pipe(map(ev => ev.pageSize));
   total$ = new BehaviorSubject<number>(0);
+  loading$: Observable<boolean>;
+  @ViewChild('table') table: DynaTableComponent;
   constructor(
     protected service: TService,
     protected dialog: MatDialog,
     protected confirm: ConfirmService
   ) {
+    this.loading$ = this.service.loading$;
     combineLatest(
       this.pageChange$,
       this.sortChange$,
@@ -201,5 +210,17 @@ export abstract class BaseLeanCloudTableComponent<
       .afterClosed()
       .pipe(filter(val => val))
       .subscribe(val => this.add$.next(val));
+  }
+
+  public resetFiltersAndSorts() {
+    this.table.resetFiltersAndSorts();
+  }
+
+  public clearFilters() {
+    this.table.clearFilters();
+  }
+
+  public clearSorts() {
+    this.table.clearSorts();
   }
 }

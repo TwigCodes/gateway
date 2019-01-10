@@ -6,7 +6,8 @@ import {
   Output,
   EventEmitter,
   TemplateRef,
-  OnDestroy
+  OnDestroy,
+  ViewChildren
 } from '@angular/core';
 import {
   MatSort,
@@ -25,6 +26,8 @@ import { ColumnConfig } from './column-config.model';
 import { ColumnFilter } from './column-filter.model';
 import { Identifiable } from './identifiable.model';
 import { ColumnFilterService } from './table-cell/column-filter.service';
+
+import * as _ from 'lodash';
 
 export const DEFAULT_PAGE_SIZE = 20;
 
@@ -45,6 +48,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   @Input() selectable = false;
   @Input() sortable = true;
   @Input() showAction = true;
+  @Input() multiSortable = true;
   @Input() expandTpl: TemplateRef<any>;
   @Input() moreMenuTpl: TemplateRef<any>;
 
@@ -57,7 +61,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   @Output() actionDelete = new EventEmitter();
   @Output() actionAdd = new EventEmitter();
 
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChildren(MatSort) sorts: MatSort[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   readonly DEFAULT_COLUMN_SELECT = 'ngx-select';
@@ -89,9 +93,6 @@ export class DynaTableComponent implements OnInit, OnDestroy {
     this.appendDefaultColumnToConfig();
 
     const dataSource = this.dataSource;
-    if (this.sortable) {
-      dataSource.sort = this.sort;
-    }
     if (this.showPaginator) {
       dataSource.paginator = this.paginator;
     }
@@ -208,12 +209,25 @@ export class DynaTableComponent implements OnInit, OnDestroy {
     }
   }
 
+  resetFiltersAndSorts() {
+    this.clearFilters();
+    this.clearSorts();
+  }
+
   clearFilters() {
     this.appliedFilters = {};
     this.filterChange.emit(this.appliedFilters);
+  }
+
+  clearSorts() {
     this.appliedSorts = {};
+    this.sorts.forEach(sort => {
+      sort.direction = '';
+      sort._stateChanges.next();
+    });
     this.sortChange.emit(this.appliedSorts);
   }
+
   getFilters() {
     const filters = this.appliedFilters;
     const filterArray = Object.keys(filters).map(key => filters[key]);
@@ -236,6 +250,15 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   }
 
   handleSortChange(sort: Sort) {
+    if (!this.multiSortable) {
+      this.sorts
+        .filter(s => s.active !== sort.active)
+        .forEach(s => {
+          s.direction = '';
+          s._stateChanges.next();
+        });
+      this.appliedSorts = {};
+    }
     this.appliedSorts[sort.active] = sort;
     this.sortChange.emit(this.appliedSorts);
   }

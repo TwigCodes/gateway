@@ -74,7 +74,6 @@ export abstract class BaseLeanCloudService<
       .set('count', '1')
       .set('order', sort)
       .set('where', filter);
-    console.log(params);
     return this.httpClient
       .get<LeanCloudResult<T>>(url, { params: params })
       .pipe(
