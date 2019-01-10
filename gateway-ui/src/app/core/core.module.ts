@@ -107,6 +107,7 @@ export class CoreModule {
 export function HttpLoaderFactory(http: HttpClient) {
   return new MultiTranslateHttpLoader(http, [
     { prefix: './assets/i18n/', suffix: '.json' },
-    { prefix: './assets/i18n/libs/', suffix: '.json' }
+    { prefix: './assets/i18n/libs/', suffix: '.json' },
+    { prefix: './assets/i18n/admin/', suffix: '.json' }
   ]);
 }

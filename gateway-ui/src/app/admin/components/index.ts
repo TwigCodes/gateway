@@ -8,3 +8,5 @@ export * from './role-detail-container/role-detail-container.component';
 export * from './groups-container/groups-container.component';
 export * from './group-detail-container/group-detail-container.component';
 export * from './group-dialog/group-dialog.component';
+export * from './menus/menu-dialog.component';
+export * from './menus/menus-container.component';
