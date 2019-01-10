@@ -46,22 +46,20 @@ export abstract class BaseLeanCloudTableComponent<
     protected service: TService,
     protected dialog: MatDialog,
     protected confirm: ConfirmService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.loading$ = this.service.loading$;
-    combineLatest(
-      this.pageChange$,
-      this.sortChange$,
-      this.filterChange$,
-      (page, sort, filter) => {
-        return {
-          pageIndex: page.pageIndex,
-          pageSize: page.pageSize,
-          sort: sort,
-          filter: filter
-        };
-      }
-    )
+    combineLatest(this.pageChange$, this.sortChange$, this.filterChange$)
       .pipe(
+        map(([page, sort, filter]) => {
+          return {
+            pageIndex: page.pageIndex,
+            pageSize: page.pageSize,
+            sort: sort,
+            filter: filter
+          };
+        }),
         switchMap(ev =>
           this.service.paged(ev.pageIndex, ev.pageSize, ev.sort, ev.filter)
         ),
@@ -121,8 +119,6 @@ export abstract class BaseLeanCloudTableComponent<
         this.data$.next(data);
       });
   }
-
-  ngOnInit(): void {}
   ngOnDestroy(): void {}
 
   handlePageChange(ev: PageEvent) {
@@ -146,7 +142,6 @@ export abstract class BaseLeanCloudTableComponent<
         }
       }
     }
-    console.log(sortArr);
     if (sortArr.length === 0) {
       this.sortChange$.next(null);
       return;

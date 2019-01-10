@@ -35,6 +35,7 @@ export class QuestionsContainerComponent
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.sortable = true;
     this.selectable = true;
     this.crumbs = [
