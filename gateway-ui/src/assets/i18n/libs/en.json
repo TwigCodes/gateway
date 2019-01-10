@@ -22,6 +22,8 @@
   "ngx-table-date-filter.text.placeholder": "Containing",
   "ngx-table-date-filter.dialog.from-date": "From",
   "ngx-table-date-filter.dialog.to-date": "To",
+  "ngx-table-edit-dialog.title": "Edit",
+  "ngx-table-add-dialog.title": "Add",
   "validation.regex.email.message": "Email address is not valid",
   "validation.regex.name.message": "The name is invalid, only alphanumeric/underline/dollar sign are allowed",
   "validation.regex.mobile.message": "The mobile number is not valid",

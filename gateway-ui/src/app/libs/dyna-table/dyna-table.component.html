@@ -34,10 +34,10 @@
       >
       <div fxLayout="row" fxLayoutAlign="start center" *ngIf="!column.headerTpl else customHeader">
         <span *ngIf="column.sortable else nosort" mat-sort-header arrowPosition="after" [disabled]="!column.name">{{
-          column.header || 'col' + i }}
+          (column.header || 'col' + i) | translate }}
         </span>
         <ng-template #nosort>
-          <span>{{ column.header }} </span>
+          <span>{{ column.header | translate }} </span>
         </ng-template>
         <button
           #filterBtn

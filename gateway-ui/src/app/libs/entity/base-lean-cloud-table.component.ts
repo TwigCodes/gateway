@@ -26,10 +26,7 @@ export abstract class BaseLeanCloudTableComponent<
     pageSize: DEFAULT_PAGE_SIZE,
     length: 0
   });
-  sortChange$ = new BehaviorSubject<Sort>({
-    active: 'id',
-    direction: 'desc'
-  });
+  sortChange$ = new BehaviorSubject<string | null>(null);
   filterChange$ = new BehaviorSubject<string | null>(null);
   delete$ = new Subject<string>();
   update$ = new Subject<T>();
@@ -50,7 +47,7 @@ export abstract class BaseLeanCloudTableComponent<
         return {
           pageIndex: page.pageIndex,
           pageSize: page.pageSize,
-          sort: sort.direction === 'desc' ? `-${sort.active}` : sort.active,
+          sort: sort,
           filter: filter
         };
       }
@@ -123,8 +120,24 @@ export abstract class BaseLeanCloudTableComponent<
     this.pageChange$.next(ev);
   }
 
-  handleSortChange(ev: Sort) {
-    this.sortChange$.next(ev);
+  handleSortChange(ev: { [key: string]: Sort }) {
+    let sortArr = [];
+    for (const key in ev) {
+      if (ev.hasOwnProperty(key)) {
+        const sort = ev[key];
+        switch (sort.direction) {
+          case 'asc':
+            sortArr.push(sort.active);
+            break;
+          case 'desc':
+            sortArr.push(`-${sort.active}`);
+            break;
+          default:
+            break;
+        }
+      }
+    }
+    this.sortChange$.next(sortArr.join(','));
   }
 
   handleDelete(row: T) {
@@ -167,7 +180,7 @@ export abstract class BaseLeanCloudTableComponent<
 
   public handleEdit(row: T) {
     const dialogRef = this.dialog.open(this.entityForm, {
-      data: { title: 'edit', payload: row }
+      data: { title: 'ngx-table-edit-dialog.title', payload: row }
     });
     dialogRef
       .afterClosed()
@@ -177,7 +190,7 @@ export abstract class BaseLeanCloudTableComponent<
 
   public handleAdd() {
     const dialogRef = this.dialog.open(this.entityForm, {
-      data: { title: 'add', payload: null }
+      data: { title: 'ngx-table-add-dialog.title', payload: null }
     });
     dialogRef
       .afterClosed()

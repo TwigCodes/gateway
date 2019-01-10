@@ -1,3 +1,5 @@
+import { startOfDay, endOfDay } from 'date-fns';
+
 export interface TableFilter {
   getFilter(): object;
 }
@@ -19,13 +21,17 @@ export class DateFilter implements TableFilter {
   private leanCloudFilter(filter: {}) {
     if (this.fromDate && this.toDate) {
       filter[this.column] = {
-        $gte: { __type: 'Date', iso: this.fromDate },
-        $lt: { __type: 'Date', iso: this.toDate }
+        $gte: { __type: 'Date', iso: startOfDay(this.fromDate) },
+        $lt: { __type: 'Date', iso: endOfDay(this.toDate) }
       };
     } else if (this.fromDate) {
-      filter[this.column] = { $gte: { __type: 'Date', iso: this.fromDate } };
+      filter[this.column] = {
+        $gte: { __type: 'Date', iso: startOfDay(this.fromDate) }
+      };
     } else if (this.toDate) {
-      filter[this.column] = { $lt: { __type: 'Date', iso: this.toDate } };
+      filter[this.column] = {
+        $lt: { __type: 'Date', iso: endOfDay(this.toDate) }
+      };
     }
   }
 }

@@ -2,19 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import {
-  MatTableModule,
-  MatSortModule,
-  MatPaginatorModule,
-  MatIconModule,
-  MatDialogModule,
-  MatCheckboxModule,
-  MatSelectModule,
   MatButtonModule,
-  MatTooltipModule,
-  MatFormFieldModule,
-  MatInputModule,
+  MatCheckboxModule,
   MatDatepickerModule,
-  MatMenuModule
+  MatDialogModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatMenuModule,
+  MatPaginatorModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatSortModule,
+  MatTableModule,
+  MatTooltipModule
 } from '@angular/material';
 
 import { DynaTableComponent } from './dyna-table.component';
@@ -39,21 +40,22 @@ import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatIconModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatMenuModule,
-    MatCheckboxModule,
-    MatSelectModule,
-    MatTooltipModule,
     FlexLayoutModule,
+    FormsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatPaginatorModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSortModule,
+    MatTableModule,
+    MatTooltipModule,
     TranslateModule
   ],
   declarations: [

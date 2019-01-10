@@ -51,7 +51,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   @Output() selectChange = new EventEmitter<any[]>();
   @Output() rowClick = new EventEmitter();
   @Output() pageChange = new EventEmitter<PageEvent>();
-  @Output() sortChange = new EventEmitter<Sort>();
+  @Output() sortChange = new EventEmitter<{ [key: string]: Sort }>();
   @Output() filterChange = new EventEmitter();
   @Output() actionEdit = new EventEmitter();
   @Output() actionDelete = new EventEmitter();
@@ -211,6 +211,8 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   clearFilters() {
     this.appliedFilters = {};
     this.filterChange.emit(this.appliedFilters);
+    this.appliedSorts = {};
+    this.sortChange.emit(this.appliedSorts);
   }
   getFilters() {
     const filters = this.appliedFilters;
@@ -234,7 +236,8 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   }
 
   handleSortChange(sort: Sort) {
-    this.sortChange.emit(sort);
+    this.appliedSorts[sort.active] = sort;
+    this.sortChange.emit(this.appliedSorts);
   }
 
   handleSelectChange(ev: MatCheckboxChange, row: any) {
