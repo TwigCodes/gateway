@@ -45,15 +45,14 @@ export abstract class BaseLeanCloudService<
     search: LeanCloudSearch,
     pageIndex: number,
     pageSize: number,
-    sort: string
+    sort: string | null
   ): Observable<LeanCloudResult<T>> {
     this.loadingSubject.next(true);
-    const params = new HttpParams()
+    let params = new HttpParams()
       .set('where', search.expression)
       .set('skip', String(pageIndex * pageSize))
-      .set('order', sort)
-      .set('limit', String(pageSize));
-
+      .set('limit', String(pageSize))
+      .set('order', sort);
     const url = `${this.baseUrl}/${this.entityPath}`;
     return this.httpClient.get<LeanCloudResult<T>>(url, { params }).pipe(
       catchError(this.handleError),
@@ -64,17 +63,18 @@ export abstract class BaseLeanCloudService<
   paged(
     pageIndex: number,
     pageSize: number,
-    sort: string,
+    sort: string | null,
     filter: string | null
   ): Observable<LeanCloudResult<T>> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}`;
-    const params = new HttpParams()
+    let params = new HttpParams()
       .set('skip', String(pageIndex * pageSize))
       .set('limit', String(pageSize))
-      .set('order', sort)
       .set('count', '1')
+      .set('order', sort)
       .set('where', filter);
+    console.log(params);
     return this.httpClient
       .get<LeanCloudResult<T>>(url, { params: params })
       .pipe(

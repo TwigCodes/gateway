@@ -137,6 +137,11 @@ export abstract class BaseLeanCloudTableComponent<
         }
       }
     }
+    console.log(sortArr);
+    if (sortArr.length === 0) {
+      this.sortChange$.next(null);
+      return;
+    }
     this.sortChange$.next(sortArr.join(','));
   }
 
