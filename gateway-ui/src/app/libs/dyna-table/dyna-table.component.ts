@@ -21,13 +21,14 @@ import {
 } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { take } from 'rxjs/operators';
-import { Subscription, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ColumnConfig } from './column-config.model';
 import { ColumnFilter } from './column-filter.model';
 import { Identifiable } from './identifiable.model';
 import { ColumnFilterService } from './table-cell/column-filter.service';
 
 import * as _ from 'lodash';
+import { untilDestroy } from '../utils';
 
 export const DEFAULT_PAGE_SIZE = 20;
 
@@ -71,7 +72,6 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   selection = new SelectionModel<Identifiable>(true, []);
   isHighlight = false;
   selectedIndex = -1;
-  subscription = new Subscription();
 
   private appliedFilters: { [key: string]: ColumnFilter } = {};
   private appliedSorts: { [key: string]: Sort } = {};
@@ -84,18 +84,11 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.validateConfig();
 
-    this.subscription.add(
-      this.data$.subscribe(data => {
-        this.dataSource.data = [];
-        this.dataSource.data = data;
-      })
-    );
+    this.data$.pipe(untilDestroy(this)).subscribe(data => {
+      this.dataSource.data = [];
+      this.dataSource.data = data;
+    });
     this.appendDefaultColumnToConfig();
-
-    const dataSource = this.dataSource;
-    if (this.showPaginator) {
-      dataSource.paginator = this.paginator;
-    }
   }
 
   private validateConfig() {
@@ -144,12 +137,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
         : this.columns.map(c => c.name);
   }
 
-  ngOnDestroy(): void {
-    if (!this.subscription.closed) {
-      this.subscription.unsubscribe();
-    }
-    this.subscription = Subscription.EMPTY;
-  }
+  ngOnDestroy(): void {}
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {

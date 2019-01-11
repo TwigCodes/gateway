@@ -82,7 +82,7 @@ export class QuestionDialogComponent extends EntityFormComponent<Question> {
           const val = this.entityForm.get('type').value;
           return !val
             ? true
-            : val !== 'tags' || val !== 'checkbox'
+            : val === 'tags' || val === 'checkbox'
             ? false
             : true;
         },
