@@ -123,7 +123,8 @@ export function reducer(state = initialState, action: GroupActions): State {
       return {
         ...state,
         ...adapter.addMany(_.values(groupEntities), state),
-        topLevelNodeIds: _.union(state.topLevelNodeIds, normalizedData.result)
+        topLevelNodeIds: _.union(state.topLevelNodeIds, normalizedData.result),
+        pageIndex: 0
       };
     }
     case ActionTypes.NextPageSuccess: {
