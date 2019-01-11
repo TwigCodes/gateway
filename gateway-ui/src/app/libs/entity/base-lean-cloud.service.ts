@@ -48,7 +48,7 @@ export abstract class BaseLeanCloudService<
     sort: string | null
   ): Observable<LeanCloudResult<T>> {
     this.loadingSubject.next(true);
-    let params = new HttpParams()
+    const params = new HttpParams()
       .set('where', search.expression)
       .set('skip', String(pageIndex * pageSize))
       .set('limit', String(pageSize))
@@ -68,7 +68,7 @@ export abstract class BaseLeanCloudService<
   ): Observable<LeanCloudResult<T>> {
     this.loadingSubject.next(true);
     const url = `${this.baseUrl}/${this.entityPath}`;
-    let params = new HttpParams()
+    const params = new HttpParams()
       .set('skip', String(pageIndex * pageSize))
       .set('limit', String(pageSize))
       .set('count', '1')

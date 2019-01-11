@@ -69,11 +69,6 @@ export class SimpleTreeComponent implements OnInit, OnDestroy {
   }
   hasNestedChild = (_: number, nodeData: SimpleTreeNode) =>
     nodeData.children.length > 0;
-  loadMore = (index: number, node: SimpleTreeNode) => {
-    this.showLoadMore &&
-      node.id ===
-        this.nestedDataSource.data[this.nestedDataSource.data.length - 1].id;
-  };
 
   private _getChildren = (node: SimpleTreeNode) => node.children;
 

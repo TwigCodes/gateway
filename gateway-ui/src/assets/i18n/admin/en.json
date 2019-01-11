@@ -1,8 +1,8 @@
 {
-  "tgapp.groups.tree.menu.add-sibling": "Add Silbing",
-  "tgapp.groups.tree.menu.add-child": "Add Child",
-  "tgapp.groups.tree.load-more": "Load More",
-  "tgapp.groups.tree.search.placeholder": "Filter by Group Name",
+  "tgapp.admin.groups.tree.menu.add-sibling": "Add Silbing",
+  "tgapp.admin.groups.tree.menu.add-child": "Add Child",
+  "tgapp.admin.groups.tree.load-more": "Load More",
+  "tgapp.admin.groups.tree.search.placeholder": "Filter by Group Name",
   "tgapp.breadcrumb.admin.home": "Admin",
   "tgapp.breadcrumb.admin.users": "Users",
   "tgapp.breadcrumb.admin.roles": "Roles",
@@ -83,5 +83,12 @@
   "tgapp.form.save.button": "Save",
   "tgapp.form.delete.button": "Delete",
   "tgapp.form.cancel.button": "Cancel",
-  "tgapp.form.close.button": "Close"
+  "tgapp.form.close.button": "Close",
+  "tgapp.data-mgmt.question-dialog.title.label": "Question Content",
+  "tgapp.data-mgmt.question-dialog.title.placeholder": "Type the question here",
+  "tgapp.data-mgmt.question-dialog.type.label": "Question Type",
+  "tgapp.data-mgmt.question-dialog.type.description": "Select one of above question types",
+  "tgapp.data-mgmt.question-dialog.type.text.label": "Subjective questions",
+  "tgapp.data-mgmt.question-dialog.type.tags.label": "Multiple choice questions (tags)",
+  "tgapp.data-mgmt.question-dialog.type.checkbox.label": "Multiple choice questions (checkboxes)"
 }

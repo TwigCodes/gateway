@@ -3,6 +3,7 @@ import { Entity } from '@app/libs/entity';
 export class Question extends Entity {
   title: string;
   type: string;
+  options?: { label: string; value: string | number }[];
   createdAt: Date;
   updatedAt: Date;
   objectId: string;

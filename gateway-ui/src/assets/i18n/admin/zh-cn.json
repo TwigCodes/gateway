@@ -1,8 +1,8 @@
 {
-  "tgapp.groups.tree.menu.add-sibling": "添加同级群组",
-  "tgapp.groups.tree.menu.add-child": "添加子群组",
-  "tgapp.groups.tree.load-more": "加载更多",
-  "tgapp.groups.tree.search.placeholder": "搜索群组名称",
+  "tgapp.admin.groups.tree.menu.add-sibling": "添加同级群组",
+  "tgapp.admin.groups.tree.menu.add-child": "添加子群组",
+  "tgapp.admin.groups.tree.load-more": "加载更多",
+  "tgapp.admin.groups.tree.search.placeholder": "搜索群组名称",
   "tgapp.breadcrumb.admin.home": "管理首页",
   "tgapp.breadcrumb.admin.users": "用户管理",
   "tgapp.breadcrumb.admin.roles": "角色管理",
@@ -83,5 +83,12 @@
   "tgapp.form.save.button": "保存",
   "tgapp.form.delete.button": "删除",
   "tgapp.form.cancel.button": "取消",
-  "tgapp.form.close.button": "关闭"
+  "tgapp.form.close.button": "关闭",
+  "tgapp.data-mgmt.question-dialog.title.label": "问题内容",
+  "tgapp.data-mgmt.question-dialog.title.placeholder": "输入问题内容",
+  "tgapp.data-mgmt.question-dialog.type.label": "问题类型",
+  "tgapp.data-mgmt.question-dialog.type.description": "选择问题类型",
+  "tgapp.data-mgmt.question-dialog.type.text.label": "主观问答题",
+  "tgapp.data-mgmt.question-dialog.type.tags.label": "标签多选",
+  "tgapp.data-mgmt.question-dialog.type.checkbox.label": "复选框多选"
 }

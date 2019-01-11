@@ -1,27 +1,11 @@
 <mat-card class="mat-elevation-z8">
   <ngx-bread-crumbs [crumbs]="crumbs"></ngx-bread-crumbs>
-  <mat-progress-bar mode="query" *ngIf="loading$ | async else loaded"></mat-progress-bar>
-  <ng-template #loaded>
-    <ngx-dyna-table
-      #table
-      [data$]="data$"
-      [columns]="columns"
-      [pageIndex]="pageIndex$ | async"
-      [pageSize]="pageSize$ | async"
-      [total]="total$ | async"
-      [selectable]="selectable"
-      [sortable]="sortable"
-      [multiSortable]="multiSortable"
-      [moreMenuTpl]="moreMenu"
-      (pageChange)="handlePageChange($event)"
-      (sortChange)="handleSortChange($event)"
-      (rowClick)="handleItem($event)"
-      (actionEdit)="handleEdit($event)"
-      (actionDelete)="handleDelete($event)"
-      (actionAdd)="handleAdd()"
-      (filterChange)="handleFilter($event)">
-    </ngx-dyna-table>
-  </ng-template>
+  <mat-progress-bar mode="query" *ngIf="loading$ | async"></mat-progress-bar>
+  <ngx-dyna-table #table [data$]="data$" [columns]="columns" [pageIndex]="pageIndex$ | async" [pageSize]="pageSize$ | async"
+    [total]="total$ | async" [selectable]="selectable" [sortable]="sortable" [multiSortable]="multiSortable"
+    [moreMenuTpl]="moreMenu" (pageChange)="handlePageChange($event)" (sortChange)="handleSortChange($event)" (rowClick)="handleItem($event)"
+    (actionEdit)="handleEdit($event)" (actionDelete)="handleDelete($event)" (actionAdd)="handleAdd()" (filterChange)="handleFilter($event)">
+  </ngx-dyna-table>
 </mat-card>
 <ng-template #moreMenu>
   <button mat-menu-item (click)="resetFiltersAndSorts()">

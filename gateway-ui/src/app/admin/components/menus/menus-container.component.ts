@@ -36,6 +36,7 @@ export class MenusContainerComponent
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.sortable = true;
     this.crumbs = BREADCRUMBS_MENUS;
     this.columns = [

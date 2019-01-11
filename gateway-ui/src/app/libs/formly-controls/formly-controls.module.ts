@@ -1,6 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatChipsModule } from '@angular/material';
+import {
+  MatChipsModule,
+  MatButtonModule,
+  MatIconModule,
+  MatTooltipModule
+} from '@angular/material';
 import { FormlyModule, FormlyConfig } from '@ngx-formly/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyMaterialModule } from '@ngx-formly/material';
@@ -16,14 +21,20 @@ import {
   COMMON_VALIDATION_MESSAGES,
   addValidationMessagesToConfig
 } from './validators';
+import { RepeatSectionTypeComponent } from './types';
+
+const COMPONENTS = [RepeatSectionTypeComponent];
 
 @NgModule({
-  declarations: [],
+  declarations: [RepeatSectionTypeComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     TranslateModule,
+    MatButtonModule,
     MatChipsModule,
+    MatIconModule,
+    MatTooltipModule,
     FormlyMaterialModule,
     FormlyModule.forRoot({
       validators: [
@@ -33,19 +44,17 @@ import {
         { name: 'human', validation: humanNameValidator },
         { name: 'username', validation: usernameValidator },
         { name: 'mobile', validation: mobileValidator }
-      ]
-      // types: [
-      //   {
-      //     name: 'chips',
-      //     component: FormlyMaterialChipsComponent,
-      //     //wrappers: ["fieldset", "label"],
-      //     extends: 'input'
-      //   }
-      // ]
+      ],
+      types: [{ name: 'repeat', component: RepeatSectionTypeComponent }]
     }),
     FormlyMatToggleModule
   ],
-  exports: [FormlyMaterialModule, FormlyModule, FormlyMatToggleModule]
+  exports: [
+    FormlyMaterialModule,
+    FormlyModule,
+    FormlyMatToggleModule,
+    ...COMPONENTS
+  ]
 })
 export class FormlyControlsModule {
   constructor(

@@ -47,19 +47,19 @@ export class QuestionDialogComponent extends EntityFormComponent<Question> {
             {
               value: 'text',
               label: this.translate.instant(
-                'tgapp.data-mgmt.question.type.text.label'
+                'tgapp.data-mgmt.question-dialog.type.text.label'
               )
             },
             {
               value: 'tags',
               label: this.translate.instant(
-                'tgapp.data-mgmt.question.type.tags.label'
+                'tgapp.data-mgmt.question-dialog.type.tags.label'
               )
             },
             {
               value: 'checkbox',
               label: this.translate.instant(
-                'tgapp.data-mgmt.question.type.checkbox.label'
+                'tgapp.data-mgmt.question-dialog.type.checkbox.label'
               )
             }
           ]
@@ -69,14 +69,40 @@ export class QuestionDialogComponent extends EntityFormComponent<Question> {
             this.translate.instant(
               'tgapp.data-mgmt.question-dialog.type.label'
             ),
-          'templateOptions.placeholder': () =>
-            this.translate.instant(
-              'tgapp.data-mgmt.question-dialog.type.placeholder'
-            ),
           'templateOptions.description': () =>
             this.translate.instant(
               'tgapp.data-mgmt.question-dialog.type.description'
             )
+        }
+      },
+      {
+        key: 'options',
+        type: 'repeat',
+        hideExpression: () => {
+          const val = this.entityForm.get('type').value;
+          return !val
+            ? true
+            : val !== 'tags' || val !== 'checkbox'
+            ? false
+            : true;
+        },
+        fieldArray: {
+          fieldGroupClassName: 'row',
+          templateOptions: { btnText: 'Add another option' },
+          fieldGroup: [
+            {
+              className: 'col-sm-4',
+              type: 'input',
+              key: 'label',
+              templateOptions: { label: 'Label', required: true }
+            },
+            {
+              type: 'input',
+              key: 'value',
+              className: 'col-sm-3',
+              templateOptions: { label: 'Value', required: true }
+            }
+          ]
         }
       }
     ];

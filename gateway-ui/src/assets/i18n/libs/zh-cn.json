@@ -26,6 +26,7 @@
   "ngx-table-date-filter.dialog.to-date": "结束日期",
   "ngx-table-edit-dialog.title": "编辑",
   "ngx-table-add-dialog.title": "添加",
+  "ngx-formly.type.repeat-section.button.remove": "删除",
   "validation.regex.email.message": "电子邮件不合法",
   "validation.regex.name.message": "命名不合法，使用字母/中文/_/#/空格，开头和结尾不可以使用空格",
   "validation.regex.mobile.message": "手机号不合法",

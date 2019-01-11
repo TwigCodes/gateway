@@ -52,12 +52,12 @@ export abstract class BaseLeanCloudTableComponent<
     this.loading$ = this.service.loading$;
     combineLatest(this.pageChange$, this.sortChange$, this.filterChange$)
       .pipe(
-        map(([page, sort, filter]) => {
+        map(([page, sort, filterStr]) => {
           return {
             pageIndex: page.pageIndex,
             pageSize: page.pageSize,
             sort: sort,
-            filter: filter
+            filter: filterStr
           };
         }),
         switchMap(ev =>
@@ -126,7 +126,7 @@ export abstract class BaseLeanCloudTableComponent<
   }
 
   handleSortChange(ev: { [key: string]: Sort }) {
-    let sortArr = [];
+    const sortArr = [];
     for (const key in ev) {
       if (ev.hasOwnProperty(key)) {
         const sort = ev[key];
@@ -161,10 +161,10 @@ export abstract class BaseLeanCloudTableComponent<
     for (const key in appliedFilters) {
       if (appliedFilters.hasOwnProperty(key)) {
         const appliedFilterValue = appliedFilters[key] as any;
-        const filter = appliedFilterValue.getFilter();
-        for (const filterKey in filter) {
-          if (filter.hasOwnProperty(filterKey)) {
-            const filterValue = filter[filterKey];
+        const activeFilter = appliedFilterValue.getFilter();
+        for (const filterKey in activeFilter) {
+          if (activeFilter.hasOwnProperty(filterKey)) {
+            const filterValue = activeFilter[filterKey];
             for (const propKey in filterValue) {
               if (filterValue.hasOwnProperty(propKey)) {
                 const propValue = filterValue[propKey];
@@ -199,7 +199,7 @@ export abstract class BaseLeanCloudTableComponent<
 
   public handleAdd() {
     const dialogRef = this.dialog.open(this.entityForm, {
-      data: { title: 'ngx-table-add-dialog.title', payload: null }
+      data: { title: 'ngx-table-add-dialog.title', payload: <T>{} }
     });
     dialogRef
       .afterClosed()

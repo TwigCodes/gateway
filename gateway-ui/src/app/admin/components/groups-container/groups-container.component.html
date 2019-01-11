@@ -3,7 +3,7 @@
   <div fxLayout="row nowrap" fxLayoutAlign="start stretch" fxLayoutGap="10px">
     <div fxFlex="1 1 auto" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
       <mat-form-field>
-        <input matInput placeholder="{{ 'tgapp.groups.tree.search.placeholder' | translate }}" (keyup)="handleSearch($event.target.value)" #search>
+        <input matInput placeholder="{{ 'tgapp.admin.groups.tree.search.placeholder' | translate }}" (keyup)="handleSearch($event.target.value)" #search>
         <button mat-icon-button matSuffix *ngIf="search.value" (click)="search.value = '';clearSearch()">
           <mat-icon>close</mat-icon>
         </button>
@@ -17,9 +17,9 @@
   </div>
 </mat-card>
 <ng-template #menu let-node>
-  <button mat-menu-item (click)="handleAddSibling(node.value)">{{ 'tgapp.groups.tree.menu.add-sibling' | translate }}</button>
-  <button mat-menu-item (click)="handleAddChild(node.value)">{{'tgapp.groups.tree.menu.add-child' | translate }}</button>
+  <button mat-menu-item (click)="handleAddSibling(node.value)">{{ 'tgapp.admin.groups.tree.menu.add-sibling' | translate }}</button>
+  <button mat-menu-item (click)="handleAddChild(node.value)">{{'tgapp.admin.groups.tree.menu.add-child' | translate }}</button>
 </ng-template>
 <ng-template #loadMore let-node>
-  <button mat-button (click)="handleLoadMore()">{{'tgapp.groups.tree.load-more' | translate }}</button>
+  <button mat-button (click)="handleLoadMore()">{{'tgapp.admin.groups.tree.load-more' | translate }}</button>
 </ng-template>
