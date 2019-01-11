@@ -21,6 +21,8 @@
   "ngx-table-date-filter.dialog.title": "Filter for ",
   "ngx-table-date-filter.dialog.clear": "Clear",
   "ngx-table-date-filter.dialog.apply": "Apply",
+  "ngx-table-date-filter.dialog.from-date.error": "from date is not valid",
+  "ngx-table-date-filter.dialog.to-date.error": "to date is not valid",
   "ngx-table-date-filter.text.placeholder": "Containing",
   "ngx-table-date-filter.dialog.from-date": "From",
   "ngx-table-date-filter.dialog.to-date": "To",

@@ -21,6 +21,8 @@
   "ngx-table-date-filter.dialog.title": "过滤",
   "ngx-table-date-filter.dialog.clear": "清除",
   "ngx-table-date-filter.dialog.apply": "应用",
+  "ngx-table-date-filter.dialog.from-date.error": "起始日期不正确",
+  "ngx-table-date-filter.dialog.to-date.error": "截止日期不正确",
   "ngx-table-date-filter.text.placeholder": "包含",
   "ngx-table-date-filter.dialog.from-date": "起始日期",
   "ngx-table-date-filter.dialog.to-date": "结束日期",

@@ -23,12 +23,16 @@ import { endOfDay } from 'date-fns';
               'ngx-table-date-filter.dialog.from-date' | translate
             }}"
             [(ngModel)]="model.fromDate"
+            #fromDateControl="ngModel"
           />
           <mat-datepicker-toggle
             matSuffix
             [for]="fromDate"
           ></mat-datepicker-toggle>
           <mat-datepicker #fromDate></mat-datepicker>
+          <mat-error>{{
+            'ngx-table-date-filter.dialog.from-date.error' | translate
+          }}</mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -42,20 +46,32 @@ import { endOfDay } from 'date-fns';
               'ngx-table-date-filter.dialog.to-date' | translate
             }}"
             [(ngModel)]="model.toDate"
+            #toDateControl="ngModel"
           />
           <mat-datepicker-toggle
             matSuffix
             [for]="toDate"
           ></mat-datepicker-toggle>
           <mat-datepicker #toDate></mat-datepicker>
+          <mat-error>{{
+            'ngx-table-date-filter.dialog.to-date.error' | translate
+          }}</mat-error>
         </mat-form-field>
       </mat-dialog-content>
 
       <mat-dialog-actions>
-        <button mat-button mat-dialog-close>
+        <button
+          mat-button
+          mat-dialog-close
+          [disabled]="fromDateControl.invalid || toDateControl.invalid"
+        >
           {{ 'ngx-table-date-filter.dialog.clear' | translate }}
         </button>
-        <button mat-button type="submit">
+        <button
+          mat-button
+          type="submit"
+          [disabled]="fromDateControl.invalid || toDateControl.invalid"
+        >
           {{ 'ngx-table-date-filter.dialog.apply' | translate }}
         </button>
       </mat-dialog-actions>
