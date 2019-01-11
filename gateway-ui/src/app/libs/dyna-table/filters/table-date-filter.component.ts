@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { DateFilter } from '../table-filter';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ColumnFilter } from '../column-filter.model';
+import { endOfDay } from 'date-fns';
 
 @Component({
   selector: 'ngx-table-date-filter',
@@ -15,6 +16,7 @@ import { ColumnFilter } from '../column-filter.model';
         <mat-form-field>
           <input
             matInput
+            [max]="model.toDate || maxDate"
             [matDatepicker]="fromDate"
             name="fromDate"
             placeholder="{{
@@ -32,6 +34,8 @@ import { ColumnFilter } from '../column-filter.model';
         <mat-form-field>
           <input
             matInput
+            [min]="model.fromDate"
+            [max]="maxDate"
             [matDatepicker]="toDate"
             name="toDate"
             placeholder="{{
@@ -64,6 +68,7 @@ export class TableDateFilterComponent implements OnInit {
 
   displayName: string;
 
+  maxDate = endOfDay(Date.now());
   public constructor(
     private readonly dialogRef: MatDialogRef<TableDateFilterComponent>,
     @Inject(MAT_DIALOG_DATA) private readonly filterData: ColumnFilter
