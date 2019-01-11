@@ -64,6 +64,13 @@ export class QuestionsContainerComponent
         type: 'string'
       },
       {
+        name: 'options',
+        header: '问题选项',
+        cell: (e: Question) =>
+          `${e.options ? e.options.map(o => o.label).join(',') : ''}`,
+        type: 'string'
+      },
+      {
         name: 'createdAt',
         header: '创建时间',
         cell: (e: Question) => e.createdAt,
