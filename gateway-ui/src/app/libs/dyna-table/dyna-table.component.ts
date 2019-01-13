@@ -16,8 +16,7 @@ import {
   MatDialogConfig,
   PageEvent,
   Sort,
-  MatCheckboxChange,
-  MatTableDataSource
+  MatCheckboxChange
 } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { take } from 'rxjs/operators';
@@ -27,6 +26,7 @@ import { ColumnFilter } from './column-filter.model';
 import { ColumnFilterService } from './table-cell/column-filter.service';
 import { untilDestroy } from '../utils';
 import { Entity } from '../entity';
+import { fadeAnimation } from '../animations';
 
 import * as _ from 'lodash';
 
@@ -35,7 +35,8 @@ export const DEFAULT_PAGE_SIZE = 20;
 @Component({
   selector: 'ngx-dyna-table',
   templateUrl: './dyna-table.component.html',
-  styleUrls: ['./dyna-table.component.scss']
+  styleUrls: ['./dyna-table.component.scss'],
+  animations: [fadeAnimation]
 })
 export class DynaTableComponent implements OnInit, OnDestroy {
   @Input() data$: Observable<Entity[]>;
@@ -67,7 +68,6 @@ export class DynaTableComponent implements OnInit, OnDestroy {
 
   readonly DEFAULT_COLUMN_SELECT = 'ngx-select';
   readonly DEFAULT_COLUMN_ACTION = 'ngx-action';
-  dataSource: MatTableDataSource<Entity> = new MatTableDataSource();
   displayedColumns: string[];
   selection = new SelectionModel<Entity>(true, []);
   isHighlight = false;
@@ -75,6 +75,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
 
   private appliedFilters: { [key: string]: ColumnFilter } = {};
   private appliedSorts: { [key: string]: Sort } = {};
+  private _data: Entity[] = [];
 
   constructor(
     private readonly columnFilterService: ColumnFilterService,
@@ -85,8 +86,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
     this.validateConfig();
 
     this.data$.pipe(untilDestroy(this)).subscribe(data => {
-      this.dataSource.data = [];
-      this.dataSource.data = data;
+      this._data = data;
     });
     this.appendDefaultColumnToConfig();
   }
@@ -142,7 +142,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this._data.length;
     return numSelected === numRows;
   }
 
@@ -150,7 +150,7 @@ export class DynaTableComponent implements OnInit, OnDestroy {
   masterToggle() {
     this.isAllSelected()
       ? this.selection.clear()
-      : this.dataSource.data.forEach(row => this.selection.select(row));
+      : this._data.forEach(row => this.selection.select(row));
     this.selectChange.emit(this.selection.selected);
   }
 

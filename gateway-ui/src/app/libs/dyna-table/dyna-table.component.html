@@ -1,6 +1,6 @@
 <table
   mat-table
-  [dataSource]="dataSource"
+  [dataSource]="data$"
   (matSortChange)="handleSortChange($event)">
   <!--Select Column-->
   <ng-container matColumnDef="ngx-select" *ngIf="selectable">
@@ -85,6 +85,7 @@
   <tr
     mat-row
     *matRowDef="let row; columns: displayedColumns;"
+    [@fadeAnimation]
     [ngxDetailRow]="row"
     [ngxDetailRowTpl]="expandTpl"
     (click)="handleRowClick(row, $event)">
