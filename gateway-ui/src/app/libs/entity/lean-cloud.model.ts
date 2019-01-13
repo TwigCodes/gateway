@@ -1,5 +1,6 @@
-import { Entity } from './entity.model';
 import { startOfDay, endOfDay } from 'date-fns';
+import { Sort } from '@angular/material';
+import { Entity } from './entity.model';
 
 export enum LeanCloudOp {
   NE,
@@ -63,4 +64,11 @@ export class LeanCloudSearch {
 export interface LeanCloudResult<T extends Entity> {
   results: T[];
   count: number;
+}
+
+export interface LeanCloudParams {
+  pageIndex: number;
+  pageSize: number;
+  sort: { [column: string]: Sort };
+  filter: { [column: string]: string };
 }

@@ -1,8 +1,8 @@
 import { OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { map, switchMap, filter, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap, filter, withLatestFrom, tap } from 'rxjs/operators';
 import { PageEvent, Sort, MatDialog } from '@angular/material';
 import { ComponentType } from '@angular/cdk/portal';
-import { BehaviorSubject, combineLatest, Subject, Observable } from 'rxjs';
+import { BehaviorSubject, merge, Subject, Observable } from 'rxjs';
 import { Entity } from './entity.model';
 import { BaseLeanCloudService } from './base-lean-cloud.service';
 import { ConfirmService } from '@app/shared';
@@ -15,6 +15,8 @@ import {
 } from '../dyna-table';
 import { untilDestroy } from '../utils';
 import { Crumb } from '../bread-crumbs';
+import * as _ from 'lodash';
+import { tag } from 'rxjs-spy/operators';
 
 export abstract class BaseLeanCloudTableComponent<
   T extends Entity,
@@ -37,10 +39,12 @@ export abstract class BaseLeanCloudTableComponent<
   delete$ = new Subject<string>();
   update$ = new Subject<T>();
   add$ = new Subject<T>();
+  loadMore$ = new Subject<void>();
   pageIndex$ = this.pageChange$.pipe(map(ev => ev.pageIndex));
   pageSize$ = this.pageChange$.pipe(map(ev => ev.pageSize));
   total$ = new BehaviorSubject<number>(0);
   loading$: Observable<boolean>;
+  render$: Observable<T[]>;
   @ViewChild('table') table: DynaTableComponent;
   constructor(
     protected service: TService,
@@ -50,52 +54,91 @@ export abstract class BaseLeanCloudTableComponent<
 
   ngOnInit(): void {
     this.loading$ = this.service.loading$;
-    combineLatest(this.pageChange$, this.sortChange$, this.filterChange$)
-      .pipe(
-        map(([page, sort, filterStr]) => {
-          return {
-            pageIndex: page.pageIndex,
-            pageSize: page.pageSize,
-            sort: sort,
-            filter: filterStr
-          };
-        }),
-        switchMap(ev =>
-          this.service.paged(ev.pageIndex, ev.pageSize, ev.sort, ev.filter)
-        ),
-        untilDestroy(this)
+    this.render$ = this.data$.asObservable().pipe(
+      map(data => {
+        return data.length === 0
+          ? []
+          : data.length <= this.pageChange$.value.pageSize
+          ? data
+          : data.slice(
+              this.pageChange$.value.pageIndex *
+                this.pageChange$.value.pageSize,
+              this.pageChange$.value.pageSize
+            );
+      })
+    );
+    const load$ = merge(
+      this.pageChange$,
+      this.sortChange$,
+      this.filterChange$
+    ).pipe(
+      switchMap(_ =>
+        this.service.paged(
+          this.pageChange$.value.pageIndex * this.pageChange$.value.pageSize,
+          this.pageChange$.value.pageSize,
+          this.sortChange$.value,
+          this.filterChange$.value
+        )
       )
-      .subscribe(data => {
-        this.data$.next(data.results);
-        this.total$.next(data.count);
-      });
+    );
+    load$.pipe(untilDestroy(this)).subscribe(data => {
+      this.data$.next(data.results);
+      this.total$.next(data.count);
+    });
 
     this.delete$
       .pipe(
         switchMap((val: string) =>
           this.service.delete(val).pipe(
-            withLatestFrom(this.data$),
-            map(([__, data]) => data.filter(item => item.objectId !== val))
+            tap(__ => {
+              const filteredData = this.data$.value.filter(
+                it => it.objectId !== val
+              );
+              this.data$.next(filteredData);
+              this.total$.next(this.total$.value - 1);
+              if (
+                (this.pageChange$.value.pageIndex + 1) *
+                  this.pageChange$.value.pageSize <
+                this.total$.value
+              ) {
+                this.loadMore$.next();
+              }
+            })
           )
         ),
         untilDestroy(this)
       )
-      .subscribe(data => {
-        this.data$.next(data);
-      });
+      .subscribe();
+
+    this.loadMore$.pipe(
+      switchMap(_ =>
+        this.service.paged(
+          this.pageChange$.value.pageIndex * this.pageChange$.value.pageSize,
+          this.pageChange$.value.pageSize,
+          this.sortChange$.value,
+          this.filterChange$.value
+        )
+      ),
+      tap(res => {
+        const ds = _.uniq([...this.data$.value, ...res.results]);
+        this.data$.next(ds);
+        this.total$.next(res.count);
+      })
+    );
 
     this.add$
       .pipe(
         switchMap((val: T) =>
           this.service.add(val).pipe(
-            withLatestFrom(this.data$),
-            map(([result, data]) => [...data, result])
+            map(item => [item, ...this.data$.value]),
+            tap(data => this.data$.next(data))
           )
         ),
         untilDestroy(this)
       )
       .subscribe(data => {
         this.data$.next(data);
+        this.total$.next(this.total$.value + 1);
       });
 
     this.update$

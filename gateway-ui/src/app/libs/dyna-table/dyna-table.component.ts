@@ -24,11 +24,11 @@ import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ColumnConfig } from './column-config.model';
 import { ColumnFilter } from './column-filter.model';
-import { Identifiable } from './identifiable.model';
 import { ColumnFilterService } from './table-cell/column-filter.service';
+import { untilDestroy } from '../utils';
+import { Entity } from '../entity';
 
 import * as _ from 'lodash';
-import { untilDestroy } from '../utils';
 
 export const DEFAULT_PAGE_SIZE = 20;
 
@@ -38,7 +38,7 @@ export const DEFAULT_PAGE_SIZE = 20;
   styleUrls: ['./dyna-table.component.scss']
 })
 export class DynaTableComponent implements OnInit, OnDestroy {
-  @Input() data$: Observable<Identifiable[]>;
+  @Input() data$: Observable<Entity[]>;
   @Input() columns: ColumnConfig[];
   @Input() total = 0;
   @Input() pageIndex = 0;
@@ -67,9 +67,9 @@ export class DynaTableComponent implements OnInit, OnDestroy {
 
   readonly DEFAULT_COLUMN_SELECT = 'ngx-select';
   readonly DEFAULT_COLUMN_ACTION = 'ngx-action';
-  dataSource: MatTableDataSource<Identifiable> = new MatTableDataSource();
+  dataSource: MatTableDataSource<Entity> = new MatTableDataSource();
   displayedColumns: string[];
-  selection = new SelectionModel<Identifiable>(true, []);
+  selection = new SelectionModel<Entity>(true, []);
   isHighlight = false;
   selectedIndex = -1;
 
