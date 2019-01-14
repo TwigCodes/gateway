@@ -153,7 +153,12 @@ export abstract class BaseLeanCloudTableComponent<
             map(result => {
               const data = this.data$.value;
               const idx = data.findIndex(d => d.objectId === result.objectId);
-              return [...data.slice(0, idx), result, ...data.slice(idx + 1)];
+              const old = data[idx];
+              return [
+                ...data.slice(0, idx),
+                Object.assign(val, result, { createdAt: old.createdAt }),
+                ...data.slice(idx + 1)
+              ];
             })
           )
         ),
@@ -238,7 +243,12 @@ export abstract class BaseLeanCloudTableComponent<
     dialogRef
       .afterClosed()
       .pipe(filter(val => val))
-      .subscribe(val => this.update$.next({ ...val, objectId: row.objectId }));
+      .subscribe(val =>
+        this.update$.next({
+          ...val,
+          objectId: row.objectId
+        })
+      );
   }
 
   public handleAdd() {

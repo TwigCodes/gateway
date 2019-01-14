@@ -28,13 +28,14 @@ export abstract class BaseLeanCloudService<
       );
   }
 
-  update(id: number | string, entity: T) {
+  update(id: number | string, entity: T): Observable<T> {
     this.loadingSubject.next(true);
     return this.httpClient
       .put(`${this.baseUrl}/${this.entityPath}/${id}`, entity)
       .pipe(
-        map(res => {
-          return Object.assign(entity, res);
+        map((res: Partial<T>) => {
+          console.log(entity);
+          return Object.assign(entity, { updatedAt: res.updatedAt });
         }),
         catchError(this.handleError),
         finalize(() => this.loadingSubject.next(false))
