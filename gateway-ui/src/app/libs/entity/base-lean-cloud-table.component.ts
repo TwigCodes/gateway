@@ -29,12 +29,13 @@ export abstract class BaseLeanCloudTableComponent<
   public selectable = false;
   public sortable = false;
   public multiSortable = false;
+  DEFAULT_SORT = '-updatedAt';
   pageChange$ = new BehaviorSubject<PageEvent>({
     pageIndex: 0,
     pageSize: DEFAULT_PAGE_SIZE,
     length: 0
   });
-  sortChange$ = new BehaviorSubject<string | null>(null);
+  sortChange$ = new BehaviorSubject<string>(this.DEFAULT_SORT);
   filterChange$ = new BehaviorSubject<string | null>(null);
   delete$ = new Subject<string>();
   update$ = new Subject<T>();
@@ -110,21 +111,24 @@ export abstract class BaseLeanCloudTableComponent<
       )
       .subscribe();
 
-    this.loadMore$.pipe(
-      switchMap(_ =>
-        this.service.paged(
-          this.pageChange$.value.pageIndex * this.pageChange$.value.pageSize,
-          this.pageChange$.value.pageSize,
-          this.sortChange$.value,
-          this.filterChange$.value
-        )
-      ),
-      tap(res => {
-        const ds = _.uniq([...this.data$.value, ...res.results]);
-        this.data$.next(ds);
-        this.total$.next(res.count);
-      })
-    );
+    this.loadMore$
+      .pipe(
+        switchMap(_ =>
+          this.service.paged(
+            this.pageChange$.value.pageIndex * this.pageChange$.value.pageSize,
+            this.pageChange$.value.pageSize,
+            this.sortChange$.value,
+            this.filterChange$.value
+          )
+        ),
+        tap(res => {
+          const ds = _.uniq([...this.data$.value, ...res.results]);
+          this.data$.next(ds);
+          this.total$.next(res.count);
+        }),
+        untilDestroy(this)
+      )
+      .subscribe();
 
     this.add$
       .pipe(
@@ -186,7 +190,7 @@ export abstract class BaseLeanCloudTableComponent<
       }
     }
     if (sortArr.length === 0) {
-      this.sortChange$.next(null);
+      this.sortChange$.next(this.DEFAULT_SORT);
       return;
     }
     this.sortChange$.next(sortArr.join(','));
