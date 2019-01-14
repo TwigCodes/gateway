@@ -154,9 +154,11 @@ export abstract class BaseLeanCloudTableComponent<
               const data = this.data$.value;
               const idx = data.findIndex(d => d.objectId === result.objectId);
               const old = data[idx];
+              const updated = Object.assign(old, val, result);
+
               return [
                 ...data.slice(0, idx),
-                Object.assign(val, result, { createdAt: old.createdAt }),
+                _.clone(updated),
                 ...data.slice(idx + 1)
               ];
             })
