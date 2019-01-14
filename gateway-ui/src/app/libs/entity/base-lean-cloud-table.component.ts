@@ -1,8 +1,8 @@
 import { OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { map, switchMap, filter, withLatestFrom, tap } from 'rxjs/operators';
+import { map, switchMap, filter, tap } from 'rxjs/operators';
 import { PageEvent, Sort, MatDialog } from '@angular/material';
 import { ComponentType } from '@angular/cdk/portal';
-import { BehaviorSubject, merge, Subject, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Subject, Observable } from 'rxjs';
 import { Entity } from './entity.model';
 import { BaseLeanCloudService } from './base-lean-cloud.service';
 import { ConfirmService } from '@app/shared';
@@ -66,9 +66,10 @@ export abstract class BaseLeanCloudTableComponent<
                 this.pageChange$.value.pageSize,
               this.pageChange$.value.pageSize
             );
-      })
+      }),
+      tag('render')
     );
-    const load$ = merge(
+    const load$ = combineLatest(
       this.pageChange$,
       this.sortChange$,
       this.filterChange$
@@ -149,14 +150,10 @@ export abstract class BaseLeanCloudTableComponent<
       .pipe(
         switchMap((val: T) =>
           this.service.update(val.objectId, val).pipe(
-            withLatestFrom(this.data$),
-            map(([result, data]) => {
-              return data.map(item => {
-                if (item.objectId === result.objectId) {
-                  return Object.assign(item, result);
-                }
-                return item;
-              });
+            map(result => {
+              const data = this.data$.value;
+              const idx = data.findIndex(d => d.objectId === result.objectId);
+              return [...data.slice(0, idx), result, ...data.slice(idx + 1)];
             })
           )
         ),
