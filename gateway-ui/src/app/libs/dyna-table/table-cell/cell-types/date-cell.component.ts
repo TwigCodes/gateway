@@ -21,7 +21,7 @@ export class DateCellComponent implements CellComponent, OnInit {
   @Input() row: object;
 
   dateFormat = 'yyyy-MM-dd';
-  dateTooltipFormat = 'short';
+  dateTooltipFormat = 'yyyy-MM-dd HH:mm:ss';
 
   ngOnInit() {
     if (this.column.options) {
