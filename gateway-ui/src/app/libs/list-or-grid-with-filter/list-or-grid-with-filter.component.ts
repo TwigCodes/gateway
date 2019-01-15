@@ -30,7 +30,7 @@ export class ListOrGridWithFilterComponent {
   @Output() select = new EventEmitter();
   @Output() add = new EventEmitter();
   @Output() filter = new EventEmitter();
-  filterValue = null;
+  filterValue: string | null;
   selection = new SelectionModel<Partial<Item>>(false, []);
   @ViewChild('gridView')
   public gridView: MatButtonToggleGroup;
@@ -54,8 +54,8 @@ export class ListOrGridWithFilterComponent {
       : this.filterValue
       ? this.items.filter(
           item =>
-            item.title.includes(this.filterValue) ||
-            item.subtitle.includes(this.filterValue)
+            item.title.toLowerCase().includes(this.filterValue.toLowerCase()) ||
+            item.subtitle.toLowerCase().includes(this.filterValue.toLowerCase())
         )
       : this.items;
   }
