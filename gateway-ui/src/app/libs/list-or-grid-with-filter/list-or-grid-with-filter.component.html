@@ -41,10 +41,10 @@
         (click)="handleSelected(item)"
         [class.active]="selection.isSelected(item)">
         <mat-card-header>
-          <mat-card-title>{{ item.title | translate }}</mat-card-title>
-          <mat-card-subtitle>{{ item.subtitle | translate }}</mat-card-subtitle>
+          <mat-card-title matTooltip="{{item.title | translate}}">{{ item.title | translate | slice:0:12 }}</mat-card-title>
+          <mat-card-subtitle matTooltip="{{item.subtitle | translate}}">{{ item.subtitle | translate | slice:0:20 }}</mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content> {{ item.desc | translate }} </mat-card-content>
+        <mat-card-content matTooltip="{{item.desc | translate}}"> {{ item.desc | translate | slice:0:60 }} </mat-card-content>
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
@@ -56,10 +56,10 @@
       (click)="handleSelected(item)"
       *ngFor="let item of filteredItems; let last = last"
       [class.active]="selection.isSelected(item)">
-      <h3 matLine>{{ item.title | translate }}</h3>
+      <h3 matLine matTooltip="{{item.title | translate}}">{{ item.title | translate | slice:0:12 }}</h3>
       <p matLine>
-        <span> {{ item.subtitle | translate }} </span>
-        <span class="subline">-- {{ item.desc | translate }} </span>
+        <span matTooltip="{{item.subtitle | translate}}"> {{ item.subtitle | translate | slice:0:16 }} </span>
+        <span class="subline" matTooltip="{{item.desc | translate}}">-- {{ item.desc | translate | slice:0:60 }} </span>
       </p>
       <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
     </mat-list-item>

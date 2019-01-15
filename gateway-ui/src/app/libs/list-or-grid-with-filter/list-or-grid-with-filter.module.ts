@@ -10,7 +10,8 @@ import {
   MatCardModule,
   MatGridListModule,
   MatToolbarModule,
-  MatButtonModule
+  MatButtonModule,
+  MatTooltipModule
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -29,6 +30,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatCardModule,
     MatGridListModule,
     MatToolbarModule,
+    MatTooltipModule,
     FormsModule
   ],
   exports: [ListOrGridWithFilterComponent]
