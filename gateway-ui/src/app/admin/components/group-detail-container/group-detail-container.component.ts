@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material';
 import { HttpParams } from '@angular/common/http';
 import { select, Store } from '@ngrx/store';
