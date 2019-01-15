@@ -1,2 +1,3 @@
 export * from './admin.menu';
-export * from './breadcrumbs.ts';
+export * from './breadcrumbs';
+export * from './constants';

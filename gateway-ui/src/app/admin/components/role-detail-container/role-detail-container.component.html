@@ -13,11 +13,11 @@
               <button mat-flat-button type="button" [routerLink]="['../']">
                 {{ 'tgapp.form.cancel.button' | translate }}
               </button>
-              <button mat-button color="warn" type="button" (click)="handleDelete()" [disabled]="isBuiltIn(model.name)">
+              <button mat-button color="warn" type="button" (click)="handleDelete()" [disabled]="isBuiltInRole(model.name)">
                 {{ 'tgapp.form.delete.button' | translate }}
               </button>
             </span>
-            <button mat-raised-button color="primary" [disabled]="entityForm.invalid || isBuiltIn(model.name)">
+            <button mat-raised-button color="primary" [disabled]="entityForm.invalid || isBuiltInRole(model.name)">
               {{ 'tgapp.form.save.button' | translate }}
             </button>
           </div>
@@ -57,7 +57,7 @@
               class="list-item">
               <p matLine>{{ user.username }}</p>
               <p matLine>{{ user.email }}</p>
-              <button mat-icon-button color="warn" (click)="handleRemoveUser(user)">
+              <button mat-icon-button color="warn" (click)="handleRemoveUser(user)" [disabled]="isBuiltInUser(user.username)">
                 <mat-icon>delete_forever</mat-icon>
               </button>
             </mat-list-item>

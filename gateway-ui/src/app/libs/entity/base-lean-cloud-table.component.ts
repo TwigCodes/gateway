@@ -29,6 +29,7 @@ export abstract class BaseLeanCloudTableComponent<
   public selectable = false;
   public sortable = false;
   public multiSortable = false;
+  public stickyHeader = true;
   DEFAULT_SORT = '-updatedAt';
   pageChange$ = new BehaviorSubject<PageEvent>({
     pageIndex: 0,

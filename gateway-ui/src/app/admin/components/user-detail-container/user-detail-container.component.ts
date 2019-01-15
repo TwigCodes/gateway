@@ -11,6 +11,7 @@ import { GroupSearchService } from '@app/admin/services';
 import { ConfirmService } from '@app/shared';
 import { KeycloakRole, KeycloakGroup } from '@app/admin/admin.model';
 import { DEFAULT_PAGE_SIZE } from '@app/libs';
+import { BUILT_IN_USERS, BUILT_IN_ROLES } from '@app/admin/commons';
 
 import * as fromAdmin from '@app/admin/reducers';
 import * as fromUser from '@app/admin/actions/users/user.actions';
@@ -37,66 +38,7 @@ export class UserDetailContainerComponent implements OnInit, OnDestroy {
   groups$ = this.store.pipe(select(fromAdmin.getUserGroups));
   availableRoles$ = this.store.pipe(select(fromAdmin.getRoles));
   sub: Subscription;
-  fields: FormlyFieldConfig[] = [
-    {
-      key: 'username',
-      type: 'input',
-      templateOptions: {
-        type: 'text',
-        required: true
-      },
-      expressionProperties: {
-        'templateOptions.label': () =>
-          this.translate.instant('tgapp.admin.user-dialog.username.label'),
-        'templateOptions.placeholder': () =>
-          this.translate.instant('tgapp.admin.user-dialog.username.placeholder')
-      }
-    },
-    {
-      key: 'firstName',
-      type: 'input',
-      templateOptions: {
-        type: 'text',
-        required: true
-      },
-      expressionProperties: {
-        'templateOptions.label': () =>
-          this.translate.instant('tgapp.admin.user-dialog.firstname.label'),
-        'templateOptions.placeholder': () =>
-          this.translate.instant(
-            'tgapp.admin.user-dialog.firstname.placeholder'
-          )
-      }
-    },
-    {
-      key: 'lastName',
-      type: 'input',
-      templateOptions: {
-        type: 'text',
-        required: true
-      },
-      expressionProperties: {
-        'templateOptions.label': () =>
-          this.translate.instant('tgapp.admin.user-dialog.lastname.label'),
-        'templateOptions.placeholder': () =>
-          this.translate.instant('tgapp.admin.user-dialog.lastname.placeholder')
-      }
-    },
-    {
-      key: 'email',
-      type: 'input',
-      templateOptions: {
-        type: 'email',
-        required: true
-      },
-      expressionProperties: {
-        'templateOptions.label': () =>
-          this.translate.instant('tgapp.admin.user-dialog.email.label'),
-        'templateOptions.placeholder': () =>
-          this.translate.instant('tgapp.admin.user-dialog.email.placeholder')
-      }
-    }
-  ];
+  fields: FormlyFieldConfig[];
   constructor(
     private store: Store<fromAdmin.State>,
     private translate: TranslateService,
@@ -108,6 +50,68 @@ export class UserDetailContainerComponent implements OnInit, OnDestroy {
     this.store.dispatch(new fromRole.GetAllAction());
     this.sub = this.model$.subscribe(val => {
       this.model = { ...val };
+      this.fields = [
+        {
+          key: 'username',
+          type: 'input',
+          templateOptions: { type: 'text', required: true },
+          expressionProperties: {
+            'templateOptions.label': () =>
+              this.translate.instant('tgapp.admin.user-dialog.username.label'),
+            'templateOptions.placeholder': () =>
+              this.translate.instant(
+                'tgapp.admin.user-dialog.username.placeholder'
+              ),
+            'templateOptions.disabled': () =>
+              val && val.username ? this.isBuiltInUser(val.username) : false
+          }
+        },
+        {
+          key: 'firstName',
+          type: 'input',
+          templateOptions: { type: 'text', required: true },
+          expressionProperties: {
+            'templateOptions.label': () =>
+              this.translate.instant('tgapp.admin.user-dialog.firstname.label'),
+            'templateOptions.placeholder': () =>
+              this.translate.instant(
+                'tgapp.admin.user-dialog.firstname.placeholder'
+              ),
+            'templateOptions.disabled': () =>
+              val && val.username ? this.isBuiltInUser(val.username) : false
+          }
+        },
+        {
+          key: 'lastName',
+          type: 'input',
+          templateOptions: { type: 'text', required: true },
+          expressionProperties: {
+            'templateOptions.label': () =>
+              this.translate.instant('tgapp.admin.user-dialog.lastname.label'),
+            'templateOptions.placeholder': () =>
+              this.translate.instant(
+                'tgapp.admin.user-dialog.lastname.placeholder'
+              ),
+            'templateOptions.disabled': () =>
+              val && val.username ? this.isBuiltInUser(val.username) : false
+          }
+        },
+        {
+          key: 'email',
+          type: 'input',
+          templateOptions: { type: 'email', required: true },
+          expressionProperties: {
+            'templateOptions.label': () =>
+              this.translate.instant('tgapp.admin.user-dialog.email.label'),
+            'templateOptions.placeholder': () =>
+              this.translate.instant(
+                'tgapp.admin.user-dialog.email.placeholder'
+              ),
+            'templateOptions.disabled': () =>
+              val && val.username ? this.isBuiltInUser(val.username) : false
+          }
+        }
+      ];
     });
   }
   ngOnDestroy(): void {
@@ -165,9 +169,12 @@ export class UserDetailContainerComponent implements OnInit, OnDestroy {
     });
   }
 
-  public isBuiltIn(username: string): boolean {
-    const builtInUsers = ['twigadmin'];
-    return _.includes(builtInUsers, username);
+  public isBuiltInRole(roleId: string): boolean {
+    return _.includes(BUILT_IN_ROLES, roleId);
+  }
+
+  public isBuiltInUser(username: string): boolean {
+    return _.includes(BUILT_IN_USERS, username);
   }
 
   pageChange() {

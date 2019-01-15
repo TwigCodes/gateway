@@ -10,12 +10,13 @@ import { Subscription } from 'rxjs';
 import { ConfirmService } from '@app/shared';
 import { UserSearchService } from '@app/admin/services';
 import { KeycloakUser } from '@app/admin/admin.model';
+import { DEFAULT_PAGE_SIZE } from '@app/libs';
+import { BUILT_IN_ROLES, BUILT_IN_USERS } from '@app/admin/commons';
 
 import * as fromAdmin from '@app/admin/reducers';
 import * as fromRole from '@app/admin/actions/roles/role.actions';
 import * as fromRoleDetail from '@app/admin/actions/roles/role-users.actions';
 import * as fromRoleUsers from '@app/admin/actions/roles/role-users.actions';
-import { DEFAULT_PAGE_SIZE } from '@app/libs';
 import * as _ from 'lodash';
 
 @Component({
@@ -57,7 +58,7 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
                 'tgapp.admin.role-dialog.name.placeholder'
               ),
             'templateOptions.disabled': () =>
-              val && val.name ? this.isBuiltIn(val.name) : false
+              val && val.name ? this.isBuiltInRole(val.name) : false
           }
         },
         {
@@ -79,7 +80,7 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
                 'tgapp.admin.role-dialog.description.placeholder'
               ),
             'templateOptions.disabled': () =>
-              val && val.name ? this.isBuiltIn(val.name) : false
+              val && val.name ? this.isBuiltInRole(val.name) : false
           }
         }
       ];
@@ -141,9 +142,12 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
     });
   }
 
-  public isBuiltIn(roleId: string): boolean {
-    const builtInRoles = ['admin', 'user'];
-    return _.includes(builtInRoles, roleId);
+  public isBuiltInRole(roleId: string): boolean {
+    return _.includes(BUILT_IN_ROLES, roleId);
+  }
+
+  public isBuiltInUser(username: string): boolean {
+    return _.includes(BUILT_IN_USERS, username);
   }
 
   trackByIdx(i) {

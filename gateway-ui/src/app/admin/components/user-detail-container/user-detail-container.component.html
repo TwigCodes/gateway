@@ -13,11 +13,11 @@
               <button mat-flat-button type="button" [routerLink]="['../']">
                 {{ 'tgapp.form.cancel.button' | translate }}
               </button>
-              <button mat-button color="warn" type="button" (click)="handleDelete()" [disabled]="isBuiltIn(model.username)">
+              <button mat-button color="warn" type="button" (click)="handleDelete()" [disabled]="isBuiltInUser(model.username)">
                 {{ 'tgapp.form.delete.button' | translate }}
               </button>
             </span>
-            <button mat-raised-button color="primary" [disabled]="entityForm.invalid || isBuiltIn(model.username)">
+            <button mat-raised-button color="primary" [disabled]="entityForm.invalid || isBuiltInUser(model.username)">
               {{ 'tgapp.form.save.button' | translate }}
             </button>
           </div>
@@ -45,7 +45,7 @@
         </mat-list-item>
         <mat-list-item *ngFor="let role of roles$ | async">
           <p matLine>{{ role.name }}</p>
-          <button mat-icon-button color="warn" (click)="handleRemoveRole(role)">
+          <button mat-icon-button color="warn" (click)="handleRemoveRole(role)" [disabled]="isBuiltInUser(model.username) && isBuiltInRole(role.name)">
             <mat-icon>delete_forever</mat-icon>
           </button>
         </mat-list-item>

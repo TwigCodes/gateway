@@ -12,8 +12,9 @@ import { QuestionDialogComponent } from './question-dialog.component';
   styles: [
     `
       :host {
-        display: flex;
-        flex-direction: column;
+        position: absolute;
+        height: calc(100% - 64px - 44px - 20px);
+        overflow-y: auto;
         width: 100%;
       }
     `
