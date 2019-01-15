@@ -21,7 +21,7 @@ export class GroupDialogComponent extends EntityFormComponent<KeycloakGroup> {
       {
         key: 'name',
         type: 'input',
-        templateOptions: { type: 'text', required: true },
+        templateOptions: { type: 'text', required: true, maxLength: 50 },
         expressionProperties: {
           'templateOptions.label': () =>
             this.translate.instant('tgapp.admin.group-dialog.name.label'),

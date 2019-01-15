@@ -61,8 +61,6 @@ export class FormlyControlsModule {
     private config: FormlyConfig,
     private translate: TranslateService
   ) {
-    this.translate.stream(COMMON_VALIDATION_MESSAGES).subscribe(msg => {
-      addValidationMessagesToConfig(msg, this.config);
-    });
+    addValidationMessagesToConfig(this.config, this.translate);
   }
 }

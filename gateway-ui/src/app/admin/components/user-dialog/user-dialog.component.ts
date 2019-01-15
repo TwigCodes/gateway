@@ -23,7 +23,7 @@ export class UserDialogComponent extends EntityFormComponent<KeycloakUser> {
       {
         key: 'username',
         type: 'input',
-        templateOptions: { type: 'text', required: true },
+        templateOptions: { type: 'text', required: true, maxLength: 50 },
         validators: {
           validation: ['username']
           // username: {
@@ -69,7 +69,7 @@ export class UserDialogComponent extends EntityFormComponent<KeycloakUser> {
       {
         key: 'email',
         type: 'input',
-        templateOptions: { type: 'email', required: true },
+        templateOptions: { type: 'email', required: true, maxLength: 255 },
         validators: {
           validation: ['email']
         },

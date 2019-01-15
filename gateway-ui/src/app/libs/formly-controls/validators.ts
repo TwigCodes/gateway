@@ -1,5 +1,6 @@
 import { FormlyFieldConfig, FormlyConfig } from '@ngx-formly/core';
 import { FormControl, ValidationErrors } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 // tslint:disable-next-line:max-line-length
 export const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -66,16 +67,50 @@ export const COMMON_VALIDATION_MESSAGES = [
   usernameValidationMessage
 ];
 
-export const addValidationMessagesToConfig = (msg, config: FormlyConfig) => {
-  config.addValidatorMessage('required', msg[requiredValidationMessage]);
-  config.addValidatorMessage('min', msg[minValidationMessage]);
-  config.addValidatorMessage('max', msg[maxValidationMessage]);
-  config.addValidatorMessage('minlength', msg[minLengthValidationMessage]);
-  config.addValidatorMessage('maxlength', msg[maxLengthValidationMessage]);
-  config.addValidatorMessage('email', msg[emailValidationMessage]);
-  config.addValidatorMessage('name', msg[nameValidationMessage]);
-  config.addValidatorMessage('username', msg[usernameValidationMessage]);
-  config.addValidatorMessage('human', msg[humanNameValidationMessage]);
-  config.addValidatorMessage('url', msg[urlValidationMessage]);
-  config.addValidatorMessage('mobile', msg[mobileValidationMessage]);
+export const addValidationMessagesToConfig = (
+  config: FormlyConfig,
+  translate: TranslateService
+) => {
+  config.addValidatorMessage(
+    'required',
+    translate.instant(requiredValidationMessage)
+  );
+  config.addValidatorMessage('min', (err, field) =>
+    translate.instant(minValidationMessage, {
+      value: field.templateOptions.min
+    })
+  );
+  config.addValidatorMessage('max', (err, field) =>
+    translate.instant(maxValidationMessage, {
+      value: field.templateOptions.max
+    })
+  );
+  config.addValidatorMessage('minlength', (err, field) =>
+    translate.instant(minLengthValidationMessage, {
+      value: field.templateOptions.minlength
+    })
+  );
+  config.addValidatorMessage('maxlength', (err, field) =>
+    translate.instant(maxLengthValidationMessage, {
+      value: field.templateOptions.maxLength
+    })
+  );
+  config.addValidatorMessage(
+    'email',
+    translate.instant(emailValidationMessage)
+  );
+  config.addValidatorMessage('name', translate.instant(nameValidationMessage));
+  config.addValidatorMessage(
+    'username',
+    translate.instant(usernameValidationMessage)
+  );
+  config.addValidatorMessage(
+    'human',
+    translate.instant(humanNameValidationMessage)
+  );
+  config.addValidatorMessage('url', translate.instant(urlValidationMessage));
+  config.addValidatorMessage(
+    'mobile',
+    translate.instant(mobileValidationMessage)
+  );
 };

@@ -21,7 +21,7 @@ export class RoleDialogComponent extends EntityFormComponent<KeycloakRole> {
       {
         key: 'name',
         type: 'input',
-        templateOptions: { type: 'text', required: true },
+        templateOptions: { type: 'text', required: true, maxLength: 50 },
         expressionProperties: {
           'templateOptions.label': () =>
             this.translate.instant('tgapp.admin.role-dialog.name.label'),
