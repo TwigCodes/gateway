@@ -75,7 +75,7 @@ export abstract class BaseLeanCloudTableComponent<
       this.sortChange$,
       this.filterChange$
     ).pipe(
-      switchMap(_ =>
+      switchMap(__ =>
         this.service.paged(
           this.pageChange$.value.pageIndex * this.pageChange$.value.pageSize,
           this.pageChange$.value.pageSize,
@@ -115,7 +115,7 @@ export abstract class BaseLeanCloudTableComponent<
 
     this.loadMore$
       .pipe(
-        switchMap(_ =>
+        switchMap(__ =>
           this.service.paged(
             this.pageChange$.value.pageIndex * this.pageChange$.value.pageSize,
             this.pageChange$.value.pageSize,
