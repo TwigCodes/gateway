@@ -56,7 +56,8 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
               this.translate.instant(
                 'tgapp.admin.role-dialog.name.placeholder'
               ),
-            'templateOptions.disabled': () => this.isBuiltIn(val.name)
+            'templateOptions.disabled': () =>
+              val && val.name ? this.isBuiltIn(val.name) : false
           }
         },
         {
@@ -77,7 +78,8 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
               this.translate.instant(
                 'tgapp.admin.role-dialog.description.placeholder'
               ),
-            'templateOptions.disabled': () => this.isBuiltIn(val.name)
+            'templateOptions.disabled': () =>
+              val && val.name ? this.isBuiltIn(val.name) : false
           }
         }
       ];
@@ -95,7 +97,7 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
     this.model$.pipe(take(1)).subscribe(role => {
       this.store.dispatch(
         new fromRole.UpdateAction({
-          id: role.name,
+          id: role.id,
           update: { ...role, ...this.entityForm.value }
         })
       );
@@ -124,7 +126,7 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
         switchMap(__ => this.model$.pipe(take(1)))
       )
       .subscribe(role => {
-        this.store.dispatch(new fromRole.DeleteAction(role.name));
+        this.store.dispatch(new fromRole.DeleteAction(role.id));
       });
   }
 

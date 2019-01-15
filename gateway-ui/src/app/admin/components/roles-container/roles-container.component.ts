@@ -60,6 +60,6 @@ export class RolesContainerComponent implements OnInit {
   }
 
   handleUpdate(role: KeycloakRole) {
-    this.router.navigate([`${role.name}`], { relativeTo: this.route });
+    this.router.navigate([`${role.id}`], { relativeTo: this.route });
   }
 }

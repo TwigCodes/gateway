@@ -15,6 +15,24 @@ export class RoleService extends BaseKeycloakService<KeycloakRole> {
     super(httpClient);
   }
 
+  delete(id: string) {
+    this.loadingSubject.next(true);
+    return this.httpClient.delete(`${this.baseUrl}/roles-by-id/${id}`).pipe(
+      catchError(this.handleError),
+      finalize(() => this.loadingSubject.next(false))
+    );
+  }
+
+  update(id: string, entity: KeycloakRole) {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .put(`${this.baseUrl}/roles-by-id/${id}`, entity)
+      .pipe(
+        catchError(this.handleError),
+        finalize(() => this.loadingSubject.next(false))
+      );
+  }
+
   /**
    * override the method of base class
    */

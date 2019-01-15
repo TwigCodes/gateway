@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Action, select, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
+import {
+  switchMap,
+  map,
+  catchError,
+  withLatestFrom,
+  filter
+} from 'rxjs/operators';
 import { UserService, RoleService } from '@app/admin/services';
 
 import * as fromRole from '@app/admin/actions/roles/role.actions';
@@ -60,6 +66,9 @@ export class RoleUsersEffects {
   getUsersByRole = this.actions$.pipe(
     ofType<fromRole.SelectAction>(fromRole.ActionTypes.Select),
     map(action => action.payload),
+    switchMap(id => this.store.pipe(select(fromAdmin.getRoleSelected))),
+    filter(val => val != null),
+    map(role => role.name),
     withLatestFrom(
       this.store.pipe(select(fromAdmin.getRoleUsersPageIndex)),
       this.store.pipe(select(fromAdmin.getRoleUsersPageSize))

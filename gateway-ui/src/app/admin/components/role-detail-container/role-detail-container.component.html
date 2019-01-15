@@ -1,5 +1,10 @@
-<mat-tab-group>
-  <mat-tab label="{{ 'tgapp.admin.roledetail.info' | translate }}">
+<ng-template #none>
+  <mat-card>
+    {{ 'tgapp.admin.role-detail.nothing-to-display' | translate }}
+  </mat-card>
+</ng-template>
+<mat-tab-group *ngIf="(model$ | async) !== null else none">
+  <mat-tab label="{{ 'tgapp.admin.role-detail.info' | translate }}">
     <ng-template matTabContent>
       <form [formGroup]="entityForm" (ngSubmit)="submit()">
         <formly-form [model]="model" [fields]="fields" [form]="entityForm">
@@ -20,13 +25,13 @@
       </form>
     </ng-template>
   </mat-tab>
-  <mat-tab label="{{ 'tgapp.admin.roledetail.users' | translate }}">
+  <mat-tab label="{{ 'tgapp.admin.role-detail.users' | translate }}">
     <ng-template matTabContent>
       <mat-list>
         <mat-list-item>
           <ngx-mat-autocomplete
             class="full-width"
-            [placeholder]="'tgapp.admin.roledetail.users.addrolemapping' | translate"
+            [placeholder]="'tgapp.admin.role-detail.users.addrolemapping' | translate"
             [minChars]="2"
             [source]="service"
             [serviceParams]="params"

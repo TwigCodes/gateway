@@ -52,7 +52,8 @@ export function reducer(state = initialState, action: UserActions): State {
       return {
         ...state,
         ...adapter.removeOne(action.payload, state),
-        count: state.count - 1 >= 0 ? state.count : 0
+        count: state.count - 1 >= 0 ? state.count : 0,
+        selectedId: null
       };
     }
     case ActionTypes.SearchSuccess:

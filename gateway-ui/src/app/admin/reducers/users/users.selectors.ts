@@ -41,5 +41,5 @@ export const selectSearch = createSelector(
 
 export const selectUserSelected = createSelector(
   selectUserState,
-  state => state.entities[state.selectedId]
+  state => (state.selectedId === null ? null : state.entities[state.selectedId])
 );

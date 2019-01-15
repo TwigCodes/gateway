@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Action } from '@ngrx/store';
+import { Action, Store, select } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map, catchError, filter } from 'rxjs/operators';
 import { UserService } from '@app/admin/services';
 
 import * as fromUser from '@app/admin/actions/users/user.actions';
 import * as fromUserRoles from '@app/admin/actions/users/user-roles.actions';
+import * as fromAdmin from '@app/admin/reducers';
 
 @Injectable()
 export class UserRolesEffects {
@@ -52,6 +53,9 @@ export class UserRolesEffects {
   getRolesByUser = this.actions$.pipe(
     ofType<fromUser.SelectAction>(fromUser.ActionTypes.Select),
     map(action => action.payload),
+    switchMap(_ => this.store.pipe(select(fromAdmin.getUserSelected))),
+    filter(val => val != null),
+    map(user => user.id),
     switchMap(userId =>
       this.service.getRolesByUserId(userId).pipe(
         map(result => new fromUserRoles.GetRolesByUserSuccessAction(result)),
@@ -60,5 +64,9 @@ export class UserRolesEffects {
     )
   );
 
-  constructor(private actions$: Actions, private service: UserService) {}
+  constructor(
+    private actions$: Actions,
+    private service: UserService,
+    private store: Store<fromAdmin.State>
+  ) {}
 }

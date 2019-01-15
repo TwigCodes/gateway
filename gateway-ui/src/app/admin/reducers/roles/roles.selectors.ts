@@ -15,5 +15,5 @@ export const {
 
 export const selectRoleSelected = createSelector(
   selectRoleState,
-  state => state.entities[state.selectedId]
+  state => (state.selectedId === null ? null : state.entities[state.selectedId])
 );

@@ -1,20 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ROUTER_NAVIGATION } from '@ngrx/router-store';
-import { switchMap, map, catchError, filter, tap } from 'rxjs/operators';
+import { switchMap, map, catchError, filter } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { Router } from '@angular/router';
 import { RoleService } from '@app/admin/services';
 
 import * as fromRole from '@app/admin/actions/roles/role.actions';
 
 @Injectable()
 export class RoleEffects {
-  constructor(
-    private actions$: Actions,
-    private service: RoleService,
-    private router: Router
-  ) {}
+  constructor(private actions$: Actions, private service: RoleService) {}
 
   @Effect()
   add = this.actions$.pipe(
