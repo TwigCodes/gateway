@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { MatButtonToggleGroup } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface Item {
   title: string;
@@ -34,7 +35,7 @@ export class ListOrGridWithFilterComponent {
   selection = new SelectionModel<Partial<Item>>(false, []);
   @ViewChild('gridView')
   public gridView: MatButtonToggleGroup;
-  constructor() {}
+  constructor(private translate: TranslateService) {}
 
   handleSelected(item: Item) {
     this.select.emit(item.value);
@@ -54,8 +55,13 @@ export class ListOrGridWithFilterComponent {
       : this.filterValue
       ? this.items.filter(
           item =>
-            item.title.toLowerCase().includes(this.filterValue.toLowerCase()) ||
-            item.subtitle.toLowerCase().includes(this.filterValue.toLowerCase())
+            this.translate
+              .instant(item.title)
+              .toLowerCase()
+              .includes(this.filterValue.toLowerCase()) ||
+            this.translate
+              .instant(item.subtitle.toLowerCase())
+              .includes(this.filterValue.toLowerCase())
         )
       : this.items;
   }
