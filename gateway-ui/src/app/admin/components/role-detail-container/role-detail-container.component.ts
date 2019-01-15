@@ -34,40 +34,7 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
   model$ = this.store.pipe(select(fromAdmin.getRoleSelected));
   users$ = this.store.pipe(select(fromAdmin.getRoleUsers));
   sub: Subscription;
-  fields: FormlyFieldConfig[] = [
-    {
-      key: 'name',
-      type: 'input',
-      templateOptions: {
-        type: 'text',
-        required: true
-      },
-      expressionProperties: {
-        'templateOptions.label': () =>
-          this.translate.instant('tgapp.admin.role-dialog.name.label'),
-        'templateOptions.placeholder': () =>
-          this.translate.instant('tgapp.admin.role-dialog.name.placeholder')
-      }
-    },
-    {
-      key: 'description',
-      type: 'textarea',
-      templateOptions: {
-        type: 'text',
-        required: true,
-        maxLength: 255,
-        rows: 3
-      },
-      expressionProperties: {
-        'templateOptions.label': () =>
-          this.translate.instant('tgapp.admin.role-dialog.description.label'),
-        'templateOptions.placeholder': () =>
-          this.translate.instant(
-            'tgapp.admin.role-dialog.description.placeholder'
-          )
-      }
-    }
-  ];
+  fields: FormlyFieldConfig[];
   constructor(
     private store: Store<fromAdmin.State>,
     private translate: TranslateService,
@@ -77,6 +44,43 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub = this.model$.subscribe(val => {
       this.model = { ...val };
+      this.fields = [
+        {
+          key: 'name',
+          type: 'input',
+          templateOptions: { type: 'text', required: true },
+          expressionProperties: {
+            'templateOptions.label': () =>
+              this.translate.instant('tgapp.admin.role-dialog.name.label'),
+            'templateOptions.placeholder': () =>
+              this.translate.instant(
+                'tgapp.admin.role-dialog.name.placeholder'
+              ),
+            'templateOptions.disabled': () => this.isBuiltIn(val.name)
+          }
+        },
+        {
+          key: 'description',
+          type: 'textarea',
+          templateOptions: {
+            type: 'text',
+            required: true,
+            maxLength: 255,
+            rows: 3
+          },
+          expressionProperties: {
+            'templateOptions.label': () =>
+              this.translate.instant(
+                'tgapp.admin.role-dialog.description.label'
+              ),
+            'templateOptions.placeholder': () =>
+              this.translate.instant(
+                'tgapp.admin.role-dialog.description.placeholder'
+              ),
+            'templateOptions.disabled': () => this.isBuiltIn(val.name)
+          }
+        }
+      ];
     });
   }
   ngOnDestroy() {
