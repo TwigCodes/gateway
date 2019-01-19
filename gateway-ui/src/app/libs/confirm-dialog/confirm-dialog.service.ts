@@ -7,7 +7,13 @@ import { ConfirmDialogComponent } from './confirm-dialog.component';
 @Injectable()
 export class ConfirmDialogService {
   constructor(private dialog: MatDialog) {}
-
+  /**
+   * @param title The dialog title
+   * @param message The message displayed in the body of the dialog
+   * @param okLabel The label text on the Ok button
+   * @param cancelLabel The label text on the cancelLabel button
+   * @returns if dialog close together with clicking on 'Ok' or 'Cancel
+   */
   public show(
     title: string,
     message: string,
