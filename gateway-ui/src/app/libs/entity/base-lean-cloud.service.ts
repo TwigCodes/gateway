@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, finalize, map, retry, switchMap } from 'rxjs/operators';
+import { catchError, finalize, map, retry, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { CrudService } from '@app/libs/entity/crud.service';
@@ -13,7 +13,8 @@ export abstract class BaseLeanCloudService<
   T extends Entity
 > extends CrudService<T> {
   protected readonly baseUrl = `${env.leanCloud.baseUrl}/classes`;
-
+  protected readonly DEFAULT_PAGE_SKIP = 0;
+  protected readonly DEFAULT_PAGE_LIMIT = 20;
   add(entity: T) {
     this.loadingSubject.next(true);
     return this.httpClient
@@ -48,17 +49,7 @@ export abstract class BaseLeanCloudService<
     pageSize: number,
     sort: string | null
   ): Observable<LeanCloudResult<T>> {
-    this.loadingSubject.next(true);
-    const params = new HttpParams()
-      .set('where', search.expression)
-      .set('skip', String(pageIndex * pageSize))
-      .set('limit', String(pageSize))
-      .set('order', sort);
-    const url = `${this.baseUrl}/${this.entityPath}`;
-    return this.httpClient.get<LeanCloudResult<T>>(url, { params }).pipe(
-      catchError(this.handleError),
-      finalize(() => this.loadingSubject.next(false))
-    );
+    return this.paged(pageIndex * pageSize, pageSize, sort, search.expression);
   }
 
   paged(
@@ -78,20 +69,19 @@ export abstract class BaseLeanCloudService<
     return this.httpClient
       .get<LeanCloudResult<T>>(url, { params: params })
       .pipe(
+        retry(3), // retry a failed request up to 3 times
         catchError(this.handleError),
+        share(),
         finalize(() => this.loadingSubject.next(false))
       );
   }
 
   getAll(): Observable<T[]> {
-    this.loadingSubject.next(true);
-    return this.httpClient
-      .get<LeanCloudResult<T>>(`${this.baseUrl}/${this.entityPath}`)
-      .pipe(
-        map(result => result.results),
-        retry(3), // retry a failed request up to 3 times
-        catchError(this.handleError),
-        finalize(() => this.loadingSubject.next(false))
-      );
+    return this.paged(
+      this.DEFAULT_PAGE_SKIP,
+      this.DEFAULT_PAGE_LIMIT,
+      null,
+      null
+    ).pipe(map(result => result.results));
   }
 }

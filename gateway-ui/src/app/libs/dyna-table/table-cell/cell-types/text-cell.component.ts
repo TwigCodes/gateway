@@ -4,7 +4,14 @@ import { ColumnConfig } from '../../column-config.model';
 
 @Component({
   selector: 'ngx-text-cell',
-  template: '{{ displayText }}',
+  template: `
+    <span
+      *ngIf="displayText.length > 30; else noTruncate"
+      matTooltip="{{ displayText }}"
+      >{{ displayText | slice: 0:30 }}...
+    </span>
+    <ng-template #noTruncate> {{ displayText }} </ng-template>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TextCellComponent implements CellComponent {
