@@ -4,8 +4,9 @@ import {
   GroupActions,
   ActionTypes
 } from '@app/admin/actions/groups/group.actions';
-import { KeycloakGroupDTO } from '@app/admin/admin.model';
+import { KeycloakGroupDTO, KeycloakGroup } from '@app/admin/admin.model';
 import { DEFAULT_PAGE_SIZE } from '@app/libs';
+import { flatGroupTree } from '@app/admin/admin-utils';
 import * as _ from 'lodash';
 
 export interface State extends EntityState<KeycloakGroupDTO> {
@@ -40,9 +41,7 @@ export function reducer(state = initialState, action: GroupActions): State {
   switch (action.type) {
     case ActionTypes.AddTopSuccess: {
       const apiResult = action.payload;
-      const group = new schema.Entity('group');
-      group.define({ subGroups: [group] });
-      const normalizedData = normalize(apiResult, group);
+      const normalizedData = flatGroupTree(apiResult);
       return {
         ...state,
         ...adapter.addMany(_.values(normalizedData.entities['group']), state),
@@ -52,9 +51,7 @@ export function reducer(state = initialState, action: GroupActions): State {
     }
     case ActionTypes.AddChildSuccess: {
       const apiResult = action.payload.child;
-      const group = new schema.Entity('group');
-      group.define({ subGroups: [group] });
-      const normalizedData = normalize(apiResult, group);
+      const normalizedData = flatGroupTree(apiResult);
       const parentId = action.payload.parentId;
       const parentEntity = state.entities[parentId];
       const newParentEntity = {
@@ -89,15 +86,33 @@ export function reducer(state = initialState, action: GroupActions): State {
       };
     }
     case ActionTypes.DeleteSuccess: {
-      const apiResult = action.payload;
+      const apiResult = action.payload as string;
 
       const newTopLevelNodeIds = state.topLevelNodeIds.filter(
         input => apiResult !== input
       );
       const deletedIds = [...state.entities[apiResult].subGroups, apiResult];
+      const deletedState = adapter.removeMany(deletedIds, state);
+      const parentNode = (state.ids as string[]).filter(id =>
+        state.entities[id].subGroups.includes(apiResult)
+      );
+      let newState = deletedState;
+      if (parentNode.length > 0) {
+        const toUpdate = state.entities[parentNode[0]] as KeycloakGroupDTO;
+        newState = adapter.updateOne(
+          {
+            id: toUpdate.id,
+            changes: {
+              ...toUpdate,
+              subGroups: toUpdate.subGroups.filter(id => id !== apiResult)
+            }
+          },
+          deletedState
+        );
+      }
       return {
         ...state,
-        ...adapter.removeMany(deletedIds, state),
+        ...newState,
         topLevelNodeIds: newTopLevelNodeIds,
         count: state.count - 1 >= 0 ? state.count : 0,
         selectedId: null
@@ -105,9 +120,7 @@ export function reducer(state = initialState, action: GroupActions): State {
     }
     case ActionTypes.SearchSuccess: {
       const apiResult = action.payload;
-      const group = new schema.Entity('group');
-      group.define({ subGroups: [group] });
-      const normalizedData = normalize(apiResult, [group]);
+      const normalizedData = flatGroupTree(apiResult);
       const groupEntities = normalizedData.entities['group'];
       return {
         ...adapter.addAll(_.values(groupEntities), state),
@@ -116,9 +129,7 @@ export function reducer(state = initialState, action: GroupActions): State {
     }
     case ActionTypes.LoadPageSuccess: {
       const apiResult = action.payload;
-      const group = new schema.Entity('group');
-      group.define({ subGroups: [group] });
-      const normalizedData = normalize(apiResult, [group]);
+      const normalizedData = flatGroupTree(apiResult);
       const groupEntities = normalizedData.entities['group'];
       return {
         ...state,
@@ -129,9 +140,7 @@ export function reducer(state = initialState, action: GroupActions): State {
     }
     case ActionTypes.NextPageSuccess: {
       const apiResult = action.payload;
-      const group = new schema.Entity('group');
-      group.define({ subGroups: [group] });
-      const normalizedData = normalize(apiResult, [group]);
+      const normalizedData = flatGroupTree(apiResult);
       const groupEntities = normalizedData.entities['group'];
       return {
         ...state,
