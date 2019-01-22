@@ -43,7 +43,7 @@ export class UserService extends BaseKeycloakService<KeycloakUser> {
         const resetParams = {
           temporary: true,
           type: 'password',
-          value: 'Abcd1234'
+          value: environment.admin.initialPassword
         };
         return this.httpClient
           .put(
