@@ -18,6 +18,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
+import { NgxPermissionsModule } from 'ngx-permissions';
 import { environment } from '@env/environment';
 
 import { NgrxNotificationService } from './notifications/ngrx-notification.service';

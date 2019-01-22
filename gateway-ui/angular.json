@@ -36,12 +36,8 @@
               }
             ],
             "styles": [
-              {
-                "input": "src/styles-app-loading.scss"
-              },
-              {
-                "input": "src/styles.scss"
-              }
+              { "input": "src/styles-app-loading.scss" },
+              { "input": "src/styles.scss" }
             ],
             "scripts": []
           },
@@ -73,7 +69,7 @@
                 {
                   "type": "bundle",
                   "name": "vendor",
-                  "baseline": "1500kb",
+                  "baseline": "1700kb",
                   "maximumWarning": "100kb",
                   "maximumError": "200kb"
                 },
@@ -87,7 +83,7 @@
                 {
                   "type": "bundle",
                   "name": "main",
-                  "baseline": "100kb",
+                  "baseline": "200kb",
                   "maximumWarning": "50kb",
                   "maximumError": "100kb"
                 }

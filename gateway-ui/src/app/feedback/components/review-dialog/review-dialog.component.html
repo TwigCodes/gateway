@@ -1,11 +1,14 @@
 <h2 mat-dialog-title> {{ 'tgapp.feedback.review.dialog.title' | translate }} </h2>
 <mat-dialog-content>
-  <mat-card class="d-flex m-1">
+  <mat-card class="d-flex m-1" *ngIf="ratee">
     <img [src]="ratee?.avatar" class="card-avatar m-2">
     <div>
       <mat-card-title>{{ ratee?.name }}</mat-card-title>
       <mat-card-subtitle>{{ ratee?.title ? ratee.title : ('tgapp.feedback.rater.notitle' | translate) }}</mat-card-subtitle>
     </div>
   </mat-card>
-  <ngx-question-wizard [questions]="questions" (answer)="handleAnswer($event)"></ngx-question-wizard>
+  <ng-container *ngIf="questions$ | async as questions">
+    <ngx-question-wizard [questions]="questions" (answer)="handleAnswer($event)"></ngx-question-wizard>
+  </ng-container>
+
 </mat-dialog-content>

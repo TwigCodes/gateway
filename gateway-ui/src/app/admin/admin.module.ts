@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { NgxPermissionsModule } from 'ngx-permissions';
 import { SharedModule } from '@app/shared';
 
 import { AdminRoutingModule } from './admin-routing.module';
@@ -16,7 +17,9 @@ import {
   GroupDetailContainerComponent,
   GroupDialogComponent,
   MenusContainerComponent,
-  MenusDialogComponent
+  MenusDialogComponent,
+  RolePermissionsContainerComponent,
+  RolePermissionDialogComponent
 } from './components';
 
 import { ADMIN_EFFECTS } from './effects';
@@ -35,7 +38,9 @@ export const COMPONENTS = [
   GroupDetailContainerComponent,
   GroupDialogComponent,
   MenusContainerComponent,
-  MenusDialogComponent
+  MenusDialogComponent,
+  RolePermissionsContainerComponent,
+  RolePermissionDialogComponent
 ];
 @NgModule({
   declarations: COMPONENTS,
@@ -50,7 +55,8 @@ export const COMPONENTS = [
     UserDialogComponent,
     RoleDialogComponent,
     GroupDialogComponent,
-    MenusDialogComponent
+    MenusDialogComponent,
+    RolePermissionDialogComponent
   ]
 })
 export class AdminModule {}

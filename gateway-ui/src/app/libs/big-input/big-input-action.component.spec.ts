@@ -60,7 +60,7 @@ describe('BigInputActionComponent', () => {
   });
 
   it('should display icon if fontSet and fontIcon properties are set', () => {
-    const template = `<ngx-big-input-action fontSet="fas" fontIcon="fa-trash"></ngx-big-input-action>`;
+    const template = `<ngx-big-input-action fontSet="fas" fontSet="fa" fontIcon="fa-trash"></ngx-big-input-action>`;
     fixture = createHostComponent(template);
     expect(getIcon()).toBeTruthy();
     expect(getIcon().nativeElement.classList.contains('fa-trash')).toBeTruthy();

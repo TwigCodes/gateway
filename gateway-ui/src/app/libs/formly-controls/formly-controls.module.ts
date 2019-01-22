@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  MatChipsModule,
+  MatAutocompleteModule,
   MatButtonModule,
+  MatChipsModule,
   MatIconModule,
+  MatOptionModule,
   MatTooltipModule
 } from '@angular/material';
 import { FormlyModule, FormlyConfig } from '@ngx-formly/core';
@@ -18,22 +20,23 @@ import {
   humanNameValidator,
   usernameValidator,
   mobileValidator,
-  COMMON_VALIDATION_MESSAGES,
   addValidationMessagesToConfig
 } from './validators';
-import { RepeatSectionTypeComponent } from './types';
+import { RepeatSectionTypeComponent, AutocompleteTypeComponent } from './types';
 
 const COMPONENTS = [RepeatSectionTypeComponent];
 
 @NgModule({
-  declarations: [RepeatSectionTypeComponent],
+  declarations: [RepeatSectionTypeComponent, AutocompleteTypeComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     TranslateModule,
+    MatAutocompleteModule,
     MatButtonModule,
     MatChipsModule,
     MatIconModule,
+    MatOptionModule,
     MatTooltipModule,
     FormlyMaterialModule,
     FormlyModule.forRoot({
@@ -45,7 +48,14 @@ const COMPONENTS = [RepeatSectionTypeComponent];
         { name: 'username', validation: usernameValidator },
         { name: 'mobile', validation: mobileValidator }
       ],
-      types: [{ name: 'repeat', component: RepeatSectionTypeComponent }]
+      types: [
+        { name: 'repeat', component: RepeatSectionTypeComponent },
+        {
+          name: 'autocomplete',
+          component: AutocompleteTypeComponent,
+          wrappers: ['form-field']
+        }
+      ]
     }),
     FormlyMatToggleModule
   ],

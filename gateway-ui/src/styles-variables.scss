@@ -17,3 +17,10 @@ $grid-breakpoints: (
 
 $success-colors: mat-palette($mat-green, 400);
 $warning-colors: mat-palette($mat-amber, 400);
+
+@mixin mat-icon-size($size: 24px) {
+  font-size: $size;
+  height: $size;
+  width: $size;
+  line-height: $size;
+}

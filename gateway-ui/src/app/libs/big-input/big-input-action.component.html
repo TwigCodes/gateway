@@ -1,5 +1,5 @@
 <button mat-raised-button color="color" [disabled]="disabled" (click)="onClick()" [attr.aria-label]="ariaLabel">
   <mat-icon *ngIf="fontSet && fontIcon && !faIcon" [fontSet]="fontSet" [fontIcon]="fontIcon"></mat-icon>
-  <fa-icon *ngIf="faIcon" [icon]="faIcon"></fa-icon>
+  <mat-icon *ngIf="faIcon" fontSet="fa" [fontIcon]="faIcon"></mat-icon>
   <span *ngIf="label">{{label}}</span>
 </button>

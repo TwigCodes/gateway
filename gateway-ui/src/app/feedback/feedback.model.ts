@@ -46,15 +46,6 @@ export interface Questionnaire {
   questionIds: number[];
 }
 
-export interface Question {
-  id: number;
-  questionnaireId: number;
-  title: string;
-  options?: { label: string; value: string }[];
-  type: string;
-  displayOrder: number;
-}
-
 export interface Employee {
   id?: number;
   name: string;

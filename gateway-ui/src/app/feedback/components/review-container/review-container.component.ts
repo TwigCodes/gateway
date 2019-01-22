@@ -1,11 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Employee, Feedback, Question } from '@app/feedback/feedback.model';
+import { MatDialog } from '@angular/material';
+import { filter, take } from 'rxjs/operators';
 import { ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
+import { Employee, Feedback } from '@app/feedback/feedback.model';
+import { ReviewDialogComponent } from '../review-dialog/review-dialog.component';
+import { Question } from '@app/data-mgmt/data-mgmt.model';
 
 import * as _ from 'lodash';
-import { MatDialog } from '@angular/material';
-import { ReviewDialogComponent } from '../review-dialog/review-dialog.component';
-import { filter, take } from 'rxjs/operators';
 
 @Component({
   selector: 'tgapp-review-container',

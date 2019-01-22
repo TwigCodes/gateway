@@ -51,6 +51,19 @@ export class AdminMenuItem extends Entity {
   subtitle: string;
   desc: string;
   link: string;
+  createdAt: Date;
+  updatedAt: Date;
+  get id() {
+    return this.objectId;
+  }
+}
+
+export class RolePermission extends Entity {
+  objectId: string;
+  roleName: string;
+  permissions: { route: string; name: string }[];
+  createdAt: Date;
+  updatedAt: Date;
   get id() {
     return this.objectId;
   }
