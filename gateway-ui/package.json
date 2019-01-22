@@ -88,6 +88,7 @@
     "lodash": "^4.17.11",
     "md5-typescript": "^1.0.5",
     "ngx-json-viewer": "^2.4.0",
+    "ngx-permissions": "^6.0.5",
     "ngx-translate-multi-http-loader": "^2.1.2",
     "normalizr": "^3.3.0",
     "rxjs": "^6.3.3",
