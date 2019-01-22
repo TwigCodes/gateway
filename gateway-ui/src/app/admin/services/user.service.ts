@@ -36,11 +36,24 @@ export class UserService extends BaseKeycloakService<KeycloakUser> {
           .get<KeycloakUser[]>(url, { params: params })
           .pipe(
             filter(users => users !== null && users.length > 0),
-            map(users => users[0]),
-            catchError(this.handleError),
-            finalize(() => this.loadingSubject.next(false))
+            map(users => users[0])
           );
-      })
+      }),
+      switchMap(added => {
+        const resetParams = {
+          temporary: true,
+          type: 'password',
+          value: 'Abcd1234'
+        };
+        return this.httpClient
+          .put(
+            `${this.baseUrl}/${this.entityPath}/${added.id}/reset-password`,
+            resetParams
+          )
+          .pipe(mapTo(added));
+      }),
+      catchError(this.handleError),
+      finalize(() => this.loadingSubject.next(false))
     );
   }
 
