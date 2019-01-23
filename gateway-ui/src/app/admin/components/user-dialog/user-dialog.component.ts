@@ -24,7 +24,11 @@ export class UserDialogComponent extends EntityFormComponent<KeycloakUser> {
       {
         key: 'username',
         type: 'input',
-        templateOptions: { type: 'text', required: true, maxLength: 50 },
+        templateOptions: {
+          type: 'text',
+          required: true,
+          maxLength: 50
+        },
         validators: {
           validation: ['username']
           // username: {

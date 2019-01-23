@@ -57,7 +57,7 @@ export class UserDetailContainerComponent implements OnInit, OnDestroy {
           validators: {
             validation: ['username']
           },
-          templateOptions: { type: 'text', required: true },
+          templateOptions: { type: 'text', required: true, readonly: true },
           expressionProperties: {
             'templateOptions.label': () =>
               this.translate.instant('tgapp.admin.user-dialog.username.label'),

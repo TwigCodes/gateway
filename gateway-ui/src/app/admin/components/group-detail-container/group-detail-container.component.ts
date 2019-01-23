@@ -61,7 +61,8 @@ export class GroupDetailContainerComponent implements OnInit, OnDestroy {
       },
       templateOptions: {
         type: 'text',
-        required: true
+        required: true,
+        readonly: true
       },
       expressionProperties: {
         'templateOptions.label': () =>

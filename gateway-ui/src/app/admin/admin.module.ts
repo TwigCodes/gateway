@@ -18,8 +18,6 @@ import {
   GroupDialogComponent,
   MenusContainerComponent,
   MenusDialogComponent,
-  RolePermissionsContainerComponent,
-  RolePermissionDialogComponent,
   PermissionsContainerComponent,
   PermissionDialogComponent
 } from './components';
@@ -49,9 +47,7 @@ export const COMPONENTS = [
   MenusContainerComponent,
   MenusDialogComponent,
   PermissionsContainerComponent,
-  PermissionDialogComponent,
-  RolePermissionsContainerComponent,
-  RolePermissionDialogComponent
+  PermissionDialogComponent
 ];
 @NgModule({
   declarations: COMPONENTS,
@@ -67,8 +63,7 @@ export const COMPONENTS = [
     RoleDialogComponent,
     GroupDialogComponent,
     MenusDialogComponent,
-    PermissionDialogComponent,
-    RolePermissionDialogComponent
+    PermissionDialogComponent
   ],
   providers: [
     {

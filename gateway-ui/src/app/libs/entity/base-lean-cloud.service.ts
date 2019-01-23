@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { catchError, finalize, map, retry, share } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { CrudService } from '@app/libs/entity/crud.service';
 import { Entity } from '@app/libs/entity/entity.model';
 import { environment as env } from '@env/environment';
 import { LeanCloudSearch, LeanCloudResult } from './lean-cloud.model';
 import { tag } from 'rxjs-spy/operators';
+import { DEFAULT_PAGE_SIZE } from '../dyna-table';
 
 @Injectable()
 export abstract class BaseLeanCloudService<
@@ -43,13 +44,11 @@ export abstract class BaseLeanCloudService<
       );
   }
 
-  search(
-    search: LeanCloudSearch,
-    pageIndex: number,
-    pageSize: number,
-    sort: string | null
-  ): Observable<LeanCloudResult<T>> {
-    return this.paged(pageIndex * pageSize, pageSize, sort, search.expression);
+  search(search: LeanCloudSearch): Observable<T[]> {
+    return this.paged(0, DEFAULT_PAGE_SIZE, null, search.expression).pipe(
+      map(res => res.results),
+      catchError(__ => of([]))
+    );
   }
 
   paged(

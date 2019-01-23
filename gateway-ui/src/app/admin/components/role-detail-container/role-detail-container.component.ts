@@ -54,7 +54,7 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
           validators: {
             validation: ['name']
           },
-          templateOptions: { type: 'text', required: true },
+          templateOptions: { type: 'text', required: true, readonly: true },
           expressionProperties: {
             'templateOptions.label': () =>
               this.translate.instant('tgapp.admin.role-dialog.name.label'),

@@ -36,28 +36,34 @@ export class LeanCloudSearch {
    * expression
    */
   public get expression(): string {
-    return this.value instanceof Date
-      ? JSON.stringify({
-          $and: [
-            {
-              [this.fieldName]: {
-                $gte: {
-                  __type: 'Date',
-                  iso: startOfDay(this.value).toUTCString
-                }
-              }
-            },
-            {
-              [this.fieldName]: {
-                $lt: {
-                  __type: 'Date',
-                  iso: endOfDay(this.value).toUTCString
-                }
+    if (this.value instanceof Date) {
+      return JSON.stringify({
+        $and: [
+          {
+            [this.fieldName]: {
+              $gte: {
+                __type: 'Date',
+                iso: startOfDay(this.value).toUTCString
               }
             }
-          ]
-        })
-      : JSON.stringify({ [this.fieldName]: { $regex: this.value } });
+          },
+          {
+            [this.fieldName]: {
+              $lt: {
+                __type: 'Date',
+                iso: endOfDay(this.value).toUTCString
+              }
+            }
+          }
+        ]
+      });
+    }
+    if (typeof this.value === 'string' && this.fieldName !== 'objectId') {
+      return JSON.stringify({
+        [this.fieldName]: { $regex: `^${this.value}*$` }
+      });
+    }
+    return JSON.stringify({ [this.fieldName]: this.value });
   }
 }
 
