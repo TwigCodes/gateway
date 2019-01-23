@@ -5,6 +5,7 @@ import { BaseKeycloakService } from './base-keycloak.service';
 import { map, catchError, finalize, switchMap, mapTo } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { filteredRoles } from './config';
+import { DEFAULT_PAGE_SIZE } from '@app/libs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,11 @@ export class GroupService extends BaseKeycloakService<KeycloakGroup> {
     super(httpClient);
   }
 
+  checkUniqueGroupName(groupName: string): Observable<boolean> {
+    return this.search(groupName, 0, DEFAULT_PAGE_SIZE).pipe(
+      map(res => res.filter(r => r.name === groupName).length === 0)
+    );
+  }
   /**
    * override the method of base class
    */

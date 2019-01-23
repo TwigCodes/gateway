@@ -7,7 +7,8 @@ import {
   RoleDetailContainerComponent,
   UserDetailContainerComponent,
   GroupsContainerComponent,
-  GroupDetailContainerComponent
+  GroupDetailContainerComponent,
+  RolePermissionsContainerComponent
 } from './components';
 import { AdminGuard } from './admin.guard';
 import { MenusContainerComponent } from './components/menus/menus-container.component';
@@ -62,6 +63,14 @@ const routes: Routes = [
         component: GroupDetailContainerComponent
       }
     ]
+  },
+  {
+    path: 'permissions',
+    component: RolePermissionsContainerComponent,
+    canActivate: [AdminGuard],
+    data: {
+      roles: ['admin']
+    }
   },
   {
     path: 'menus',

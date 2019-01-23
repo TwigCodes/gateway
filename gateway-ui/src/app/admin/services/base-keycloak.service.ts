@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { catchError, finalize } from 'rxjs/operators';
+import { catchError, finalize, map } from 'rxjs/operators';
 import { Entity } from '@app/libs/entity/entity.model';
 import { environment } from '@env/environment';
 import { Filter } from '@app/libs/entity/filter.service';
@@ -35,20 +35,15 @@ export abstract class BaseKeycloakService<T extends Entity> extends CrudService<
 
   filter(filter: Filter, pageIndex: number, pageSize: number): Observable<T[]> {
     this.loadingSubject.next(true);
-    const params = new HttpParams()
-      .set('first', String(pageIndex * pageSize))
-      .set('max', String(pageSize));
+    const params = {
+      ...filter,
+      first: String(pageIndex * pageSize),
+      max: String(pageSize)
+    };
     if (!filter) {
       return this.paged(pageIndex, pageSize);
     }
-    for (const key of Object.keys(filter)) {
-      const value = filter[key];
-      if (value instanceof String) {
-        params.set(key, value as string);
-      } else {
-        params.set(key, (value as string[]).join(','));
-      }
-    }
+
     const url = `${this.baseUrl}/${this.entityPath}`;
     return this.httpClient
       .get<T[]>(url, {

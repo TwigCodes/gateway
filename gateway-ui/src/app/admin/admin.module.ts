@@ -19,12 +19,21 @@ import {
   MenusContainerComponent,
   MenusDialogComponent,
   RolePermissionsContainerComponent,
-  RolePermissionDialogComponent
+  RolePermissionDialogComponent,
+  PermissionsContainerComponent,
+  PermissionDialogComponent
 } from './components';
 
 import { ADMIN_EFFECTS } from './effects';
 import { DataMgmtModule } from '@app/data-mgmt/data-mgmt.module';
 import * as fromAdmin from './reducers';
+import { FORMLY_CONFIG } from '@ngx-formly/core';
+import {
+  uniqueUsernameValidationConfig,
+  uniqueRoleNameValidationConfig,
+  uniqueGroupNameValidationConfig
+} from '@app/libs';
+import { UserService, RoleService, GroupService } from './services';
 
 export const COMPONENTS = [
   HomeContainerComponent,
@@ -39,6 +48,8 @@ export const COMPONENTS = [
   GroupDialogComponent,
   MenusContainerComponent,
   MenusDialogComponent,
+  PermissionsContainerComponent,
+  PermissionDialogComponent,
   RolePermissionsContainerComponent,
   RolePermissionDialogComponent
 ];
@@ -56,7 +67,28 @@ export const COMPONENTS = [
     RoleDialogComponent,
     GroupDialogComponent,
     MenusDialogComponent,
+    PermissionDialogComponent,
     RolePermissionDialogComponent
+  ],
+  providers: [
+    {
+      provide: FORMLY_CONFIG,
+      multi: true,
+      useFactory: uniqueUsernameValidationConfig,
+      deps: [UserService]
+    },
+    {
+      provide: FORMLY_CONFIG,
+      multi: true,
+      useFactory: uniqueRoleNameValidationConfig,
+      deps: [RoleService]
+    },
+    {
+      provide: FORMLY_CONFIG,
+      multi: true,
+      useFactory: uniqueGroupNameValidationConfig,
+      deps: [GroupService]
+    }
   ]
 })
 export class AdminModule {}

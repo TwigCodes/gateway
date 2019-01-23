@@ -2,12 +2,12 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ColumnConfig, BaseLeanCloudTableComponent, Crumb } from '@app/libs';
 import { ConfirmService } from '@app/shared';
-import { RolePermission } from '../../admin.model';
-import { RolePermissionService } from '../../services';
-import { RolePermissionDialogComponent } from './role-permission-dialog.component';
+import { Permission } from '../../admin.model';
+import { PermissionService } from '../../services';
+import { PermissionDialogComponent } from './permission-dialog.component';
 
 @Component({
-  selector: 'tgapp-role-permissions-container',
+  selector: 'tgapp-permissions-container',
   templateUrl: '../../../libs/entity/templates/entity-table.html',
   styles: [
     `
@@ -21,14 +21,14 @@ import { RolePermissionDialogComponent } from './role-permission-dialog.componen
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RolePermissionsContainerComponent
-  extends BaseLeanCloudTableComponent<RolePermission, RolePermissionService>
+export class PermissionsContainerComponent
+  extends BaseLeanCloudTableComponent<Permission, PermissionService>
   implements OnInit {
   public columns: ColumnConfig[];
   public crumbs: Crumb[];
-  public entityForm = RolePermissionDialogComponent;
+  public entityForm = PermissionDialogComponent;
   constructor(
-    protected service: RolePermissionService,
+    protected service: PermissionService,
     protected dialog: MatDialog,
     protected confirm: ConfirmService
   ) {
@@ -41,34 +41,34 @@ export class RolePermissionsContainerComponent
     this.selectable = false;
     this.crumbs = [
       { name: 'tgapp.breadcrumb.admin.home', link: '../' },
-      { name: 'tgapp.breadcrumb.admin.role-permissions', link: '.' }
+      { name: 'tgapp.breadcrumb.admin.permissions', link: '.' }
     ];
     this.columns = [
       {
         name: 'objectId',
         header: 'ID',
-        cell: (e: RolePermission) => `${e.objectId}`,
+        cell: (e: Permission) => `${e.objectId}`,
         type: 'string',
         sortable: true
       },
       {
-        name: 'roleName',
-        header: '角色名称',
-        cell: (e: RolePermission) => e.roleName,
+        name: 'tenant',
+        header: '租户名称',
+        cell: (e: Permission) => e.tenant,
         type: 'string',
         filterable: true
       },
       {
-        name: 'permissions',
-        header: '权限',
-        cell: (e: RolePermission) =>
-          `${e.permissions ? e.permissions.map(p => p.name).join(',') : ''}`,
-        type: 'string'
+        name: 'name',
+        header: '权限名称',
+        cell: (e: Permission) => e.name,
+        type: 'string',
+        filterable: true
       },
       {
         name: 'createdAt',
         header: '创建时间',
-        cell: (e: RolePermission) => e.createdAt,
+        cell: (e: Permission) => e.createdAt,
         type: 'date',
         sortable: true,
         filterable: true
@@ -76,7 +76,7 @@ export class RolePermissionsContainerComponent
       {
         name: 'updatedAt',
         header: '更新时间',
-        cell: (e: RolePermission) => e.updatedAt,
+        cell: (e: Permission) => e.updatedAt,
         type: 'date',
         sortable: true,
         filterable: true
@@ -84,7 +84,7 @@ export class RolePermissionsContainerComponent
     ];
   }
 
-  handleItem(row: RolePermission) {
+  handleItem(row: Permission) {
     console.log(row);
   }
 }

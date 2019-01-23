@@ -2,7 +2,7 @@
   {{ title | translate }}
 </h1>
 
-<form [formGroup]="entityForm" (ngSubmit)="submit()">
+<form [formGroup]="entityForm" (ngSubmit)="submit()" mat-dialog-content>
   <formly-form [model]="entity" [fields]="fields" [form]="entityForm">
     <mat-dialog-actions fxL0ayout="row" fxLayoutAlign="space-between center">
       <button mat-button color="warn" type="button" [mat-dialog-close]="false">

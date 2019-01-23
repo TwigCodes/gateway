@@ -80,7 +80,7 @@ export class GroupRolesEffects {
     map(action => action.payload),
     switchMap(({ roles, group }) => {
       return this.service.addRoleToGroup(group.id, roles).pipe(
-        map(roles => new fromGroupRoles.AddRolesToGroupSuccessAction(roles)),
+        map(__ => new fromGroupRoles.AddRolesToGroupSuccessAction(roles)),
         catchError(err => of(new fromGroupRoles.AddRolesToGroupFailAction(err)))
       );
     })

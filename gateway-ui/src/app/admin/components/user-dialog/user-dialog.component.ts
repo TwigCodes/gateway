@@ -4,7 +4,8 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { EntityFormComponent } from '@app/libs/entity/entity-form.component';
 import { KeycloakUser } from '@app/admin/admin.model';
-import { usernamePattern, usernameValidationMessage } from '@app/libs';
+
+import * as fromAdmin from '@app/admin/reducers';
 
 @Component({
   selector: 'tgapp-user-dialog',
@@ -30,6 +31,9 @@ export class UserDialogComponent extends EntityFormComponent<KeycloakUser> {
           //   expression: c => usernamePattern.test(c.value),
           //   message: this.translate.instant(usernameValidationMessage)
           // }
+        },
+        asyncValidators: {
+          validation: ['uniqueUsername']
         },
         expressionProperties: {
           'templateOptions.label': () =>

@@ -74,3 +74,8 @@ export const getRouteQueryParams = createSelector(
   selectRouterState,
   state => state && state.state && state.state.queryParams
 );
+
+export const getCurrentTenant = createSelector(
+  selectAuthState,
+  state => state.realm
+);

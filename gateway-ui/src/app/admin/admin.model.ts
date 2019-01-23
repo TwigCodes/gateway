@@ -58,10 +58,20 @@ export class AdminMenuItem extends Entity {
   }
 }
 
+export class Permission extends Entity {
+  objectId: string;
+  name: string;
+  tenant: string;
+  get id() {
+    return this.objectId;
+  }
+}
+
 export class RolePermission extends Entity {
   objectId: string;
   roleName: string;
-  permissions: { route: string; name: string }[];
+  tenant: string;
+  permissions: { name: string }[];
   createdAt: Date;
   updatedAt: Date;
   get id() {

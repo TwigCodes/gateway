@@ -6,10 +6,10 @@ import { Store, select } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { take, switchMap, filter } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { ConfirmService } from '@app/shared';
 import { UserSearchService } from '@app/admin/services';
-import { KeycloakUser } from '@app/admin/admin.model';
+import { KeycloakUser, Permission } from '@app/admin/admin.model';
 import { DEFAULT_PAGE_SIZE } from '@app/libs';
 import { BUILT_IN_ROLES, BUILT_IN_USERS } from '@app/admin/commons';
 
@@ -36,6 +36,8 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
   users$ = this.store.pipe(select(fromAdmin.getRoleUsers));
   sub: Subscription;
   fields: FormlyFieldConfig[];
+  rolePermissions$: Observable<Permission[]>;
+  availablePermissions$: Observable<Permission[]>;
   constructor(
     private store: Store<fromAdmin.State>,
     private translate: TranslateService,

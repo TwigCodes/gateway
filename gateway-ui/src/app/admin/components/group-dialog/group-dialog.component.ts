@@ -21,6 +21,12 @@ export class GroupDialogComponent extends EntityFormComponent<KeycloakGroup> {
       {
         key: 'name',
         type: 'input',
+        validators: {
+          validation: ['name']
+        },
+        asyncValidators: {
+          validation: ['uniqueGroupName']
+        },
         templateOptions: { type: 'text', required: true, maxLength: 50 },
         expressionProperties: {
           'templateOptions.label': () =>

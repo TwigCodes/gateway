@@ -8,7 +8,7 @@ import {
   MatOptionModule,
   MatTooltipModule
 } from '@angular/material';
-import { FormlyModule, FormlyConfig } from '@ngx-formly/core';
+import { FormlyModule, FormlyConfig, FORMLY_CONFIG } from '@ngx-formly/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { FormlyMatToggleModule } from '@ngx-formly/material/toggle';
@@ -20,7 +20,9 @@ import {
   humanNameValidator,
   usernameValidator,
   mobileValidator,
-  addValidationMessagesToConfig
+  addValidationMessagesToConfig,
+  englishNameValidator,
+  routeValidator
 } from './validators';
 import { RepeatSectionTypeComponent, AutocompleteTypeComponent } from './types';
 
@@ -46,7 +48,9 @@ const COMPONENTS = [RepeatSectionTypeComponent];
         { name: 'url', validation: urlValidator },
         { name: 'human', validation: humanNameValidator },
         { name: 'username', validation: usernameValidator },
-        { name: 'mobile', validation: mobileValidator }
+        { name: 'mobile', validation: mobileValidator },
+        { name: 'englishName', validation: englishNameValidator },
+        { name: 'route', validation: routeValidator }
       ],
       types: [
         { name: 'repeat', component: RepeatSectionTypeComponent },

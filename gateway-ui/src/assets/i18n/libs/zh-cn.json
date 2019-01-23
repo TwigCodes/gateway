@@ -33,11 +33,14 @@
   "validation.regex.name.message": "命名不合法，使用字母/中文/_/#/空格，开头和结尾不可以使用空格",
   "validation.regex.mobile.message": "手机号不合法",
   "validation.regex.human-name.message": "姓名仅可以使用字母/中文/空格，开头和结尾不可以使用空格",
-  "validation.regex.username.message": "用户名不合法，仅可以使用字母或数字",
+  "validation.regex.username.message": "用户名不合法，仅可以使用英文字母或数字",
+  "validation.regex.english-name.message": "名称不合法，仅可以使用英文字母、数字、下划线或减号",
   "validation.regex.url.message": "URL 不合法",
+  "validation.regex.route.message": "路由不合法",
   "validation.require.message": "此字段为必填项",
   "validation.min.message": "最小值为 {{value}}",
   "validation.max.message": "最大值为 {{value}}",
   "validation.min-length.message": "最小长度为 {{value}}",
-  "validation.max-length.message": "最大长度为 {{value}}"
+  "validation.max-length.message": "最大长度为 {{value}}",
+  "validation.role-name.existed.message": "该角色已经分配过权限，请选择其他角色"
 }

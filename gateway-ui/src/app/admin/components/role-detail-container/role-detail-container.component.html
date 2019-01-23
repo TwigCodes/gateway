@@ -66,4 +66,14 @@
       </mat-list>
     </ng-template>
   </mat-tab>
+  <mat-tab label="{{ 'tgapp.admin.role-detail.permission' | translate }}">
+    <ng-template matTabContent>
+      <mat-chip-list *ngIf="rolePermissions$ | async as rolePermissions">
+        <mat-chip *ngFor="let perm of rolePermissions; trackBy:perm.objectId">{{perm.name}}</mat-chip>
+      </mat-chip-list>
+      <mat-selection-list *ngIf="availablePermissions$ | async as availablePermissions" #availablePermissionList>
+        <mat-list-item *ngFor="let perm of availablePermissions">{{ perm.name }}</mat-list-item>
+      </mat-selection-list>
+    </ng-template>
+  </mat-tab>
 </mat-tab-group>

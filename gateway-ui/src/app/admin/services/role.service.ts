@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { switchMap, finalize, catchError, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { switchMap, finalize, catchError, map, mapTo } from 'rxjs/operators';
 import { KeycloakRole, KeycloakUser } from '../admin.model';
 import { BaseKeycloakService } from './base-keycloak.service';
 import { filteredRoles } from './config';
@@ -14,7 +14,14 @@ export class RoleService extends BaseKeycloakService<KeycloakRole> {
   constructor(protected httpClient: HttpClient) {
     super(httpClient);
   }
-
+  checkUniqueRoleName(roleName: string): Observable<boolean> {
+    return this.getById(roleName).pipe(
+      mapTo(true),
+      catchError(__ => {
+        return of(false);
+      })
+    );
+  }
   delete(id: string) {
     this.loadingSubject.next(true);
     return this.httpClient.delete(`${this.baseUrl}/roles-by-id/${id}`).pipe(

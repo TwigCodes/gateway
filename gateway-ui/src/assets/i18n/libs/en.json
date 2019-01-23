@@ -34,10 +34,13 @@
   "validation.regex.mobile.message": "The mobile number is not valid",
   "validation.regex.human-name.message": "The name should consists of alphanumeric and space, no other charactors allowed",
   "validation.regex.username.message": "The username should consists of alphanumeric, no other charactors allowed",
+  "validation.regex.english-name.message": "The username should consists of alphanumeric, no other charactors allowed",
   "validation.regex.url.message": "The url is not valid",
+  "validation.regex.route.message": "The url is not valid",
   "validation.require.message": "The field is required",
   "validation.min.message": "The min value should be {{value}}",
   "validation.max.message": "The max value should be {{value}}",
   "validation.min-length.message": "The min length should be {{value}}",
-  "validation.max-length.message": "The max length should be {{value}}"
+  "validation.max-length.message": "The max length should be {{value}}",
+  "validation.role-name.existed.message": "The role you selected has been assigned with permissions"
 }

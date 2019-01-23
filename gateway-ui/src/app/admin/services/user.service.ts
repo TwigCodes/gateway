@@ -13,6 +13,7 @@ import {
 } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { filteredRoles } from './config';
+import { DEFAULT_PAGE_SIZE } from '@app/libs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,15 @@ export class UserService extends BaseKeycloakService<KeycloakUser> {
   constructor(protected httpClient: HttpClient) {
     super(httpClient);
   }
-
+  checkUniqueUsername(username: string): Observable<boolean> {
+    return this.filter({ username }, 0, DEFAULT_PAGE_SIZE).pipe(
+      map(
+        res =>
+          res.length === 0 ||
+          res.filter(r => r.username === username).length === 0
+      )
+    );
+  }
   /**
    * override add method
    */

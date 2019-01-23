@@ -28,5 +28,12 @@ export const BASIC_ADMIN_MENU: AdminMenuItem[] = [
     subtitle: 'tgapp.admin.menu.menu.subtitle',
     desc: 'tgapp.admin.menu.menu.desc',
     link: 'menus'
+  }),
+  Object.create({
+    objectId: '5',
+    title: 'tgapp.admin.menu.role-permissions.title',
+    subtitle: 'tgapp.admin.menu.role-permissions.subtitle',
+    desc: 'tgapp.admin.menu.role-permissions.desc',
+    link: 'permissions'
   })
 ];
