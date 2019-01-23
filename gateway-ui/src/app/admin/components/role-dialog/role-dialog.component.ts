@@ -23,7 +23,7 @@ export class RoleDialogComponent extends EntityFormComponent<KeycloakRole> {
         type: 'input',
         templateOptions: { type: 'text', required: true, maxLength: 50 },
         validators: {
-          validation: ['englishName']
+          validation: ['name']
         },
         asyncValidators: {
           validation: ['uniqueRoleName']

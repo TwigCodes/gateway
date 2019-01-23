@@ -42,5 +42,7 @@
   "validation.max.message": "最大值为 {{value}}",
   "validation.min-length.message": "最小长度为 {{value}}",
   "validation.max-length.message": "最大长度为 {{value}}",
-  "validation.role-name.existed.message": "该角色已经分配过权限，请选择其他角色"
+  "validation.role-name.unique.message": "角色名称已存在",
+  "validation.group-name.unique.message": "群组名称已存在",
+  "validation.username.unique.message": "用户名已存在"
 }

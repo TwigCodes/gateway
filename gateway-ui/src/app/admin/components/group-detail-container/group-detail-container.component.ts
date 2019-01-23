@@ -56,6 +56,9 @@ export class GroupDetailContainerComponent implements OnInit, OnDestroy {
     {
       key: 'name',
       type: 'input',
+      validators: {
+        validation: ['name']
+      },
       templateOptions: {
         type: 'text',
         required: true

@@ -54,6 +54,9 @@ export class UserDetailContainerComponent implements OnInit, OnDestroy {
         {
           key: 'username',
           type: 'input',
+          validators: {
+            validation: ['username']
+          },
           templateOptions: { type: 'text', required: true },
           expressionProperties: {
             'templateOptions.label': () =>

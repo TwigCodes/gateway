@@ -51,6 +51,9 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
         {
           key: 'name',
           type: 'input',
+          validators: {
+            validation: ['name']
+          },
           templateOptions: { type: 'text', required: true },
           expressionProperties: {
             'templateOptions.label': () =>

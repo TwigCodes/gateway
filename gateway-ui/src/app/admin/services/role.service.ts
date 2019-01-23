@@ -16,10 +16,8 @@ export class RoleService extends BaseKeycloakService<KeycloakRole> {
   }
   checkUniqueRoleName(roleName: string): Observable<boolean> {
     return this.getById(roleName).pipe(
-      mapTo(true),
-      catchError(__ => {
-        return of(false);
-      })
+      mapTo(false),
+      catchError(__ => of(true))
     );
   }
   delete(id: string) {

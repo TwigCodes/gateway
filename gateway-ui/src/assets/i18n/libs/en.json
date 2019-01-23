@@ -42,5 +42,7 @@
   "validation.max.message": "The max value should be {{value}}",
   "validation.min-length.message": "The min length should be {{value}}",
   "validation.max-length.message": "The max length should be {{value}}",
-  "validation.role-name.existed.message": "The role you selected has been assigned with permissions"
+  "validation.role-name.unique.message": "The role name exists",
+  "validation.group-name.unique.message": "The group name exists",
+  "validation.username.unique.message": "The username exists"
 }
