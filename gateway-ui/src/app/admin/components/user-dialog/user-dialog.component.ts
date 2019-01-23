@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { EntityFormComponent } from '@app/libs/entity/entity-form.component';
 import { KeycloakUser } from '@app/admin/admin.model';
 
-import * as fromAdmin from '@app/admin/reducers';
+import * as fromAdmin from '@app/admin/store/reducers';
 
 @Component({
   selector: 'tgapp-user-dialog',

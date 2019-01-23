@@ -20,11 +20,11 @@ import {
   MenusDialogComponent,
   PermissionsContainerComponent,
   PermissionDialogComponent
-} from './components';
+} from '@app/admin/components';
 
-import { ADMIN_EFFECTS } from './effects';
+import { ADMIN_EFFECTS } from '@app/admin/store/effects';
 import { DataMgmtModule } from '@app/data-mgmt/data-mgmt.module';
-import * as fromAdmin from './reducers';
+import * as fromAdmin from '@app/admin/store/reducers';
 import { FORMLY_CONFIG } from '@ngx-formly/core';
 import {
   uniqueUsernameValidationConfig,

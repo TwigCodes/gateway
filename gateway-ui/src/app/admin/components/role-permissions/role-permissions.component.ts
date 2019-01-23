@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ColumnConfig, BaseLeanCloudTableComponent, Crumb } from '@app/libs';
 import { ConfirmService } from '@app/shared';
-import { RolePermission } from '../../admin.model';
+import { RolePermission } from '@app/admin/admin.model';
 import { RolePermissionService } from '../../services';
 import { RolePermissionDialogComponent } from './role-permission-dialog.component';
 

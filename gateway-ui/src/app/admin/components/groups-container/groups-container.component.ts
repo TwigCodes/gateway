@@ -23,8 +23,8 @@ import { Crumb } from '@app/libs';
 import { GroupDialogComponent } from '../group-dialog/group-dialog.component';
 import { BREADCRUMBS_GROUPS } from '@app/admin/commons/breadcrumbs';
 
-import * as fromAdmin from '@app/admin/reducers';
-import * as fromGroup from '@app/admin/actions/groups/group.actions';
+import * as fromAdmin from '@app/admin/store/reducers';
+import * as fromGroup from '@app/admin/store/actions/groups/group.actions';
 
 @Component({
   selector: 'tgapp-groups-container',

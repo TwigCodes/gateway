@@ -6,17 +6,17 @@ import { Store, select } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { take, switchMap, filter } from 'rxjs/operators';
-import { Subscription, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ConfirmService } from '@app/shared';
 import { UserSearchService } from '@app/admin/services';
 import { KeycloakUser, Permission } from '@app/admin/admin.model';
-import { DEFAULT_PAGE_SIZE } from '@app/libs';
+import { DEFAULT_PAGE_SIZE, untilDestroy } from '@app/libs';
 import { BUILT_IN_ROLES, BUILT_IN_USERS } from '@app/admin/commons';
 
-import * as fromAdmin from '@app/admin/reducers';
-import * as fromRole from '@app/admin/actions/roles/role.actions';
-import * as fromRoleDetail from '@app/admin/actions/roles/role-users.actions';
-import * as fromRoleUsers from '@app/admin/actions/roles/role-users.actions';
+import * as fromAdmin from '@app/admin/store/reducers';
+import * as fromRole from '@app/admin/store/actions/roles/role.actions';
+import * as fromRoleDetail from '@app/admin/store/actions/roles/role-users.actions';
+import * as fromRoleUsers from '@app/admin/store/actions/roles/role-users.actions';
 import * as _ from 'lodash';
 
 @Component({
@@ -34,7 +34,6 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
     .set('pageSize', String(this.pageSize));
   model$ = this.store.pipe(select(fromAdmin.getRoleSelected));
   users$ = this.store.pipe(select(fromAdmin.getRoleUsers));
-  sub: Subscription;
   fields: FormlyFieldConfig[];
   rolePermissions$: Observable<Permission[]>;
   availablePermissions$: Observable<Permission[]>;
@@ -45,7 +44,7 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
     public service: UserSearchService
   ) {}
   ngOnInit(): void {
-    this.sub = this.model$.subscribe(val => {
+    this.model$.pipe(untilDestroy(this)).subscribe(val => {
       this.model = { ...val };
       this.fields = [
         {
@@ -91,11 +90,7 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
       ];
     });
   }
-  ngOnDestroy() {
-    if (this.sub && !this.sub.closed) {
-      this.sub.unsubscribe();
-    }
-  }
+  ngOnDestroy() {}
   submit() {
     if (this.entityForm.invalid) {
       return;

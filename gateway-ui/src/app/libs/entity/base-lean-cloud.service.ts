@@ -19,12 +19,10 @@ export abstract class BaseLeanCloudService<
   add(entity: T) {
     this.loadingSubject.next(true);
     return this.httpClient
-      .post(`${this.baseUrl}/${this.entityPath}`, entity)
+      .post<T>(`${this.baseUrl}/${this.entityPath}`, entity, {
+        params: { fetchWhenSave: 'true' }
+      })
       .pipe(
-        map((res: { id: string; createdAt: Date }) => {
-          const created = Object.assign(entity, res);
-          return Object.assign(created, { updatedAt: res.createdAt });
-        }),
         catchError(this.handleError),
         finalize(() => this.loadingSubject.next(false))
       );
@@ -36,7 +34,6 @@ export abstract class BaseLeanCloudService<
       .put(`${this.baseUrl}/${this.entityPath}/${id}`, entity)
       .pipe(
         map((res: Partial<T>) => {
-          console.log(entity);
           return Object.assign(entity, { updatedAt: res.updatedAt });
         }),
         catchError(this.handleError),

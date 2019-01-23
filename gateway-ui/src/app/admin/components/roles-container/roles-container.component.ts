@@ -5,13 +5,13 @@ import { Store, select } from '@ngrx/store';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
-import { selectAll } from '@app/admin/reducers/roles/roles.selectors';
+import { selectAll } from '@app/admin/store/reducers/roles/roles.selectors';
 import { KeycloakRole } from '@app/admin/admin.model';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
 import { BREADCRUMBS_ROLES } from '@app/admin/commons/breadcrumbs';
 
-import * as fromAdmin from '@app/admin/reducers';
-import * as fromRole from '@app/admin/actions/roles/role.actions';
+import * as fromAdmin from '@app/admin/store/reducers';
+import * as fromRole from '@app/admin/store/actions/roles/role.actions';
 @Component({
   selector: 'tgapp-roles-container',
   templateUrl: './roles-container.component.html',

@@ -4,7 +4,6 @@ import { FormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material';
 import { HttpParams } from '@angular/common/http';
 import { select, Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
 import { take, filter, switchMap } from 'rxjs/operators';
@@ -12,12 +11,12 @@ import { tag } from 'rxjs-spy/operators';
 import { UserSearchService } from '@app/admin/services';
 import { KeycloakUser, KeycloakRole } from '@app/admin/admin.model';
 import { ConfirmService } from '@app/shared/confirm/confirm.service';
-import { DEFAULT_PAGE_SIZE } from '@app/libs';
+import { DEFAULT_PAGE_SIZE, untilDestroy } from '@app/libs';
 
-import * as fromAdmin from '@app/admin/reducers';
-import * as fromGroup from '@app/admin/actions/groups/group.actions';
-import * as fromGroupRoles from '@app/admin/actions/groups/group-roles.actions';
-import * as fromGroupUsers from '@app/admin/actions/groups/group-users.actions';
+import * as fromAdmin from '@app/admin/store/reducers';
+import * as fromGroup from '@app/admin/store/actions/groups/group.actions';
+import * as fromGroupRoles from '@app/admin/store/actions/groups/group-roles.actions';
+import * as fromGroupUsers from '@app/admin/store/actions/groups/group-users.actions';
 
 import * as _ from 'lodash';
 
@@ -51,27 +50,7 @@ export class GroupDetailContainerComponent implements OnInit, OnDestroy {
     filter(val => val != null),
     switchMap(__ => this.store.pipe(select(fromAdmin.getRealmRoles)))
   );
-  sub = new Subscription();
-  fields: FormlyFieldConfig[] = [
-    {
-      key: 'name',
-      type: 'input',
-      validators: {
-        validation: ['name']
-      },
-      templateOptions: {
-        type: 'text',
-        required: true,
-        readonly: true
-      },
-      expressionProperties: {
-        'templateOptions.label': () =>
-          this.translate.instant('tgapp.admin.group-detail.name.label'),
-        'templateOptions.placeholder': () =>
-          this.translate.instant('tgapp.admin.group-detail.name.placeholder')
-      }
-    }
-  ];
+  fields: FormlyFieldConfig[];
   constructor(
     private store: Store<fromAdmin.State>,
     private translate: TranslateService,
@@ -79,17 +58,31 @@ export class GroupDetailContainerComponent implements OnInit, OnDestroy {
     public service: UserSearchService
   ) {}
   ngOnInit(): void {
-    this.sub.add(
-      this.model$.subscribe(val => {
-        this.model = { ...val };
-      })
-    );
+    this.fields = [
+      {
+        key: 'name',
+        type: 'input',
+        validators: {
+          validation: ['name']
+        },
+        templateOptions: {
+          type: 'text',
+          required: true,
+          readonly: true
+        },
+        expressionProperties: {
+          'templateOptions.label': () =>
+            this.translate.instant('tgapp.admin.group-detail.name.label'),
+          'templateOptions.placeholder': () =>
+            this.translate.instant('tgapp.admin.group-detail.name.placeholder')
+        }
+      }
+    ];
+    this.model$.pipe(untilDestroy(this)).subscribe(val => {
+      this.model = { ...val };
+    });
   }
-  ngOnDestroy() {
-    if (this.sub && !this.sub.closed) {
-      this.sub.unsubscribe();
-    }
-  }
+  ngOnDestroy() {}
   submit() {
     if (this.entityForm.invalid) {
       return;

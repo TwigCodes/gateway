@@ -62,6 +62,10 @@ export class Permission extends Entity {
   objectId: string;
   name: string;
   tenant: string;
+  public constructor(init?: Partial<Permission>) {
+    super();
+    Object.assign(this, init);
+  }
   get id() {
     return this.objectId;
   }
@@ -71,10 +75,24 @@ export class RolePermission extends Entity {
   objectId: string;
   roleName: string;
   tenant: string;
-  permissions: { name: string }[];
+  permission: Permission;
   createdAt: Date;
   updatedAt: Date;
+  public constructor(init?: Partial<RolePermission>) {
+    super();
+    Object.assign(this, init);
+  }
   get id() {
     return this.objectId;
+  }
+  get toAddExpr() {
+    return {
+      ...this,
+      permission: {
+        __type: 'Pointer',
+        className: 'Permission',
+        objectId: this.permission.objectId
+      }
+    };
   }
 }
