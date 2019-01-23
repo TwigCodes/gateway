@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Permission, KeycloakRole, RolePermission } from '@app/admin/admin.model';
+import { Permission, RolePermission } from '@app/admin/admin.model';
 
 export enum ActionTypes {
   AddPermissionToRole = '[RoleDetailPage] Add Permission To Role',
@@ -11,7 +11,9 @@ export enum ActionTypes {
   GetPermissionsByRoleSuccess = '[RoleApi] Get Permissions By Role Success',
   GetPermissionsByRoleFail = '[RoleApi] Get Permissions By Role Fail',
   LoadStart = '[RoleDetailPage] Load Start',
-  LoadingComplete = '[RoleDetailPage] Load Complete'
+  LoadingComplete = '[RoleDetailPage] Load Complete',
+  GetAvailablePermsByRoleSuccess = '[RoleApi] Get Available Permissions Success',
+  GetAvailablePermsByRoleFail = '[RoleApi] Get Available Permissions Fail'
 }
 
 export class AddPermissionToRoleAction implements Action {
@@ -56,6 +58,16 @@ export class GetPermissionsByRoleFailAction implements Action {
   constructor(public payload: string) {}
 }
 
+export class GetAvailablePermsSuccessAction implements Action {
+  readonly type = ActionTypes.GetAvailablePermsByRoleSuccess;
+  constructor(public payload: Permission[]) {}
+}
+
+export class GetAvailablePermsFailAction implements Action {
+  readonly type = ActionTypes.GetAvailablePermsByRoleFail;
+  constructor(public payload: string) {}
+}
+
 export class LoadStartAction implements Action {
   readonly type = ActionTypes.LoadStart;
   constructor() {}
@@ -76,4 +88,6 @@ export type RolePermissionsActions =
   | GetPermissionsByRoleSuccessAction
   | GetPermissionsByRoleFailAction
   | LoadStartAction
-  | LoadingCompleteAction;
+  | LoadingCompleteAction
+  | GetAvailablePermsSuccessAction
+  | GetAvailablePermsFailAction;

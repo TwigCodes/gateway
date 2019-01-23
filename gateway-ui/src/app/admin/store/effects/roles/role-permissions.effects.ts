@@ -9,7 +9,7 @@ import {
   withLatestFrom,
   filter
 } from 'rxjs/operators';
-import { RolePermissionService, RoleService } from '@app/admin/services';
+import { RolePermissionService, PermissionService } from '@app/admin/services';
 import { Permission, RolePermission } from '@app/admin/admin.model';
 
 import * as fromRole from '@app/admin/store/actions/roles/role.actions';
@@ -22,7 +22,7 @@ export class RolePermissionsEffects {
   constructor(
     private actions$: Actions,
     private rolePermissions: RolePermissionService,
-    private roleService: RoleService,
+    private perms: PermissionService,
     private store: Store<fromRoot.AppState>
   ) {}
 
@@ -89,6 +89,26 @@ export class RolePermissionsEffects {
         ),
         catchError(err =>
           of(new fromRolePermissions.GetPermissionsByRoleFailAction(err))
+        )
+      )
+    )
+  );
+
+  @Effect()
+  getAvailablePermsByRole = this.actions$.pipe(
+    ofType<fromRole.SelectAction>(fromRole.ActionTypes.Select),
+    map(action => action.payload),
+    switchMap(id => this.store.pipe(select(fromAdmin.getRoleSelected))),
+    filter(val => val != null),
+    withLatestFrom(this.store.pipe(select(fromRoot.getCurrentTenant))),
+    switchMap(([__, tenant]) =>
+      this.perms.getByTenant(tenant).pipe(
+        map(
+          result =>
+            new fromRolePermissions.GetAvailablePermsSuccessAction(result)
+        ),
+        catchError(err =>
+          of(new fromRolePermissions.GetAvailablePermsFailAction(err))
         )
       )
     )

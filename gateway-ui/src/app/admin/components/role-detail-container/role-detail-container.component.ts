@@ -5,7 +5,7 @@ import { HttpParams } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { take, switchMap, filter } from 'rxjs/operators';
+import { take, switchMap, filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ConfirmService } from '@app/shared';
 import { UserSearchService } from '@app/admin/services';
@@ -44,6 +44,15 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
     public service: UserSearchService
   ) {}
   ngOnInit(): void {
+    this.rolePermissions$ = this.store.pipe(
+      select(fromAdmin.getRolePermissions),
+      map(rolePermissions =>
+        rolePermissions.map(rolePermission => rolePermission.permission)
+      )
+    );
+    this.availablePermissions$ = this.store.pipe(
+      select(fromAdmin.getRoleAvailabePerms)
+    );
     this.model$.pipe(untilDestroy(this)).subscribe(val => {
       this.model = { ...val };
       this.fields = [
