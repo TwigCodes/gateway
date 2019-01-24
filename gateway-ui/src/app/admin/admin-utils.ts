@@ -1,4 +1,4 @@
-import { KeycloakGroup } from './admin.model';
+import { KeycloakGroup } from '../libs/entity/permissions/admin.model';
 import { normalize, schema } from 'normalizr';
 
 export const flatGroupTree = (groups: KeycloakGroup | KeycloakGroup[]) => {

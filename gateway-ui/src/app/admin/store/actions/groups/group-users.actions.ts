@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { KeycloakUser, KeycloakGroup } from '@app/admin/admin.model';
+import { KeycloakUser, KeycloakGroup } from '@app/libs';
 
 export enum ActionTypes {
   GetUsersByGroupSuccess = '[GroupApi] Get Users By User Success',

@@ -2,6 +2,7 @@ import browser from 'browser-detect';
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, of, combineLatest, Subscription } from 'rxjs';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 import {
   ActionAuthLogin,
@@ -13,7 +14,7 @@ import {
   ActionAuthCheckLogin,
   selectRealm
 } from '@app/core';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 // import { OAuthService } from 'angular-oauth2-oidc';
 // import { JwksValidationHandler } from 'angular-oauth2-oidc';
 import { environment as env } from '@env/environment';
@@ -71,6 +72,7 @@ export class AppComponent implements OnInit {
   sub = new Subscription();
   constructor(
     private store: Store<AppState>,
+    private permissionsService: NgxPermissionsService,
     private storageService: LocalStorageService // private oauthService: OAuthService
   ) {}
 

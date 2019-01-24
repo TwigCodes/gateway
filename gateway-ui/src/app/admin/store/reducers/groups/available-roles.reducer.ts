@@ -3,7 +3,7 @@ import {
   GroupRoleMappingActions,
   ActionTypes
 } from '@app/admin/store/actions/groups/group-roles.actions';
-import { KeycloakRole } from '@app/admin/admin.model';
+import { KeycloakRole } from '@app/libs';
 
 import * as fromGroup from '@app/admin/store/actions/groups/group-users.actions';
 

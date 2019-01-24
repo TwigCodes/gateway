@@ -3,8 +3,7 @@ import {
   UserGroupsActions,
   ActionTypes
 } from '@app/admin/store/actions/users/user-groups.actions';
-import { KeycloakGroup } from '@app/admin/admin.model';
-import { DEFAULT_PAGE_SIZE } from '@app/libs';
+import { DEFAULT_PAGE_SIZE, KeycloakGroup } from '@app/libs';
 
 export interface State extends EntityState<KeycloakGroup> {
   pageIndex: number;

@@ -4,8 +4,7 @@ import {
   GroupActions,
   ActionTypes
 } from '@app/admin/store/actions/groups/group.actions';
-import { KeycloakGroupDTO, KeycloakGroup } from '@app/admin/admin.model';
-import { DEFAULT_PAGE_SIZE } from '@app/libs';
+import { DEFAULT_PAGE_SIZE, KeycloakGroupDTO } from '@app/libs';
 import { flatGroupTree } from '@app/admin/admin-utils';
 import * as _ from 'lodash';
 

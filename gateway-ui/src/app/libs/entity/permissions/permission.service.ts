@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BaseLeanCloudService, LeanCloudResult } from '@app/libs';
-import { Permission } from '../admin.model';
+import { BaseLeanCloudService } from '../base-lean-cloud.service';
+import { LeanCloudResult } from '../lean-cloud.model';
+import { Permission } from './admin.model';
 import { map, catchError, finalize } from 'rxjs/operators';
 
 @Injectable({

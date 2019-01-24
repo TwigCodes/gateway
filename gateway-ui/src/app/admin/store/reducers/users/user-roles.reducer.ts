@@ -3,7 +3,7 @@ import {
   UserRolesActions,
   ActionTypes
 } from '@app/admin/store/actions/users/user-roles.actions';
-import { KeycloakRole } from '@app/admin/admin.model';
+import { KeycloakRole } from '@app/libs';
 
 export interface State extends EntityState<KeycloakRole> {
   loading: boolean;

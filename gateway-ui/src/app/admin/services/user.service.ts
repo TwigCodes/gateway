@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BaseKeycloakService } from './base-keycloak.service';
-import { KeycloakUser, KeycloakRole, KeycloakGroup } from '../admin.model';
+import { BaseKeycloakService } from '../../libs/entity/base-keycloak.service';
+import {
+  KeycloakUser,
+  KeycloakRole,
+  KeycloakGroup
+} from '../../libs/entity/permissions/admin.model';
 import { Observable } from 'rxjs';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import {

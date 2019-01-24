@@ -4,9 +4,8 @@ import { map, filter, take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
+import { Crumb, KeycloakRole } from '@app/libs';
 import { selectAll } from '@app/admin/store/reducers/roles/roles.selectors';
-import { KeycloakRole } from '@app/admin/admin.model';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
 import { BREADCRUMBS_ROLES } from '@app/admin/commons/breadcrumbs';
 

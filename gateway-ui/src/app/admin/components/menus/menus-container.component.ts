@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { ColumnConfig, BaseLeanCloudTableComponent, Crumb } from '@app/libs';
 import { ConfirmService } from '@app/shared';
 import { AdminMenuService } from '../../services';
-import { AdminMenuItem } from '@app/admin/admin.model';
+import { AdminMenuItem } from '@app/libs';
 import { MenusDialogComponent } from './menu-dialog.component';
 import { BREADCRUMBS_MENUS } from '../../commons/breadcrumbs';
 

@@ -3,8 +3,7 @@ import {
   UserActions,
   ActionTypes
 } from '@app/admin/store/actions/users/user.actions';
-import { KeycloakUser } from '@app/admin/admin.model';
-import { Filter, DEFAULT_PAGE_SIZE } from '@app/libs';
+import { Filter, DEFAULT_PAGE_SIZE, KeycloakUser } from '@app/libs';
 
 export interface State extends EntityState<KeycloakUser> {
   pageIndex: number;

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BaseLeanCloudService, LeanCloudResult } from '@app/libs';
-import { RolePermission } from '../admin.model';
 import { map, catchError, finalize, switchMap } from 'rxjs/operators';
+import { BaseLeanCloudService } from '../base-lean-cloud.service';
+import { LeanCloudResult } from '../lean-cloud.model';
+import { RolePermission } from './admin.model';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,25 @@ export class RolePermissionService extends BaseLeanCloudService<
         ),
         catchError(this.handleError),
         finalize(() => this.loadingSubject.next(false))
+      );
+  }
+
+  getAllByTenant(tenant: string) {
+    return this.httpClient
+      .get<LeanCloudResult<RolePermission>>(
+        `${this.baseUrl}/${this.entityPath}`,
+        {
+          params: {
+            where: JSON.stringify({ tenant: tenant }),
+            include: 'permission'
+          }
+        }
+      )
+      .pipe(
+        map(res =>
+          res.results.map(rolePermission => new RolePermission(rolePermission))
+        ),
+        catchError(this.handleError)
       );
   }
 }

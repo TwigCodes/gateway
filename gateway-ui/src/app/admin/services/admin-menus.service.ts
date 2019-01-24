@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BaseLeanCloudService } from '@app/libs';
-import { AdminMenuItem } from '../admin.model';
+import { AdminMenuItem } from '../../libs/entity/permissions/admin.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

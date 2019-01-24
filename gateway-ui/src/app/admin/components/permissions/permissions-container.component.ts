@@ -2,8 +2,8 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ColumnConfig, BaseLeanCloudTableComponent, Crumb } from '@app/libs';
 import { ConfirmService } from '@app/shared';
-import { Permission } from '@app/admin/admin.model';
-import { PermissionService } from '../../services';
+import { Permission } from '@app/libs';
+import { PermissionService } from '@app/libs';
 import { PermissionDialogComponent } from './permission-dialog.component';
 
 @Component({
@@ -45,9 +45,9 @@ export class PermissionsContainerComponent
     ];
     this.columns = [
       {
-        name: 'objectId',
+        name: 'id',
         header: 'ID',
-        cell: (e: Permission) => `${e.objectId}`,
+        cell: (e: Permission) => `${e.id}`,
         type: 'string',
         sortable: true
       },

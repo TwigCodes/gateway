@@ -2,8 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { switchMap, finalize, catchError, map, mapTo } from 'rxjs/operators';
-import { KeycloakRole, KeycloakUser } from '../admin.model';
-import { BaseKeycloakService } from './base-keycloak.service';
+import {
+  KeycloakRole,
+  KeycloakUser
+} from '../../libs/entity/permissions/admin.model';
+import { BaseKeycloakService } from '../../libs/entity/base-keycloak.service';
 import { filteredRoles } from './config';
 
 @Injectable({

@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { flatGroupTree } from '../admin-utils';
 import * as _ from 'lodash';
 import { tag } from 'rxjs-spy/operators';
-import { KeycloakGroupDTO } from '../admin.model';
+import { KeycloakGroupDTO } from '../../libs/entity/permissions/admin.model';
 
 @Injectable({
   providedIn: 'root'

@@ -6,7 +6,7 @@ import {
   namePattern,
   nameValidationMessage
 } from '@app/libs';
-import { AdminMenuItem } from '@app/admin/admin.model';
+import { AdminMenuItem } from '@app/libs';
 
 @Component({
   templateUrl: '../../../libs/entity/templates/entity-form.html',

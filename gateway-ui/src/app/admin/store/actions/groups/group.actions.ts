@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { KeycloakGroup } from '@app/admin/admin.model';
+import { KeycloakGroup } from '@app/libs';
 
 export enum ActionTypes {
   AddTop = '[GroupPage] Add Top',

@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Permission, RolePermission } from '@app/admin/admin.model';
+import { Permission, RolePermission } from '@app/libs';
 
 export enum ActionTypes {
   AddPermissionToRole = '[RoleDetailPage] Add Permission To Role',

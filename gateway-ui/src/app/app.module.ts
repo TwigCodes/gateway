@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, ErrorHandler, APP_INITIALIZER } from '@angular/core';
 import { TransferHttpCacheModule } from '@nguniversal/common';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 import { SharedModule } from '@app/shared';
 import { CoreModule } from '@app/core';
@@ -23,6 +24,7 @@ import { NotFoundModule } from './libs/not-found/not-found.module';
 import * as fundebug from 'fundebug-javascript';
 import { DataMgmtModule } from './data-mgmt/data-mgmt.module';
 import { QuestionWizardModule } from './libs/question-wizard/question-wizard.module';
+import { RolePermissionService } from '@app/libs';
 
 fundebug.apikey = environment.fundbugApiKey;
 

@@ -9,7 +9,7 @@ import {
   LeanCloudSearch,
   DEFAULT_PAGE_SIZE
 } from '@app/libs';
-import { Permission, KeycloakRole } from '@app/admin/admin.model';
+import { Permission, KeycloakRole } from '@app/libs';
 import { AppState } from '@app/core';
 
 import * as fromRoot from '@app/core';
@@ -59,41 +59,6 @@ export class PermissionDialogComponent extends EntityFormComponent<Permission>
             type: 'input',
             templateOptions: {
               required: true
-            }
-          },
-          {
-            key: 'permissions',
-            type: 'repeat',
-            fieldArray: {
-              fieldGroupClassName: 'row',
-              templateOptions: {
-                btnText: this.translate.instant(
-                  'tgapp.admin.role-permission-dialog.add-permission.title'
-                )
-              },
-              fieldGroup: [
-                {
-                  type: 'autocomplete',
-                  key: 'test',
-                  className: 'col-sm-6',
-                  validators: {
-                    validation: ['englishName']
-                  },
-                  templateOptions: {
-                    label: this.translate.instant(
-                      'tgapp.admin.role-permission-dialog.permission.name'
-                    ),
-                    filter: (query: string) => {
-                      return query === ''
-                        ? of([])
-                        : this.question$
-                            .search(new LeanCloudSearch('objectId', query))
-                            .pipe(map(res => res.map(question => question.id)));
-                    },
-                    required: true
-                  }
-                }
-              ]
             }
           }
         ];

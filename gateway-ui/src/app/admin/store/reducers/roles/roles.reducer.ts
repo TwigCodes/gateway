@@ -3,7 +3,7 @@ import {
   RoleActions,
   ActionTypes
 } from '@app/admin/store/actions/roles/role.actions';
-import { KeycloakRole } from '@app/admin/admin.model';
+import { KeycloakRole } from '@app/libs';
 
 import * as fromRouter from '@ngrx/router-store';
 import * as _ from 'lodash';
@@ -56,7 +56,11 @@ export function reducer(
     }
     case fromRouter.ROUTER_NAVIGATION:
       const stateUrl = action.payload.routerState as any;
-      return { ...state, realm: stateUrl.params.realm };
+      const realm = stateUrl.params.realm;
+      if (realm != null) {
+        return { ...state, realm: stateUrl.params.realm };
+      }
+      return state;
     default: {
       return state;
     }

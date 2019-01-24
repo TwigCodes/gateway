@@ -5,7 +5,7 @@ import { startWith, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-form-autocomplete-type',
+  selector: 'ngx-form-autocomplete-type',
   template: `
     <input
       matInput

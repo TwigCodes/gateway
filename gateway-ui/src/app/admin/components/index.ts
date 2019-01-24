@@ -10,5 +10,4 @@ export * from './group-detail-container/group-detail-container.component';
 export * from './group-dialog/group-dialog.component';
 export * from './menus/menu-dialog.component';
 export * from './menus/menus-container.component';
-export * from './role-permissions';
 export * from './permissions';

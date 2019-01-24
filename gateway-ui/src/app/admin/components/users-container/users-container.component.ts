@@ -9,11 +9,9 @@ import {
   selectAll,
   selectCount
 } from '@app/admin/store/reducers/users/users.selectors';
-import { Crumb } from '@app/libs/bread-crumbs/bread-crumbs.component';
-import { KeycloakUser } from '@app/admin/admin.model';
+import { Crumb, DEFAULT_PAGE_SIZE, KeycloakUser } from '@app/libs';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 import { BREADCRUMBS_USERS } from '@app/admin/commons/breadcrumbs';
-import { DEFAULT_PAGE_SIZE } from '@app/libs';
 
 import * as fromAdmin from '@app/admin/store/reducers';
 import * as fromUser from '@app/admin/store/actions/users/user.actions';

@@ -6,3 +6,5 @@ export * from './entity.datasource';
 export * from './entity.model';
 export * from './filter.service';
 export * from './lean-cloud.model';
+export * from './base-keycloak.service';
+export * from './permissions';

@@ -3,7 +3,7 @@ import {
   RoleUsersActions,
   ActionTypes
 } from '@app/admin/store/actions/roles/role-users.actions';
-import { KeycloakUser } from '@app/admin/admin.model';
+import { KeycloakUser } from '@app/libs';
 import { DEFAULT_PAGE_SIZE } from '@app/libs';
 
 export interface State extends EntityState<KeycloakUser> {

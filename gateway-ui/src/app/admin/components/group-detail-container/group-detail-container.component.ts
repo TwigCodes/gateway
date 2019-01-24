@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { take, filter, switchMap } from 'rxjs/operators';
 import { tag } from 'rxjs-spy/operators';
 import { UserSearchService } from '@app/admin/services';
-import { KeycloakUser, KeycloakRole } from '@app/admin/admin.model';
+import { KeycloakUser, KeycloakRole } from '@app/libs';
 import { ConfirmService } from '@app/shared/confirm/confirm.service';
 import { DEFAULT_PAGE_SIZE, untilDestroy } from '@app/libs';
 

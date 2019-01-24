@@ -14,7 +14,7 @@ import {
   KeycloakUser,
   Permission,
   RolePermission
-} from '@app/admin/admin.model';
+} from '@app/libs';
 import { DEFAULT_PAGE_SIZE, untilDestroy } from '@app/libs';
 import { BUILT_IN_ROLES, BUILT_IN_USERS } from '@app/admin/commons';
 

@@ -60,7 +60,8 @@ import localeZhHans from '@angular/common/locales/zh-Hans';
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    NgxPermissionsModule.forRoot()
   ],
   providers: [
     NotificationService,

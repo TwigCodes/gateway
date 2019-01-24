@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { schema, denormalize } from 'normalizr';
 import { selectAdminState } from '../admin.state';
-import { KeycloakGroupDTO, KeycloakGroup } from '@app/admin/admin.model';
+import { KeycloakGroupDTO, KeycloakGroup } from '@app/libs';
 
 import * as fromUser from './groups.reducer';
 

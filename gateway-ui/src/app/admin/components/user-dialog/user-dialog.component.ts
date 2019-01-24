@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 
 import { EntityFormComponent } from '@app/libs/entity/entity-form.component';
-import { KeycloakUser } from '@app/admin/admin.model';
+import { KeycloakUser } from '@app/libs';
 
 import * as fromAdmin from '@app/admin/store/reducers';
 

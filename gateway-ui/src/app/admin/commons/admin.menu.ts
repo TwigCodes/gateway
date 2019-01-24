@@ -1,4 +1,4 @@
-import { AdminMenuItem } from '../admin.model';
+import { AdminMenuItem } from '@app/libs';
 
 export const BASIC_ADMIN_MENU: AdminMenuItem[] = [
   Object.create({

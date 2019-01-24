@@ -1,4 +1,4 @@
-import { KeycloakRole } from '../admin.model';
+import { KeycloakRole } from '../../libs/entity/permissions/admin.model';
 import * as _ from 'lodash';
 
 export const invisibleRoleIds = ['uma_authorization', 'offline_access'];

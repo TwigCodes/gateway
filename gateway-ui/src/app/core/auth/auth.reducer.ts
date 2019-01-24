@@ -19,7 +19,11 @@ export function authReducer(
       return { ...state, isAuthenticated: false };
     case fromRouter.ROUTER_NAVIGATION:
       const stateUrl = action.payload.routerState as any;
-      return { ...state, realm: stateUrl.params.realm };
+      const realm = stateUrl.params.realm;
+      if (realm != null) {
+        return { ...state, realm: stateUrl.params.realm };
+      }
+      return state;
     default:
       return state;
   }

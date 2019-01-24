@@ -1,4 +1,4 @@
-import { Entity } from '@app/libs';
+import { Entity } from '../entity.model';
 
 export interface KeycloakRole {
   id: string;

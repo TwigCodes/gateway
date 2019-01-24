@@ -8,8 +8,12 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
 import { GroupSearchService } from '@app/admin/services';
 import { ConfirmService } from '@app/shared';
-import { KeycloakRole, KeycloakGroup } from '@app/admin/admin.model';
-import { DEFAULT_PAGE_SIZE, untilDestroy } from '@app/libs';
+import {
+  DEFAULT_PAGE_SIZE,
+  untilDestroy,
+  KeycloakRole,
+  KeycloakGroup
+} from '@app/libs';
 import { BUILT_IN_USERS, BUILT_IN_ROLES } from '@app/admin/commons';
 
 import * as fromAdmin from '@app/admin/store/reducers';

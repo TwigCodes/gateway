@@ -2,7 +2,7 @@ import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { EntityFormComponent } from '@app/libs/entity/entity-form.component';
-import { KeycloakGroup } from '@app/admin/admin.model';
+import { KeycloakGroup } from '@app/libs';
 
 @Component({
   selector: 'tgapp-group-dialog',

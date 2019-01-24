@@ -56,7 +56,8 @@ export const COMPONENTS = [
     AdminRoutingModule,
     DataMgmtModule,
     StoreModule.forFeature('admin', fromAdmin.reducers),
-    EffectsModule.forFeature(ADMIN_EFFECTS)
+    EffectsModule.forFeature(ADMIN_EFFECTS),
+    NgxPermissionsModule.forChild()
   ],
   entryComponents: [
     UserDialogComponent,

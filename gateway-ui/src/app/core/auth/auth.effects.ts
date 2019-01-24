@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Action } from '@ngrx/store';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, Effect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
 import { tap, map, switchMap, catchError } from 'rxjs/operators';
 import { KeycloakService } from 'keycloak-angular';
 import { of, from } from 'rxjs';
@@ -22,14 +22,6 @@ export const AUTH_KEY = 'AUTH';
 
 @Injectable()
 export class AuthEffects {
-  constructor(
-    private actions$: Actions<Action>,
-    private localStorageService: LocalStorageService,
-    private keycloakService: KeycloakService,
-    // private oauthService: OAuthService,
-    private router: Router
-  ) {}
-
   @Effect({ dispatch: false })
   login = this.actions$.pipe(
     ofType<ActionAuthLogin>(AuthActionTypes.LOGIN),
@@ -67,4 +59,12 @@ export class AuthEffects {
       this.localStorageService.setItem(AUTH_KEY, { isAuthenticated: false });
     })
   );
+
+  constructor(
+    private actions$: Actions<Action>,
+    private localStorageService: LocalStorageService,
+    private keycloakService: KeycloakService,
+    // private oauthService: OAuthService,
+    private router: Router
+  ) {}
 }

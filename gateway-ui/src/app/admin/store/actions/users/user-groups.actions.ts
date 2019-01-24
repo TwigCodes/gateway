@@ -1,9 +1,5 @@
 import { Action } from '@ngrx/store';
-import {
-  KeycloakGroupDTO,
-  KeycloakUser,
-  KeycloakGroup
-} from '@app/admin/admin.model';
+import { KeycloakUser, KeycloakGroup } from '@app/libs';
 
 export enum ActionTypes {
   NextPage = '[UserAPI] Get Next Page of Groups of User',

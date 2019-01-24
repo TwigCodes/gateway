@@ -9,8 +9,12 @@ import {
   withLatestFrom,
   filter
 } from 'rxjs/operators';
-import { RolePermissionService, PermissionService } from '@app/admin/services';
-import { Permission, RolePermission } from '@app/admin/admin.model';
+import {
+  RolePermissionService,
+  PermissionService,
+  Permission,
+  RolePermission
+} from '@app/libs';
 
 import * as fromRole from '@app/admin/store/actions/roles/role.actions';
 import * as fromRolePermissions from '@app/admin/store/actions/roles/role-permissions.actions';

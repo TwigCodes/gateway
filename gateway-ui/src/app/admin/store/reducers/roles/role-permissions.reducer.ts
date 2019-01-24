@@ -3,7 +3,7 @@ import {
   RolePermissionsActions,
   ActionTypes
 } from '@app/admin/store/actions/roles/role-permissions.actions';
-import { RolePermission } from '@app/admin/admin.model';
+import { RolePermission } from '@app/libs';
 
 export interface State extends EntityState<RolePermission> {}
 

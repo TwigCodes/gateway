@@ -17,9 +17,13 @@ import {
 import { Store, select } from '@ngrx/store';
 import { MatDialog } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
-import { KeycloakGroup, KeycloakGroupDTO } from '@app/admin/admin.model';
-import { SimpleTreeNode, DEFAULT_PAGE_SIZE } from '@app/libs';
-import { Crumb } from '@app/libs';
+import {
+  SimpleTreeNode,
+  DEFAULT_PAGE_SIZE,
+  Crumb,
+  KeycloakGroup,
+  KeycloakGroupDTO
+} from '@app/libs';
 import { GroupDialogComponent } from '../group-dialog/group-dialog.component';
 import { BREADCRUMBS_GROUPS } from '@app/admin/commons/breadcrumbs';
 
