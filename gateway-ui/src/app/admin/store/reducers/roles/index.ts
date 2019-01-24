@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 
 export const getRoles = fromRoles.selectAll;
 export const getRoleSelected = fromRoles.selectRoleSelected;
+export const getRoleTenant = fromRoles.selectRoleRealm;
 
 export const getRoleUsers = fromRoleUsers.selectAll;
 export const getRoleUsersLoading = fromRoleUsers.selectLoading;

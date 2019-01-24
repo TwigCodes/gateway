@@ -87,10 +87,11 @@ export class RolePermission extends Entity {
   }
   get toAddExpr() {
     return {
-      ...this,
+      roleName: this.roleName,
+      tenant: this.tenant,
       permission: {
         __type: 'Pointer',
-        className: 'Permission',
+        className: 'Permissions',
         objectId: this.permission.objectId
       }
     };

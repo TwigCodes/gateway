@@ -1,22 +1,27 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { MatListOption } from '@angular/material';
 import { HttpParams } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { take, switchMap, filter, map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ConfirmService } from '@app/shared';
 import { UserSearchService } from '@app/admin/services';
-import { KeycloakUser, Permission } from '@app/admin/admin.model';
+import {
+  KeycloakUser,
+  Permission,
+  RolePermission
+} from '@app/admin/admin.model';
 import { DEFAULT_PAGE_SIZE, untilDestroy } from '@app/libs';
 import { BUILT_IN_ROLES, BUILT_IN_USERS } from '@app/admin/commons';
 
 import * as fromAdmin from '@app/admin/store/reducers';
 import * as fromRole from '@app/admin/store/actions/roles/role.actions';
-import * as fromRoleDetail from '@app/admin/store/actions/roles/role-users.actions';
 import * as fromRoleUsers from '@app/admin/store/actions/roles/role-users.actions';
+import * as fromRolePermissions from '@app/admin/store/actions/roles/role-permissions.actions';
 import * as _ from 'lodash';
 
 @Component({
@@ -35,8 +40,9 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
   model$ = this.store.pipe(select(fromAdmin.getRoleSelected));
   users$ = this.store.pipe(select(fromAdmin.getRoleUsers));
   fields: FormlyFieldConfig[];
-  rolePermissions$: Observable<Permission[]>;
+  rolePermissions$: Observable<RolePermission[]>;
   availablePermissions$: Observable<Permission[]>;
+  selectPerm = new Subject<Permission>();
   constructor(
     private store: Store<fromAdmin.State>,
     private translate: TranslateService,
@@ -45,10 +51,7 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
   ) {}
   ngOnInit(): void {
     this.rolePermissions$ = this.store.pipe(
-      select(fromAdmin.getRolePermissions),
-      map(rolePermissions =>
-        rolePermissions.map(rolePermission => rolePermission.permission)
-      )
+      select(fromAdmin.getRolePermissions)
     );
     this.availablePermissions$ = this.store.pipe(
       select(fromAdmin.getRoleAvailabePerms)
@@ -168,7 +171,24 @@ export class RoleDetailContainerComponent implements OnInit, OnDestroy {
     const total = this.viewport.getDataLength();
     console.log(`${end}, '>=', ${total}`);
     if (end === total && total >= this.pageSize) {
-      this.store.dispatch(new fromRoleDetail.NextPageAction());
+      this.store.dispatch(new fromRoleUsers.NextPageAction());
     }
+  }
+
+  handleSelection(options: MatListOption[]) {
+    options
+      .map(option => option.value)
+      .forEach(perm =>
+        this.store.dispatch(
+          new fromRolePermissions.AddPermissionToRoleAction(perm)
+        )
+      );
+  }
+
+  removePermFromRole(perm: Partial<RolePermission>) {
+    const permission = new RolePermission(perm);
+    this.store.dispatch(
+      new fromRolePermissions.DeletePermissionFromRoleAction(permission.id)
+    );
   }
 }

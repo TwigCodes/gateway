@@ -5,10 +5,12 @@ import {
 } from '@app/admin/store/actions/roles/role.actions';
 import { KeycloakRole } from '@app/admin/admin.model';
 
+import * as fromRouter from '@ngrx/router-store';
 import * as _ from 'lodash';
 
 export interface State extends EntityState<KeycloakRole> {
   selectedId: string | null;
+  realm: string | null;
 }
 
 export const adapter: EntityAdapter<KeycloakRole> = createEntityAdapter<
@@ -19,16 +21,17 @@ export const adapter: EntityAdapter<KeycloakRole> = createEntityAdapter<
 });
 
 const initialState = adapter.getInitialState({
-  selectedId: null
+  selectedId: null,
+  realm: null
 });
 
-export function reducer(state = initialState, action: RoleActions): State {
+export function reducer(
+  state = initialState,
+  action: RoleActions | fromRouter.RouterNavigationAction
+): State {
   switch (action.type) {
     case ActionTypes.AddSuccess: {
-      return {
-        ...state,
-        ...adapter.addOne(action.payload, state)
-      };
+      return { ...state, ...adapter.addOne(action.payload, state) };
     }
     case ActionTypes.UpdateSuccess: {
       return {
@@ -51,6 +54,9 @@ export function reducer(state = initialState, action: RoleActions): State {
     case ActionTypes.Select: {
       return { ...state, selectedId: action.payload };
     }
+    case fromRouter.ROUTER_NAVIGATION:
+      const stateUrl = action.payload.routerState as any;
+      return { ...state, realm: stateUrl.params.realm };
     default: {
       return state;
     }

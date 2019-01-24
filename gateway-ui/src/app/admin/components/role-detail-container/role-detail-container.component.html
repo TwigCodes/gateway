@@ -68,11 +68,19 @@
   </mat-tab>
   <mat-tab label="{{ 'tgapp.admin.role-detail.permission' | translate }}">
     <ng-template matTabContent>
-      <mat-chip-list *ngIf="rolePermissions$ | async as rolePermissions">
-        <mat-chip *ngFor="let perm of rolePermissions">{{perm.name}}</mat-chip>
+      <mat-chip-list style="margin: 5px" *ngIf="rolePermissions$ | async as rolePermissions" fxLayout="row" fxLayoutWrap fxLayoutGap="10px">
+        <mat-chip *ngFor="let perm of rolePermissions" [removable]="true" (removed)="removePermFromRole(perm)">{{perm.permission.name}}<mat-icon matChipRemove>cancel</mat-icon></mat-chip>
       </mat-chip-list>
-      <mat-selection-list *ngIf="availablePermissions$ | async as availablePermissions" #availablePermissionList>
-        <mat-list-option *ngFor="let perm of availablePermissions">{{ perm.name }}</mat-list-option>
+      <mat-selection-list
+        #availablePermissionList
+        *ngIf="availablePermissions$ | async as availablePermissions"
+        (selectionChange)="handleSelection(availablePermissionList.selectedOptions.selected)" >
+        <mat-list-option
+          checkboxPosition="before"
+          *ngFor="let perm of availablePermissions"
+          [value]="perm">
+          {{ perm.name }}
+        </mat-list-option>
       </mat-selection-list>
     </ng-template>
   </mat-tab>

@@ -18,9 +18,7 @@ export enum ActionTypes {
 
 export class AddPermissionToRoleAction implements Action {
   readonly type = ActionTypes.AddPermissionToRole;
-  constructor(
-    public payload: { permission: Permission; roleName: string; tenant: string }
-  ) {}
+  constructor(public payload: Permission) {}
 }
 
 export class AddPermissionToRoleSuccessAction implements Action {

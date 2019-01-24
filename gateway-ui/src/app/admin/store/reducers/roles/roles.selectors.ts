@@ -17,3 +17,8 @@ export const selectRoleSelected = createSelector(
   selectRoleState,
   state => (state.selectedId === null ? null : state.entities[state.selectedId])
 );
+
+export const selectRoleRealm = createSelector(
+  selectRoleState,
+  state => state.realm
+);
