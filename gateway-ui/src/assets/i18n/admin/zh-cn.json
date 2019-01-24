@@ -29,6 +29,7 @@
   "tgapp.admin.role-detail.users": "拥有该角色的用户",
   "tgapp.admin.role-detail.users.addrolemapping": "添加角色到用户，输入关键字搜索",
   "tgapp.admin.role-detail.nothing-to-display": "当前没有选中任何有效角色，请在左侧选择",
+  "tgapp.admin.role-detail.permission": "权限",
   "tgapp.admin.user-detail.info": "用户信息",
   "tgapp.admin.user-detail.roles": "角色",
   "tgapp.admin.user-detail.roles.addrolemapping": "添加用户角色，输入关键字搜索",

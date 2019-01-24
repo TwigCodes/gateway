@@ -29,6 +29,7 @@
   "tgapp.admin.role-detail.users": "Users who have the role",
   "tgapp.admin.role-detail.users.addrolemapping": "Type keywords in user's email or name",
   "tgapp.admin.role-detail.nothing-to-display": "No role selected, please select one from the tree",
+  "tgapp.admin.role-detail.permission": "Permissions",
   "tgapp.admin.user-detail.info": "User Info",
   "tgapp.admin.user-detail.roles": "Roles",
   "tgapp.admin.user-detail.roles.addrolemapping": "Type keywords in role's email or name",

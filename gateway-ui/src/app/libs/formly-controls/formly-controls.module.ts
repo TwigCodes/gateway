@@ -12,6 +12,7 @@ import { FormlyModule, FormlyConfig, FORMLY_CONFIG } from '@ngx-formly/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { FormlyMatToggleModule } from '@ngx-formly/material/toggle';
+import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import {
   emailValidator,
@@ -61,12 +62,14 @@ const COMPONENTS = [RepeatSectionTypeComponent];
         }
       ]
     }),
-    FormlyMatToggleModule
+    FormlyMatToggleModule,
+    FormlyMatDatepickerModule
   ],
   exports: [
     FormlyMaterialModule,
     FormlyModule,
     FormlyMatToggleModule,
+    FormlyMatDatepickerModule,
     ...COMPONENTS
   ]
 })
