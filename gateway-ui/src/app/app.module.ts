@@ -22,8 +22,6 @@ import { EventStackService } from './core/keycloak/event-stack.service';
 import { NotFoundModule } from './libs/not-found/not-found.module';
 
 import * as fundebug from 'fundebug-javascript';
-import { DataMgmtModule } from './data-mgmt/data-mgmt.module';
-import { QuestionWizardModule } from './libs/question-wizard/question-wizard.module';
 
 fundebug.apikey = environment.fundbugApiKey;
 
@@ -65,11 +63,7 @@ export class FundebugErrorHandler implements ErrorHandler {
     // app
     AppRoutingModule,
 
-    NotFoundModule,
-
-    DataMgmtModule,
-
-    QuestionWizardModule
+    NotFoundModule
   ],
   declarations: [AppComponent],
   providers: [

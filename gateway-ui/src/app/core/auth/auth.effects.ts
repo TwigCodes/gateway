@@ -17,7 +17,7 @@ import {
   ActionAuthLoginSuccess,
   ActionAuthLoginFail
 } from './auth.actions';
-import { NgxPermissionsService } from 'ngx-permissions';
+import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
 import { RolePermissionService, RolePermission } from '@app/libs';
 
 export const AUTH_KEY = 'AUTH';
@@ -64,14 +64,24 @@ export class AuthEffects {
       return this.rolePerms.getByRoleNamesAndTenant(roleNames, tenant).pipe(
         catchError(err => {
           console.error('cannot get role permissions: ', err);
-          return of([] as RolePermission[]);
+          return of([]);
         })
       );
     }),
-    tap(rps => {
+    tap((rps: RolePermission[]) => {
       const permsByRoles = rps.map(rp => rp.permission.name);
       this.permissionsService.addPermission(permsByRoles);
       this.permissionsService.loadPermissions(permsByRoles);
+      const roles = rps.reduce(
+        (acc, curr) => ({
+          ...acc,
+          [curr.roleName]: !!acc[curr.roleName]
+            ? [...acc[curr.roleName], curr.permission.name]
+            : [curr.permission.name]
+        }),
+        {}
+      );
+      this.roleService.addRoles(roles);
     })
   );
 
@@ -92,6 +102,7 @@ export class AuthEffects {
     private keycloakService: KeycloakService,
     private permissionsService: NgxPermissionsService,
     private rolePerms: RolePermissionService,
+    private roleService: NgxRolesService,
     // private oauthService: OAuthService,
     private router: Router
   ) {}

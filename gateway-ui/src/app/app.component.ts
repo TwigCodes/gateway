@@ -26,8 +26,6 @@ import {
   selectSettingsLanguage,
   selectSettingsStickyHeader
 } from './settings';
-import { PermissionService, RolePermissionService, untilDestroy } from './libs';
-import { tag } from 'rxjs-spy/operators';
 
 export interface RouteMenu {
   link: string;
@@ -74,10 +72,6 @@ export class AppComponent implements OnInit, OnDestroy {
   sub = new Subscription();
   constructor(
     private store: Store<AppState>,
-    private permissionsService: NgxPermissionsService,
-    private roleService: NgxRolesService,
-    private availablePerms: PermissionService,
-    private rolePerms: RolePermissionService,
     private storageService: LocalStorageService // private oauthService: OAuthService
   ) {}
 
