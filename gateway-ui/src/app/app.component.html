@@ -68,7 +68,7 @@
         <router-outlet #o="outlet"></router-outlet>
       </div>
 
-      <div class="footer">
+      <div class="footer" *ngxPermissionsOnly="['editUser']">
         <div class="row">
           <div class="col-12 signature">
             &#169; <span class="year" data-testid="footer-year">{{year}}</span> - {{ 'tgapp.footer.company' | translate }}

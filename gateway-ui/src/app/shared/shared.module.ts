@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { FilterMenuComponent } from './filter-menu/filter-menu.component';
 import { ConfirmService } from './confirm/confirm.service';
 import { TwigLibsModule } from '@app/libs/twig-ng-lib.module';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { TwigLibsModule } from '@app/libs/twig-ng-lib.module';
 
     TranslateModule,
 
-    TwigLibsModule
+    TwigLibsModule,
+    NgxPermissionsModule
   ]
 })
 export class SharedModule {}

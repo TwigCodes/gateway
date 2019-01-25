@@ -59,13 +59,16 @@ export class RolePermissionService extends BaseLeanCloudService<
       );
   }
 
-  getAllByTenant(tenant: string) {
+  getByRoleNamesAndTenant(roleNames: string[], tenant: string) {
     return this.httpClient
       .get<LeanCloudResult<RolePermission>>(
         `${this.baseUrl}/${this.entityPath}`,
         {
           params: {
-            where: JSON.stringify({ tenant: tenant }),
+            where: JSON.stringify({
+              tenant: tenant,
+              roleName: { $in: roleNames }
+            }),
             include: 'permission'
           }
         }

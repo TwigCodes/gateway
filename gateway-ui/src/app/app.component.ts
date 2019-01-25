@@ -1,8 +1,9 @@
 import browser from 'browser-detect';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, of, combineLatest, Subscription } from 'rxjs';
-import { NgxPermissionsService } from 'ngx-permissions';
+import { filter, map, switchMap, tap, share } from 'rxjs/operators';
+import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
 
 import {
   ActionAuthLogin,
@@ -14,7 +15,6 @@ import {
   ActionAuthCheckLogin,
   selectRealm
 } from '@app/core';
-import { filter, map, switchMap } from 'rxjs/operators';
 // import { OAuthService } from 'angular-oauth2-oidc';
 // import { JwksValidationHandler } from 'angular-oauth2-oidc';
 import { environment as env } from '@env/environment';
@@ -26,6 +26,8 @@ import {
   selectSettingsLanguage,
   selectSettingsStickyHeader
 } from './settings';
+import { PermissionService, RolePermissionService, untilDestroy } from './libs';
+import { tag } from 'rxjs-spy/operators';
 
 export interface RouteMenu {
   link: string;
@@ -38,7 +40,7 @@ export interface RouteMenu {
   styleUrls: ['./app.component.scss'],
   animations: [routeAnimations]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   realm$: Observable<string>;
   isProd = env.production;
   envName = env.envName;
@@ -73,6 +75,9 @@ export class AppComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private permissionsService: NgxPermissionsService,
+    private roleService: NgxRolesService,
+    private availablePerms: PermissionService,
+    private rolePerms: RolePermissionService,
     private storageService: LocalStorageService // private oauthService: OAuthService
   ) {}
 
@@ -83,8 +88,10 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.realm$ = this.store.pipe(
       select(selectRealm),
-      filter(val => val != null)
+      filter(val => val != null),
+      share()
     );
+
     // this.sub.add(
     //   this.realm$.subscribe(realm => {
     //     this.oauthService.configure({
@@ -123,7 +130,7 @@ export class AppComponent implements OnInit {
     this.language$ = this.store.pipe(select(selectSettingsLanguage));
     this.theme$ = this.store.pipe(select(selectEffectiveTheme));
   }
-
+  ngOnDestroy(): void {}
   onLoginClick() {
     this.store.dispatch(new ActionAuthLogin());
   }
@@ -134,5 +141,12 @@ export class AppComponent implements OnInit {
 
   onLanguageSelect({ value: language }) {
     this.store.dispatch(new ActionSettingsChangeLanguage({ language }));
+  }
+
+  authorized() {
+    console.log('authorized');
+  }
+  unauthorized() {
+    console.log('unauthorized');
   }
 }

@@ -17,8 +17,11 @@ import {
   ActionAuthLoginSuccess,
   ActionAuthLoginFail
 } from './auth.actions';
+import { NgxPermissionsService } from 'ngx-permissions';
+import { RolePermissionService, RolePermission } from '@app/libs';
 
 export const AUTH_KEY = 'AUTH';
+export const REALM_KEY = 'REALM';
 
 @Injectable()
 export class AuthEffects {
@@ -50,6 +53,26 @@ export class AuthEffects {
   );
 
   @Effect({ dispatch: false })
+  configPermissions = this.actions$.pipe(
+    ofType<ActionAuthLoginSuccess>(AuthActionTypes.LOGIN_SUCCESS),
+    switchMap(__ => {
+      const roleNames = this.keycloakService.getUserRoles();
+      const tenant = this.localStorageService.getItem(REALM_KEY);
+      return this.rolePerms.getByRoleNamesAndTenant(roleNames, tenant).pipe(
+        catchError(err => {
+          console.error('cannot get role permissions: ', err);
+          return of([] as RolePermission[]);
+        })
+      );
+    }),
+    tap(rps => {
+      const permsByRoles = rps.map(rp => rp.permission.name);
+      this.permissionsService.addPermission(permsByRoles);
+      this.permissionsService.loadPermissions(permsByRoles);
+    })
+  );
+
+  @Effect({ dispatch: false })
   logout = this.actions$.pipe(
     ofType<ActionAuthLogout>(AuthActionTypes.LOGOUT),
     tap(() => {
@@ -64,6 +87,8 @@ export class AuthEffects {
     private actions$: Actions<Action>,
     private localStorageService: LocalStorageService,
     private keycloakService: KeycloakService,
+    private permissionsService: NgxPermissionsService,
+    private rolePerms: RolePermissionService,
     // private oauthService: OAuthService,
     private router: Router
   ) {}

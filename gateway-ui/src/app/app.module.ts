@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, ErrorHandler, APP_INITIALIZER } from '@angular/core';
 import { TransferHttpCacheModule } from '@nguniversal/common';
-import { NgxPermissionsService } from 'ngx-permissions';
+import { NgxPermissionsService, NgxPermissionsModule } from 'ngx-permissions';
 
 import { SharedModule } from '@app/shared';
 import { CoreModule } from '@app/core';
@@ -48,6 +48,7 @@ export class FundebugErrorHandler implements ErrorHandler {
     // core & shared
     CoreModule,
     SharedModule,
+    NgxPermissionsModule.forRoot(),
 
     // Keycloak
     KeycloakAngularModule,

@@ -23,13 +23,6 @@ import { tag } from 'rxjs-spy/operators';
 
 @Injectable()
 export class RolePermissionsEffects {
-  constructor(
-    private actions$: Actions,
-    private rolePermissions: RolePermissionService,
-    private perms: PermissionService,
-    private store: Store<fromAdmin.State>
-  ) {}
-
   @Effect() addPermissionToRole$: Observable<Action> = this.actions$.pipe(
     ofType<fromRolePermissions.AddPermissionToRoleAction>(
       fromRolePermissions.ActionTypes.AddPermissionToRole
@@ -120,4 +113,11 @@ export class RolePermissionsEffects {
       )
     )
   );
+
+  constructor(
+    private actions$: Actions,
+    private rolePermissions: RolePermissionService,
+    private perms: PermissionService,
+    private store: Store<fromAdmin.State>
+  ) {}
 }
