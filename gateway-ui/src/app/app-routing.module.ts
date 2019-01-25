@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { NgxPermissionsGuard } from 'ngx-permissions';
 
 import { SettingsContainerComponent } from './settings';
 import { AuthGuardService } from './core';
 import { AboutComponent } from './static';
-import { AdminGuard } from './admin/admin.guard';
 
 const routes: Routes = [
   {
@@ -33,9 +33,14 @@ const routes: Routes = [
       },
       {
         path: 'admin',
+        data: {
+          permissions: {
+            only: ['admin', 'readUser', 'readGroup', 'readRole', 'readPerm']
+          }
+        },
+        canLoad: [NgxPermissionsGuard],
         loadChildren: './admin#AdminModule',
-        pathMatch: 'prefix',
-        canActivate: [AdminGuard]
+        pathMatch: 'prefix'
       }
     ]
   }

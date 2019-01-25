@@ -45,9 +45,12 @@ export class QuestionsContainerComponent
     ];
     this.columns = [
       {
-        name: 'objectId',
+        name: 'id',
         header: 'ID',
-        cell: (e: Question) => `${e.objectId}`,
+        cell: (e: Partial<Question>) => {
+          const item = new Question(e);
+          return item.id;
+        },
         type: 'string',
         sortable: true
       },

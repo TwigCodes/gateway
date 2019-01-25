@@ -53,6 +53,10 @@ export class AdminMenuItem extends Entity {
   link: string;
   createdAt: Date;
   updatedAt: Date;
+  public constructor(init?: Partial<Permission>) {
+    super();
+    Object.assign(this, init);
+  }
   get id() {
     return this.objectId;
   }

@@ -41,9 +41,12 @@ export class MenusContainerComponent
     this.crumbs = BREADCRUMBS_MENUS;
     this.columns = [
       {
-        name: 'objectId',
+        name: 'id',
         header: 'ID',
-        cell: (e: AdminMenuItem) => `${e.objectId}`,
+        cell: (e: Partial<AdminMenuItem>) => {
+          const item = new AdminMenuItem(e);
+          return item.id;
+        },
         type: 'string',
         sortable: true
       },

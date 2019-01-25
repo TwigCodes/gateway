@@ -47,7 +47,10 @@ export class PermissionsContainerComponent
       {
         name: 'id',
         header: 'ID',
-        cell: (e: Permission) => `${e.id}`,
+        cell: (e: Partial<Permission>) => {
+          const perm = new Permission(e);
+          return perm.id;
+        },
         type: 'string',
         sortable: true
       },

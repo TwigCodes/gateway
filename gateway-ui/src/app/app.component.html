@@ -46,8 +46,12 @@
           </button>
           <mat-menu #toolbarUserMenu="matMenu">
             <button mat-menu-item (click)="onLogoutClick()">
-              <mat-icon><mat-icon fontSet="fa" fontIcon="fa-power-off"></mat-icon></mat-icon>
-              <span>{{ 'tgapp.menu.logout' | translate }}</span>
+              <span fxLayout="row">
+                <mat-icon>
+                  <mat-icon fontSet="fa" fontIcon="fa-power-off"></mat-icon>
+                </mat-icon>
+                <span>{{ 'tgapp.menu.logout' | translate }}</span>
+              </span>
             </button>
           </mat-menu>
 

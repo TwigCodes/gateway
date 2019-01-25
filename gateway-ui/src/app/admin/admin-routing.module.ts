@@ -10,24 +10,30 @@ import {
   GroupDetailContainerComponent,
   PermissionsContainerComponent
 } from './components';
-import { AdminGuard } from './admin.guard';
 import { MenusContainerComponent } from './components/menus/menus-container.component';
+import { NgxPermissionsGuard } from 'ngx-permissions';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeContainerComponent,
-    canActivate: [AdminGuard],
+    canActivate: [NgxPermissionsGuard],
     data: {
-      roles: ['admin']
+      permissions: {
+        only: ['admin', 'readUser', 'readGroup', 'readRole', 'readPerm']
+        // except: ['GUEST']
+      }
     }
   },
   {
     path: 'roles',
     component: RolesContainerComponent,
-    canActivate: [AdminGuard],
+    canActivate: [NgxPermissionsGuard],
     data: {
-      roles: ['admin']
+      permissions: {
+        only: ['admin', 'readRole']
+        // except: ['GUEST']
+      }
     },
     children: [
       {
@@ -39,9 +45,12 @@ const routes: Routes = [
   {
     path: 'users',
     component: UsersContainerComponent,
-    canActivate: [AdminGuard],
+    canActivate: [NgxPermissionsGuard],
     data: {
-      roles: ['admin']
+      permissions: {
+        only: ['admin', 'readUser']
+        // except: ['GUEST']
+      }
     },
     children: [
       {
@@ -53,9 +62,12 @@ const routes: Routes = [
   {
     path: 'groups',
     component: GroupsContainerComponent,
-    canActivate: [AdminGuard],
+    canActivate: [NgxPermissionsGuard],
     data: {
-      roles: ['admin']
+      permissions: {
+        only: ['admin', 'readGroup']
+        // except: ['GUEST']
+      }
     },
     children: [
       {
@@ -67,17 +79,23 @@ const routes: Routes = [
   {
     path: 'permissions',
     component: PermissionsContainerComponent,
-    canActivate: [AdminGuard],
+    canActivate: [NgxPermissionsGuard],
     data: {
-      roles: ['admin']
+      permissions: {
+        only: ['admin', 'readPerm']
+        // except: ['GUEST']
+      }
     }
   },
   {
     path: 'menus',
     component: MenusContainerComponent,
-    canActivate: [AdminGuard],
+    canActivate: [NgxPermissionsGuard],
     data: {
-      roles: ['admin']
+      permissions: {
+        only: ['admin']
+        // except: ['GUEST']
+      }
     }
   }
 ];
