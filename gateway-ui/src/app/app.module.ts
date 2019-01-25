@@ -5,7 +5,7 @@ import { TransferHttpCacheModule } from '@nguniversal/common';
 import { NgxPermissionsService, NgxPermissionsModule } from 'ngx-permissions';
 
 import { SharedModule } from '@app/shared';
-import { CoreModule } from '@app/core';
+import { CoreModule, LocalStorageService } from '@app/core';
 import { environment } from '@env/environment';
 
 import { SettingsModule } from './settings';
@@ -24,7 +24,6 @@ import { NotFoundModule } from './libs/not-found/not-found.module';
 import * as fundebug from 'fundebug-javascript';
 import { DataMgmtModule } from './data-mgmt/data-mgmt.module';
 import { QuestionWizardModule } from './libs/question-wizard/question-wizard.module';
-import { RolePermissionService } from '@app/libs';
 
 fundebug.apikey = environment.fundbugApiKey;
 
@@ -79,7 +78,7 @@ export class FundebugErrorHandler implements ErrorHandler {
       provide: APP_INITIALIZER,
       useFactory: initializer,
       multi: true,
-      deps: [KeycloakService, EventStackService]
+      deps: [KeycloakService, EventStackService, LocalStorageService]
     }
   ],
   bootstrap: [AppComponent]

@@ -2,10 +2,12 @@ import { KeycloakService, KeycloakEvent } from 'keycloak-angular';
 
 import { environment } from '../environments/environment';
 import { EventStackService } from './core/keycloak/event-stack.service';
+import { LocalStorageService } from './core';
 
 export function initializer(
   keycloak: KeycloakService,
-  eventStackService: EventStackService
+  eventStackService: EventStackService,
+  localStorgaeService: LocalStorageService
 ): () => Promise<any> {
   return (): Promise<any> => {
     return new Promise(async (resolve, reject) => {
@@ -16,7 +18,9 @@ export function initializer(
         await keycloak.init({
           config: {
             ...environment.keycloak,
-            realm: localStorage.getItem('REALM') || environment.keycloak.realm
+            realm:
+              localStorgaeService.getRawItem('REALM') ||
+              environment.keycloak.realm
           },
           enableBearerInterceptor: true,
           bearerExcludedUrls: [environment.leanCloud.baseUrl]

@@ -57,7 +57,10 @@ export class AuthEffects {
     ofType<ActionAuthLoginSuccess>(AuthActionTypes.LOGIN_SUCCESS),
     switchMap(__ => {
       const roleNames = this.keycloakService.getUserRoles();
-      const tenant = this.localStorageService.getItem(REALM_KEY);
+      const tenant = this.localStorageService.getRawItem(REALM_KEY);
+      if (tenant == null) {
+        return of([]);
+      }
       return this.rolePerms.getByRoleNamesAndTenant(roleNames, tenant).pipe(
         catchError(err => {
           console.error('cannot get role permissions: ', err);
