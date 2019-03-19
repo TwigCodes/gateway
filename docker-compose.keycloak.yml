@@ -1,0 +1,63 @@
+version: "3"
+
+services:
+  keycloak-db:
+    # image: postgres:10
+    image: mysql:5.7
+    volumes:
+      # - keycloak_data:/var/lib/postgresql/data
+      - keycloak_data:/var/lib/mysql
+    environment:
+      # POSTGRES_USER: admin
+      # POSTGRES_PASSWORD: password
+      # POSTGRES_DB: keycloakdb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: keycloakdb
+      MYSQL_ROOT_PASSWORD: X*bcYp4x
+    networks:
+      - local
+      # - default
+  keycloak:
+    image: jboss/keycloak
+    ports:
+      - "8080:8080"
+      - "25:25"
+      - "587:587"
+      - "465:465"
+    restart: on-failure
+    command:
+      - "-b"
+      - "0.0.0.0"
+    environment:
+      # - VIRTUAL_HOST=auth.twigcodes.com
+      # - LETSENCRYPT_HOST=auth.twigcodes.com
+      - VIRTUAL_PORT=8080
+      - PROXY_ADDRESS_FORWARDING=true
+      # - KEYCLOAK_HOSTNAME=auth.twigcodes.com
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=password
+      - KEYCLOAK_LOGLEVEL=DEBUG
+      - JAVA_TOOL_OPTIONS=-Dkeycloak.profile.feature.token_exchange=enabled
+      # - DB_VENDOR=postgres
+      - DB_VENDOR=mysql
+      - DB_USER=admin
+      - DB_PASSWORD=password
+      - DB_ADDR=keycloak-db
+      # - DB_PORT=5432
+      - DB_PORT=3306
+      - DB_DATABASE=keycloakdb
+    depends_on:
+      - keycloak-db
+    networks:
+      - local
+      # - default
+volumes:
+  keycloak_data:
+    driver: local
+networks:
+  local:
+    driver: bridge
+  # default:
+  #   external:
+  #     name: webproxy

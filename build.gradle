@@ -2,7 +2,7 @@ buildscript {
     ext {
         springBootVersion = '2.0.7.RELEASE'
         springFoxVersion = '2.9.2'
-        keycloakVersion = '4.7.0.Final'
+        keycloakVersion = '4.8.0.Final'
         twigCommonsVersion = '0.2.6-Candidate'
     }
     repositories {
